@@ -2,8 +2,7 @@
 
 	<ul class="ul-menux">
 		<li class="var_nav h-65 mb-5">
-			<h3 class="title-reportes">REPORTES</h3>
-		</li>
+		<!--</li>
                 <li class="var_nav">
 			<div class="link_bg"></div>
 			<div class="link_title">
@@ -14,8 +13,8 @@
 					<span class="link-title-span">Casas</span>
 				</a>
 			</div>
-		</li>
-                <li class="var_nav">
+		</li>-->
+        <li class="var_nav">
 			<div class="link_bg"></div>
 			<div class="link_title">
 				<div class=icon>
@@ -26,7 +25,7 @@
 				</a>
 			</div>
 		</li>
-                <li class="var_nav">
+        <!--<li class="var_nav">
 			<div class="link_bg"></div>
 			<div class="link_title">
 				<div class=icon>
@@ -36,7 +35,7 @@
 					<span class="link-title-span">Gráficas</span>
 				</a>
 			</div>
-		</li>
+		</li>-->
 		<!--<li class="var_nav">
 			<div class="link_bg"></div>
 			<div class="link_title">
@@ -59,7 +58,7 @@
 				</a>
 			</div>
 		</li>-->
-		<li class="var_nav">
+		<!--<li class="var_nav">
 			<div class="link_bg"></div>
 			<div class="link_title">
 				<div class=icon>
@@ -79,6 +78,6 @@
 					<span	class="link-title-span">Productos</span>
 				</a>
 			</div>
-		</li>
+		</li>-->
 	</ul>
 </nav>

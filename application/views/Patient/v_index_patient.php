@@ -21,11 +21,9 @@
 								<thead>
 									<tr>
                                         <th width="10%" class="text-center active">No. Expediente</th>
-                                        <th width="10%" class="text-center active">Acciones</th>
-										<th width="15%" class="text-center active">Nombre</th>
+                                        <th width="15%" class="text-center active">Acciones</th>
+										<th width="20%" class="text-center active">Nombre</th>
 										<th width="20%" class="text-center active">Domicilio</th>
-										<th width="5%" class="text-center active">Municipio</th>
-										<th width="5%" class="text-center active">Estado</th>
 										<th width="5%" class="text-center active">Edad</th>
 										<!--<th width="10%" class="text-center active">Sexo</th>-->
 									</tr>

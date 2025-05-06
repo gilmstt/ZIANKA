@@ -115,7 +115,7 @@
                                         <?php } ?>
                                         <?php if($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR || $this->session->userdata('CAREYES_ID_ROL') == MEDICO || $this->session->userdata('CAREYES_ID_ROL') == RECEPCION){ ?>
                                         <li <?=$classCon?>> <a href="<?= base_url(); ?>Consult/index"><i class="fa fa-stethoscope"></i> Consultas</a></li>
-                                        <li <?=$classUrg?>> <a href="<?= base_url(); ?>Urgency/index"><i class="fa fa-hospital-symbol"></i> Urgencias</a></li>
+                                        <!--<li <?=$classUrg?>> <a href="<?= base_url(); ?>Urgency/index"><i class="fa fa-hospital-symbol"></i> Urgencias</a></li>-->
                                         <?php } ?>
                                         <li class="dropdown <?=$classCfg?>">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" >

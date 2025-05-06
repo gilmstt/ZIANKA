@@ -1,6 +1,14 @@
 $(document).ready(function () {
    let isEdit = false;
-
+   $.ajax({
+      type: "method",
+      url: raiz_url + "Consult/ajax_get_all_consults",
+      data: "data",
+      dataType: "json",
+      success: function (response) {
+         console.log(response);
+      }
+   });
    $('#dataConsult').DataTable({
       "dom": "<'row'<'col-md-6'<'col-lg-12'fB>><'col-md-6 text-right'l>><'row op'<'col-md-12't>><'row'<'col-md-12'i>><'row'<'col-md-12'p>>",
       "language": {"url": raiz_url+"assets/plugins/dataTables/Spanish.json"},
@@ -27,7 +35,6 @@ $(document).ready(function () {
       } else {
          e.preventDefault();
          var formData = new FormData($(this)[0]);
-
          $.ajax({
             type: "POST",
             url: raiz_url + "Consult/ajax_nueva_consulta",
@@ -108,6 +115,32 @@ $(document).ready(function () {
       placeholder: "Elige un producto",
       dropdownParent: $("#modal2"),
    });
+
+   $("#SELECT_TIPO_CONSULTA").change(function () {
+      var id_tipo_consulta = $(this).val();
+  
+      if (id_tipo_consulta) {
+          $.ajax({
+              type: "POST",
+              url: raiz_url + "Consult/ajax_get_procedimientos_por_tipo",
+              data: { id_tipo_consulta: id_tipo_consulta },
+              dataType: "json",
+              success: function (response) {
+                  var select = $("#SEARCH_PROCEDIMIENTO");
+                  select.empty(); // limpia anteriores
+                  select.append('<option value="" disabled selected>Elige</option>');
+  
+                  if (response.length > 0) {
+                      $.each(response, function (index, item) {
+                          select.append('<option value="' + item.descripcion_procedimiento + '">' + item.descripcion_procedimiento + '</option>');
+                      });
+                  }
+              }
+          });
+      }
+  });
+
+  
 // MODAL FICHA CONSUMO - TEMP PROCEDIMIENTOS =====================================//
    $("#SEARCH_PROCEDIMIENTO").change(function () {
       let txt = $("#SEARCH_PROCEDIMIENTO").val();

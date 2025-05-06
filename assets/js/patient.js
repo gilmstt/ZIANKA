@@ -27,12 +27,12 @@ $(document).ready(function () {
       },
       "columnDefs": [
          { "targets": [0, 4], "orderable": false },
-         { "targets": [0, 1, 2, 3, 5], "className": 'text-center' },
+         { "targets": [0, 1, 2, 3, 4], "className": 'text-center' },
       ],
       drawCallback: function () {
          $('[data-toggle="tooltip"]').tooltip({
-    trigger : 'hover'
-})
+      trigger : 'hover'
+   });
       }
    });
 
@@ -107,7 +107,7 @@ $(document).ready(function () {
       } else {
          e.preventDefault();
          $.ajax({
-            url: raiz_url + "Patient/ajax_add_patient",
+            url: raiz_url + "Patient/ajax_add_patient", 
             type: 'POST',
             data: $(this).serialize(),
             success: function (data) {

@@ -1,23 +1,25 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Mconsult extends CI_Model {
+class Mconsult extends CI_Model
+{
 
-    function agregarReceta($idConsulta, $idReceta) {
+    function agregarReceta($idConsulta, $idReceta)
+    {
         try {
             $this->db->set('ID_RECETA', $idReceta);
             $this->db->where('ID_CONSULTA', $idConsulta);
             $this->db->update("consulta");
             return ($this->db->affected_rows() > 0);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             return $exception->getMessage();
         }
     }
 
-// FICHA CONSUMO
-    function insertFicha($id_consulta) {
+    // FICHA CONSUMO
+    function insertFicha($id_consulta)
+    {
         try {
             $values = array(
                 "ID_PACIENTE" => $this->input->post('ID_PACIENTE'),
@@ -85,8 +87,9 @@ class Mconsult extends CI_Model {
         }
     }
 
-// CRUD CONSULTA
-    function clear_temps($ID_SESSION) {
+    // CRUD CONSULTA
+    function clear_temps($ID_SESSION)
+    {
         try {
             $this->db->where('ID_SESSION', $ID_SESSION);
             $this->db->delete(array('temp_procedimiento', 'temp_producto'));
@@ -95,7 +98,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function nueva_consulta() {
+    function nueva_consulta()
+    {
         try {
             $id_user = $this->session->userdata('CAREYES_ID_USUARIO');
             $temps_proce = $this->db->get_where('temp_procedimiento', array('ID_SESSION' => $id_user))->num_rows();
@@ -116,15 +120,64 @@ class Mconsult extends CI_Model {
                 "DESC_TARIFA" => $descTarifa,
                 "FECHA_CONSULTA" => convierte_fecha($this->input->post('RG_FECHA_FICHA')),
                 "HORA_CONSULTA" => $this->input->post('RG_HR_FICHA'),
+                "ID_TIPO_CONSULTA" => $this->input->post('RG_TIPO_CONSULTA'),
+                "EXPOSICION_SOLAR" => $this->input->post('EXPOSICION_SOLAR_SI') ? 'SI' : ($this->input->post('EXPOSICION_SOLAR_NO') ? 'NO' : null),
+                "TIEMPO_EXPOSICION_SOLAR" => $this->input->post('TIEMPO_EXPOSICION_SOLAR'),
+                "USO_PROTECCION_SOLAR" => $this->input->post('USO_PROTECTOR_SOLAR_SI') ? 'SI' : ($this->input->post('USO_PROTECTOR_SOLAR_NO') ? 'NO' : null),
+                "MARCA_PROTECTOR_SOLAR" => $this->input->post('MARCA_PROTECTOR_SOLAR'),
+                "FPS_PROTECTOR_SOLAR" => $this->input->post('FPS_PROTECTOR_SOLAR'),
+                "ENVEJECIMIENTO_CUTANEO" => $this->input->post('ENVEJECIMIENTO_CUTANEO') ? 1 : 0,
+                "RITIDES" => $this->input->post('RITIDES') ? 1 : 0,
+                "BRUXISMO" => $this->input->post('BRUXISMO') ? 1 : 0,
+                "ADIP_LOCALIZADA" => $this->input->post('ADIP_LOCALIZADA') ? 1 : 0,
+                "ESTRIAS" => $this->input->post('ESTRIAS') ? 1 : 0,
+                "VARICES" => $this->input->post('VARICES') ? 1 : 0,
+                "HIPERMEGTACION" => $this->input->post('HIPERMEGTACION') ? 1 : 0,
+                "ALOPECIA" => $this->input->post('ALOPECIA') ? 1 : 0,
+                "VERRUGAS" => $this->input->post('VERRUGAS') ? 1 : 0,
+                "FLACIDEZ_CUTANEA" => $this->input->post('FLACIDEZ_CUTANEA') ? 1 : 0,
+                "ACNE" => $this->input->post('ACNE') ? 1 : 0,
+                "PEFE" => $this->input->post('PEFE') ? 1 : 0,
+                "CICATRICES" => $this->input->post('CICATRICES') ? 1 : 0,
+                "ROSACEA" => $this->input->post('ROSACEA') ? 1 : 0,
+                "HIPERHIDROSIS" => $this->input->post('HIPERHIDROSIS') ? 1 : 0,
+                "OTROS_MOTIVO_CONSULTA" => $this->input->post('OTROS_MOTIVO_CONSULTA'),
+                'FITZPATRICK' => $this->input->post('FITZPATRICK'),
+                'GLOGAU' => $this->input->post('GLOGAU'),
+                'TIPO_PIEL' => $this->input->post('TIPO_PIEL'),
+                'TIPO_ROSTRO' => $this->input->post('TIPO_ROSTRO'),
+                'LESIONES_DERMATOLOGICAS' => $this->input->post('LESIONES_DERMATOLOGICAS'),
+                'TIPO_DERMATOLOGICAS' => $this->input->post('TIPO_DERMATOLOGICAS'),
+                'LOCALIZACION_DERMATOLOGICAS' => $this->input->post('LOCALIZACION_DERMATOLOGICAS'),
+                'CONDICION_PACIENTE' => $this->input->post('CONDICION_PACIENTE'),
+                'CONSTITUCION_HABITUS' => $this->input->post('CONSTITUCION_HABITUS'),
+                'CONFORMACION_HABITUS' => $this->input->post('CONFORMACION_HABITUS'),
+                'ACTITUD_HABITUS' => $this->input->post('ACTITUD_HABITUS'),
+                'FACIES_HABITUS' => $this->input->post('FACIES_HABITUS'),
+                'MOVIMIENTOS_ANORMALES_HABITUS' => $this->input->post('MOVIMIENTOS_ANORMALES_HABITUS'),
+                'MARCHA_HABITUS' => $this->input->post('MARCHA_HABITUS'),
+                'ESTADO_CONCIENCIA_HABITUS' => $this->input->post('ESTADO_CONCIENCIA_HABITUS'),
+                'OTROS_HABITUS' => $this->input->post('OTROS_HABITUS'),
+                "FC_CONSULTA" => $this->input->post('RG_FC_CONSULTA'),
+                "FR_CONSULTA" => $this->input->post('RG_FR_CONSULTA'),
+                "TA_CONSULTA" => $this->input->post('RG_TA_CONSULTA'),
+                "TEMP_CONSULTA" => $this->input->post('RG_TEMP_CONSULTA'),
+                "PESO_CONSULTA" => $this->input->post('RG_PESO_CONSULTA'),
+                "TALLA_CONSULTA" => $this->input->post('RG_TALLA_CONSULTA'),
+                "IMC_CONSULTA" => $this->input->post('RG_IMC_CONSULTA'),
+                "LABORATORIOS_SOLICITADOS" => $this->input->post('RG_LABORATORIOS'),
+                "IMPRESION_DIAGNOSTICA"   => $this->input->post('RG_LABORATORIOS_I_DIAGNOSTICA'),
+                "TOTAL_PAGADO_CONSULTA" =>  floatval($this->input->post('RG_TOTAL_PAGADO_CONSULTA')),
+                "OTROS_TRATAMIENTOS_ESTETICOS" => $this->input->post('OTROS_TRATAMIENTOS_ESTETICOS'),
+                "VIGENCIA_CONSULTA" => ACTIVO,
+                
+                
                 /* "CONDICION_CONSULTA" => $this->input->post('RG_CONDICION_CONSULTA'), */
                 "ORIGEN_CONSULTA" => $this->input->post('RG_ORIGEN_CONSULTA'),
                 "MOTIVO_CONSULTA" => $this->input->post('RG_MOTIVO_CONSULTA'),
                 "INICIOEVOLUCION_CONSULTA" => $this->input->post('RG_INICIOEVOLUCION_CONSULTA'),
                 "SIGNOS_VITALES" => $this->input->post('RG_SIGNOS_VITALES_CONSULTA'),
-                "FC_CONSULTA" => $this->input->post('RG_FC_CONSULTA'),
                 "RITMO_CARDIACO_CONSULTA" => $this->input->post('RG_RITMO_CARDIACO_CONSULTA'),
-                "TEMP_CONSULTA" => $this->input->post('RG_TEMP_CONSULTA'),
-                "FR_CONSULTA" => $this->input->post('RG_FR_CONSULTA'),
                 "SAT_CONSULTA" => $this->input->post('RG_SAT_CONSULTA'),
                 "GLICEMIA_CAPILAR_CONSULTA" => $this->input->post('RG_GLICEMIA_CAPILAR_CONSULTA'),
                 "DIAGNOSTICO" => $this->input->post('RG_DIAGNOSTICO_CONSULTA'),
@@ -134,21 +187,35 @@ class Mconsult extends CI_Model {
                 "TRATAMIENTO_CONSULTA" => $this->input->post('RG_TRATAMIENTO_CONSULTA'),
                 "EVOLUCION_CONSULTA" => $this->input->post('RG_EVOLUCION_CONSULTA'),
                 "OBSERVACIONES_CONSULTA" => $this->input->post('RG_OBSERVACION_CONSULTA'),
-                "PESO_CONSULTA" => $this->input->post('RG_PESO_CONSULTA'),
-                "TALLA_CONSULTA" => $this->input->post('RG_TALLA_CONSULTA'),
                 "PC" => $this->input->post('RG_PC_CONSULTA'),
                 "PA" => $this->input->post('RG_PA_CONSULTA'),
-                "ID_CASA" =>intval( $this->input->post('ID_CASA')),
-                "TOTAL_PAGADO_CONSULTA" =>  floatval($this->input->post('RG_TOTAL_PAGADO_CONSULTA')),
-                "VIGENCIA_CONSULTA" => ACTIVO
+                "ID_CASA" => intval($this->input->post('ID_CASA')),
             );
             $this->db->insert('consulta', $data);
             $id_consulta = $this->db->insert_id();
+
+            // Insertar tratamientos si existen
+            $tratamientos = $this->input->post('TRATAMIENTOS'); // Suponiendo que los tratamientos vienen en un array
+
+            if (!empty($tratamientos) && is_array($tratamientos)) {
+                foreach ($tratamientos as $tratamiento) {
+                    $procedimiento = $tratamiento['PROCEDIMIENTO'];
+                    $producto = $tratamiento['PRODUCTO'];
+                    $fecha = convierte_fecha($tratamiento['FECHA']); // Formato a Y-m-d
+    
+                    // Insertar cada tratamiento
+                    $this->db->insert('tratamientos_aplicados_consulta', [
+                        'id_consulta' => $id_consulta,  // Asociamos el tratamiento con la consulta recién insertada
+                        'procedimiento' => $procedimiento,
+                        'producto' => $producto,
+                        'fecha_aplicacion' => $fecha
+                    ]);
+                }
+            }
+
             if ($temps_proce > 0 || $temps_product > 0) {
                 $this->insertFicha($id_consulta);
             }
-            /*  $this->db->where('ID_PACIENTE', $this->input->post('ID_PACIENTE'));
-              $this->db->update('paciente', array("ANTECEDENTES_PACIENTE" => $this->input->post('ANTECEDENTES'))); */
 
             echo json_encode(array("msj" => "okay"));
         } catch (Exception $ex) {
@@ -160,7 +227,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function update_consulta() {
+    function update_consulta()
+    {
         $inputFecha = $this->input->post('RG_FECHA_EGRESO');
         $inputHora = $this->input->post('RG_HORA_EGRESO');
         $Fecha = ($inputFecha != "Sin registrar") ? convierte_fecha($inputFecha) : NULL;
@@ -198,7 +266,8 @@ class Mconsult extends CI_Model {
         $this->db->update('consulta', $data);
     }
 
-    function get_all_consults() {
+    function get_all_consults()
+    {
         try {
 
             $query = $this->db->query("SELECT consulta.* , paciente.NOMBRE_PACIENTE, usuario.NOMBRE_USUARIO, tarifa.NOMBRE_TARIFA
@@ -223,7 +292,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function get_consult_by_id() {
+    function get_consult_by_id()
+    {
         $id_consulta = $this->input->post('consulta');
         $id_paciente = $this->input->post('paciente');
         $id_tarifa = $this->input->post('tarifa');
@@ -245,7 +315,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function delete_consult() {
+    function delete_consult()
+    {
         $id = $this->input->post('id_consulta');
 
         try {
@@ -262,21 +333,22 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function costo_total() {//index (modal)
+    function costo_total()
+    { //index (modal)
         $ficha = $this->input->post('ficha');
         $descuento = $this->input->post('descuento');
         $PrecioConsulta = $this->input->post('precio');
         $IsTarifa = $this->input->post('tarifa');
-       
-        $fichaRow = $this->db->get_where('ficha_consumo',array('ID_FICHA'=>$ficha))->row();
+
+        $fichaRow = $this->db->get_where('ficha_consumo', array('ID_FICHA' => $ficha))->row();
         $is_IdConsulta = $fichaRow->ID_CONSULTA;
         $is_IdUrgencia = $fichaRow->ID_URGENCIA;
 
-        if($is_IdConsulta > 0){
-            $sql = $this->db->get_where('consulta',array('ID_FICHA'=>$ficha))->row();
+        if ($is_IdConsulta > 0) {
+            $sql = $this->db->get_where('consulta', array('ID_FICHA' => $ficha))->row();
             $get = $sql->TOTAL_PAGADO_CONSULTA;
-        }elseif($is_IdUrgencia > 0){
-            $sql = $this->db->get_where('urgencia',array('ID_FICHA'=>$ficha))->row();
+        } elseif ($is_IdUrgencia > 0) {
+            $sql = $this->db->get_where('urgencia', array('ID_FICHA' => $ficha))->row();
             $get = $sql->TOTAL_PAGADO_URGENCIA;
         }
 
@@ -290,18 +362,18 @@ class Mconsult extends CI_Model {
         if ($descuento) {
             $desc = $suma * ($descuento / 100);
             $total = $suma - $desc;
-           // $totalx = ($IsTarifa != 1) ? $total : $total + $suma_productos;
+            // $totalx = ($IsTarifa != 1) ? $total : $total + $suma_productos;
             $totalx = $total;
         } else {
             $totalx = $suma;
         }
 
         $desc = (isset($desc)) ? $desc : 0;
-        $data['costo']= $suma;
-        $data['desc']= $desc;
-        $data['total']= $totalx;
-        $data['totalpagado']= $get;
-        
+        $data['costo'] = $suma;
+        $data['desc'] = $desc;
+        $data['total'] = $totalx;
+        $data['totalpagado'] = $get;
+
         /*$data = array(
             'costo' => $suma,
             'desc' => $desc,
@@ -311,7 +383,8 @@ class Mconsult extends CI_Model {
         return $data;
     }
 
-    function total_final() {//form consulta
+    function total_final()
+    { //form consulta
         $session = $this->session->userdata('CAREYES_ID_USUARIO');
         $descuento = $this->input->post('descuento');
         $PrecioConsulta = $this->input->post('precio');
@@ -351,7 +424,8 @@ class Mconsult extends CI_Model {
         return $data;
     }
 
-    function close_consult() {
+    function close_consult()
+    {
         try {
             $id = $this->input->post('id_consulta');
 
@@ -368,8 +442,9 @@ class Mconsult extends CI_Model {
         }
     }
 
-// TEMP PROCEDIMIENTOS
-    function obtenerProcedimiento($var) {
+    // TEMP PROCEDIMIENTOS
+    function obtenerProcedimiento($var)
+    {
         try {
             $this->db->select("*");
             $this->db->from('procedimiento');
@@ -383,7 +458,19 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function tempProcedimiento() {
+    public function getProcedimientosPorTipo($id_tipo_consulta)
+    {
+        $this->db->select('p.id_procedimiento, p.descripcion_procedimiento');
+        $this->db->from('tipo_consulta_procedimientos tcp');
+        $this->db->join('procedimiento p', 'p.id_procedimiento = tcp.id_procedimiento');
+        $this->db->where('tcp.id_tipo_consulta', $id_tipo_consulta);
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
+    function tempProcedimiento()
+    {
         try {
 
             $precio = $this->input->post('COSTO_PROCEDIMIENTO');
@@ -421,7 +508,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function get_tempProcedimientos() {
+    function get_tempProcedimientos()
+    {
         $id_user = $this->session->userdata('CAREYES_ID_USUARIO');
         $data = $this->db->get_where('temp_procedimiento', array('ID_SESSION' => $id_user))->result();
         $suma = $this->db->select_sum('PRECIO_PROCEDIMIENTO')->get_where('temp_procedimiento', array('ID_SESSION' => $id_user))->row();
@@ -430,7 +518,8 @@ class Mconsult extends CI_Model {
         return $json;
     }
 
-    function delete_temProcedimiento() {
+    function delete_temProcedimiento()
+    {
         try {
             $id = $this->input->post('id_temp');
 
@@ -441,8 +530,9 @@ class Mconsult extends CI_Model {
         }
     }
 
-// TEMP MATERIALES
-    function obtenerProducto($var) {
+    // TEMP MATERIALES
+    function obtenerProducto($var)
+    {
         try {
             $this->db->select("*");
             $this->db->from('producto');
@@ -457,7 +547,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function get_tempProductos() {
+    function get_tempProductos()
+    {
         $id_user = $this->session->userdata('CAREYES_ID_USUARIO');
 
         $data = $this->db->get_where('temp_producto', array('ID_SESSION' => $id_user))->result();
@@ -467,7 +558,8 @@ class Mconsult extends CI_Model {
         return $json;
     }
 
-    function tempProducto() {
+    function tempProducto()
+    {
         try {
 
             if ($this->input->post('ID_TARIFA')) {
@@ -520,7 +612,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function delete_temProducto() {
+    function delete_temProducto()
+    {
         try {
             $id = $this->input->post('id_temp');
 
@@ -531,8 +624,9 @@ class Mconsult extends CI_Model {
         }
     }
 
-// MODAL FICHA CONSUMO
-    function get_procedimientos() {
+    // MODAL FICHA CONSUMO
+    function get_procedimientos()
+    {
         try {
             $id_ficha = $this->input->post('id_ficha');
             $data = $this->db->get_where('rel_procedimiento_ficha', array('ID_FICHA' => $id_ficha))->result_array();
@@ -542,7 +636,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function get_productos() {
+    function get_productos()
+    {
         try {
             $id_ficha = $this->input->post('id_ficha');
             $data = $this->db->get_where('rel_producto_ficha', array('ID_FICHA' => $id_ficha))->result_array();
@@ -552,7 +647,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function insert_relProcedimiento() {
+    function insert_relProcedimiento()
+    {
         try {
             // Guardo las variables recibidas //
             $input_ficha = $this->input->post('id_ficha');
@@ -584,7 +680,7 @@ class Mconsult extends CI_Model {
 
             $row_procedimiento = $this->db->get_where('procedimiento', array('id_procedimiento' => $id_procedimiento))->row();
             /* $precio = $row_procedimiento->precio_procedimiento; */
-            $precio = ( $get_precio > 0) ? $get_precio : $row_procedimiento->precio_procedimiento;
+            $precio = ($get_precio > 0) ? $get_precio : $row_procedimiento->precio_procedimiento;
 
             $exist = $this->db->get_where('rel_procedimiento_ficha', array('ID_PROCEDIMIENTO' => $id_procedimiento, 'ID_FICHA' => $id_ficha))->row();
             // Valido si existe el id procedimiento en la tabla rel_procedimiento
@@ -620,7 +716,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function delete_relProcedimiento() {
+    function delete_relProcedimiento()
+    {
         try {
             $id = $this->input->post('id_rel');
             $this->db->where('ID', $id);
@@ -630,7 +727,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function insert_relProducto() {
+    function insert_relProducto()
+    {
         try {
 
             if ($this->input->post('id_tarifa')) {
@@ -645,7 +743,7 @@ class Mconsult extends CI_Model {
             $id_consulta = $this->input->post('id_consulta');
             $id_paciente = $this->input->post('id_paciente');
             $id_producto = $this->input->post('id_producto');
-            log_message("error", "agregando producto ficha consumo id: ".  $input_ficha . ", id_usuario: " . $this->session->userdata('CAREYES_ID_USUARIO'));
+            log_message("error", "agregando producto ficha consumo id: " .  $input_ficha . ", id_usuario: " . $this->session->userdata('CAREYES_ID_USUARIO'));
 
             if ($input_ficha <= 0) {
                 $values = array(
@@ -703,7 +801,7 @@ class Mconsult extends CI_Model {
                     'CANT_PRODUCTO' => $cantidad,
                 );
                 $this->db->insert('rel_producto_ficha', $data);
-                log_message("error", "nuevos datos de stock de producto" .json_encode($data));
+                log_message("error", "nuevos datos de stock de producto" . json_encode($data));
                 $verify = 1;
             }
 
@@ -720,14 +818,15 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function delete_relProducto() {
+    function delete_relProducto()
+    {
         try {
             $id_rel = $this->input->post('id_relP');
 
             $row_FichaProduct = $this->db->get_where('rel_producto_ficha', array('ID' => $id_rel))->row();
             $ID_PRODUCTO = $row_FichaProduct->ID_PRODUCTO;
             $CANT_PRODUCTO = $row_FichaProduct->CANT_PRODUCTO;
-            log_message("error", "eliminando producto de ficha consumo id: " . $row_FichaProduct->ID_FICHA . " , id_producto: " . $ID_PRODUCTO . " , cantidad: " . $CANT_PRODUCTO. " , id_usuario: " . $this->session->userdata('CAREYES_ID_USUARIO'));
+            log_message("error", "eliminando producto de ficha consumo id: " . $row_FichaProduct->ID_FICHA . " , id_producto: " . $ID_PRODUCTO . " , cantidad: " . $CANT_PRODUCTO . " , id_usuario: " . $this->session->userdata('CAREYES_ID_USUARIO'));
 
             $row_TableProduct = $this->db->get_where('producto', array('ID_PRODUCTO' => $ID_PRODUCTO))->row();
             log_message("error", "producto antes de edición" . json_encode($row_TableProduct));
@@ -747,31 +846,32 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function edit_desc_tarifa() {
+    function edit_desc_tarifa()
+    {
         try {
             $data = array();
-            if(!empty($this->input->post('desc'))) $data['DESC_TARIFA'] = $this->input->post('desc');
-            if(!empty($this->input->post('TotPag'))) $data['TOTAL_PAGADO_CONSULTA'] = $this->input->post('TotPag');
+            if (!empty($this->input->post('desc'))) $data['DESC_TARIFA'] = $this->input->post('desc');
+            if (!empty($this->input->post('TotPag'))) $data['TOTAL_PAGADO_CONSULTA'] = $this->input->post('TotPag');
             $data['FOLIO_CONSULTA'] = 0;
-            if(intval($this->input->post('FolCon')>0)) $data['FOLIO_CONSULTA'] = intval($this->input->post('FolCon'));
-            if(intval($this->input->post('FolConM')>0)) $data['FOLIO_CONSULTA'] = intval($this->input->post('FolConM'));
-            
+            if (intval($this->input->post('FolCon') > 0)) $data['FOLIO_CONSULTA'] = intval($this->input->post('FolCon'));
+            if (intval($this->input->post('FolConM') > 0)) $data['FOLIO_CONSULTA'] = intval($this->input->post('FolConM'));
+
             $ficha = $this->input->post('ficha');
 
-            $findFolio = $this->db->get_where("consulta", array("ID_CONSULTA <>" .$this->input->post('consulta') ."FOLIO_CONSULTA ="=>$data['FOLIO_CONSULTA']))->num_rows();
-            if($findFolio <= 0 || intval($data['FOLIO_CONSULTA']==0)){
-                if($ficha>0){
+            $findFolio = $this->db->get_where("consulta", array("ID_CONSULTA <>" . $this->input->post('consulta') . "FOLIO_CONSULTA =" => $data['FOLIO_CONSULTA']))->num_rows();
+            if ($findFolio <= 0 || intval($data['FOLIO_CONSULTA'] == 0)) {
+                if ($ficha > 0) {
                     $this->db->where('ID_FICHA', $ficha);
                     $this->db->update('consulta', $data);
-                    
-                        return "bien";
-               }else{
-                return 'no ficha';
+
+                    return "bien";
+                } else {
+                    return 'no ficha';
                 }
-            }else{
-                if($findFolio >0 && intval($data['FOLIO_CONSULTA'])>0){
+            } else {
+                if ($findFolio > 0 && intval($data['FOLIO_CONSULTA']) > 0) {
                     return 'repetido';
-                }else{
+                } else {
                     return "error";
                 }
             }
@@ -780,8 +880,9 @@ class Mconsult extends CI_Model {
         }
     }
 
-// MODAL ADJUNTAR ARCHIVO
-    function delete_file_by_id($ID_DOCUMENTO) {
+    // MODAL ADJUNTAR ARCHIVO
+    function delete_file_by_id($ID_DOCUMENTO)
+    {
         try {
 
             $this->db->where('ID_DOCUMENTO', $ID_DOCUMENTO);
@@ -792,7 +893,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function get_files_consult_on_db($ID_CONSULTA) {
+    function get_files_consult_on_db($ID_CONSULTA)
+    {
         try {
             $this->db->where('D.ID_CONSULTA', $ID_CONSULTA);
             $this->db->from('DOCUMENTO AS D');
@@ -803,7 +905,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function insert_file_by_consult_id($ROW) {
+    function insert_file_by_consult_id($ROW)
+    {
         try {
             $data = array(
                 //'ID_MEMBRESIA' => $row['ID_MEMBRESIA'],
@@ -819,8 +922,9 @@ class Mconsult extends CI_Model {
         }
     }
 
-// PDF IMRESIÓN
-    function get_consult_by_id_consult($ID_CONSULT) {
+    // PDF IMRESIÓN
+    function get_consult_by_id_consult($ID_CONSULT)
+    {
         try {
             $this->db->select("*, c.ID_TARIFA as TARIFA2, c.ID_MEMBRESIA as MEMBRECIA2");
             $this->db->from('consulta as c');
@@ -837,7 +941,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function get_procedimiento_by_consult_id($ID_CONSULT) {
+    function get_procedimiento_by_consult_id($ID_CONSULT)
+    {
         try {
             $this->db->select("*");
             $this->db->from('consulta as c');
@@ -851,7 +956,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function get_producto_by_consult_id($ID_CONSULT) {
+    function get_producto_by_consult_id($ID_CONSULT)
+    {
         try {
             $this->db->select("*");
             $this->db->from('consulta as c');
@@ -864,7 +970,8 @@ class Mconsult extends CI_Model {
             return $e->getMessage();
         }
     }
-    function get_sum($ID_FICHA) {
+    function get_sum($ID_FICHA)
+    {
         try {
             $this->db->select_sum('PRECIO_PROCEDIMIENTO', 'suma');
             $this->db->where('ID_FICHA', $ID_FICHA);
@@ -875,7 +982,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function get_sum_ficha($ID_FICHA) {
+    function get_sum_ficha($ID_FICHA)
+    {
         try {
             $this->db->select_sum('PRECIO_PRODUCTO', 'sumaficha');
             $this->db->where('ID_FICHA', $ID_FICHA);
@@ -886,7 +994,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function get_urgency_by_id($ID_URGENCY) {
+    function get_urgency_by_id($ID_URGENCY)
+    {
         try {
             $this->db->select("*, u.ID_TARIFA as TARIFA2, u.ID_MEMBRESIA as MEMBRESIA2");
             $this->db->from('urgencia as u');
@@ -903,7 +1012,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function get_procedimiento_by_urgency_id($ID_URGENCY) {
+    function get_procedimiento_by_urgency_id($ID_URGENCY)
+    {
         try {
             $this->db->select("*");
             $this->db->from('urgencia as u');
@@ -917,7 +1027,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function get_producto_by_urgency_id($ID_URGENCY) {
+    function get_producto_by_urgency_id($ID_URGENCY)
+    {
         try {
             $this->db->select("*");
             $this->db->from('urgencia as u');
@@ -930,16 +1041,17 @@ class Mconsult extends CI_Model {
             return $e->getMessage();
         }
     }
-    
-   // SERVERSIDE CONSULTAS //
-    function make_query() {
-        $pacientes = $this->db->get_where('paciente', array('ACTIVO_PACIENTE' => 1))->result_array();
 
-        $order_column = array(NULL, "NOMBRE_PACIENTE", "NOMBRE_USUARIO", "NOMBRE_TARIFA", NULL, "FECHA_CONSULTA", "HORA_CONSULTA");
+    // SERVERSIDE CONSULTAS //
+    function make_query()
+    {
+        //$pacientes = $this->db->get_where('paciente', array('ACTIVO_PACIENTE' => 1))->result_array();
 
-        $this->db->select('consulta.*, paciente.NOMBRE_PACIENTE, paciente.APELLIDO_PATERNO_PACIENTE, paciente.APELLIDO_MATERNO_PACIENTE, usuario.NOMBRE_USUARIO, tarifa.NOMBRE_TARIFA, membresia.NOMBRE_MEMBRESIA');
+        $order_column = array(NULL, NULL,NULL, NULL, NULL, NULL, NULL, NULL);
+        $this->db->select('consulta.*, paciente.NOMBRE_PACIENTE, paciente.APELLIDO_PATERNO_PACIENTE, paciente.APELLIDO_MATERNO_PACIENTE, usuario.NOMBRE_USUARIO, tarifa.NOMBRE_TARIFA, membresia.NOMBRE_MEMBRESIA, tipo_consulta.nombre_tipo_consulta');
         $this->db->from('consulta');
         $this->db->join('paciente', 'paciente.ID_PACIENTE = consulta.ID_PACIENTE');
+        $this->db->join('tipo_consulta', 'consulta.ID_TIPO_CONSULTA = tipo_consulta.id_tipo_consulta', 'left');
         $this->db->join('usuario', 'usuario.ID_USUARIO = consulta.ID_MEDICO');
         $this->db->join('tarifa', 'tarifa.ID_TARIFA = consulta.ID_TARIFA', 'left');
         $this->db->join('membresia', 'membresia.ID_MEMBRESIA = consulta.ID_MEMBRESIA', 'left');
@@ -951,7 +1063,7 @@ class Mconsult extends CI_Model {
             $search_value = $_POST["search"]["value"];
 
             $this->db->like("CONCAT(paciente.NOMBRE_PACIENTE, ' ', `paciente`.`APELLIDO_PATERNO_PACIENTE`, ' ', `paciente`.APELLIDO_MATERNO_PACIENTE)", $search_value);
-            
+
             $this->db->or_like("NOMBRE_USUARIO", $search_value);
             $this->db->or_like("APELLIDO_USUARIO", $search_value);
 
@@ -966,7 +1078,8 @@ class Mconsult extends CI_Model {
         }
     }
 
-    function make_datatables() {
+    function make_datatables()
+    {
         $this->make_query();
 
         if ($_POST["length"] != -1) {
@@ -976,7 +1089,8 @@ class Mconsult extends CI_Model {
         return $query;
     }
 
-    function get_all_data() {
+    function get_all_data()
+    {
         $this->db->select("*");
         $this->db->where('VIGENCIA_CONSULTA', 1);
         $this->db->from("consulta");
@@ -984,13 +1098,15 @@ class Mconsult extends CI_Model {
         return $this->db->count_all_results();
     }
 
-    function get_filtered_data() {
+    function get_filtered_data()
+    {
         $this->make_query();
         $query = $this->db->get();
         return $query->num_rows();
     }
 
-    function get_consults() {
+    function get_consults()
+    {
         $fetch_data = $this->mconsult->make_datatables();
         $total_consults = $this->mconsult->get_all_data();
         $filtered_consults = $this->mconsult->get_filtered_data();
@@ -1017,7 +1133,7 @@ class Mconsult extends CI_Model {
                     data-id_paciente='" . $row['ID_PACIENTE'] . "'>
                     <i class='fas fa-print fa-x'></i>
                     </button>";
-                
+
             $actions = $actions . "
           
            
@@ -1066,10 +1182,10 @@ class Mconsult extends CI_Model {
             $sub_array[] = "<span class='" . $badge . "'>" . $status . "</span>";
             $sub_array[] = $row['NOMBRE_PACIENTE'] . " " . $row['APELLIDO_PATERNO_PACIENTE'] . " " . $row['APELLIDO_MATERNO_PACIENTE'];
             $sub_array[] = $row['NOMBRE_USUARIO'];
-            $sub_array[] = $type;
-            $sub_array[] = $row['MOTIVO_CONSULTA'];
+            $sub_array[] = $row['nombre_tipo_consulta'];
             $sub_array[] = $row['FECHA_CONSULTA'];
             $sub_array[] = $row['HORA_CONSULTA'];
+            $sub_array[] = $type;
 
             $data[] = $sub_array;
         }
@@ -1079,11 +1195,9 @@ class Mconsult extends CI_Model {
             "recordsFiltered" => $filtered_consults,
             "data" => $data
         );
+
         return $output;
     }
-    
-
 }
 
 /* End of file Mconsult.php */
-?>
