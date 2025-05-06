@@ -248,6 +248,18 @@ class Mconfig extends CI_Model {
             return $e->getMessage();
         }
     }
+
+    function get_all_valid_sangre() {
+        try {     
+            $this->db->select("*");
+            $this->db->from("sangre");
+            $this->db->where('vigencia_sangre', VIGENTE);
+            $query = $this->db->get();
+            return $query->result_array();
+        } catch (Exception $ex) {
+            return $e->getMessage();
+        }
+    }
     function check_perfil($name){
         try {
             $this->db->select("*");

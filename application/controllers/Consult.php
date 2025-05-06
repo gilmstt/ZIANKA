@@ -2,11 +2,13 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Consult extends CI_Controller {
+class Consult extends CI_Controller
+{
 
-// CONSTRUCT
+    // CONSTRUCT
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('mpatient');
         $this->load->model('mconsult');
@@ -19,17 +21,18 @@ class Consult extends CI_Controller {
         $this->ID_SESSION = $this->session->userdata('CAREYES_ID_USUARIO');
     }
 
-// INDEX
-    public function index() {
+    // INDEX
+    public function index()
+    {
         $data = getActive("classCon");
         $data['PRODUCTOS'] = $this->Murgency->get_productos_();
-        
         $this->load->view('esqueleton/header', $data);
         $this->load->view('Consult/v_index_consult');
         $this->load->view('esqueleton/footer');
     }
-    
-    public function ajax_get_all_consults() {
+
+    public function ajax_get_all_consults()
+    {
         if ($this->input->is_ajax_request()) {
             $data = $this->mconsult->get_consults();
             echo json_encode($data, true);
@@ -38,17 +41,30 @@ class Consult extends CI_Controller {
         }
     }
 
-// CONSULTA
-    public function nueva_consulta($id) {
+    // CONSULTA
+    public function nueva_consulta($id)
+    {
         $data['row_user'] = $this->mpatient->get_patient_by_id($id);
 
         $this->load->view('esqueleton/header', getActive("classCon"));
+        $data['tratamientos'] = [
+            'TOXINA_BOTULINICA' => 'Toxina Botulínica',
+            'ACIDO_HIALURONICO' => 'Relleno Ácido Hialurónico',
+            'BIOESTIMULADORES' => 'Bioestimuladores',
+            'DERMAPEN' => 'Dermapen',
+            'PEELING' => 'Peeling Químico',
+            'PLASMA' => 'Plasma Rico en Plaquetas',
+            'HILOS' => 'Hilos de Sustentación',
+            'MESOTERAPIA' => 'Mesoterapia',
+            'APARATOLOGIA_CORPORAL' => 'Aparatología Corporal'
+        ];
         $this->load->view('Consult/v_new_consult', $data);
         $this->load->view('esqueleton/footer');
         $this->mconsult->clear_temps($this->ID_SESSION);
     }
 
-    public function ajax_nueva_consulta() {
+    public function ajax_nueva_consulta()
+    {
         if ($this->input->is_ajax_request()) {
             $this->mconsult->nueva_consulta();
         } else {
@@ -56,14 +72,16 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function get_tarifas() {
+    public function get_tarifas()
+    {
         if ($this->input->is_ajax_request()) {
             $tarifas = $this->mconfig->get_all_valid_tarifas();
             echo json_encode($tarifas);
         }
     }
 
-    public function change_tarifa() {
+    public function change_tarifa()
+    {
         if ($this->input->is_ajax_request()) {
 
             $ficha = $this->input->post('ficha');
@@ -77,7 +95,8 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_get_consulta_by_id() {
+    public function ajax_get_consulta_by_id()
+    {
         if ($this->input->is_ajax_request()) {
             $Consult = $this->mconsult->get_consult_by_id();
             echo json_encode($Consult);
@@ -86,7 +105,7 @@ class Consult extends CI_Controller {
         }
     }
 
-   /* public function ajax_delete_consult() {
+    /* public function ajax_delete_consult() {
         if ($this->input->is_ajax_request()) {
             ($this->mconsult->delete_consult()) ? 'success' : 'error';
         } else {
@@ -94,7 +113,8 @@ class Consult extends CI_Controller {
         }
     }*/
 
-    public function ajax_costo_total() {//index
+    public function ajax_costo_total()
+    { //index
         if ($this->input->is_ajax_request()) {
             $total = $this->mconsult->costo_total();
             echo json_encode($total);
@@ -103,7 +123,8 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_total_final() {//form
+    public function ajax_total_final()
+    { //form
         if ($this->input->is_ajax_request()) {
             $data = $this->mconsult->total_final();
             echo json_encode($data);
@@ -112,24 +133,26 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_edit_desc_tarifa() {
+    public function ajax_edit_desc_tarifa()
+    {
         if ($this->input->is_ajax_request()) {
-            $edit =$this->mconsult->edit_desc_tarifa();
+            $edit = $this->mconsult->edit_desc_tarifa();
             if ($edit == "bien") {
                 echo "success";
-            }else{
-                if($edit == "no ficha"){
-                   echo 'no ficha';   
-                }else{
-                   echo 'repetido';
+            } else {
+                if ($edit == "no ficha") {
+                    echo 'no ficha';
+                } else {
+                    echo 'repetido';
                 }
-             }
+            }
         } else {
             redirect('index');
         }
     }
 
-    public function ajax_close_consult() {
+    public function ajax_close_consult()
+    {
         if ($this->input->is_ajax_request()) {
 
             if ($this->mconsult->close_consult()) {
@@ -140,8 +163,9 @@ class Consult extends CI_Controller {
         }
     }
 
-// FICHA CONSUMO
-    public function ajax_insert_ficha() {
+    // FICHA CONSUMO
+    public function ajax_insert_ficha()
+    {
         if ($this->input->is_ajax_request()) {
             $this->mconsult->insertFicha();
         } else {
@@ -149,8 +173,9 @@ class Consult extends CI_Controller {
         }
     }
 
-// PROCEDIMIENTOS & PRODUCTOS
-    public function ajax_obtener_procedimiento() {
+    // PROCEDIMIENTOS & PRODUCTOS
+    public function ajax_obtener_procedimiento()
+    {
         if ($this->input->is_ajax_request()) {
             $var = $this->input->post('var');
             $this->mconsult->obtenerProcedimiento($var);
@@ -159,7 +184,19 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_temp_procedimiento() {
+    public function ajax_get_procedimientos_por_tipo()
+    {
+        if ($this->input->is_ajax_request()) {
+            $id_tipo_consulta = $this->input->post('id_tipo_consulta');
+            $data = $this->mconsult->getProcedimientosPorTipo($id_tipo_consulta);
+            echo json_encode($data);
+        } else {
+            show_404();
+        }
+    }
+
+    public function ajax_temp_procedimiento()
+    {
         if ($this->input->is_ajax_request()) {
             $this->mconsult->tempProcedimiento();
         } else {
@@ -167,7 +204,8 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_show_tempProcedimientos() {
+    public function ajax_show_tempProcedimientos()
+    {
         if ($this->input->is_ajax_request()) {
             $data = $this->mconsult->get_tempProcedimientos();
             echo json_encode($data);
@@ -176,7 +214,8 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_delete_temProcedimiento() {
+    public function ajax_delete_temProcedimiento()
+    {
         if ($this->input->is_ajax_request()) {
             $this->mconsult->delete_temProcedimiento();
         } else {
@@ -184,8 +223,9 @@ class Consult extends CI_Controller {
         }
     }
 
-// MATERIALES
-    public function ajax_obtener_producto() {
+    // MATERIALES
+    public function ajax_obtener_producto()
+    {
         if ($this->input->is_ajax_request()) {
             $var = $this->input->post('var');
             $this->mconsult->obtenerProducto($var);
@@ -194,7 +234,8 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_temp_producto() {
+    public function ajax_temp_producto()
+    {
         if ($this->input->is_ajax_request()) {
             $this->mconsult->tempProducto();
         } else {
@@ -202,7 +243,8 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_show_tempProductos() {
+    public function ajax_show_tempProductos()
+    {
         if ($this->input->is_ajax_request()) {
             $data = $this->mconsult->get_tempProductos();
             echo json_encode($data);
@@ -211,7 +253,8 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_delete_temProducto() {
+    public function ajax_delete_temProducto()
+    {
         if ($this->input->is_ajax_request()) {
             $this->mconsult->delete_temProducto();
         } else {
@@ -219,8 +262,9 @@ class Consult extends CI_Controller {
         }
     }
 
-// MODAL FICHA CONSUMO
-    public function ajax_get_procedimientos() {
+    // MODAL FICHA CONSUMO
+    public function ajax_get_procedimientos()
+    {
         if ($this->input->is_ajax_request()) {
             $data = $this->mconsult->get_procedimientos();
             echo json_encode($data);
@@ -229,7 +273,8 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_get_productos() {
+    public function ajax_get_productos()
+    {
         if ($this->input->is_ajax_request()) {
             $data = $this->mconsult->get_productos();
             echo json_encode($data);
@@ -238,7 +283,8 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_insert_relProcedimiento() {
+    public function ajax_insert_relProcedimiento()
+    {
         if ($this->input->is_ajax_request()) {
             $id_ficha = $this->mconsult->insert_relProcedimiento();
             echo $id_ficha;
@@ -247,7 +293,8 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_delete_relProcedimiento() {
+    public function ajax_delete_relProcedimiento()
+    {
         if ($this->input->is_ajax_request()) {
             $this->mconsult->delete_relProcedimiento();
         } else {
@@ -255,7 +302,8 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_insert_relProducto() {
+    public function ajax_insert_relProducto()
+    {
         if ($this->input->is_ajax_request()) {
             $id_ficha = $this->mconsult->insert_relProducto();
             echo $id_ficha;
@@ -264,7 +312,8 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_delete_relProducto() {
+    public function ajax_delete_relProducto()
+    {
         if ($this->input->is_ajax_request()) {
             $this->mconsult->delete_relProducto();
         } else {
@@ -272,17 +321,18 @@ class Consult extends CI_Controller {
         }
     }
 
-// MODAL FICHA DIAGNOSTICO
-    public function ajax_update_consulta() {
+    // MODAL FICHA DIAGNOSTICO
+    public function ajax_update_consulta()
+    {
         if ($this->input->is_ajax_request()) {
             $this->mconsult->update_consulta();
         } else {
-            
         }
     }
 
-// MODAL ADJUNTAR ARCHIVO
-    public function ajax_get_files_consult() {
+    // MODAL ADJUNTAR ARCHIVO
+    public function ajax_get_files_consult()
+    {
         if ($this->input->is_ajax_request() && !empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
             $ID_CONSULTA = $this->input->post('ID_CONSULTA');
             $FILES_CONSULT = $this->mconsult->get_files_consult_on_db($ID_CONSULTA);
@@ -296,7 +346,8 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_delete_file_by_id() {
+    public function ajax_delete_file_by_id()
+    {
         if ($this->input->is_ajax_request() && !empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
             $ID_CONSULTA = $this->input->post('ID_CONSULTA');
             $ID_DOCUMENTO = $this->input->post('ID_DOCUMENTO');
@@ -316,7 +367,8 @@ class Consult extends CI_Controller {
         }
     }
 
-    public function ajax_subir_archivo() {
+    public function ajax_subir_archivo()
+    {
         if ($this->input->is_ajax_request()) {
 
             $ID_CONSULTA = $_POST['ID_CONSULTA'];
@@ -358,33 +410,32 @@ class Consult extends CI_Controller {
         }
     }
     public function ajax_delete_consult()
-   {
-      if ($this->input->is_ajax_request()) {
-          $ID_CONSULTA = $this->input->post('id_consulta');
-          
-          $ROW_ITEMS = $this->mconsult->get_producto_by_consult_id($ID_CONSULTA);
-          foreach ($ROW_ITEMS as $ROW) {
-              
-              $ID_PRODUCTO = $ROW['ID_PRODUCTO'];
-              $ITEM_ON_DB = $this->Minventary->get_product_by_id($ID_PRODUCTO);
-              $data['STOCK_PRODUCTO'] = $ITEM_ON_DB[0]['STOCK_PRODUCTO'] + $ROW['CANT_PRODUCTO'];
-              $UPDATE = $this->Minventary->edit_product_on_db($data, $ID_PRODUCTO);
-              
-          }
-         if ($this->mconsult->delete_consult()) {
-            echo "success";
-         } else {
-            echo "error";
-         }
+    {
+        if ($this->input->is_ajax_request()) {
+            $ID_CONSULTA = $this->input->post('id_consulta');
 
-      } else {
-         redirect('index', 'refresh');
-      }
-   }
+            $ROW_ITEMS = $this->mconsult->get_producto_by_consult_id($ID_CONSULTA);
+            foreach ($ROW_ITEMS as $ROW) {
 
-// PDF FORMATTOS IMPRESION
-// FICHA DE CONSULTA
-    function creaPdfFichaDiagnostic($ID_CONSULT) {
+                $ID_PRODUCTO = $ROW['ID_PRODUCTO'];
+                $ITEM_ON_DB = $this->Minventary->get_product_by_id($ID_PRODUCTO);
+                $data['STOCK_PRODUCTO'] = $ITEM_ON_DB[0]['STOCK_PRODUCTO'] + $ROW['CANT_PRODUCTO'];
+                $UPDATE = $this->Minventary->edit_product_on_db($data, $ID_PRODUCTO);
+            }
+            if ($this->mconsult->delete_consult()) {
+                echo "success";
+            } else {
+                echo "error";
+            }
+        } else {
+            redirect('index', 'refresh');
+        }
+    }
+
+    // PDF FORMATTOS IMPRESION
+    // FICHA DE CONSULTA
+    function creaPdfFichaDiagnostic($ID_CONSULT)
+    {
         if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
 
             $ROW_CONSULT = $this->mconsult->get_consult_by_id_consult($ID_CONSULT);
@@ -400,7 +451,7 @@ class Consult extends CI_Controller {
 
                 //$this->pdf->image(base_url() . "assets/img/", 76, 8, 70);
 
-               /* if ($ROW_CONSULT[0]['TARIFA2'] > NULO) {
+                /* if ($ROW_CONSULT[0]['TARIFA2'] > NULO) {
                     $ROW_TARIFA = $this->mconfig->get_tarifa_by_id(mb_strtoupper($ROW_CONSULT[0]['TARIFA2']));
                     $this->pdf->SetFont('Arial', 'B', 11);
                     $this->pdf->text(172, 32, 'Tarifa:', 0, 0, 'L');
@@ -437,7 +488,7 @@ class Consult extends CI_Controller {
                 $this->pdf->SetFont('Arial', '', 10);
                 $this->pdf->Text(46, 47, utf8_decode($ROW_CONSULT[0]['CALLE_PACIENTE']) . ' ' . utf8_decode($ROW_CONSULT[0]['NUMERO_PACIENTE']) . ' ' . utf8_decode($ROW_CONSULT[0]['COLONIA_PACIENTE']));
 
-               /* $this->pdf->SetFont('Arial', 'B', 11);
+                /* $this->pdf->SetFont('Arial', 'B', 11);
                 $this->pdf->text(26, 53, 'Lugar Nacimiento:', 0, 0, 'L');
                 $this->pdf->SetFont('Arial', '', 11);
                 $this->pdf->Text(62, 53, utf8_decode($ROW_CONSULT[0]['LUGAR_NACIMIENTO']));
@@ -607,30 +658,30 @@ class Consult extends CI_Controller {
 
                 $this->pdf->setXY(25, $y + 4);
                 $this->pdf->Cell(26, 5, utf8_decode('DX:'), 0, 0, 'L');
-                
-                $this->pdf->setXY(25,$y+7);
+
+                $this->pdf->setXY(25, $y + 7);
                 $this->pdf->SetFont('Arial', '', 10);
                 $this->pdf->Multicell(170, 4.4, $ROW_CONSULT[0]['DIAGNOSTICO_EGRESO_CONSULTA']);
 
                 $y = $this->pdf->GetY();
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(26, $y+3 , utf8_decode('Fecha:'), 0, 0, 'L');
+                $this->pdf->text(26, $y + 3, utf8_decode('Fecha:'), 0, 0, 'L');
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Text(38, $y+3, $ROW_CONSULT[0]['FECHAEGRESO_CONSULTA']);
+                $this->pdf->Text(38, $y + 3, $ROW_CONSULT[0]['FECHAEGRESO_CONSULTA']);
                 //$this->pdf->line(80, 229.5, 110, 229.5);
 
                 $y = $this->pdf->GetY();
 
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(65, $y+3 , utf8_decode('Hora:'), 0, 0, 'L');
+                $this->pdf->text(65, $y + 3, utf8_decode('Hora:'), 0, 0, 'L');
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Text(74, $y+3 , $ROW_CONSULT[0]['HREGRESO_CONSULTA']);
+                $this->pdf->Text(74, $y + 3, $ROW_CONSULT[0]['HREGRESO_CONSULTA']);
                 //$this->pdf->line(118, 229.5, 145, 229.5);
 
                 $y = $this->pdf->GetY();
 
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(96, $y+3, utf8_decode('Destino:'), 0, 0, 'L');
+                $this->pdf->text(96, $y + 3, utf8_decode('Destino:'), 0, 0, 'L');
 
                 $y = $this->pdf->GetY();
 
@@ -641,14 +692,14 @@ class Consult extends CI_Controller {
                 $this->pdf->SetFont('Arial', '', 10);
                 $this->pdf->Text(41, $y + 9, utf8_decode($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO']));
                 //$this->pdf->line(36, 243.5, 193, 243.5);
-                
+
                 $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
                 $this->pdf->setXY(13, 255);
                 $this->pdf->Cell(0, 0, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 0, 'C');
                 $y = $this->pdf->GetY();
-                $this->pdf->line(12, $y+2, 205, $y+2);
-               
-               $this->pdf->Output(); //Salida al navegador del pdf
+                $this->pdf->line(12, $y + 2, 205, $y + 2);
+
+                $this->pdf->Output(); //Salida al navegador del pdf
             } else {
                 redirect('Consult/index');
             }
@@ -658,7 +709,8 @@ class Consult extends CI_Controller {
     }
 
     //FICHA DE CONSUMO
-    public function creaPdf($ID_CONSULT) {
+    public function creaPdf($ID_CONSULT)
+    {
         if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
 
             if ($ID_CONSULT > NULO) {
@@ -907,7 +959,7 @@ class Consult extends CI_Controller {
                     $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
                     $this->pdf->setXY(13, 255);
                     $this->pdf->Cell(0, 0, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 0, 'C');
-                    $this->pdf->line(12, $y+257, 205, $y+257);
+                    $this->pdf->line(12, $y + 257, 205, $y + 257);
                     //Posición 0 || 1 || 2 || 3
 
                     $this->pdf->Output(); //Salida al navegador del pdf
@@ -921,7 +973,8 @@ class Consult extends CI_Controller {
     }
 
     //FICHA DE URGENCIA
-    public function creaPdfUrgency($ID_URGENCY) {
+    public function creaPdfUrgency($ID_URGENCY)
+    {
         if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
 
             if ($ID_URGENCY > NULO) {
@@ -1012,12 +1065,10 @@ class Consult extends CI_Controller {
                         $this->pdf->SetFont('Arial', 'B', 10);
                         $this->pdf->Cell(128, 5, 'PERFIL:', 1, 1, 'L');
                         $this->pdf->SetFont('Arial', '', 10);
-                        if (count($ROW_PERFIL)<=0)
-                        {
-                            $this->pdf->Text(100, 43, 'Sin asignar',1,1,'L');
-                        }
-                        else{
-                        $this->pdf->Text(100, 43, $ROW_PERFIL[0]['NOMBRE_PERFIL']);
+                        if (count($ROW_PERFIL) <= 0) {
+                            $this->pdf->Text(100, 43, 'Sin asignar', 1, 1, 'L');
+                        } else {
+                            $this->pdf->Text(100, 43, $ROW_PERFIL[0]['NOMBRE_PERFIL']);
                         }
                     }
 
@@ -1166,7 +1217,7 @@ class Consult extends CI_Controller {
                     $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
                     $this->pdf->setXY(13, 255);
                     $this->pdf->Cell(0, 0, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 0, 'C');
-                    $this->pdf->line(12, $y+257, 205, $y+257);
+                    $this->pdf->line(12, $y + 257, 205, $y + 257);
 
                     //Nos ayuda a saber qué posición está haciendo
                     //Posición 0 || 1 || 2 || 3
@@ -1180,7 +1231,8 @@ class Consult extends CI_Controller {
     }
 
     //FORMATO DE URGENCIA
-    public function creaPdfFichaUrgency($ID_URGENCY) {
+    public function creaPdfFichaUrgency($ID_URGENCY)
+    {
         if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
 
             if ($ID_URGENCY > NULO) {
@@ -1190,7 +1242,7 @@ class Consult extends CI_Controller {
                     //Carpeta imágenes está un directorio arriba
                     $directorioPadre = base_url() . "assets/img/";
 
-                    $this->pdf->AddPage('P', 'letter',0); //Vertical, Carta
+                    $this->pdf->AddPage('P', 'letter', 0); //Vertical, Carta
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                     $this->pdf->designUp();
                     $this->pdf->image(base_url() . "assets/img/encabezado.png", 76, 8, 100);
@@ -1218,11 +1270,11 @@ class Consult extends CI_Controller {
                     $this->pdf->SetFont('Arial', 'B', 10);
                     $this->pdf->text(26, 40, 'Nombre:', 0, 0, 'L');
                     $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->SetXY(40,36);
-                    $this->pdf->Multicell(50, 4.5, utf8_decode($ROW_URGENCY[0]['NOMBRE_PACIENTE']) . ' ' . utf8_decode($ROW_URGENCY[0]['APELLIDO_PATERNO_PACIENTE']) . ' ' . utf8_decode($ROW_URGENCY[0]['APELLIDO_MATERNO_PACIENTE']),0,1);
+                    $this->pdf->SetXY(40, 36);
+                    $this->pdf->Multicell(50, 4.5, utf8_decode($ROW_URGENCY[0]['NOMBRE_PACIENTE']) . ' ' . utf8_decode($ROW_URGENCY[0]['APELLIDO_PATERNO_PACIENTE']) . ' ' . utf8_decode($ROW_URGENCY[0]['APELLIDO_MATERNO_PACIENTE']), 0, 1);
 
-                    $this->pdf->SetXY(90,36);
-                    
+                    $this->pdf->SetXY(90, 36);
+
                     /*$this->pdf->SetFont('Arial', 'B', 10);
                     $this->pdf->multicell(40, 5.5, 'Lugar Nacimiento:',0,1);
                     $this->pdf->SetFont('Arial', '', 10);
@@ -1335,9 +1387,9 @@ class Consult extends CI_Controller {
                     $this->pdf->SetFont('Arial', 'B', 10);
                     $this->pdf->text(26, $y + 4, utf8_decode('Diágnostico Ingreso:'), 0, 0, 'L');
                     $this->pdf->SetFont('Arial', '', 10);
-                   
+
                     $y = $this->pdf->GetY();
-                    $this->pdf->SetXY(26,$y+4);
+                    $this->pdf->SetXY(26, $y + 4);
                     $this->pdf->Multicell(170, 4.4, utf8_decode($ROW_URGENCY[0]['DIAGNOSTICO']));
                     $this->pdf->Ln(6);
 
@@ -1392,30 +1444,30 @@ class Consult extends CI_Controller {
                     $y = $this->pdf->GetY();
 
                     $this->pdf->text(26, $y, utf8_decode('DX egreso:'), 0, 0, 'L');
-                    
-                    $this->pdf->setXY(25, $y+3);
+
+                    $this->pdf->setXY(25, $y + 3);
                     $this->pdf->SetFont('Arial', '', 10);
                     $this->pdf->Multicell(163, 4.5, utf8_decode($ROW_URGENCY[0]['DIAGNOSTICO_EGRESO']));
 
                     $y = $this->pdf->GetY();
-                    
+
                     $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, $y+3 , utf8_decode('Fecha:'), 0, 0, 'L');
+                    $this->pdf->text(26, $y + 3, utf8_decode('Fecha:'), 0, 0, 'L');
                     $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(38, $y+3, $ROW_URGENCY[0]['FECHAEGRESO_URGENCIA']);
+                    $this->pdf->Text(38, $y + 3, $ROW_URGENCY[0]['FECHAEGRESO_URGENCIA']);
 
                     $y = $this->pdf->GetY();
                     $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(61, $y+3, utf8_decode('Hora:'), 0, 0, 'L');
+                    $this->pdf->text(61, $y + 3, utf8_decode('Hora:'), 0, 0, 'L');
                     $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(72, $y+3, $ROW_URGENCY[0]['HREGRESO_URGENCIA']);
+                    $this->pdf->Text(72, $y + 3, $ROW_URGENCY[0]['HREGRESO_URGENCIA']);
 
                     $y = $this->pdf->GetY();
                     $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(87, $y+3, utf8_decode('Destino:'), 0, 0, 'L');
+                    $this->pdf->text(87, $y + 3, utf8_decode('Destino:'), 0, 0, 'L');
                     $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(102, $y+3, utf8_decode($ROW_URGENCY[0]['DESTINO']));
-                    
+                    $this->pdf->Text(102, $y + 3, utf8_decode($ROW_URGENCY[0]['DESTINO']));
+
                     // Verificar si el contenido anterior alcanza el límite inferior
                     if ($y + 10 > $this->pdf->GetPageHeight() - $footerHeight) {
                         $this->pdf->AddPage();  // Añadir una nueva página si no hay espacio suficiente
@@ -1426,17 +1478,17 @@ class Consult extends CI_Controller {
                     $this->pdf->text(26, $y + 10, utf8_decode('Médico:'), 0, 0, 'L');
                     $this->pdf->SetFont('Arial', '', 10);
                     $this->pdf->Text(40, $y + 10, utf8_decode($ROW_URGENCY[0]['NOMBRE_USUARIO'] . ' ' . $ROW_URGENCY[0]['APELLIDO_USUARIO']));
-                    
+
                     $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
                     //$this->pdf->setXY(13, 258);
-                   
+
                     $footerHeight = 10; // Altura del pie de página
                     $this->pdf->SetAutoPageBreak(true, $footerHeight);
                     $this->pdf->SetY(-$footerHeight);
 
                     $this->pdf->Cell(0, 0, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 1, 'C');
                     $y = $this->pdf->GetY();
-                    $this->pdf->line(12, $y+2, 205, $y+2);
+                    $this->pdf->line(12, $y + 2, 205, $y + 2);
 
                     $this->pdf->Output(); //Salida al navegador del pdf
                     $this->pdf->close();
@@ -1452,17 +1504,18 @@ class Consult extends CI_Controller {
     }
 
     //RECETA
-    public function creaPdfReceta($ID_CONSULT) {
+    public function creaPdfReceta($ID_CONSULT)
+    {
         if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
 
             if ($ID_CONSULT > NULO) {
                 $ROW_CONSULT = $this->mconsult->get_consult_by_id_consult($ID_CONSULT);
-                
+
                 if (count($ROW_CONSULT) > NULO) {
                     $this->load->library('PDF');
                     //Carpeta imágenes está un directorio arriba
                     $directorioPadre = base_url() . "assets/img/";
-                    
+
                     // $this->pdf->Image($directorioPadre."logo.jpg",10,10,10,28);
 
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
@@ -1474,7 +1527,7 @@ class Consult extends CI_Controller {
                     $this->pdf->setXY(11, 29);
                     $this->pdf->SetFont('Arial', '', 9);
                     $this->pdf->line(153, 43, 199, 43);
-                    $this->pdf->text(140, 43 , utf8_decode('Fecha:'), 0, 0, 'L');
+                    $this->pdf->text(140, 43, utf8_decode('Fecha:'), 0, 0, 'L');
                     $this->pdf->Text(160, 42, $ROW_CONSULT[0]['FECHA_CONSULTA']);
 
                     $this->pdf->text(16, 43, utf8_decode('Paciente:'), 0, 0, 'L');
@@ -1483,36 +1536,36 @@ class Consult extends CI_Controller {
                     $this->pdf->line(40, 43, 140, 43);
                     $this->pdf->Text(41, 42, utf8_decode(mb_strtoupper($ROW_CONSULT[0]['NOMBRE_PACIENTE'])) . ' ' . utf8_decode(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'])) . ' ' . utf8_decode(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'])));
 
-                    $this->pdf->text(16, 53 , utf8_decode('Diagnóstico:'), 0, 0, 'L');
+                    $this->pdf->text(16, 53, utf8_decode('Diagnóstico:'), 0, 0, 'L');
                     $this->pdf->Text(41, 53, utf8_decode($ROW_CONSULT[0]['DIAGNOSTICO_EGRESO_CONSULTA']));
                     $this->pdf->line(40, 54, 140, 54);
 
                     $this->pdf->text(141, 53, 'Edad:', 0, 0, 'L');
                     $this->pdf->Text(167, 52, calcula_edad_2($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'], $ROW_CONSULT[0]['FECHA_CONSULTA']));
                     $this->pdf->line(153, 53, 199, 53);
-                    
+
                     $this->pdf->setXY(15, 56);
                     $this->pdf->Multicell(163, 5.5, utf8_decode($ROW_CONSULT[0]['TRATAMIENTO_CONSULTA']));
 
                     $this->pdf->setXY(25, 145);
-                    $y= $this->pdf->GetY();
-                       
-                    $this->pdf->Text(25, $y+5 , utf8_decode('DR.:'), 0, 0, 'L');
-                    $this->pdf->Text(35, $y+5,utf8_decode( $ROW_CONSULT[0]['NOMBRE_USUARIO'].' '.$ROW_CONSULT[0]['APELLIDO_USUARIO']));
-                    $this->pdf->line(34, $y+6, 139, $y+6);
-                    $this->pdf->Text(140,$y+5, utf8_decode('CEDULA:'), 0, 0, 'L');
-                    $this->pdf->Text(167, $y+5, $ROW_CONSULT[0]['CEDULA_USUARIO']);
-                    $this->pdf->line(159, $y+6, 199, $y+6);
+                    $y = $this->pdf->GetY();
+
+                    $this->pdf->Text(25, $y + 5, utf8_decode('DR.:'), 0, 0, 'L');
+                    $this->pdf->Text(35, $y + 5, utf8_decode($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO']));
+                    $this->pdf->line(34, $y + 6, 139, $y + 6);
+                    $this->pdf->Text(140, $y + 5, utf8_decode('CEDULA:'), 0, 0, 'L');
+                    $this->pdf->Text(167, $y + 5, $ROW_CONSULT[0]['CEDULA_USUARIO']);
+                    $this->pdf->line(159, $y + 6, 199, $y + 6);
 
                     $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
                     $this->pdf->setXY(10, 157);
                     $this->pdf->Cell(0, 0, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 0, 'C');
-                    $this->pdf->line(12, $y+17, 205, $y+17);
+                    $this->pdf->line(12, $y + 17, 205, $y + 17);
                     //$this->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
-                   // $this->pdf->setXY(13, 255);
+                    // $this->pdf->setXY(13, 255);
                     //$this->Cell(0, 5, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 0, 'C');
                     //$y = $this->GetY();
-                   // $this->line(12, $y+7, 205, $y+7);
+                    // $this->line(12, $y+7, 205, $y+7);
 
                     $this->pdf->Output(); //Salida al navegador del pdf
                 } else {

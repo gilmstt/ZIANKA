@@ -121,7 +121,7 @@
                         </div>
                         </a>
                         <?php } ?>
-                        <?php if($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR || $this->session->userdata('CAREYES_ID_ROL') == MEDICO || $this->session->userdata('CAREYES_ID_ROL') == RECEPCION){ ?>
+                        <!--<?php if($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR || $this->session->userdata('CAREYES_ID_ROL') == MEDICO || $this->session->userdata('CAREYES_ID_ROL') == RECEPCION){ ?>
                         <a href="<?= base_url() ?>urgency/index">
                         <div class="col-lg-4 text-center">
                             <div class="jss442">
@@ -147,7 +147,7 @@
                             </div>
                         </div>
                         </a>
-                        <?php } ?>
+                        <?php } ?>-->
                         <?php if($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR){ ?>
                         <a href="<?= base_url() ?>config/config_user">
                         <div class="col-lg-4 text-center">

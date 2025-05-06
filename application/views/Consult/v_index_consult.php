@@ -42,8 +42,7 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
                               <th width="10%" class="text-center active">Status</th>
                               <th width="30%" class="text-center active">Paciente</th>
                               <th width="15%" class="text-center active">Médico</th>
-                              <th width="5%" class="text-center active">Tar/Mem</th>
-                              <th width="25%" class="text-center active">Motivo</th>
+                              <th width="25%" class="text-center active">Procedimiento</th>
                               <th width="10%" class="text-center active">Fecha</th>
                               <th width="10%" class="text-center active">Hora</th>
                            </tr>

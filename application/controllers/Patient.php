@@ -18,8 +18,7 @@ class Patient extends CI_Controller {
         if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
             $data = getActive("classPat");
             $this->load->view('esqueleton/header', $data);
-            $data['ROW_PATIENTS'] = $this->mpatient->get_all_valid_patients();
-            $this->load->view('Patient/v_index_patient', $data);
+            $this->load->view('Patient/v_index_patient');
             $this->load->view('esqueleton/footer');
         } else {
             redirect('login/salir');
@@ -42,6 +41,7 @@ class Patient extends CI_Controller {
             $this->load->view('esqueleton/header', $data);
             $data['ROW_SEX'] = $this->mpatient->get_all_valid_sex();
             $data['casas'] = $this->mconfig->get_all_valid_casas();
+            $data['tipo_sangre'] = $this->mconfig->get_all_valid_sangre();
             $this->load->view('Patient/v_add_patient', $data);
             $this->load->view('esqueleton/footer');
         } else {
