@@ -180,10 +180,12 @@ fieldset[disabled] .form-control {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-sm-12 col-mdx-12 col-lg-12">
-                                    <br>
-                                    <h4 class="h3Antecedentes">FOTO PROTECCIÓN</h4>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <h4 class="h3Antecedentes">FOTO PROTECCIÓN</h4>
+                                    </div>
                                 </div>
 
                                 <div class=" row col-sm-12 col-mdx-12 col-lg-12"><br>
@@ -245,8 +247,10 @@ fieldset[disabled] .form-control {
                                     </div>
                                 </div>
 
-                                <div class="col-sm-12 col-mdx-12 col-lg-12">
-                                    <h4 class="h3Antecedentes">MOTIVO DE CONSULTA</h4>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <h4 class="h3Antecedentes">MOTIVO DE CONSULTA</h4>
+                                    </div>
                                 </div>
 
                                 <div class="form-check">
@@ -402,8 +406,10 @@ fieldset[disabled] .form-control {
                                     </div>
                                 </div>
 
-                                <div class="col-sm-12 col-mdx-12 col-lg-12">
-                                    <h4 class="h3Antecedentes">TRATAMIENTOS ESTÉTICOS PREVIOS</h4>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <h4 class="h3Antecedentes">TRATAMIENTOS ESTÉTICOS PREVIOS</h4>
+                                    </div>
                                 </div>
 
                                 <div class="row col-sm-12 col-mdx-12 col-lg-12">
@@ -445,9 +451,11 @@ fieldset[disabled] .form-control {
 
                                 
 
-                            <div class="col-sm-12 col-mdx-12 col-lg-12">
-                                <h4 class="h3Antecedentes"> EXPLORACIÓN FÍSICA</h4>
-                            </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <h4 class="h3Antecedentes"> EXPLORACIÓN FÍSICA</h4>
+                                    </div>
+                                </div>
 
                             <!-- FITZPATRICK -->
                             <div class="form-group">
@@ -546,8 +554,10 @@ fieldset[disabled] .form-control {
                                 </div>
                             </div>
 
-                            <div class="col-sm-12 col-mdx-12 col-lg-12">
-                                <h4 class="h3Antecedentes"> HABITUS EXTERIOR</h4>
+                            <div class="row">
+                                <div class="col-sm-12 col-mdx-12 col-lg-12">
+                                    <h4 class="h3Antecedentes"> HABITUS EXTERIOR</h4>
+                                </div>
                             </div>
 
                             <div class="row col-sm-12 col-mdx-12 col-lg-12">
@@ -618,8 +628,10 @@ fieldset[disabled] .form-control {
                                 </div>
                             </div>
 
-                            <div class="col-sm-12 col-mdx-12 col-lg-12">
-                                <h4 class="h3Antecedentes"> SIGNOS VITALES:</h4>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="h3Antecedentes"> SIGNOS VITALES:</h4>
+                                </div>
                             </div>
 
                             <div class="col-lg-12 col-sm-12 col-mdx-12">
@@ -676,8 +688,10 @@ fieldset[disabled] .form-control {
                                 </div>
                             </div>
 
-                            <div class="col-sm-12 col-mdx-12 col-lg-12">
-                                <h4 class="h3Antecedentes"> LABORATORIOS</h4>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="h3Antecedentes"> LABORATORIOS</h4>
+                                </div>
                             </div>
                             <div class="col-lg-12 col-sm-12 col-mdx-12">
                                 <div class="col-12-4 col-sm-12 col-mdx-12">

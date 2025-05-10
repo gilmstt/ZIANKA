@@ -79,7 +79,7 @@
                                         <label for="RG_FECHA_NAC_PACIENTE" class="control-label text-left">Fecha nacimiento</label>
                                         <div class='input-group'>
                                             <span class="input-group-addon"><i class="fas fa-calendar"></i></span>
-                                            <input type='text' readonly data-type="datepicker" class="form-control" id="RG_FECHA_NAC_PACIENTE" name="RG_FECHA_NAC_PACIENTE" placeholder="dd/mm/yyyy" />
+                                            <input type='text' readonly data-type="datepicker" class="form-control" id="RG_FECHA_NAC_PACIENTE" name="RG_FECHA_NAC_PACIENTE" value="<?= date("d/m/Y"); ?>" />
                                         </div>
                                     </div>
                                 </div>
@@ -305,8 +305,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-mdx-12 col-lg-12">
-                                    <h4 class="h3Antecedentes">ANTECEDENTES HEREDOFAMILIARES</h4>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <h4 class="h3Antecedentes">ANTECEDENTES HEREDOFAMILIARES</h4>
+                                    </div>
                                 </div>
                                 <div class="col-sm-12 col-mdx-12 col-lg-12">
                                     <div class="form-group">
@@ -415,7 +417,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-mdx-12 col-lg-12">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         <label class="control-label text-left">Otros</label>
                                         <textarea class="form-control" name="OTROS_HEREDOFAMILIARES"
@@ -424,9 +426,10 @@
                                 </div>
 
                                 
-
-                                <div class="col-sm-12 col-mdx-12 col-lg-12">
+                                <div class="row">                        
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
                                     <h4 class="h3Antecedentes">ANTECEDENTES PERSONALES PATOLÓGIVOS Y NO PATOLÓGICOS</h4>
+                                </div>
 
                                 </div>
                                 <div class="cointainer">
@@ -444,15 +447,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="DIABETES_MELLITUS_SI"
-                                                id="DIABETES_MELLITUS_SI" >
-                                            <label class="form-check-label" for="DIABETES_MELLITUS_SI">
+                                            <input class="form-check-input" type="radio" name="DIABETES_MELLITUS"
+                                                id="DIABETES_MELLITUS" value="1">
+                                            <label class="form-check-label" for="DIABETES_MELLITUS">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="DIABETES_MELLITUS_NO"
-                                                id="DIABETES_MELLITUS_NO" >
+                                            <input class="form-check-input" type="radio" name="DIABETES_MELLITUS"
+                                                id="DIABETES_MELLITUS_NO" value="0">
                                             <label class="form-check-label" for="DIABETES_MELLITUS_NO">
                                                 NO
                                             </label>
@@ -465,20 +468,20 @@
 
                                     <div class=" row col-sm-12 col-mdx-12 col-lg-12"> <br>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="DIABETES_MELLITUS">
+                                            <label class="control-label" for="HIPERTENSION_ARTERIAL">
                                                 Hipertensión Arterial
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="HIPERTENSION_ARTERIAL_SI"
-                                                id="HIPERTENSION_ARTERIAL_SI" >
-                                            <label class="form-check-label" for="HIPERTENSION_ARTERIAL_SI">
+                                            <input class="form-check-input" type="radio" name="HIPERTENSION_ARTERIAL"
+                                                id="HIPERTENSION_ARTERIAL" value="1" >
+                                            <label class="form-check-label" for="HIPERTENSION_ARTERIAL">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="HIPERTENSION_ARTERIAL_NO"
-                                                id="HIPERTENSION_ARTERIAL_NO" >
+                                            <input class="form-check-input" type="radio" name="HIPERTENSION_ARTERIAL"
+                                                id="HIPERTENSION_ARTERIAL_NO" value="0" >
                                             <label class="form-check-label" for="HIPERTENSION_ARTERIAL_NO">
                                                 NO
                                             </label>
@@ -496,17 +499,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox"
-                                                name="ENFERMEDADES_ENDOCRINOLOGICAS_SI"
-                                                id="ENFERMEDADES_ENDOCRINOLOGICAS_SI" >
-                                            <label class="form-check-label" for="ENFERMEDADES_ENDOCRINOLOGICAS_SI">
+                                            <input class="form-check-input" type="radio" name="ENFERMEDADES_ENDOCRINOLOGICAS"
+                                                id="ENFERMEDADES_ENDOCRINOLOGICAS" value="1" >
+                                            <label class="form-check-label" for="ENFERMEDADES_ENDOCRINOLOGICAS">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox"
-                                                name="ENFERMEDADES_ENDOCRINOLOGICAS_NO"
-                                                id="ENFERMEDADES_ENDOCRINOLOGICAS_NO" >
+                                            <input class="form-check-input" type="radio" name="ENFERMEDADES_ENDOCRINOLOGICAS"
+                                                id="ENFERMEDADES_ENDOCRINOLOGICAS_NO" value="0">
                                             <label class="form-check-label" for="ENFERMEDADES_ENDOCRINOLOGICAS_NO">
                                                 NO
                                             </label>
@@ -525,17 +526,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox"
-                                                name="ENFERMEDADES_PSIQUIATRICAS_SI" id="ENFERMEDADES_PSIQUIATRICAS_SI"
-                                                >
-                                            <label class="form-check-label" for="ENFERMEDADES_PSIQUIATRICAS_SI">
+                                            <input class="form-check-input" type="radio"
+                                                name="ENFERMEDADES_PSIQUIATRICAS" id="ENFERMEDADES_PSIQUIATRICAS" value="1" >
+                                            <label class="form-check-label" for="ENFERMEDADES_PSIQUIATRICAS">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox"
-                                                name="ENFERMEDADES_PSIQUIATRICAS_NO" id="ENFERMEDADES_PSIQUIATRICAS_NO"
-                                                >
+                                            <input class="form-check-input" type="radio"
+                                                name="ENFERMEDADES_PSIQUIATRICAS" id="ENFERMEDADES_PSIQUIATRICAS_NO" value="0">
                                             <label class="form-check-label" for="ENFERMEDADES_PSIQUIATRICAS_NO">
                                                 NO
                                             </label>
@@ -554,17 +553,17 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox"
-                                                name="ENFERMEDADES_AUTOINMUNES_SI" id="ENFERMEDADES_AUTOINMUNES_SI"
-                                                >
-                                            <label class="form-check-label" for="ENFERMEDADES_AUTOINMUNES_SI">
+                                            <input class="form-check-input" type="radio"
+                                                name="ENFERMEDADES_AUTOINMUNES" id="ENFERMEDADES_AUTOINMUNES"
+                                                 value="1" >
+                                            <label class="form-check-label" for="ENFERMEDADES_AUTOINMUNES">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox"
-                                                name="ENFERMEDADES_AUTOINMUNES_NO" id="ENFERMEDADES_AUTOINMUNES_NO"
-                                                >
+                                            <input class="form-check-input" type="radio"
+                                                name="ENFERMEDADES_AUTOINMUNES" id="ENFERMEDADES_AUTOINMUNES_NO"
+                                                value="0">
                                             <label class="form-check-label" for="ENFERMEDADES_AUTOINMUNES_NO">
                                                 NO
                                             </label>
@@ -582,15 +581,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="VIH_SI" id="VIH_SI"
-                                                >
-                                            <label class="form-check-label" for="VIH_SI">
+                                            <input class="form-check-input" type="radio" name="VIH" id="VIH"
+                                               value="1" >
+                                            <label class="form-check-label" for="VIH">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="VIH_NO" id="VIH_NO"
-                                                >
+                                            <input class="form-check-input" type="radio" name="VIH" id="VIH_NO"
+                                              value="0" >
                                             <label class="form-check-label" for="VIH_NO">
                                                 NO
                                             </label>
@@ -608,15 +607,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="HERPES_LABIAL_SI"
-                                                id="HERPES_LABIAL_SI" >
-                                            <label class="form-check-label" for="HERPES_LABIAL_SI">
+                                            <input class="form-check-input" type="radio" name="HERPES_LABIAL"
+                                                id="HERPES_LABIAL" value="1" >
+                                            <label class="form-check-label" for="HERPES_LABIAL">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="HERPES_LABIAL_NO"
-                                                id="HERPES_LABIAL_NO" >
+                                            <input class="form-check-input" type="radio" name="HERPES_LABIAL"
+                                                id="HERPES_LABIAL_NO"  value="0">
                                             <label class="form-check-label" for="HERPES_LABIAL_NO">
                                                 NO
                                             </label>
@@ -634,17 +633,17 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox"
-                                                name="TRANSFUSIONES_SANGUINEAS_SI" id="TRANSFUSIONES_SANGUINEAS_SI"
-                                                >
-                                            <label class="form-check-label" for="TRANSFUSIONES_SANGUINEAS_SI">
+                                            <input class="form-check-input" type="radio"
+                                                name="TRANSFUSIONES_SANGUINEAS" id="TRANSFUSIONES_SANGUINEAS"
+                                                value="1" >
+                                            <label class="form-check-label" for="TRANSFUSIONES_SANGUINEAS">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox"
-                                                name="TRANSFUSIONES_SANGUINEAS_NO" id="TRANSFUSIONES_SANGUINEAS_NO"
-                                                >
+                                            <input class="form-check-input" type="radio"
+                                                name="TRANSFUSIONES_SANGUINEAS" id="TRANSFUSIONES_SANGUINEAS_NO"
+                                                value="0" >
                                             <label class="form-check-label" for="TRANSFUSIONES_SANGUINEAS_NO">
                                                 NO
                                             </label>
@@ -662,15 +661,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="FRACTURAS_SI"
-                                                id="FRACTURAS_SI" >
-                                            <label class="form-check-label" for="FRACTURAS_SI">
+                                            <input class="form-check-input" type="radio" name="FRACTURAS"
+                                                id="FRACTURAS" value="1" >
+                                            <label class="form-check-label" for="FRACTURAS">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="FRACTURAS_NO"
-                                                id="FRACTURAS_NO" >
+                                            <input class="form-check-input" type="radio" name="FRACTURAS"
+                                                id="FRACTURAS_NO" value="0" >
                                             <label class="form-check-label" for="FRACTURAS_NO">
                                                 NO
                                             </label>
@@ -688,15 +687,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="HOSPITALIZACIONES_SI"
-                                                id="HOSPITALIZACIONES_SI" >
-                                            <label class="form-check-label" for="HOSPITALIZACIONES_SI">
+                                            <input class="form-check-input" type="radio" name="HOSPITALIZACIONES"
+                                                id="HOSPITALIZACIONES" value="1" >
+                                            <label class="form-check-label" for="HOSPITALIZACIONES">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="HOSPITALIZACIONES_NO"
-                                                id="HOSPITALIZACIONES_NO" >
+                                            <input class="form-check-input" type="radio" name="HOSPITALIZACIONES"
+                                                id="HOSPITALIZACIONES_NO" value="0" >
                                             <label class="form-check-label" for="HOSPITALIZACIONES_NO">
                                                 NO
                                             </label>
@@ -714,15 +713,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="CIRUGIAS_PREVIAS_SI"
-                                                id="CIRUGIAS_PREVIAS_SI" >
-                                            <label class="form-check-label" for="CIRUGIAS_PREVIAS_SI">
+                                            <input class="form-check-input" type="radio" name="CIRUGIAS_PREVIAS"
+                                                id="CIRUGIAS_PREVIAS" value="1" >
+                                            <label class="form-check-label" for="CIRUGIAS_PREVIAS">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="CIRUGIAS_PREVIAS_NO"
-                                                id="CIRUGIAS_PREVIAS_NO" >
+                                            <input class="form-check-input" type="radio" name="CIRUGIAS_PREVIAS"
+                                                id="CIRUGIAS_PREVIAS_NO" value="0" >
                                             <label class="form-check-label" for="CIRUGIAS_PREVIAS_NO">
                                                 NO
                                             </label>
@@ -740,15 +739,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="HEPATITIS_SI"
-                                                id="HEPATITIS_SI" >
-                                            <label class="form-check-label" for="HEPATITIS_SI">
+                                            <input class="form-check-input" type="radio" name="HEPATITIS"
+                                                id="HEPATITIS" value="1" >
+                                            <label class="form-check-label" for="HEPATITIS">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="HEPATITIS_NO"
-                                                id="HEPATITIS_NO" >
+                                            <input class="form-check-input" type="radio" name="HEPATITIS"
+                                                id="HEPATITIS_NO" value="0" >
                                             <label class="form-check-label" for="HEPATITIS_NO">
                                                 NO
                                             </label>
@@ -766,15 +765,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="CANCER_SI" id="CANCER_SI"
-                                                >
-                                            <label class="form-check-label" for="CANCER_SI">
+                                            <input class="form-check-input" type="radio" name="CANCER" id="CANCER"
+                                                value="1" >
+                                            <label class="form-check-label" for="CANCER">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="CANCER_NO" id="CANCER_NO"
-                                                >
+                                            <input class="form-check-input" type="radio" name="CANCER" id="CANCER_NO"
+                                                value="0" >
                                             <label class="form-check-label" for="CANCER_NO">
                                                 NO
                                             </label>
@@ -792,15 +791,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="EPILEPSIA_SI"
-                                                id="EPILEPSIA_SI" >
-                                            <label class="form-check-label" for="EPILEPSIA_SI">
+                                            <input class="form-check-input" type="radio" name="EPILEPSIA"
+                                                id="EPILEPSIA" value="1" >
+                                            <label class="form-check-label" for="EPILEPSIA">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="EPILEPSIA_NO"
-                                                id="EPILEPSIA_NO" >
+                                            <input class="form-check-input" type="radio" name="EPILEPSIA"
+                                                id="EPILEPSIA_NO" value="0" >
                                             <label class="form-check-label" for="EPILEPSIA_NO">
                                                 NO
                                             </label>
@@ -818,15 +817,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="ALERGIAS_SI"
-                                                id="ALERGIAS_SI" >
-                                            <label class="form-check-label" for="ALERGIAS_SI">
+                                            <input class="form-check-input" type="radio" name="ALERGIAS"
+                                                id="ALERGIAS" value="1" >
+                                            <label class="form-check-label" for="ALERGIAS">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="ALERGIAS_NO"
-                                                id="ALERGIAS_NO" >
+                                            <input class="form-check-input" type="radio" name="ALERGIAS"
+                                                id="ALERGIAS_NO" value="0" >
                                             <label class="form-check-label" for="ALERGIAS_NO">
                                                 NO
                                             </label>
@@ -853,15 +852,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="FUMA_SI" id="FUMA_SI"
-                                                >
-                                            <label class="form-check-label" for="FUMA_SI">
+                                            <input class="form-check-input" type="radio" name="FUMA" id="FUMA"
+                                                value="1">
+                                            <label class="form-check-label" for="FUMA">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="FUMA_NO" id="FUMA_NO"
-                                                >
+                                            <input class="form-check-input" type="radio" name="FUMA" id="FUMA_NO"
+                                                value="0">
                                             <label class="form-check-label" for="FUMA_NO">
                                                 NO
                                             </label>
@@ -880,15 +879,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="ADICCIONES_SI"
-                                                id="ADICCIONES_SI" >
-                                            <label class="form-check-label" for="ADICCIONES_SI">
+                                            <input class="form-check-input" type="radio" name="ADICCIONES"
+                                                id="ADICCIONES" value="1" >
+                                            <label class="form-check-label" for="ADICCIONES">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="ADICCIONES_NO"
-                                                id="ADICCIONES_NO" >
+                                            <input class="form-check-input" type="radio" name="ADICCIONES"
+                                                id="ADICCIONES_NO" value="0">
                                             <label class="form-check-label" for="ADICCIONES_NO">
                                                 NO
                                             </label>
@@ -907,15 +906,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="BEBE_ALCOHOL_SI"
-                                                id="BEBE_ALCOHOL_SI" >
-                                            <label class="form-check-label" for="BEBE_ALCOHOL_SI">
+                                            <input class="form-check-input" type="radio" name="BEBE_ALCOHOL"
+                                                id="BEBE_ALCOHOL" value="1" >
+                                            <label class="form-check-label" for="BEBE_ALCOHOL">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="BEBE_ALCOHOL_NO"
-                                                id="BEBE_ALCOHOL_NO" >
+                                            <input class="form-check-input" type="radio" name="BEBE_ALCOHOL"
+                                                id="BEBE_ALCOHOL_NO" value="0" >
                                             <label class="form-check-label" for="BEBE_ALCOHOL_NO">
                                                 NO
                                             </label>
@@ -934,15 +933,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="FOBIA_SI" id="FOBIA_SI"
-                                                >
-                                            <label class="form-check-label" for="FOBIA_SI">
+                                            <input class="form-check-input" type="radio" name="FOBIA" id="FOBIA"
+                                                value="1">
+                                            <label class="form-check-label" for="FOBIA">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-8 col-mdx-8 col-lg-8">
-                                            <input class="form-check-input" type="checkbox" name="FOBIA_NO" id="FOBIA_NO"
-                                                >
+                                            <input class="form-check-input" type="radio" name="FOBIA" id="FOBIA_NO"
+                                               value="0" >
                                             <label class="form-check-label" for="FOBIA_NO">
                                                 NO
                                             </label>
@@ -956,15 +955,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="DESMAYOS_SI"
-                                                id="DESMAYOS_SI" >
-                                            <label class="form-check-label" for="DESMAYOS_SI">
+                                            <input class="form-check-input" type="radio" name="DESMAYOS"
+                                                id="DESMAYOS" value="1" >
+                                            <label class="form-check-label" for="DESMAYOS">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-8 col-mdx-8 col-lg-8">
-                                            <input class="form-check-input" type="checkbox" name="DESMAYOS_NO"
-                                                id="DESMAYOS_NO" >
+                                            <input class="form-check-input" type="radio" name="DESMAYOS"
+                                                id="DESMAYOS_NO" value="0" >
                                             <label class="form-check-label" for="DESMAYOS_NO">
                                                 NO
                                             </label>
@@ -978,15 +977,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="ASPIRINA_SI"
-                                                id="ASPIRINA_SI" >
-                                            <label class="form-check-label" for="ASPIRINA_SI">
+                                            <input class="form-check-input" type="radio" name="ASPIRINA"
+                                                id="ASPIRINA" value="1" >
+                                            <label class="form-check-label" for="ASPIRINA">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-8 col-mdx-8 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="ASPIRINA_NO"
-                                                id="ASPIRINA_NO" >
+                                            <input class="form-check-input" type="radio" name="ASPIRINA"
+                                                id="ASPIRINA_NO" value="0" >
                                             <label class="form-check-label" for="ASPIRINA_NO">
                                                 NO
                                             </label>
@@ -1000,15 +999,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="MORETES_SI"
-                                                id="MORETES_SI" >
-                                            <label class="form-check-label" for="MORETES_SI">
+                                            <input class="form-check-input" type="radio" name="MORETES"
+                                                id="MORETES" value="1" >
+                                            <label class="form-check-label" for="MORETES">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-8 col-mdx-8 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="MORETES_NO"
-                                                id="MORETES_NO" >
+                                            <input class="form-check-input" type="radio" name="MORETES"
+                                                id="MORETES_NO" value="0">
                                             <label class="form-check-label" for="MORETES_NO">
                                                 NO
                                             </label>
@@ -1022,15 +1021,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="BRONCEADO_SI"
-                                                id="BRONCEADO_SI" >
-                                            <label class="form-check-label" for="BRONCEADO_SI">
+                                            <input class="form-check-input" type="radio" name="BRONCEADO"
+                                                id="BRONCEADO" value="1" >
+                                            <label class="form-check-label" for="BRONCEADO">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-8 col-mdx-8 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="BRONCEADO_NO"
-                                                id="BRONCEADO_NO" >
+                                            <input class="form-check-input" type="radio" name="BRONCEADO"
+                                                id="BRONCEADO_NO" value="0" >
                                             <label class="form-check-label" for="BRONCEADO_NO">
                                                 NO
                                             </label>
@@ -1045,15 +1044,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-1 col-mdx-1 col-lg-1">
-                                            <input class="form-check-input" type="checkbox" name="ANESTESIA_SI"
-                                                id="ANESTESIA_SI" >
-                                            <label class="form-check-label" for="ANESTESIA_SI">
+                                            <input class="form-check-input" type="radio" name="ANESTESIA"
+                                                id="ANESTESIA" value="1" >
+                                            <label class="form-check-label" for="ANESTESIA">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2 ">
-                                            <input class="form-check-input" type="checkbox" name="ANESTESIA_NO"
-                                                id="ANESTESIA_NO" >
+                                            <input class="form-check-input" type="radio" name="ANESTESIA"
+                                                id="ANESTESIA_NO" value="0" >
                                             <label class="form-check-label" for="ANESTESIA_NO">
                                                 NO
                                             </label>
@@ -1067,15 +1066,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-1 col-mdx-1 col-lg-1">
-                                            <input class="form-check-input" type="checkbox" name="PROBLEMA_ANESTESIA_SI"
-                                                id="PROBLEMA_ANESTESIA_SI" >
-                                            <label class="form-check-label" for="PROBLEMA_ANESTESIA_SI">
+                                            <input class="form-check-input" type="radio" name="PROBLEMA_ANESTESIA"
+                                                id="PROBLEMA_ANESTESIA" value="1" >
+                                            <label class="form-check-label" for="PROBLEMA_ANESTESIA">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="PROBLEMA_ANESTESIA_NO"
-                                                id="PROBLEMA_ANESTESIA_NO" >
+                                            <input class="form-check-input" type="radio" name="PROBLEMA_ANESTESIA"
+                                                id="PROBLEMA_ANESTESIA_NO" value="0" >
                                             <label class="form-check-label" for="PROBLEMA_ANESTESIA_NO">
                                                 NO
                                             </label>
@@ -1094,15 +1093,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-1 col-mdx-1 col-lg-1">
-                                            <input class="form-check-input" type="checkbox" name="INMUNIZACION_SI"
-                                                id="INMUNIZACION_SI" >
-                                            <label class="form-check-label" for="INMUNIZACION_SI">
+                                            <input class="form-check-input" type="radio" name="INMUNIZACION"
+                                                id="INMUNIZACION" value="1" >
+                                            <label class="form-check-label" for="INMUNIZACION">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="INMUNIZACION_NO"
-                                                id="INMUNIZACION_NO" >
+                                            <input class="form-check-input" type="radio" name="INMUNIZACION"
+                                                id="INMUNIZACION_NO" value="0" >
                                             <label class="form-check-label" for="INMUNIZACION_NO">
                                                 NO
                                             </label>
@@ -1121,15 +1120,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-1 col-mdx-1 col-lg-1">
-                                            <input class="form-check-input" type="checkbox" name="INFECCION_PIEL_SI"
-                                                id="INFECCION_PIEL_SI" >
-                                            <label class="form-check-label" for="INFECCION_PIEL_SI">
+                                            <input class="form-check-input" type="radio" name="INFECCION_PIEL"
+                                                id="INFECCION_PIEL" value="1" >
+                                            <label class="form-check-label" for="INFECCION_PIEL">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="INFECCION_PIEL_NO"
-                                                id="INFECCION_PIEL_NO" >
+                                            <input class="form-check-input" type="radio" name="INFECCION_PIEL"
+                                                id="INFECCION_PIEL_NO" value="0" >
                                             <label class="form-check-label" for="INFECCION_PIEL_NO">
                                                 NO
                                             </label>
@@ -1151,15 +1150,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-1 col-mdx-1 col-lg-1">
-                                            <input class="form-check-input" type="checkbox" name="ESTEROIDES_SI"
-                                                id="ESTEROIDES_SI" >
-                                            <label class="form-check-label" for="ESTEROIDES_SI">
+                                            <input class="form-check-input" type="radio" name="ESTEROIDES"
+                                                id="ESTEROIDES" value="1" >
+                                            <label class="form-check-label" for="ESTEROIDES">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-1 col-mdx-1 col-lg-1">
-                                            <input class="form-check-input" type="checkbox" name="ESTEROIDES_NO"
-                                                id="ESTEROIDES_NO" >
+                                            <input class="form-check-input" type="radio" name="ESTEROIDES"
+                                                id="ESTEROIDES_NO" value="0" >
                                             <label class="form-check-label" for="ESTEROIDES_NO">
                                                 NO
                                             </label>
@@ -1178,15 +1177,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="EJERCICIO_SI"
-                                                id="EJERCICIO_SI" >
-                                            <label class="form-check-label" for="EJERCICIO_SI">
+                                            <input class="form-check-input" type="radio" name="EJERCICIO"
+                                                id="EJERCICIO" value="1" >
+                                            <label class="form-check-label" for="EJERCICIO">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="EJERCICIO_NO"
-                                                id="EJERCICIO_NO" >
+                                            <input class="form-check-input" type="radio" name="EJERCICIO"
+                                                id="EJERCICIO_NO" value="0" >
                                             <label class="form-check-label" for="EJERCICIO_NO">
                                                 NO
                                             </label>
@@ -1205,15 +1204,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="DIETA_SI" id="DIETA_SI"
-                                                >
-                                            <label class="form-check-label" for="DIETA_SI">
+                                            <input class="form-check-input" type="radio" name="DIETA" id="DIETA"
+                                                value="1">
+                                            <label class="form-check-label" for="DIETA">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="DIETA_NO" id="DIETA_NO"
-                                                >
+                                            <input class="form-check-input" type="radio" name="DIETA" id="DIETA_NO"
+                                                value="0">
                                             <label class="form-check-label" for="DIETA_NO">
                                                 NO
                                             </label>
@@ -1225,8 +1224,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-12 col-mdx-12 col-lg-12">
-                                        <h4 class="h3Antecedentes">ANTECEDENTES GINECOBSTÉTRICOS</h4>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <h4 class="h3Antecedentes">ANTECEDENTES GINECOBSTÉTRICOS</h4>
+                                        </div>
                                     </div>
 
                                     <div class=" row col-sm-12 col-mdx-12 col-lg-12"><br>
@@ -1237,15 +1238,15 @@
                                             </label>
                                         </div>
                                         <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="ACTUALMENTE_EMBARAZADA_SI"
-                                                id="ACTUALMENTE_EMBARAZADA_SI" >
-                                            <label class="form-check-label" for="ACTUALMENTE_EMBARAZADA_SI">
+                                            <input class="form-check-input" type="radio" name="ACTUALMENTE_EMBARAZADA"
+                                                id="ACTUALMENTE_EMBARAZADA" value="1" >
+                                            <label class="form-check-label" for="ACTUALMENTE_EMBARAZADA">
                                                 SI
                                             </label>
                                         </div>
                                         <div class="col-sm-4 col-mdx-4 col-lg-4">
-                                            <input class="form-check-input" type="checkbox" name="ACTUALMENTE_EMBARAZADA_NO"
-                                                id="ACTUALMENTE_EMBARAZADA_NO" >
+                                            <input class="form-check-input" type="radio" name="ACTUALMENTE_EMBARAZADA"
+                                                id="ACTUALMENTE_EMBARAZADA_NO" value="0" >
                                             <label class="form-check-label" for="ACTUALMENTE_EMBARAZADA_NO">
                                                 NO
                                             </label>
