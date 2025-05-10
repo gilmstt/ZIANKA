@@ -19,7 +19,7 @@ class Mpatient extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -32,7 +32,7 @@ class Mpatient extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -41,7 +41,7 @@ class Mpatient extends CI_Model
         try {
             return $this->db->get('tarifa')->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -106,93 +106,64 @@ class Mpatient extends CI_Model
                 'ENF_AUTOINMUNES_HERMANOS' => $this->input->post("ENF_AUTOINMUNES_HERMANOS") ? 1 : 0,
                 'CANCER_HERMANOS' => $this->input->post("CANCER_HERMANOS") ? 1 : 0,
                 'OTROS_HEREDOFAMILIARES' => trim($this->input->post("OTROS_HEREDOFAMILIARES")),
-                'DIABETES_MELLITUS_SI' => $this->input->post("DIABETES_MELLITUS_SI") ? 1 : 0,
-                'DIABETES_MELLITUS_NO' => $this->input->post("DIABETES_MELLITUS_NO") ? 1 : 0,
+
+                'DIABETES_MELLITUS' => $this->input->post("DIABETES_MELLITUS") ? 1 : 0,
                 'TIEMPO_EVOLUCION_DIABETES' => trim($this->input->post("TIEMPO_EVOLUCION_DIABETES")),
-                'HIPERTENSION_ARTERIAL_SI' => $this->input->post("HIPERTENSION_ARTERIAL_SI") ? 1 : 0,
-                'HIPERTENSION_ARTERIAL_NO' => $this->input->post("HIPERTENSION_ARTERIAL_NO") ? 1 : 0,
+                'HIPERTENSION_ARTERIAL' => $this->input->post("HIPERTENSION_ARTERIAL") ? 1 : 0,
                 'TIEMPO_EVOLUCION_HIPERTENSION' => trim($this->input->post("TIEMPO_EVOLUCION_HIPERTENSION")),
-                'ENFERMEDADES_ENDOCRINOLOGICAS_SI' => $this->input->post("ENFERMEDADES_ENDOCRINOLOGICAS_SI") ? 1 : 0,
-                'ENFERMEDADES_ENDOCRINOLOGICAS_NO' => $this->input->post("ENFERMEDADES_ENDOCRINOLOGICAS_NO") ? 1 : 0,
+                'ENFERMEDADES_ENDOCRINOLOGICAS' => $this->input->post("ENFERMEDADES_ENDOCRINOLOGICAS") ? 1 : 0,
                 'TIEMPO_EVOLUCION_ENFERMEDADES_ENDOCRINOLOGICAS' => trim($this->input->post("TIEMPO_EVOLUCION_ENFERMEDADES_ENDOCRINOLOGICAS")),
-                'ENFERMEDADES_PSIQUIATRICAS_SI' => $this->input->post("ENFERMEDADES_PSIQUIATRICAS_SI") ? 1 : 0,
-                'ENFERMEDADES_PSIQUIATRICAS_NO' => $this->input->post("ENFERMEDADES_PSIQUIATRICAS_NO") ? 1 : 0,
+                'ENFERMEDADES_PSIQUIATRICAS' => $this->input->post("ENFERMEDADES_PSIQUIATRICAS") ? 1 : 0,
                 'TIEMPO_EVOLUCION_ENFERMEDADES_PSIQUIATRICAS' => trim($this->input->post("TIEMPO_EVOLUCION_ENFERMEDADES_PSIQUIATRICAS")),
-                'ENFERMEDADES_AUTOINMUNES_SI' => $this->input->post("ENFERMEDADES_AUTOINMUNES_SI") ? 1 : 0,
-                'ENFERMEDADES_AUTOINMUNES_NO' => $this->input->post("ENFERMEDADES_AUTOINMUNES_NO") ? 1 : 0,
+                'ENFERMEDADES_AUTOINMUNES' => $this->input->post("ENFERMEDADES_AUTOINMUNES") ? 1 : 0,
                 'TIEMPO_EVOLUCION_ENFERMEDADES_AUTOINMUNES' => trim($this->input->post("TIEMPO_EVOLUCION_ENFERMEDADES_AUTOINMUNES")),
-                'VIH_SI' => $this->input->post("VIH_SI") ? 1 : 0,
-                'VIH_NO' => $this->input->post("VIH_NO") ? 1 : 0,
+                'VIH' => $this->input->post("VIH") ? 1 : 0,
                 'TIEMPO_EVOLUCION_VIH' => trim($this->input->post("TIEMPO_EVOLUCION_VIH")),
-                'HERPES_LABIAL_SI' => $this->input->post("HERPES_LABIAL_SI") ? 1 : 0,
-                'HERPES_LABIAL_NO' => $this->input->post("HERPES_LABIAL_NO") ? 1 : 0,
+                'HERPES_LABIAL' => $this->input->post("HERPES_LABIAL") ? 1 : 0,
                 'TIEMPO_EVOLUCION_HERPES_LABIAL' => trim($this->input->post("TIEMPO_EVOLUCION_HERPES_LABIAL")),
-                'TRANSFUSIONES_SANGUINEAS_SI' => $this->input->post("TRANSFUSIONES_SANGUINEAS_SI") ? 1 : 0,
-                'TRANSFUSIONES_SANGUINEAS_NO' => $this->input->post("TRANSFUSIONES_SANGUINEAS_NO") ? 1 : 0,
+                'TRANSFUSIONES_SANGUINEAS' => $this->input->post("TRANSFUSIONES_SANGUINEAS") ? 1 : 0,
                 'TIEMPO_EVOLUCION_TRANSFUSIONES_SANGUINEAS' => trim($this->input->post("TIEMPO_EVOLUCION_TRANSFUSIONES_SANGUINEAS")),
-                'FRACTURAS_SI' => $this->input->post('FRACTURAS_SI') ? 1 : 0,
-                'FRACTURAS_NO' => $this->input->post('FRACTURAS_NO') ? 1 : 0,
+                'FRACTURAS' => $this->input->post('FRACTURAS') ? 1 : 0,
                 'TIEMPO_EVOLUCION_FRACTURAS' => trim($this->input->post('TIEMPO_EVOLUCION_FRACTURAS')),
-                'HOSPITALIZACIONES_SI' => $this->input->post('HOSPITALIZACIONES_SI') ? 1 : 0,
-                'HOSPITALIZACIONES_NO' => $this->input->post('HOSPITALIZACIONES_NO') ? 1 : 0,
+                'HOSPITALIZACIONES' => $this->input->post('HOSPITALIZACIONES') ? 1 : 0,
                 'TIEMPO_EVOLUCION_HOSPITALIZACIONES' => trim($this->input->post('TIEMPO_EVOLUCION_HOSPITALIZACIONES')),
-                'CIRUGIAS_PREVIAS_SI' => $this->input->post('CIRUGIAS_PREVIAS_SI') ? 1 : 0,
-                'CIRUGIAS_PREVIAS_NO' => $this->input->post('CIRUGIAS_PREVIAS_NO') ? 1 : 0,
+                'CIRUGIAS_PREVIAS' => $this->input->post('CIRUGIAS_PREVIAS') ? 1 : 0,
                 'TIEMPO_EVOLUCION_CIRUGIAS_PREVIAS' => trim($this->input->post('TIEMPO_EVOLUCION_CIRUGIAS_PREVIAS')),
-                'HEPATITIS_SI' => $this->input->post('HEPATITIS_SI') ? 1 : 0,
-                'HEPATITIS_NO' => $this->input->post('HEPATITIS_NO') ? 1 : 0,
+                'HEPATITIS' => $this->input->post('HEPATITIS') ? 1 : 0,
                 'TIEMPO_EVOLUCION_HEPATITIS' => trim($this->input->post('TIEMPO_EVOLUCION_HEPATITIS')),
-                'CANCER_SI' => $this->input->post('CANCER_SI') ? 1 : 0,
-                'CANCER_NO' => $this->input->post('CANCER_NO') ? 1 : 0,
+                'CANCER' => $this->input->post('CANCER') ? 1 : 0,
                 'TIEMPO_EVOLUCION_CANCER' => trim($this->input->post('TIEMPO_EVOLUCION_CANCER')),
-                'EPILEPSIA_SI' => $this->input->post('EPILEPSIA_SI') ? 1 : 0,
-                'EPILEPSIA_NO' => $this->input->post('EPILEPSIA_NO') ? 1 : 0,
+                'EPILEPSIA' => $this->input->post('EPILEPSIA') ? 1 : 0,
                 'TIEMPO_EVOLUCION_EPILEPSIA' => trim($this->input->post('TIEMPO_EVOLUCION_EPILEPSIA')),
-                'ALERGIAS_SI' => $this->input->post('ALERGIAS_SI') ? 1 : 0,
-                'ALERGIAS_NO' => $this->input->post('ALERGIAS_NO') ? 1 : 0,
+                'ALERGIAS' => $this->input->post('ALERGIAS') ? 1 : 0,
                 'TIEMPO_EVOLUCION_ALERGIAS' => trim($this->input->post('TIEMPO_EVOLUCION_ALERGIAS')),
                 'OTROS_PATOLOGICO' => trim($this->input->post('OTROS_PATOLOGICO')),
-                'FUMA_SI' => $this->input->post('FUMA_SI') ? 1 : 0,
-                'FUMA_NO' => $this->input->post('FUMA_NO') ? 1 : 0,
+                'FUMA' => $this->input->post('FUMA') ? 1 : 0,
                 'FUMA_CUANTOS' => trim($this->input->post('FUMA_CUANTOS')),
-                'ADICCIONES_SI' => $this->input->post('ADICCIONES_SI') ? 1 : 0,
-                'ADICCIONES_NO' => $this->input->post('ADICCIONES_NO') ? 1 : 0,
+                'ADICCIONES' => $this->input->post('ADICCIONES') ? 1 : 0,
                 'ESPECIFIQUE_ADICCIONES' => trim($this->input->post('ESPECIFIQUE_ADICCIONES')),
-                'BEBE_ALCOHOL_SI' => $this->input->post('BEBE_ALCOHOL_SI') ? 1 : 0,
-                'BEBE_ALCOHOL_NO' => $this->input->post('BEBE_ALCOHOL_NO') ? 1 : 0,
+                'BEBE_ALCOHOL' => $this->input->post('BEBE_ALCOHOL') ? 1 : 0,
                 'ESPECIFIQUE_ALCOHOL' => trim($this->input->post('ESPECIFIQUE_ALCOHOL')),
-                'FOBIA_SI' => $this->input->post('FOBIA_SI') ? 1 : 0,
-                'FOBIA_NO' => $this->input->post('FOBIA_NO') ? 1 : 0,
-                'DESMAYOS_SI' => $this->input->post('DESMAYOS_SI') ? 1 : 0,
-                'DESMAYOS_NO' => $this->input->post('DESMAYOS_NO') ? 1 : 0,
-                'ASPIRINA_SI' => $this->input->post('ASPIRINA_SI') ? 1 : 0,
-                'ASPIRINA_NO' => $this->input->post('ASPIRINA_NO') ? 1 : 0,
-                'MORETES_SI' => $this->input->post('MORETES_SI') ? 1 : 0,
-                'MORETES_NO' => $this->input->post('MORETES_NO') ? 1 : 0,
-                'BRONCEADO_SI' => $this->input->post('BRONCEADO_SI') ? 1 : 0,
-                'BRONCEADO_NO' => $this->input->post('BRONCEADO_NO') ? 1 : 0,
-                'ANESTESIA_SI' => $this->input->post('ANESTESIA_SI') ? 1 : 0,
-                'ANESTESIA_NO' => $this->input->post('ANESTESIA_NO') ? 1 : 0,
-                'PROBLEMA_ANESTESIA_SI' => $this->input->post('PROBLEMA_ANESTESIA_SI') ? 1 : 0,
-                'PROBLEMA_ANESTESIA_NO' => $this->input->post('PROBLEMA_ANESTESIA_NO') ? 1 : 0,
+                'FOBIA' => $this->input->post('FOBIA') ? 1 : 0,
+                'DESMAYOS' => $this->input->post('DESMAYOS') ? 1 : 0,
+                'ASPIRINA' => $this->input->post('ASPIRINA') ? 1 : 0,
+                'MORETES' => $this->input->post('MORETES') ? 1 : 0,
+                'BRONCEADO' => $this->input->post('BRONCEADO') ? 1 : 0,
+                'ANESTESIA' => $this->input->post('ANESTESIA') ? 1 : 0,
+                'PROBLEMA_ANESTESIA' => $this->input->post('PROBLEMA_ANESTESIA') ? 1 : 0,
                 'ESPECIFIQUE_PROBLEMA_ANESTESIA' => trim($this->input->post('ESPECIFIQUE_PROBLEMA_ANESTESIA')),
-                'INMUNIZACION_SI' => $this->input->post('INMUNIZACION_SI') ? 1 : 0,
-                'INMUNIZACION_NO' => $this->input->post('INMUNIZACION_NO') ? 1 : 0,
+                'INMUNIZACION' => $this->input->post('INMUNIZACION') ? 1 : 0,
                 'ESPECIFIQUE_INMUNIZACION' => trim($this->input->post('ESPECIFIQUE_INMUNIZACION')),
-                'INFECCION_PIEL_SI' => $this->input->post('INFECCION_PIEL_SI') ? 1 : 0,
-                'INFECCION_PIEL_NO' => $this->input->post('INFECCION_PIEL_NO') ? 1 : 0,
+                'INFECCION_PIEL' => $this->input->post('INFECCION_PIEL') ? 1 : 0,
                 'ESPECIFIQUE_INFECCION_PIEL' => trim($this->input->post('ESPECIFIQUE_INFECCION_PIEL')),
-                'ESTEROIDES_SI' => $this->input->post('ESTEROIDES_SI') ? 1 : 0,
-                'ESTEROIDES_NO' => $this->input->post('ESTEROIDES_NO') ? 1 : 0,
+                'ESTEROIDES' => $this->input->post('ESTEROIDES') ? 1 : 0,
                 'ESPECIFIQUE_ESTEROIDES' => trim($this->input->post('ESPECIFIQUE_ESTEROIDES')),
-                'EJERCICIO_SI' => $this->input->post('EJERCICIO_SI') ? 1 : 0,
-                'EJERCICIO_NO' => $this->input->post('EJERCICIO_NO') ? 1 : 0,
+                'EJERCICIO' => $this->input->post('EJERCICIO') ? 1 : 0,
                 'ESPECIFIQUE_EJERCICIO' => trim($this->input->post('ESPECIFIQUE_EJERCICIO')),
-                'DIETA_SI' => $this->input->post('DIETA_SI') ? 1 : 0,
-                'DIETA_NO' => $this->input->post('DIETA_NO') ? 1 : 0,
+                'DIETA' => $this->input->post('DIETA') ? 1 : 0,
                 'ESPECIFIQUE_DIETA' => trim($this->input->post('ESPECIFIQUE_DIETA')),
-                'ACTUALMENTE_EMBARAZADA_SI' => $this->input->post('ACTUALMENTE_EMBARAZADA_SI') ? 1 : 0,
-                'ACTUALMENTE_EMBARAZADA_NO' => $this->input->post('ACTUALMENTE_EMBARAZADA_NO') ? 1 : 0,
+                'ACTUALMENTE_EMBARAZADA' => $this->input->post('ACTUALMENTE_EMBARAZADA') ? 1 : 0,
+
                 'MENARCA' => trim($this->input->post('MENARCA')),
                 'FUM' => trim($this->input->post('FUM')),
                 'RITMO_MENSTRUAL' => trim($this->input->post('RITMO_MENSTRUAL')),
@@ -265,7 +236,7 @@ class Mpatient extends CI_Model
             $query = $this->db->get();
             return $query->row();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -275,12 +246,12 @@ class Mpatient extends CI_Model
             $antecedentes = $this->db->get_where('antecedentes', array('ID_PACIENTE' => $patient_id))->row();
             return $antecedentes;
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
     // UPDATE PATIENT
-    function edit_patient_on_db($row)
+    function edit_patient_on_db($row, $data)
     {
 
         try {
@@ -303,6 +274,101 @@ class Mpatient extends CI_Model
                 'NOMBRE_PACIENTE' => trim($row['NOMBRE_PACIENTE']),
                 'APELLIDO_PATERNO_PACIENTE' => trim($row['APELLIDO_PATERNO_PACIENTE']),
                 'APELLIDO_MATERNO_PACIENTE' => trim($row['APELLIDO_MATERNO_PACIENTE']),
+                'ID_SEXO' => trim($row['ID_SEXO']),
+                'FECHA_NAC_PACIENTE' => trim($row['FECHA_NAC_PACIENTE']),
+                'ESTADO_CIVIL_PACIENTE' => trim($row['ESTADO_CIVIL_PACIENTE']),
+                'RELIGION_PACIENTE' => trim($this->input->post("RG_RELIGION_PACIENTE")),
+                'OCUPACION_PACIENTE' => trim($this->input->post("RG_OCUPACION_PACIENTE")),
+                'CALLE_PACIENTE' => trim($this->input->post("RG_CALLE_PACIENTE")),
+                'NUMERO_PACIENTE' => trim($this->input->post("RG_NUMERO_PACIENTE")),
+                'COLONIA_PACIENTE' => trim($this->input->post("RG_COLONIA_PACIENTE")),
+                'EMAIL_PACIENTE' => trim($this->input->post("RG_EMAIL_PACIENTE")),
+                'TELEFONO_PACIENTE' => trim($this->input->post("RG_TELEFONO_PACIENTE")),
+                'TELEFONO_URGENCIA' => trim($this->input->post("RG_TELEFONO_URGENCIA")),
+                'ID_SANGRE' => intval($this->input->post("RG_ID_TIPO_SANGRE")),
+                'DIABETES_MADRE' => $this->input->post("DIABETES_MADRE") ? 1 : 0,
+                'HIPERTENSION_MADRE' => $this->input->post("HIPERTENSION_MADRE") ? 1 : 0,
+                'ENF_AUTOINMUNES_MADRE' => $this->input->post("ENF_AUTOINMUNES_MADRE") ? 1 : 0,
+                'CANCER_MADRE' => $this->input->post("CANCER_MADRE") ? 1 : 0,
+                'DIABETES_PADRE' => $this->input->post("DIABETES_PADRE") ? 1 : 0,
+                'HIPERTENSION_PADRE' => $this->input->post("HIPERTENSION_PADRE") ? 1 : 0,
+                'ENF_AUTOINMUNES_PADRE' => $this->input->post("ENF_AUTOINMUNES_PADRE") ? 1 : 0,
+                'CANCER_PADRE' => $this->input->post("CANCER_PADRE") ? 1 : 0,
+                'DIABETES_HERMANOS' => $this->input->post("DIABETES_HERMANOS") ? 1 : 0,
+                'HIPERTENSION_HERMANOS' => $this->input->post("HIPERTENSION_HERMANOS") ? 1 : 0,
+                'ENF_AUTOINMUNES_HERMANOS' => $this->input->post("ENF_AUTOINMUNES_HERMANOS") ? 1 : 0,
+                'CANCER_HERMANOS' => $this->input->post("CANCER_HERMANOS") ? 1 : 0,
+                'OTROS_HEREDOFAMILIARES' => trim($this->input->post("OTROS_HEREDOFAMILIARES")),
+
+                'DIABETES_MELLITUS' => $this->input->post("DIABETES_MELLITUS") ? 1 : 0,
+                'TIEMPO_EVOLUCION_DIABETES' => trim($this->input->post("TIEMPO_EVOLUCION_DIABETES")),
+                'HIPERTENSION_ARTERIAL' => $this->input->post("HIPERTENSION_ARTERIAL") ? 1 : 0,
+                'TIEMPO_EVOLUCION_HIPERTENSION' => trim($this->input->post("TIEMPO_EVOLUCION_HIPERTENSION")),
+                'ENFERMEDADES_ENDOCRINOLOGICAS' => $this->input->post("ENFERMEDADES_ENDOCRINOLOGICAS") ? 1 : 0,
+                'TIEMPO_EVOLUCION_ENFERMEDADES_ENDOCRINOLOGICAS' => trim($this->input->post("TIEMPO_EVOLUCION_ENFERMEDADES_ENDOCRINOLOGICAS")),
+                'ENFERMEDADES_PSIQUIATRICAS' => $this->input->post("ENFERMEDADES_PSIQUIATRICAS") ? 1 : 0,
+                'TIEMPO_EVOLUCION_ENFERMEDADES_PSIQUIATRICAS' => trim($this->input->post("TIEMPO_EVOLUCION_ENFERMEDADES_PSIQUIATRICAS")),
+                'ENFERMEDADES_AUTOINMUNES' => $this->input->post("ENFERMEDADES_AUTOINMUNES") ? 1 : 0,
+                'TIEMPO_EVOLUCION_ENFERMEDADES_AUTOINMUNES' => trim($this->input->post("TIEMPO_EVOLUCION_ENFERMEDADES_AUTOINMUNES")),
+                'VIH' => $this->input->post("VIH") ? 1 : 0,
+                'TIEMPO_EVOLUCION_VIH' => trim($this->input->post("TIEMPO_EVOLUCION_VIH")),
+                'HERPES_LABIAL' => $this->input->post("HERPES_LABIAL") ? 1 : 0,
+                'TIEMPO_EVOLUCION_HERPES_LABIAL' => trim($this->input->post("TIEMPO_EVOLUCION_HERPES_LABIAL")),
+                'TRANSFUSIONES_SANGUINEAS' => $this->input->post("TRANSFUSIONES_SANGUINEAS") ? 1 : 0,
+                'TIEMPO_EVOLUCION_TRANSFUSIONES_SANGUINEAS' => trim($this->input->post("TIEMPO_EVOLUCION_TRANSFUSIONES_SANGUINEAS")),
+                'FRACTURAS' => $this->input->post('FRACTURAS') ? 1 : 0,
+                'TIEMPO_EVOLUCION_FRACTURAS' => trim($this->input->post('TIEMPO_EVOLUCION_FRACTURAS')),
+                'HOSPITALIZACIONES' => $this->input->post('HOSPITALIZACIONES') ? 1 : 0,
+                'TIEMPO_EVOLUCION_HOSPITALIZACIONES' => trim($this->input->post('TIEMPO_EVOLUCION_HOSPITALIZACIONES')),
+                'CIRUGIAS_PREVIAS' => $this->input->post('CIRUGIAS_PREVIAS') ? 1 : 0,
+                'TIEMPO_EVOLUCION_CIRUGIAS_PREVIAS' => trim($this->input->post('TIEMPO_EVOLUCION_CIRUGIAS_PREVIAS')),
+                'HEPATITIS' => $this->input->post('HEPATITIS') ? 1 : 0,
+                'TIEMPO_EVOLUCION_HEPATITIS' => trim($this->input->post('TIEMPO_EVOLUCION_HEPATITIS')),
+                'CANCER' => $this->input->post('CANCER') ? 1 : 0,
+                'TIEMPO_EVOLUCION_CANCER' => trim($this->input->post('TIEMPO_EVOLUCION_CANCER')),
+                'EPILEPSIA' => $this->input->post('EPILEPSIA') ? 1 : 0,
+                'TIEMPO_EVOLUCION_EPILEPSIA' => trim($this->input->post('TIEMPO_EVOLUCION_EPILEPSIA')),
+                'ALERGIAS' => $this->input->post('ALERGIAS') ? 1 : 0,
+                'TIEMPO_EVOLUCION_ALERGIAS' => trim($this->input->post('TIEMPO_EVOLUCION_ALERGIAS')),
+                'OTROS_PATOLOGICO' => trim($this->input->post('OTROS_PATOLOGICO')),
+                'FUMA' => $this->input->post('FUMA') ? 1 : 0,
+                'FUMA_CUANTOS' => trim($this->input->post('FUMA_CUANTOS')),
+                'ADICCIONES' => $this->input->post('ADICCIONES') ? 1 : 0,
+                'ESPECIFIQUE_ADICCIONES' => trim($this->input->post('ESPECIFIQUE_ADICCIONES')),
+                'BEBE_ALCOHOL' => $this->input->post('BEBE_ALCOHOL') ? 1 : 0,
+                'ESPECIFIQUE_ALCOHOL' => trim($this->input->post('ESPECIFIQUE_ALCOHOL')),
+                'FOBIA' => $this->input->post('FOBIA') ? 1 : 0,
+                'DESMAYOS' => $this->input->post('DESMAYOS') ? 1 : 0,
+                'ASPIRINA' => $this->input->post('ASPIRINA') ? 1 : 0,
+                'MORETES' => $this->input->post('MORETES') ? 1 : 0,
+                'BRONCEADO' => $this->input->post('BRONCEADO') ? 1 : 0,
+                'ANESTESIA' => $this->input->post('ANESTESIA') ? 1 : 0,
+                'PROBLEMA_ANESTESIA' => $this->input->post('PROBLEMA_ANESTESIA') ? 1 : 0,
+                'ESPECIFIQUE_PROBLEMA_ANESTESIA' => trim($this->input->post('ESPECIFIQUE_PROBLEMA_ANESTESIA')),
+                'INMUNIZACION' => $this->input->post('INMUNIZACION') ? 1 : 0,
+                'ESPECIFIQUE_INMUNIZACION' => trim($this->input->post('ESPECIFIQUE_INMUNIZACION')),
+                'INFECCION_PIEL' => $this->input->post('INFECCION_PIEL') ? 1 : 0,
+                'ESPECIFIQUE_INFECCION_PIEL' => trim($this->input->post('ESPECIFIQUE_INFECCION_PIEL')),
+                'ESTEROIDES' => $this->input->post('ESTEROIDES') ? 1 : 0,
+                'ESPECIFIQUE_ESTEROIDES' => trim($this->input->post('ESPECIFIQUE_ESTEROIDES')),
+                'EJERCICIO' => $this->input->post('EJERCICIO') ? 1 : 0,
+                'ESPECIFIQUE_EJERCICIO' => trim($this->input->post('ESPECIFIQUE_EJERCICIO')),
+                'DIETA' => $this->input->post('DIETA') ? 1 : 0,
+                'ESPECIFIQUE_DIETA' => trim($this->input->post('ESPECIFIQUE_DIETA')),
+                'ACTUALMENTE_EMBARAZADA' => $this->input->post('ACTUALMENTE_EMBARAZADA') ? 1 : 0,
+
+                'MENARCA' => trim($this->input->post('MENARCA')),
+                'FUM' => trim($this->input->post('FUM')),
+                'RITMO_MENSTRUAL' => trim($this->input->post('RITMO_MENSTRUAL')),
+                'FUP_CESAREA' => trim($this->input->post('FUP_CESAREA')),
+                'G' => trim($this->input->post('G')),
+                'P' => trim($this->input->post('P')),
+                'A' => trim($this->input->post('A')),
+                'C' => trim($this->input->post('C')),
+                'METODO_ANTICONCEPTIVO' => trim($this->input->post('METODO_ANTICONCEPTIVO')),
+
+                
+
                 'TELEFONO_PACIENTE' => trim($row['TELEFONO_PACIENTE']),
                 'TELEFONO_URGENCIA' => trim($row['TELEFONO_URGENCIA']),
                 'EMAIL_PACIENTE' => trim($row['EMAIL_PACIENTE']),
@@ -311,7 +377,6 @@ class Mpatient extends CI_Model
                 'COLONIA_PACIENTE' => trim($row['COLONIA_PACIENTE']),
                 'MUNICIPIO_PACIENTE' => trim($row['MUNICIPIO_PACIENTE']),
                 'ESTADO_REPUBLICA' => trim($row['ESTADO_REPUBLICA']),
-                'FECHA_NAC_PACIENTE' => trim($row['FECHA_NAC_PACIENTE']),
                 'LUGAR_NACIMIENTO' => trim($row['LUGAR_NACIMIENTO']),
                 'RESIDENCIA' => trim($row['RESIDENCIA']),
                 'NOMBRE_MADRE_PACIENTE' => trim($row['NOMBRE_MADRE_PACIENTE']),
@@ -323,7 +388,6 @@ class Mpatient extends CI_Model
                 'APELLIDO_PADRE_MATERNO_PACIENTE' => trim($row['APELLIDO_PADRE_MATERNO_PACIENTE']),
                 'TELEFONO_PADRE_PACIENTE' => trim($row['TELEFONO_PADRE_PACIENTE']),
                 'ID_CASA' =>  intval($row["ID_CASA"]),
-                'ID_SEXO' => trim($row['ID_SEXO']),
                 'ID_TARIFA' => $tarifa,
                 'ID_MEMBRESIA' => $membre,
                 'ID_PERFIL_MEMBRESIA' => $perfil,
@@ -352,7 +416,7 @@ class Mpatient extends CI_Model
             $this->db->update('paciente', $data);
             return $this->db->affected_rows();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
     // MODAL ADJUNTAR ARCHIVO
@@ -364,7 +428,7 @@ class Mpatient extends CI_Model
             $this->db->delete('documento_paciente');
             return $this->db->affected_rows();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -376,7 +440,7 @@ class Mpatient extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
