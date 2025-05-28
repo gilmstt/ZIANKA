@@ -20,7 +20,7 @@ if (!function_exists('convierte_fecha_valida_db')) {
             //echo checkdate($valor);
             $fecha_esp = str_replace("/", "-", $fecha);
             $timestamp = strtotime($fecha_esp);
-            $fechaFormateada = date("Y-m-d", $timestamp);
+            $fechaFormateada = date("d-m-Y", $timestamp);
             return $fechaFormateada;
         } else
             return;

@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-//ini_set('display_errors', '1');
+ini_set('display_errors', '1');
 
 if ( function_exists( 'date_default_timezone_set' ) ) {
     date_default_timezone_set('Etc/GMT+6');

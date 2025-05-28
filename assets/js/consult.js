@@ -1422,7 +1422,17 @@ $(document).ready(function () {
    }
    $("body").on('click', '.btn-receta-show', function () {
       var ID_CONSULT = $(this).attr('data-id_consulta');
-      window.open(raiz_url + "consult/creaPdfReceta/" + ID_CONSULT);
+      window.open(raiz_url + "consult/creaPdfReceta/" + ID_CONSULT + "?modo=imprimir");
+   });
+
+   $("body").on('click', '.btn-receta-ver', function () {
+    var ID_CONSULT = $(this).attr('data-id_consulta');
+    window.open(raiz_url + "consult/creaPdfReceta/" + ID_CONSULT);
+   });
+
+   $("body").on('click', '.btn_hist_clinica', function () {
+      var ID_CONSULT = $(this).attr('data-id_consulta');
+      window.open(raiz_url + "consult/creaHistClinica/" + ID_CONSULT);
       
    });
    /*document.onkeyup = function (e) {

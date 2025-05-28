@@ -38,8 +38,8 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
                         style="font-size: 14px; border-radius:5px" cellspacing="0" width="100%">
                         <thead>
                            <tr>
-                              <th width="15%" class="text-center active">Acciones</th>
-                              <th width="10%" class="text-center active">Status</th>
+                              <th width="5%" class="text-center active">Acciones</th>
+                              <th width="5%" class="text-center active">Status</th>
                               <th width="30%" class="text-center active">Paciente</th>
                               <th width="15%" class="text-center active">Médico</th>
                               <th width="25%" class="text-center active">Procedimiento</th>

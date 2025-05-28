@@ -5,7 +5,6 @@ class Mconfig extends CI_Model {
     function __construct() {
         parent::__construct();
     }
-
     //Terifas
     function get_all_valid_tarifas() {
         try {     
@@ -15,7 +14,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -36,7 +35,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -94,7 +93,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
     
@@ -108,7 +107,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
     function get_all_valid_roles() {
@@ -119,7 +118,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
     function add_new_user_on_db($row) {
@@ -148,7 +147,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
     function edit_user_on_db($row,$id_usuario) {
@@ -170,7 +169,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
     function check_membresia($name){
@@ -181,7 +180,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
     function add_new_membresia_on_db($row){
@@ -200,7 +199,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
     function edit_membresia_on_db($row,$id_membresia) {
@@ -232,7 +231,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
     function get_all_valid_casas() {
@@ -245,7 +244,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -257,7 +256,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
     function check_perfil($name){
@@ -268,7 +267,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
     function add_new_perfil_on_db($row){
@@ -287,7 +286,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
     function edit_perfil_on_db($row,$id_perfil) {
@@ -317,7 +316,7 @@ class Mconfig extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
     function add_new_house_on_db($row){

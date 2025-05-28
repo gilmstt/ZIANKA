@@ -4,7 +4,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Consult extends CI_Controller
 {
-
+    /**
+     * @var mconsult
+     * @var Murgency
+     * @var mpatient
+     * @var mconfig
+     * @var pdf
+     */
+    public $mconsult;
+    public $Murgency;
+    public $mpatient;
+    public $mconfig;
+    public $pdf;
     // CONSTRUCT
 
     public function __construct()
@@ -476,7 +487,7 @@ class Consult extends CI_Controller
                 $this->pdf->SetFont('Arial', 'B', 10);
                 $this->pdf->text(26, 40, 'Nombre:', 0, 0, 'L');
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Text(42, 40, utf8_decode($ROW_CONSULT[0]['NOMBRE_PACIENTE']) . ' ' . utf8_decode($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE']) . ' ' . utf8_decode($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE']));
+                $this->pdf->Text(42, 40, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
 
                 $this->pdf->SetFont('Arial', 'B', 10);
                 $this->pdf->text(150, 40, 'Edad:', 0, 0, 'L');
@@ -1515,6 +1526,7 @@ class Consult extends CI_Controller
                     $this->load->library('PDF');
                     //Carpeta imágenes está un directorio arriba
                     $directorioPadre = base_url() . "assets/img/";
+                    $modo = $this->input->get('modo'); // o $this->input->post('modo')
 
                     // $this->pdf->Image($directorioPadre."logo.jpg",10,10,10,28);
 
@@ -1522,50 +1534,603 @@ class Consult extends CI_Controller
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                     $this->pdf->designUp();
 
-                    $this->pdf->image(base_url() . "assets/img/encabezado.png", 76, 8, 100);
+                    if ($modo != 'imprimir') {
+                    $this->pdf->image(base_url() . "assets/img/ZC_LABORATORIOS.png", 0, 0, 215.9, 279.4);
+                    }
 
                     $this->pdf->setXY(11, 29);
                     $this->pdf->SetFont('Arial', '', 9);
-                    $this->pdf->line(153, 43, 199, 43);
-                    $this->pdf->text(140, 43, utf8_decode('Fecha:'), 0, 0, 'L');
-                    $this->pdf->Text(160, 42, $ROW_CONSULT[0]['FECHA_CONSULTA']);
-
-                    $this->pdf->text(16, 43, utf8_decode('Paciente:'), 0, 0, 'L');
-
-                    $this->pdf->setXY(11, 34);
-                    $this->pdf->line(40, 43, 140, 43);
-                    $this->pdf->Text(41, 42, utf8_decode(mb_strtoupper($ROW_CONSULT[0]['NOMBRE_PACIENTE'])) . ' ' . utf8_decode(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'])) . ' ' . utf8_decode(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'])));
-
-                    $this->pdf->text(16, 53, utf8_decode('Diagnóstico:'), 0, 0, 'L');
-                    $this->pdf->Text(41, 53, utf8_decode($ROW_CONSULT[0]['DIAGNOSTICO_EGRESO_CONSULTA']));
-                    $this->pdf->line(40, 54, 140, 54);
-
-                    $this->pdf->text(141, 53, 'Edad:', 0, 0, 'L');
-                    $this->pdf->Text(167, 52, calcula_edad_2($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'], $ROW_CONSULT[0]['FECHA_CONSULTA']));
-                    $this->pdf->line(153, 53, 199, 53);
-
-                    $this->pdf->setXY(15, 56);
-                    $this->pdf->Multicell(163, 5.5, utf8_decode($ROW_CONSULT[0]['TRATAMIENTO_CONSULTA']));
-
+                    $this->pdf->Text(27, 45, mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['NOMBRE_PACIENTE']), 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE']), 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE']), 'ISO-8859-1', 'UTF-8'));
+                    $this->pdf->Text(11, 73, date('d', strtotime($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'])));
+                    $this->pdf->Text(20, 73, date('m', strtotime($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'])));
+                    $this->pdf->Text(30, 73, date('Y', strtotime($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'])));
+                    $this->pdf->Text(182, 73, date('d', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                    $this->pdf->Text(193, 73, date('m', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                    $this->pdf->Text(201, 73, date('Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                    $this->pdf->Text(47, 73, $ROW_CONSULT[0]['PESO_CONSULTA']);
+                    $this->pdf->Text(75, 73, $ROW_CONSULT[0]['TALLA_CONSULTA']);
+                    $this->pdf->Text(99, 73, $ROW_CONSULT[0]['IMC_CONSULTA']);
+                    $this->pdf->Text(134, 73, $ROW_CONSULT[0]['TEMP_CONSULTA']);
+                    $this->pdf->Text(152, 73, $ROW_CONSULT[0]['PA']);
+                    
+                    $this->pdf->setXY(11, 95);
+                    $this->pdf->Multicell(190, 6, mb_convert_encoding($ROW_CONSULT[0]['LABORATORIOS_SOLICITADOS'], 'ISO-8859-1', 'UTF-8'));
+                    
+                    $this->pdf->setXY(11, 155);
+                    $this->pdf->Multicell(190, 6, mb_convert_encoding($ROW_CONSULT[0]['IMPRESION_DIAGNOSTICA'], 'ISO-8859-1', 'UTF-8'));
                     $this->pdf->setXY(25, 145);
-                    $y = $this->pdf->GetY();
 
-                    $this->pdf->Text(25, $y + 5, utf8_decode('DR.:'), 0, 0, 'L');
-                    $this->pdf->Text(35, $y + 5, utf8_decode($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO']));
-                    $this->pdf->line(34, $y + 6, 139, $y + 6);
-                    $this->pdf->Text(140, $y + 5, utf8_decode('CEDULA:'), 0, 0, 'L');
-                    $this->pdf->Text(167, $y + 5, $ROW_CONSULT[0]['CEDULA_USUARIO']);
-                    $this->pdf->line(159, $y + 6, 199, $y + 6);
 
-                    $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
-                    $this->pdf->setXY(10, 157);
-                    $this->pdf->Cell(0, 0, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 0, 'C');
-                    $this->pdf->line(12, $y + 17, 205, $y + 17);
-                    //$this->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
-                    // $this->pdf->setXY(13, 255);
-                    //$this->Cell(0, 5, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 0, 'C');
-                    //$y = $this->GetY();
-                    // $this->line(12, $y+7, 205, $y+7);
+                    $this->pdf->Output(); //Salida al navegador del pdf
+                } else {
+                    echo "redirect('Consult/index')";
+                }
+            } else {
+                redirect('Consult/index');
+            }
+        }
+    }
+
+    public function ConsentimientoInformado($ID_CONSULT)
+    {
+        if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
+
+            if ($ID_CONSULT > NULO) {
+                $ROW_CONSULT = $this->mconsult->get_consult_by_id_consult($ID_CONSULT);
+
+                if (count($ROW_CONSULT) > NULO) {
+                    $this->load->library('PDF');
+                    //Carpeta imágenes está un directorio arriba
+                    $directorioPadre = base_url() . "assets/img/";
+
+                    // $this->pdf->Image($directorioPadre."logo.jpg",10,10,10,28);
+
+                    $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                    $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
+                    $this->pdf->designUp();
+
+                    $this->pdf->image(base_url() . "assets/img/ZC_LABORATORIOS.png", 0, 0, 215.9, 279.4);
+
+                    $this->pdf->setXY(11, 29);
+                    $this->pdf->SetFont('Arial', '', 9);
+                    $this->pdf->Text(27, 45, mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['NOMBRE_PACIENTE']), 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE']), 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'])), 'ISO-8859-1', 'UTF-8');
+                    $this->pdf->Text(11, 73, date('d', strtotime($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'])));
+                    $this->pdf->Text(20, 73, date('m', strtotime($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'])));
+                    $this->pdf->Text(30, 73, date('Y', strtotime($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'])));
+                    $this->pdf->Text(182, 73, date('d', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                    $this->pdf->Text(193, 73, date('m', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                    $this->pdf->Text(201, 73, date('Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                    $this->pdf->Text(47, 73, $ROW_CONSULT[0]['PESO_CONSULTA']);
+                    $this->pdf->Text(75, 73, $ROW_CONSULT[0]['TALLA_CONSULTA']);
+                    $this->pdf->Text(99, 73, $ROW_CONSULT[0]['IMC_CONSULTA']);
+                    $this->pdf->Text(134, 73, $ROW_CONSULT[0]['TEMP_CONSULTA']);
+                    $this->pdf->Text(152, 73, $ROW_CONSULT[0]['PA']);
+                    
+                    $this->pdf->setXY(11, 95);
+                    $this->pdf->Multicell(190, 6, mb_convert_encoding($ROW_CONSULT[0]['LABORATORIOS_SOLICITADOS'], 'ISO-8859-1', 'UTF-8'));
+                    
+                    $this->pdf->setXY(11, 155);
+                    $this->pdf->Multicell(190, 6, mb_convert_encoding($ROW_CONSULT[0]['IMPRESION_DIAGNOSTICA'], 'ISO-8859-1', 'UTF-8'));
+                    $this->pdf->setXY(25, 145);
+
+
+                    $this->pdf->Output(); //Salida al navegador del pdf
+                } else {
+                    echo "redirect('Consult/index')";
+                }
+            } else {
+                redirect('Consult/index');
+            }
+        }
+    }
+    public function creaHistClinica($ID_CONSULT)
+    {
+        if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
+
+            if ($ID_CONSULT > NULO) {
+                $ROW_CONSULT = $this->mconsult->get_consult_by_id_consult($ID_CONSULT);
+                $TRATAMIENTOS = $this->mconsult->get_tratamientos_by_id_consult($ID_CONSULT);
+
+                if (count($ROW_CONSULT) > NULO) {
+                    $this->load->library('PDF');
+                    //Carpeta imágenes está un directorio arriba
+                    $directorioPadre = base_url() . "assets/img/";
+
+                    // $this->pdf->Image($directorioPadre."logo.jpg",10,10,10,28);
+
+                    $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                    $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
+                    $this->pdf->designUp();
+
+                    $this->pdf->image(base_url() . "assets/img/historiaClinica/1.png", 0, 0, 215.9, 279.4);
+
+                    $this->pdf->setXY(11, 29);
+                    $this->pdf->SetFont('Arial', '', 9);
+                    $this->pdf->Text(167, 7, date('d', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                    $this->pdf->Text(180, 7, date('m', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                    $this->pdf->Text(190, 7, date('Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                    $this->pdf->Text(35, 25, mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['NOMBRE_PACIENTE']), 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE']), 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE']), 'ISO-8859-1', 'UTF-8'));
+                    $this->pdf->Text(152, 25, $ROW_CONSULT[0]['NOMBRE_SEXO']);
+                    $this->pdf->Text(185, 25, calcula_edad_2($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'], $ROW_CONSULT[0]['FECHA_CONSULTA']));
+                    $this->pdf->Text(62, 34, date('d', strtotime($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'])));
+                    $this->pdf->Text(74, 34, date('m', strtotime($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'])));
+                    $this->pdf->Text(85, 34, date('Y', strtotime($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'])));
+                    $this->pdf->Text(124, 33, $ROW_CONSULT[0]['ESTADO_CIVIL_PACIENTE']);
+                    $this->pdf->Text(170, 33, $ROW_CONSULT[0]['RELIGION_PACIENTE']);
+                    $this->pdf->Text(39, 41, $ROW_CONSULT[0]['OCUPACION_PACIENTE']);
+                    $this->pdf->Text(94, 41, mb_convert_encoding($ROW_CONSULT[0]['CALLE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['NUMERO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['COLONIA_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                    $this->pdf->Text(57, 48, $ROW_CONSULT[0]['EMAIL_PACIENTE']);
+                    $this->pdf->Text(145, 48, $ROW_CONSULT[0]['TELEFONO_PACIENTE']);
+                    $this->pdf->Text(65, 55, $ROW_CONSULT[0]['TELEFONO_URGENCIA']);
+                    $this->pdf->Text(185, 55, $ROW_CONSULT[0]['tipo_sangre']);
+                    $this->pdf->Text(70, 80, $ROW_CONSULT[0]['DIABETES_MADRE'] ? 'X' : '');
+                    $this->pdf->Text(107, 80, $ROW_CONSULT[0]['HIPERTENSION_MADRE'] ? 'X' : '');
+                    $this->pdf->Text(147, 80, $ROW_CONSULT[0]['ENF_AUTOINMUNES_MADRE'] ? 'X' : '');
+                    $this->pdf->Text(182, 80, $ROW_CONSULT[0]['CANCER_MADRE'] ? 'X' : '');
+                    $this->pdf->Text(70, 86, $ROW_CONSULT[0]['DIABETES_PADRE'] ? 'X' : '');
+                    $this->pdf->Text(107, 86, $ROW_CONSULT[0]['HIPERTENSION_PADRE'] ? 'X' : '');
+                    $this->pdf->Text(147, 86, $ROW_CONSULT[0]['ENF_AUTOINMUNES_PADRE'] ? 'X' : '');
+                    $this->pdf->Text(182, 86, $ROW_CONSULT[0]['CANCER_PADRE'] ? 'X' : '');
+                    $this->pdf->Text(70, 92, $ROW_CONSULT[0]['DIABETES_HERMANOS'] ? 'X' : '');
+                    $this->pdf->Text(107, 92, $ROW_CONSULT[0]['HIPERTENSION_HERMANOS'] ? 'X' : '');
+                    $this->pdf->Text(147, 92, $ROW_CONSULT[0]['ENF_AUTOINMUNES_HERMANOS'] ? 'X' : '');
+                    $this->pdf->Text(182, 92, $ROW_CONSULT[0]['CANCER_HERMANOS'] ? 'X' : '');
+                    $this->pdf->Text(30, 99, $ROW_CONSULT[0]['OTROS_HEREDOFAMILIARES']);
+                    if ($ROW_CONSULT[0]['DIABETES_MELLITUS'] == 1) {
+                    $this->pdf->Text(77, 127, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 122, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 122, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_DIABETES']);
+                    
+                    if ($ROW_CONSULT[0]['HIPERTENSION_ARTERIAL'] == 1) {
+                    $this->pdf->Text(77, 128, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 128, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 128, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_HIPERTENSION'] );
+
+                    if ($ROW_CONSULT[0]['ENFERMEDADES_ENDOCRINOLOGICAS'] == 1) {
+                    $this->pdf->Text(77, 134, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 134, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 134, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_ENFERMEDADES_ENDOCRINOLOGICAS'] );
+
+                    if ($ROW_CONSULT[0]['ENFERMEDADES_PSIQUIATRICAS'] == 1) {
+                    $this->pdf->Text(77, 140, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 140, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 140, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_ENFERMEDADES_PSIQUIATRICAS'] );
+
+                    if ($ROW_CONSULT[0]['ENFERMEDADES_AUTOINMUNES'] == 1) {
+                    $this->pdf->Text(77, 145, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 145, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 145, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_ENFERMEDADES_AUTOINMUNES'] );
+
+                    if ($ROW_CONSULT[0]['VIH'] == 1) {
+                    $this->pdf->Text(77, 151, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 151, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 151, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_VIH'] );
+
+                    if ($ROW_CONSULT[0]['HERPES_LABIAL'] == 1) {
+                    $this->pdf->Text(77, 157, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 157, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 157, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_HERPES_LABIAL'] );
+
+                    if ($ROW_CONSULT[0]['TRANSFUSIONES_SANGUINEAS'] == 1) {
+                    $this->pdf->Text(77, 163, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 163, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 163, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_TRANSFUSIONES_SANGUINEAS'] );
+
+                    if ($ROW_CONSULT[0]['FRACTURAS'] == 1) {
+                    $this->pdf->Text(77, 168, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 168, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 168, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_FRACTURAS'] );
+
+                    if ($ROW_CONSULT[0]['HOSPITALIZACIONES'] == 1) {
+                    $this->pdf->Text(77, 174, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 174, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 174, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_HOSPITALIZACIONES'] );
+
+                    if ($ROW_CONSULT[0]['CIRUGIAS_PREVIAS'] == 1) {
+                    $this->pdf->Text(77, 180, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 180, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 180, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_CIRUGIAS_PREVIAS'] );
+
+                    if ($ROW_CONSULT[0]['HEPATITIS'] == 1) {
+                    $this->pdf->Text(77, 186, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 186, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 185, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_HEPATITIS'] );
+
+                    if ($ROW_CONSULT[0]['CANCER'] == 1) {
+                    $this->pdf->Text(77, 191, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 191, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 191, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_CANCER'] );
+
+                    if ($ROW_CONSULT[0]['EPILEPSIA'] == 1) {
+                    $this->pdf->Text(77, 197, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 197, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 197, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_EPILEPSIA'] );
+
+                    if ($ROW_CONSULT[0]['ALERGIAS'] == 1) {
+                    $this->pdf->Text(77, 203, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(89, 203, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(100, 203, $ROW_CONSULT[0]['TIEMPO_EVOLUCION_ALERGIAS'] );
+
+                    $this->pdf->Text(30, 209, $ROW_CONSULT[0]['OTROS_PATOLOGICO'] );
+
+                    if ($ROW_CONSULT[0]['FUMA'] == 1) {
+                    $this->pdf->Text(31.5, 218, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(42, 218, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(84, 217, $ROW_CONSULT[0]['FUMA_CUANTOS'] );
+
+                    if ($ROW_CONSULT[0]['ADICCIONES'] == 1) {
+                    $this->pdf->Text(125.5, 218, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(135.5, 218, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(168, 217, $ROW_CONSULT[0]['ESPECIFIQUE_ADICCIONES'] );
+
+                    if ($ROW_CONSULT[0]['BEBE_ALCOHOL'] == 1) {
+                    $this->pdf->Text(47, 222.5, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(57, 222.5, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(90, 222, $ROW_CONSULT[0]['ESPECIFIQUE_ADICCIONES'] );
+
+                    if ($ROW_CONSULT[0]['FOBIA'] == 1) {
+                    $this->pdf->Text(184.5, 222.5, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(194.5, 222.5, 'X'); // Marca el "no"
+                        }
+
+                    if ($ROW_CONSULT[0]['DESMAYOS'] == 1) {
+                    $this->pdf->Text(73.5, 229, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(84.5, 229, 'X'); // Marca el "no"
+                        }
+
+                    if ($ROW_CONSULT[0]['ASPIRINA'] == 1) {
+                    $this->pdf->Text(179.5, 229, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(189.5, 229, 'X'); // Marca el "no"
+                        }
+
+                    if ($ROW_CONSULT[0]['MORETES'] == 1) {
+                    $this->pdf->Text(73, 235, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(83.5, 235, 'X'); // Marca el "no"
+                        }
+                    
+                    if ($ROW_CONSULT[0]['BRONCEADO'] == 1) {
+                    $this->pdf->Text(186, 235, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(196, 235, 'X'); // Marca el "no"
+                        }
+                        
+                    if ($ROW_CONSULT[0]['ANESTESIA'] == 1) {
+                    $this->pdf->Text(177.5, 241, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(187.5, 241, 'X'); // Marca el "no"
+                        }
+
+                    if ($ROW_CONSULT[0]['PROBLEMA_ANESTESIA'] == 1) {
+                    $this->pdf->Text(99, 247, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(109.5, 247, 'X'); // Marca el "no"
+                        }
+
+                    $this->pdf->Text(137, 246, $ROW_CONSULT[0]['ESPECIFIQUE_PROBLEMA_ANESTESIA']);
+
+                    $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                    $this->pdf->designUp();
+                    $this->pdf->image(base_url() . "assets/img/historiaClinica/2.png", 0, 0, 215.9, 279.4);
+
+                    if ($ROW_CONSULT[0]['INMUNIZACION'] == 1) {
+                    $this->pdf->Text(133, 4, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(142.5, 4, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(159, 3, $ROW_CONSULT[0]['ESPECIFIQUE_INMUNIZACION'] );
+
+                    if ($ROW_CONSULT[0]['INFECCION_PIEL'] == 1) {
+                    $this->pdf->Text(137, 10.5, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(148, 10.5, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(165, 10, $ROW_CONSULT[0]['ESPECIFIQUE_INFECCION_PIEL'] );
+
+                    if ($ROW_CONSULT[0]['ESTEROIDES'] == 1) {
+                    $this->pdf->Text(180, 21, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(190, 21, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(35, 25, $ROW_CONSULT[0]['ESPECIFIQUE_ESTEROIDES'] );
+
+                    if ($ROW_CONSULT[0]['EJERCICIO'] == 1) {
+                    $this->pdf->Text(47, 32, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(57, 32, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(69, 31, $ROW_CONSULT[0]['ESPECIFIQUE_EJERCICIO'] );
+                    
+                    if ($ROW_CONSULT[0]['DIETA'] == 1) {
+                    $this->pdf->Text(138, 32, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(148, 32, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(168, 31, $ROW_CONSULT[0]['ESPECIFIQUE_DIETA'] );
+
+                    if ($ROW_CONSULT[0]['ACTUALMENTE_EMBARAZADA'] == 1) {
+                    $this->pdf->Text(190.5, 48, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(200.5, 48, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(40, 54, $ROW_CONSULT[0]['MENARCA'] );
+                    $this->pdf->Text(71, 54, $ROW_CONSULT[0]['FUM'] );
+                    $this->pdf->Text(123, 54, $ROW_CONSULT[0]['RITMO_MENSTRUAL'] );
+                    $this->pdf->Text(173, 54, $ROW_CONSULT[0]['FUP_CESAREA'] );
+                    $this->pdf->Text(20, 60, $ROW_CONSULT[0]['G'] );
+                    $this->pdf->Text(33, 60, $ROW_CONSULT[0]['P'] );
+                    $this->pdf->Text(46, 60, $ROW_CONSULT[0]['A'] );
+                    $this->pdf->Text(59, 60, $ROW_CONSULT[0]['C'] );
+                    $this->pdf->Text(113, 60, $ROW_CONSULT[0]['METODO_ANTICONCEPTIVO'] );
+
+                    if ($ROW_CONSULT[0]['EXPOSICION_SOLAR'] == 'SI') {
+                    $this->pdf->Text(49.5, 78, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(59.5, 78, 'X'); // Marca el "no"
+                        }
+                    $this->pdf->Text(113, 77, $ROW_CONSULT[0]['TIEMPO_EXPOSICION_SOLAR'] );
+
+                    if ($ROW_CONSULT[0]['USO_PROTECCION_SOLAR'] == 'SI') {
+                    $this->pdf->Text(184.5, 78, 'X'); // Marca el "sí"
+                        } else {
+                            $this->pdf->Text(194.5, 78, 'X'); // Marca el "no"
+                        }
+                   
+                        $this->pdf->Text(58, 82, $ROW_CONSULT[0]['MARCA_PROTECTOR_SOLAR'] );
+                        $this->pdf->Text(140, 82, $ROW_CONSULT[0]['FPS_PROTECTOR_SOLAR'] );
+                        $this->pdf->Text(71, 99, $ROW_CONSULT[0]['ENVEJECIMIENTO_CUTANEO'] ? 'X' : '');
+                        $this->pdf->Text(137, 99, $ROW_CONSULT[0]['RITIDES'] ? 'X' : '');
+                        $this->pdf->Text(196, 99, $ROW_CONSULT[0]['BRUXISMO'] ? 'X' : '');
+
+                        $this->pdf->Text(71, 105, $ROW_CONSULT[0]['ADIP_LOCALIZADA'] ? 'X' : '');
+                        $this->pdf->Text(137, 105, $ROW_CONSULT[0]['ESTRIAS'] ? 'X' : '');
+                        $this->pdf->Text(196, 105, $ROW_CONSULT[0]['VARICES'] ? 'X' : '');
+
+                        $this->pdf->Text(71, 111, $ROW_CONSULT[0]['HIPERMEGTACION'] ? 'X' : '');
+                        $this->pdf->Text(137, 111, $ROW_CONSULT[0]['ALOPECIA'] ? 'X' : '');
+                        $this->pdf->Text(196, 111, $ROW_CONSULT[0]['VERRUGAS'] ? 'X' : '');
+
+                        $this->pdf->Text(71, 117, $ROW_CONSULT[0]['FLACIDEZ_CUTANEA'] ? 'X' : '');
+                        $this->pdf->Text(137, 117, $ROW_CONSULT[0]['ACNE'] ? 'X' : '');
+                        $this->pdf->Text(196, 117, $ROW_CONSULT[0]['PEFE'] ? 'X' : '');
+
+                        $this->pdf->Text(71, 123, $ROW_CONSULT[0]['CICATRICES'] ? 'X' : '');
+                        $this->pdf->Text(137, 123, $ROW_CONSULT[0]['ROSACEA'] ? 'X' : '');
+                        $this->pdf->Text(196, 123, $ROW_CONSULT[0]['HIPERHIDROSIS'] ? 'X' : '');
+
+                        $this->pdf->Text(30, 130, $ROW_CONSULT[0]['OTROS_MOTIVO_CONSULTA']);
+
+                        $procedimientos = [
+                            'TOXINA_BOTULINICA' => 153,
+                            'ACIDO_HIALURONICO' => 159,
+                            'BIOESTIMULADORES' => 165,
+                            'DERMAPEN' => 171,
+                            'PEELING' => 177,
+                            'PLASMA' => 183,
+                            'HILOS' => 189,
+                            'MESOTERAPIA' => 195,
+                            'APARATOLOGIA_CORPORAL' => 201
+                        ];
+                        foreach ($procedimientos as $nombre_procedimiento => $y_pos) {
+                            // Buscar el procedimiento en $TRATAMIENTOS
+                            foreach ($TRATAMIENTOS as $row) {
+                                if ($row['PROCEDIMIENTO'] === $nombre_procedimiento) {
+                                    // Producto en X=96
+                                    $producto = mb_convert_encoding($row['PRODUCTO'], 'ISO-8859-1', 'UTF-8');
+                                    $this->pdf->Text(90, $y_pos, $producto);
+
+                                    // Fecha de aplicación en X=172
+                                    $fecha = !empty($row['FECHA_APLICACION']) ? date('d/m/Y', strtotime($row['FECHA_APLICACION'])) : 'N/A';
+                                    $fecha = mb_convert_encoding($fecha, 'ISO-8859-1', 'UTF-8');
+                                    $this->pdf->Text(172, $y_pos, $fecha);
+
+                                    break; // Salir del bucle interno una vez encontrado el procedimiento
+                                }
+                            }
+                        }
+
+                        $this->pdf->Text(30, 208, $ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'] );
+                        
+                        $fitzpatrick = [
+                            '1' => 40,
+                            '2' => 47,
+                            '3' => 55,
+                            '4' => 62,
+                            '5' => 70,
+                            '6' => 77
+                        ];
+                        // Obtener el valor de FITZPATRICK (asumiendo que está en $ROW_CONSULT[0])
+                        $fitzpatrick_value = isset($ROW_CONSULT[0]['FITZPATRICK']) ? (string)$ROW_CONSULT[0]['FITZPATRICK'] : '';
+
+                        if (array_key_exists($fitzpatrick_value, $fitzpatrick)) {
+                            $x_pos = $fitzpatrick[$fitzpatrick_value];
+                            $this->pdf->Text($x_pos, 226, 'X'); // Dibujar una "X" en la posición correspondiente
+                        }
+
+                        $glogau = [
+                            '1' => 105,
+                            '2' => 112,
+                            '3' => 119,
+                            '4' => 127
+                        ];
+                        // Obtener el valor de FITZPATRICK (asumiendo que está en $ROW_CONSULT[0])
+                        $glogau_value = isset($ROW_CONSULT[0]['GLOGAU']) ? (string)$ROW_CONSULT[0]['GLOGAU'] : '';
+
+                        if (array_key_exists($glogau_value, $glogau)) {
+                            $x_pos = $glogau[$glogau_value];
+                            $this->pdf->Text($x_pos, 226, 'X'); // Dibujar una "X" en la posición correspondiente
+                        }
+
+                        $piel = [
+                            'MIXTA' => 167,
+                            'SECA' => 180,
+                            'GRASA' => 195
+                        ];
+                        // Obtener el valor de FITZPATRICK (asumiendo que está en $ROW_CONSULT[0])
+                        $piel_value = isset($ROW_CONSULT[0]['TIPO_PIEL']) ? (string)$ROW_CONSULT[0]['TIPO_PIEL'] : '';
+
+                        if (array_key_exists($piel_value, $piel)) {
+                            $x_pos = $piel[$piel_value];
+                            $this->pdf->Text($x_pos, 226, 'X'); // Dibujar una "X" en la posición correspondiente
+                        }
+
+                        $rostro = [
+                            'OVALADO' => 53,
+                            'RECTANGULAR' => 78,
+                            'REDONDO' => 102,
+                            'CUADRADO' => 122,
+                            'TRIANGULAR' => 147,
+                            'DIAMANTE' => 170
+                        ];
+                        // Obtener el valor de FITZPATRICK (asumiendo que está en $ROW_CONSULT[0])
+                        $rostro_value = isset($ROW_CONSULT[0]['TIPO_ROSTRO']) ? (string)$ROW_CONSULT[0]['TIPO_ROSTRO'] : '';
+
+                        if (array_key_exists($rostro_value, $rostro)) {
+                            $x_pos = $rostro[$rostro_value];
+                            $this->pdf->Text($x_pos, 233, 'X'); // Dibujar una "X" en la posición correspondiente
+                        }
+
+                        $this->pdf->Text(62, 239, $ROW_CONSULT[0]['LESIONES_DERMATOLOGICAS']);
+                        $this->pdf->Text(29, 245, $ROW_CONSULT[0]['TIPO_DERMATOLOGICAS']);
+                        $this->pdf->Text(128, 245, $ROW_CONSULT[0]['LOCALIZACION_DERMATOLOGICAS']);
+
+                        $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                        $this->pdf->designUp();
+                        $this->pdf->image(base_url() . "assets/img/historiaClinica/3.png", 0, 0, 215.9, 279.4);
+
+                        $this->pdf->Text(59, 12, $ROW_CONSULT[0]['CONDICION_PACIENTE']);
+                        $this->pdf->Text(38, 17, $ROW_CONSULT[0]['CONSTITUCION_HABITUS']);
+                        $this->pdf->Text(112, 17, $ROW_CONSULT[0]['CONFORMACION_HABITUS']);
+                        $this->pdf->Text(173, 17, $ROW_CONSULT[0]['ACTITUD_HABITUS']);
+                        $this->pdf->Text(27, 23, $ROW_CONSULT[0]['FACIES_HABITUS']);
+                        $this->pdf->Text(115, 23, $ROW_CONSULT[0]['MOVIMIENTOS_ANORMALES_HABITUS']);
+                        $this->pdf->Text(28, 29, $ROW_CONSULT[0]['MARCHA_HABITUS']);
+                        $this->pdf->Text(115, 29, $ROW_CONSULT[0]['ESTADO_CONCIENCIA_HABITUS']);
+                        $this->pdf->Text(28, 35, $ROW_CONSULT[0]['OTROS_HABITUS']);
+                        $this->pdf->Text(46, 41, $ROW_CONSULT[0]['FC_CONSULTA']);
+                        $this->pdf->Text(65, 41, $ROW_CONSULT[0]['FR_CONSULTA']);
+                        $this->pdf->Text(82, 41, $ROW_CONSULT[0]['TA_CONSULTA']);
+                        $this->pdf->Text(106, 41, $ROW_CONSULT[0]['TEMP_CONSULTA']);
+                        $this->pdf->Text(125, 41, $ROW_CONSULT[0]['PESO_CONSULTA']);
+                        $this->pdf->Text(150, 41, $ROW_CONSULT[0]['TALLA_CONSULTA']);
+                        $this->pdf->Text(170, 41, $ROW_CONSULT[0]['IMC_CONSULTA']);
+                        $this->pdf->Text(39, 69, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->SetFont('Arial', '', 7);
+                        $this->pdf->Text(158, 160, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->SetFont('Arial', '', 9);
+                        $this->pdf->Text(57, 181, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(45, 188, date('d', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                        $meses = [
+                            '01' => 'Enero',
+                            '02' => 'Febrero',
+                            '03' => 'Marzo',
+                            '04' => 'Abril',
+                            '05' => 'Mayo',
+                            '06' => 'Junio',
+                            '07' => 'Julio',
+                            '08' => 'Agosto',
+                            '09' => 'Septiembre',
+                            '10' => 'Octubre',
+                            '11' => 'Noviembre',
+                            '12' => 'Diciembre'
+                        ];
+                        $mes_numero = date('m', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA']));
+                        $mes_nombre = isset($meses[$mes_numero]) ? $meses[$mes_numero] : 'N/A';
+                        $mes_nombre = mb_convert_encoding($mes_nombre, 'ISO-8859-1', 'UTF-8');
+                        $this->pdf->Text(70, 188, $mes_nombre);
+                        $this->pdf->Text(103, 188, date('Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                     
+                        $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                        $this->pdf->designUp();
+                        $this->pdf->image(base_url() . "assets/img/historiaClinica/4.png", 0, 0, 215.9, 279.4);
+                        
+                        $this->pdf->Text(20, 40, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(145, 40, calcula_edad_2($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'], $ROW_CONSULT[0]['FECHA_CONSULTA']));
+                        $this->pdf->Text(128, 84, date('d', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                        $mes_nombre = isset($meses[$mes_numero]) ? $meses[$mes_numero] : 'N/A';
+                        $mes_nombre = mb_convert_encoding($mes_nombre, 'ISO-8859-1', 'UTF-8');
+                        $this->pdf->Text(153, 84, $mes_nombre);
+                        $this->pdf->Text(192, 84, date('Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                        $this->pdf->Text(40, 92, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+
+                        $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                        $this->pdf->designUp();
+                        $this->pdf->image(base_url() . "assets/img/historiaClinica/5.png", 0, 0, 215.9, 279.4);
+
+                        $this->pdf->Text(165, 127, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                        $this->pdf->Text(165, 160, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                        $this->pdf->Text(58, 127, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(55, 161, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+                       
+                        $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                        $this->pdf->designUp();
+                        $this->pdf->image(base_url() . "assets/img/historiaClinica/6.png", 0, 0, 215.9, 279.4);
+
+                        $this->pdf->Text(52, 10, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(170, 10, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                        $this->pdf->Text(56, 190, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(55, 199, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+
+
+                        $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                        $this->pdf->designUp();
+                        $this->pdf->image(base_url() . "assets/img/historiaClinica/7.png", 0, 0, 215.9, 279.4);
+
+                        $this->pdf->Text(52, 10, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(170, 10, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                        $this->pdf->Text(30, 17, $ROW_CONSULT[0]['NOMBRE_SEXO']);
+                        $this->pdf->Text(62, 17, calcula_edad_2($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'], $ROW_CONSULT[0]['FECHA_CONSULTA']));
+                        $this->pdf->Text(53, 31, $ROW_CONSULT[0]['FC_CONSULTA']);
+                        $this->pdf->Text(71, 31, $ROW_CONSULT[0]['FR_CONSULTA']);
+                        $this->pdf->Text(88, 31, $ROW_CONSULT[0]['TA_CONSULTA']);
+                        $this->pdf->Text(111, 31, $ROW_CONSULT[0]['TEMP_CONSULTA']);
+                        $this->pdf->Text(132, 31, $ROW_CONSULT[0]['PESO_CONSULTA']);
+                        $this->pdf->Text(157, 31, $ROW_CONSULT[0]['TALLA_CONSULTA']);
+                        $this->pdf->Text(175, 31, $ROW_CONSULT[0]['IMC_CONSULTA']);
+                        $this->pdf->Text(52, 220, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(115, 220, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+                        
+
+
 
                     $this->pdf->Output(); //Salida al navegador del pdf
                 } else {
