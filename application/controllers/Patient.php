@@ -224,7 +224,6 @@ class Patient extends CI_Controller {
 
 
 
-            
             $data['MUNICIPIO_PACIENTE'] = trim($this->input->post("RG_MUNICIPIO_PATIENT"));
             $data['ESTADO_REPUBLICA'] = trim($this->input->post("RG_ESTADO_REPUBLICAP"));
             $data['RESIDENCIA'] = trim($this->input->post("RG_RESIDENCIA"));

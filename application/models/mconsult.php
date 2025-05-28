@@ -5,6 +5,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mconsult extends CI_Model
 {
 
+    
+
     function agregarReceta($idConsulta, $idReceta)
     {
         try {
@@ -170,9 +172,6 @@ class Mconsult extends CI_Model
                 "TOTAL_PAGADO_CONSULTA" =>  floatval($this->input->post('RG_TOTAL_PAGADO_CONSULTA')),
                 "OTROS_TRATAMIENTOS_ESTETICOS" => $this->input->post('OTROS_TRATAMIENTOS_ESTETICOS'),
                 "VIGENCIA_CONSULTA" => ACTIVO,
-                
-                
-                /* "CONDICION_CONSULTA" => $this->input->post('RG_CONDICION_CONSULTA'), */
                 "ORIGEN_CONSULTA" => $this->input->post('RG_ORIGEN_CONSULTA'),
                 "MOTIVO_CONSULTA" => $this->input->post('RG_MOTIVO_CONSULTA'),
                 "INICIOEVOLUCION_CONSULTA" => $this->input->post('RG_INICIOEVOLUCION_CONSULTA'),
@@ -221,7 +220,7 @@ class Mconsult extends CI_Model
         } catch (Exception $ex) {
             $_data = array(
                 "error" => TRUE,
-                "msj" => $e->getMessage()
+                "msj" => $ex->getMessage()
             );
             echo json_encode($_data);
         }
@@ -889,7 +888,7 @@ class Mconsult extends CI_Model
             $this->db->delete('DOCUMENTO');
             return $this->db->affected_rows();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -901,7 +900,7 @@ class Mconsult extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -932,12 +931,26 @@ class Mconsult extends CI_Model
             $this->db->join('paciente as p', 'c.ID_PACIENTE=p.ID_PACIENTE');
             //$this->db->join('tarifa as t', 'c.ID_TARIFA=t.ID_TARIFA');
             $this->db->join('sexo as s', 'p.ID_SEXO=s.ID_SEXO');
+            $this->db->join('sangre as sa', 'p.ID_SANGRE=sa.id_sangre');
             $this->db->where('c.ID_CONSULTA', $ID_CONSULT);
 
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
+        }
+    }
+
+    function get_tratamientos_by_id_consult($ID_CONSULT)
+    {
+        try {
+            $this->db->select("*");
+            $this->db->from('tratamientos_aplicados_consulta as tac');
+            $this->db->where('tac.ID_CONSULTA', $ID_CONSULT);
+            $query = $this->db->get();
+            return $query->result_array();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
         }
     }
 
@@ -952,7 +965,7 @@ class Mconsult extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -967,7 +980,7 @@ class Mconsult extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
     function get_sum($ID_FICHA)
@@ -978,7 +991,7 @@ class Mconsult extends CI_Model
             $suma = $this->db->get('rel_procedimiento_ficha')->result_array();
             return $suma;
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -990,7 +1003,7 @@ class Mconsult extends CI_Model
             $suma = $this->db->get('rel_producto_ficha')->result_array();
             return $suma;
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -1008,7 +1021,7 @@ class Mconsult extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -1023,7 +1036,7 @@ class Mconsult extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -1038,7 +1051,7 @@ class Mconsult extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -1126,18 +1139,59 @@ class Mconsult extends CI_Model
                 $NameTarifa = "";
             }
 
-            $actions = "
-            <button id='BTN_RECETA'  class='btn btn-defaultx btn-receta-show' type='button'
-                        title='Imprimir Receta' data-toggle='tooltip'
-                    data-id_consulta='" . $row['ID_CONSULTA'] . "'
-                    data-id_paciente='" . $row['ID_PACIENTE'] . "'>
-                    <i class='fas fa-print fa-x'></i>
-                    </button>";
-
-            $actions = $actions . "
-          
-           
-            <button id='BTN_FICHA_CLINICA'  class='btn btn-defaultx' type='button'
+            $actions = '
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton_'.$row['ID_CONSULTA'].'" 
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Acciones">
+        <i class="fas fa-ellipsis-v"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton_'.$row['ID_CONSULTA'].'" style="right: auto; left: 40px; transform: translateX(-25%);"  >
+        <li>
+            <a id="BTN_RECETA_'.$row['ID_CONSULTA'].'" class="btn-receta-show" 
+                title="Imprimir Receta" data-toggle="tooltip"
+                data-id_consulta="'.$row['ID_CONSULTA'].'"
+                data-id_paciente="'.$row['ID_PACIENTE'].'">
+                <i class="fas fa-print fa-fw" style="margin-right: 8px;"></i>
+                Imprimir Receta
+            </a>
+        </li>
+        <li>
+            <a id="BTN_RECETA_VER_'.$row['ID_CONSULTA'].'" class="btn-receta-ver" 
+                title="Ver Receta" data-toggle="tooltip"
+                data-id_consulta="'.$row['ID_CONSULTA'].'"
+                data-id_paciente="'.$row['ID_PACIENTE'].'">
+                <i class="fas fa-eye fa-fw" style="margin-right: 8px;"></i>
+                Ver Receta
+            </a>
+        </li>
+        <li>
+            <a id="BTN_HISTORIA_CLINICA_'.$row['ID_CONSULTA'].'" class="btn_hist_clinica" 
+                title="Historia clínica" data-toggle="tooltip"
+                data-id_consulta="'.$row['ID_CONSULTA'].'"
+                data-id_paciente="'.$row['ID_PACIENTE'].'">
+                <i class="fas fa-history fa-fw" style="margin-right: 8px;"></i>
+                Historia Clínica
+            </a>
+        </li>
+        <li>
+            <a id="BTN_CONSENTIMIENTO_'.$row['ID_CONSULTA'].'" class="btn_consentimiento" 
+                title="Consentimiento" data-toggle="tooltip"
+                data-id_consulta="'.$row['ID_CONSULTA'].'"
+                data-id_paciente="'.$row['ID_PACIENTE'].'">
+                <i class="fas fa-info fa-fw" style="margin-right: 8px;"></i>
+                Consentimiento
+            </a>
+        </li>
+        <li>
+            <a id="BTN_ADJUNTAR_ARCHIVO_'.$row['ID_CONSULTA'].'" class="" href="#modAddFiles"
+                data-toggle="modal" title="Adjuntar archivo"
+                data-id_consult="'.$row['ID_CONSULTA'].'">
+                <i class="fas fa-file-medical fa-fw" style="margin-right: 8px;"></i>
+                Adjuntar Archivo
+            </a>
+        </li>'.
+    
+        /*<button id='BTN_FICHA_CLINICA'  class='btn btn-defaultx' type='button'
                title='Ficha Diagnóstico' data-toggle='tooltip'
                data-id_tarifa='" . $row['ID_TARIFA'] . "'
                data-id_consulta='" . $row['ID_CONSULTA'] . "'
@@ -1146,7 +1200,7 @@ class Mconsult extends CI_Model
             </button>
            
 
-            <button id='BTN_FICHA_CONSUMO' class='btn btn-defaultz' title='Ficha consumo' data-toggle='tooltip'              
+            <button id='BTN_FICHA_CONSUMO' class='btn btn-defaultz' title='Ficha consumo' data-toggle='tooltip'
                data-nombre_paciente='" . $row['NOMBRE_PACIENTE'] . "'
                data-id_paciente='" . $row['ID_PACIENTE'] . "'
                data-id_consulta='" . $row['ID_CONSULTA'] . "'
@@ -1160,21 +1214,19 @@ class Mconsult extends CI_Model
                data-folio_m='" . $row['FOLIO_CONSULTA'] . "'
                data-id_tarifa='" . $row['ID_TARIFA'] . "'>
                <i class='fas fa-file-invoice fa-x' aria-hidden='true'></i>
-            </button>
+            </button>*/
 
-            <span title='Adjuntar archivo' data-toggle='tooltip' data-placement='top'>
-               <button id='BTN_ADJUNTAR_ARCHIVO' href='#modAddFiles' class='btn btn-defaultx'
-                  data-toggle='modal'
-                  data-id_consult='" . $row['ID_CONSULTA'] . "'>
-                  <i class='fas fa-file-medical fa-x' aria-hidden='true'></i>
-               </button>
-            </span> 
-            <button id='BTN_ELIMINAR_CONSULTA' title='Eliminar consulta'
-              class='btn btn-defaultz '
-              data-id-consult='" . $row['ID_CONSULTA'] . "'>
-              <i class='fa fa-trash fa-x' aria-hidden='true'></i>
-
-            </button>";
+        '<li class="divider"></li>
+        <li>
+            <a id="BTN_ELIMINAR_CONSULTA_'.$row['ID_CONSULTA'].'" class="text-danger"
+                title="Eliminar consulta" data-toggle="tooltip"
+                data-id-consult="'.$row['ID_CONSULTA'].'">
+                <i class="fas fa-trash fa-fw" style="margin-right: 8px;"></i>
+                Eliminar Consulta
+            </a>
+        </li>
+    </ul>
+</div>';
 
             $sub_array = array();
 

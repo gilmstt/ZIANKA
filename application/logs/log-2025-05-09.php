@@ -2231,3 +2231,9 @@ ERROR - 2025-05-09 20:07:23 --> Severity: Notice  --> Undefined index: length C:
 ERROR - 2025-05-09 20:07:23 --> Severity: Notice  --> Undefined index: start C:\AppServ\www\ZIANKA\application\models\mconsult.php 1086
 ERROR - 2025-05-09 20:07:23 --> Severity: Notice  --> Undefined index: search C:\AppServ\www\ZIANKA\application\models\mconsult.php 1062
 ERROR - 2025-05-09 20:07:24 --> Severity: Notice  --> Undefined index: draw C:\AppServ\www\ZIANKA\application\models\mconsult.php 1193
+ERROR - 2025-05-09 20:19:11 --> Severity: Notice  --> Undefined index: search C:\AppServ\www\ZIANKA\application\models\mconsult.php 1062
+ERROR - 2025-05-09 20:19:11 --> Severity: Notice  --> Undefined index: length C:\AppServ\www\ZIANKA\application\models\mconsult.php 1085
+ERROR - 2025-05-09 20:19:11 --> Severity: Notice  --> Undefined index: length C:\AppServ\www\ZIANKA\application\models\mconsult.php 1086
+ERROR - 2025-05-09 20:19:11 --> Severity: Notice  --> Undefined index: start C:\AppServ\www\ZIANKA\application\models\mconsult.php 1086
+ERROR - 2025-05-09 20:19:11 --> Severity: Notice  --> Undefined index: search C:\AppServ\www\ZIANKA\application\models\mconsult.php 1062
+ERROR - 2025-05-09 20:19:12 --> Severity: Notice  --> Undefined index: draw C:\AppServ\www\ZIANKA\application\models\mconsult.php 1193
