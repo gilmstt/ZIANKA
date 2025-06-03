@@ -1174,6 +1174,15 @@ class Mconsult extends CI_Model
             </a>
         </li>
         <li>
+            <a id="BTN_IMPRIMIR_HISTORIAL_'.$row['ID_CONSULTA'].'" class="btn_impr_clinica" 
+                title="Imprimir historia clínica" data-toggle="tooltip"
+                data-id_consulta="'.$row['ID_CONSULTA'].'"
+                data-id_paciente="'.$row['ID_PACIENTE'].'">
+                <i class="fas fa-print fa-fw" style="margin-right: 8px;"></i>
+                Imprimir Historial
+            </a>
+        </li>
+        <li>
             <a id="BTN_CONSENTIMIENTO_'.$row['ID_CONSULTA'].'" class="btn_consentimiento" 
                 title="Consentimiento" data-toggle="tooltip"
                 data-id_consulta="'.$row['ID_CONSULTA'].'"
