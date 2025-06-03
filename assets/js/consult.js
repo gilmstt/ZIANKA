@@ -1443,6 +1443,14 @@ $(document).ready(function () {
          var ID_CONSULT = $(this).attr('data-id_consulta');
          window.open(raiz_url + "consult/creaHistClinica/" + ID_CONSULT + "?modo=imprimir");
    });
+
+      $("body").on('click', '.btn_consentimiento', function () {
+         alert('hola');
+         var ID_CONSULT = $(this).attr('data-id_consulta');
+         window.open(raiz_url + "consult/creaConsentimiento/" + ID_CONSULT);
+   });
+   
+   
       /*document.onkeyup = function (e) {
          if (e.shiftKey && e.which == 66) {
            

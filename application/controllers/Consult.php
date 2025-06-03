@@ -2041,12 +2041,12 @@ class Consult extends CI_Controller
 
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->designUp();
-                    
+
                     if ($modo != 'imprimir') {
-                    $this->pdf->image(base_url() . "assets/img/historiaClinica/3.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(base_url() . "assets/img/historiaClinica/3.png", 0, 0, 215.9, 279.4);
                     }
 
-                    
+
                     $this->pdf->Text(59, 12, $ROW_CONSULT[0]['CONDICION_PACIENTE']);
                     $this->pdf->Text(38, 17, $ROW_CONSULT[0]['CONSTITUCION_HABITUS']);
                     $this->pdf->Text(112, 17, $ROW_CONSULT[0]['CONFORMACION_HABITUS']);
@@ -2093,7 +2093,7 @@ class Consult extends CI_Controller
                     $this->pdf->designUp();
 
                     if ($modo != 'imprimir') {
-                    $this->pdf->image(base_url() . "assets/img/historiaClinica/4.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(base_url() . "assets/img/historiaClinica/4.png", 0, 0, 215.9, 279.4);
                     }
 
                     $this->pdf->Text(20, 40, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2109,7 +2109,7 @@ class Consult extends CI_Controller
                     $this->pdf->designUp();
 
                     if ($modo != 'imprimir') {
-                    $this->pdf->image(base_url() . "assets/img/historiaClinica/5.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(base_url() . "assets/img/historiaClinica/5.png", 0, 0, 215.9, 279.4);
                     }
 
                     $this->pdf->Text(165, 127, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
@@ -2121,7 +2121,7 @@ class Consult extends CI_Controller
                     $this->pdf->designUp();
 
                     if ($modo != 'imprimir') {
-                    $this->pdf->image(base_url() . "assets/img/historiaClinica/6.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(base_url() . "assets/img/historiaClinica/6.png", 0, 0, 215.9, 279.4);
                     }
 
                     $this->pdf->Text(52, 10, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2134,7 +2134,7 @@ class Consult extends CI_Controller
                     $this->pdf->designUp();
 
                     if ($modo != 'imprimir') {
-                    $this->pdf->image(base_url() . "assets/img/historiaClinica/7.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(base_url() . "assets/img/historiaClinica/7.png", 0, 0, 215.9, 279.4);
                     }
 
                     $this->pdf->Text(52, 10, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2151,8 +2151,70 @@ class Consult extends CI_Controller
                     $this->pdf->Text(52, 220, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
                     $this->pdf->Text(115, 220, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
 
+                    $this->pdf->Output(); //Salida al navegador del pdf
+                } else {
+                    echo "redirect('Consult/index')";
+                }
+            } else {
+                redirect('Consult/index');
+            }
+        }
+    }
 
+    public function creaConsentimiento($ID_CONSULT)
+    {
+        if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
 
+            if ($ID_CONSULT > NULO) {
+                $ROW_CONSULT = $this->mconsult->get_consult_by_id_consult($ID_CONSULT);
+
+                if (count($ROW_CONSULT) > NULO) {
+                    $this->load->library('PDF');
+                    //Carpeta imágenes está un directorio arriba
+                    $directorioPadre = base_url() . "assets/img/";
+
+                    $modo = $this->input->get('modo'); // Obtener el modo desde la URL
+
+                    // $this->pdf->Image($directorioPadre."logo.jpg",10,10,10,28);
+
+                    $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                    $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
+                    $this->pdf->designUp();
+
+                    $this->pdf->image(base_url() . "assets/img/acidoHialuronico/1.png", 0, 0, 215.9, 279.4);
+
+                    $this->pdf->setXY(11, 29);
+                    $this->pdf->SetFont('Arial', '', 10);
+
+                    $this->pdf->Text(60, 32, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                    $this->pdf->Text(60, 40, $ROW_CONSULT[0]['ID_CONSULTA']);
+                    $this->pdf->Text(60, 48, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+                    $this->pdf->Text(60, 56, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+
+                    $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                    $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
+                    $this->pdf->designUp();
+
+                    $this->pdf->image(base_url() . "assets/img/acidoHialuronico/2.png", 0, 0, 215.9, 279.4);
+                    $this->pdf->setXY(11, 29);
+                    $this->pdf->SetFont('Arial', '', 9);
+
+                    $this->pdf->Text(73, 222, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+
+                    if ($ROW_CONSULT[0]['ENVEJECIMIENTO_CUTANEO'] == 1) {
+                        $this->pdf->Text(162, 227,mb_convert_encoding('Envejecimiento cutáneo', 'ISO-8859-1', 'UTF-8'));
+                    }
+
+                    $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                    $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
+                    $this->pdf->designUp();
+
+                    $this->pdf->image(base_url() . "assets/img/acidoHialuronico/3.png", 0, 0, 215.9, 279.4);
+                    $this->pdf->setXY(11, 29);
+                    $this->pdf->SetFont('Arial', '', 9);
+
+                    $this->pdf->Text(80, 137, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                    $this->pdf->Text(80, 156, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
 
                     $this->pdf->Output(); //Salida al navegador del pdf
                 } else {
