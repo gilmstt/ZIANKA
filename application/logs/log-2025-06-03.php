@@ -91,3 +91,9 @@ ERROR - 2025-06-03 14:11:11 --> Severity: Notice  --> Undefined index: search C:
 ERROR - 2025-06-03 14:11:12 --> Severity: Notice  --> Undefined index: draw C:\AppServ\www\ZIANKA\application\models\mconsult.php 1254
 ERROR - 2025-06-03 14:17:09 --> Severity: Notice  --> Undefined index: ENVEJECIMIENTO_CUTANEO  C:\AppServ\www\ZIANKA\application\controllers\Consult.php 2204
 ERROR - 2025-06-03 14:24:07 --> Severity: Warning  --> mb_convert_encoding(): Unknown encoding &quot;227&quot; C:\AppServ\www\ZIANKA\application\controllers\Consult.php 2205
+ERROR - 2025-06-03 15:15:29 --> Severity: Notice  --> Undefined index: search C:\AppServ\www\ZIANKA\application\models\mconsult.php 1075
+ERROR - 2025-06-03 15:15:29 --> Severity: Notice  --> Undefined index: length C:\AppServ\www\ZIANKA\application\models\mconsult.php 1098
+ERROR - 2025-06-03 15:15:29 --> Severity: Notice  --> Undefined index: length C:\AppServ\www\ZIANKA\application\models\mconsult.php 1099
+ERROR - 2025-06-03 15:15:29 --> Severity: Notice  --> Undefined index: start C:\AppServ\www\ZIANKA\application\models\mconsult.php 1099
+ERROR - 2025-06-03 15:15:29 --> Severity: Notice  --> Undefined index: search C:\AppServ\www\ZIANKA\application\models\mconsult.php 1075
+ERROR - 2025-06-03 15:15:30 --> Severity: Notice  --> Undefined index: draw C:\AppServ\www\ZIANKA\application\models\mconsult.php 1254
