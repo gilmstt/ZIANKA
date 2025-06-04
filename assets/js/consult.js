@@ -1445,7 +1445,6 @@ $(document).ready(function () {
    });
 
       $("body").on('click', '.btn_consentimiento', function () {
-         alert('hola');
          var ID_CONSULT = $(this).attr('data-id_consulta');
          window.open(raiz_url + "consult/creaConsentimiento/" + ID_CONSULT);
    });
