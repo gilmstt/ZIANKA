@@ -1448,6 +1448,12 @@ $(document).ready(function () {
          var ID_CONSULT = $(this).attr('data-id_consulta');
          window.open(raiz_url + "consult/creaConsentimiento/" + ID_CONSULT);
    });
+
+   $("body").on('click', '.btn_impr_consentimiento', function () {
+         var ID_CONSULT = $(this).attr('data-id_consulta');
+         window.open(raiz_url + "consult/creaConsentimiento/" + ID_CONSULT + "?modo=imprimir");
+   });
+   
    
    
       /*document.onkeyup = function (e) {

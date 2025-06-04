@@ -2181,7 +2181,9 @@ class Consult extends CI_Controller
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                     $this->pdf->designUp();
 
+                    if ($modo != 'imprimir') {
                     $this->pdf->image(base_url() . "assets/img/acidoHialuronico/1.png", 0, 0, 215.9, 279.4);
+                    }
 
                     $this->pdf->setXY(11, 29);
                     $this->pdf->SetFont('Arial', '', 10);
@@ -2195,7 +2197,10 @@ class Consult extends CI_Controller
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                     $this->pdf->designUp();
 
+                    if ($modo != 'imprimir') {
                     $this->pdf->image(base_url() . "assets/img/acidoHialuronico/2.png", 0, 0, 215.9, 279.4);
+                    }
+
                     $this->pdf->setXY(11, 29);
                     $this->pdf->SetFont('Arial', '', 9);
 
@@ -2205,17 +2210,17 @@ class Consult extends CI_Controller
                                 'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
                                 'RITIDES' => 'Ritides',
                                 'BRUXISMO' => 'Bruxismo',
-                                'ADIP_LOCALIZADA' => 'ADIP Localizada',
+                                'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
                                 'ESTRIAS' => 'Estrías',
                                 'VARICES' => 'Várices',
-                                'HIPERMEGTACION' => 'Hipermegtación',
+                                'HIPERMEGTACION' => 'Hiperpigmentación',
                                 'ALOPECIA' => 'Alopecia',
                                 'VERRUGAS' => 'Verrugas',
                                 'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
                                 'ACNE' => 'Acné',
-                                'PEFE' => 'Pefe',
+                                'PEFE' => 'Celulitis',
                                 'CICATRICES' => 'Cicatrices',
-                                'ROSACEA' => 'Rosacea',
+                                'ROSACEA' => 'Rosácea',
                                 'HIPERHIDROSIS' => 'Hiperhidrósis',
     
                               ];
@@ -2252,7 +2257,10 @@ class Consult extends CI_Controller
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                     $this->pdf->designUp();
 
+                    if ($modo != 'imprimir') {
                     $this->pdf->image(base_url() . "assets/img/acidoHialuronico/3.png", 0, 0, 215.9, 279.4);
+                    }
+                    
                     $this->pdf->setXY(11, 29);
                     $this->pdf->SetFont('Arial', '', 9);
 

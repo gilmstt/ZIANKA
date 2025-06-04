@@ -1192,6 +1192,15 @@ class Mconsult extends CI_Model
             </a>
         </li>
         <li>
+            <a id="BTN_IMPRIMIR_CONSENTIMIENTO_'.$row['ID_CONSULTA'].'" class="btn_impr_consentimiento" 
+                title="Imprimir consentimiento" data-toggle="tooltip"
+                data-id_consulta="'.$row['ID_CONSULTA'].'"
+                data-id_paciente="'.$row['ID_PACIENTE'].'">
+                <i class="fas fa-print fa-fw" style="margin-right: 8px;"></i>
+                Imprimir Consentimiento
+            </a>
+        </li>
+        <li>
             <a id="BTN_ADJUNTAR_ARCHIVO_'.$row['ID_CONSULTA'].'" class="" href="#modAddFiles"
                 data-toggle="modal" title="Adjuntar archivo"
                 data-id_consult="'.$row['ID_CONSULTA'].'">
