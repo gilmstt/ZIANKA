@@ -1,2 +1,3 @@
 ﻿.gitinogre
 /application/config/database.php
+/application/logs/
