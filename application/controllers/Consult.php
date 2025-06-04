@@ -2201,9 +2201,52 @@ class Consult extends CI_Controller
 
                     $this->pdf->Text(73, 222, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
 
-                    if ($ROW_CONSULT[0]['ENVEJECIMIENTO_CUTANEO'] == 1) {
-                        $this->pdf->Text(162, 227,mb_convert_encoding('Envejecimiento cutáneo', 'ISO-8859-1', 'UTF-8'));
+                    $campos = [
+                                'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
+                                'RITIDES' => 'Ritides',
+                                'BRUXISMO' => 'Bruxismo',
+                                'ADIP_LOCALIZADA' => 'ADIP Localizada',
+                                'ESTRIAS' => 'Estrías',
+                                'VARICES' => 'Várices',
+                                'HIPERMEGTACION' => 'Hipermegtación',
+                                'ALOPECIA' => 'Alopecia',
+                                'VERRUGAS' => 'Verrugas',
+                                'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
+                                'ACNE' => 'Acné',
+                                'PEFE' => 'Pefe',
+                                'CICATRICES' => 'Cicatrices',
+                                'ROSACEA' => 'Rosacea',
+                                'HIPERHIDROSIS' => 'Hiperhidrósis',
+    
+                              ];
+
+                    $x = 161;          // Coordenada X inicial
+                    $y = 227;         // Coordenada Y inicial
+                    $maxX = 205;      // Límite derecho de la página (ajusta según tu margen)
+                    $espaciado = 3; // Espacio entre textos
+
+                    foreach ($campos as $campo => $texto) {
+                        if ($ROW_CONSULT[0][$campo] == 1) {
+                            // Convertir texto al encoding correcto
+                            $textoPDF = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
+
+                            // Obtener ancho real del texto
+                            $anchoTexto = $this->pdf->GetStringWidth($textoPDF);
+
+                            // Si ya no cabe en la línea actual, pasa a la siguiente
+                            if ($x + $anchoTexto > $maxX) {
+                                $x = 20;
+                                $y += 5;
+                            }
+
+                            // Imprimir el texto
+                            $this->pdf->Text($x, $y, $textoPDF);
+
+                            // Avanzar X según el ancho del texto + espacio
+                            $x += $anchoTexto + $espaciado;
+                        }
                     }
+
 
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
