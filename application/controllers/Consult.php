@@ -2282,7 +2282,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/co2/1.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(base_url() . "assets/img/bioestimulador/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2293,20 +2293,75 @@ class Consult extends CI_Controller
                         $this->pdf->Text(60, 56, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
-                        $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
+                        $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/co2/2.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(base_url() . "assets/img/bioestimulador/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
-                        $this->pdf->SetFont('Arial', '', 9);
-                        $this->pdf->Text(80, 129, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
-                        $this->pdf->Text(80, 148, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
-                        $this->pdf->Text(80, 200, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
-                        $this->pdf->Text(80, 218, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(73, 187, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+                        $campos = [
+                                    'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
+                                    'RITIDES' => 'Ritides',
+                                    'BRUXISMO' => 'Bruxismo',
+                                    'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
+                                    'ESTRIAS' => 'Estrías',
+                                    'VARICES' => 'Várices',
+                                    'HIPERMEGTACION' => 'Hiperpigmentación',
+                                    'ALOPECIA' => 'Alopecia',
+                                    'VERRUGAS' => 'Verrugas',
+                                    'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
+                                    'ACNE' => 'Acné',
+                                    'PEFE' => 'Celulitis',
+                                    'CICATRICES' => 'Cicatrices',
+                                    'ROSACEA' => 'Rosácea',
+                                    'HIPERHIDROSIS' => 'Hiperhidrósis',
+        
+                                ];
 
+                        $x = 161;          // Coordenada X inicial
+                        $y = 192;         // Coordenada Y inicial
+                        $maxX = 205;      // Límite derecho de la página (ajusta según tu margen)
+                        $espaciado = 3; // Espacio entre textos
+
+                        foreach ($campos as $campo => $texto) {
+                            if ($ROW_CONSULT[0][$campo] == 1) {
+                                // Convertir texto al encoding correcto
+                                $textoPDF = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
+
+                                // Obtener ancho real del texto
+                                $anchoTexto = $this->pdf->GetStringWidth($textoPDF);
+
+                                // Si ya no cabe en la línea actual, pasa a la siguiente
+                                if ($x + $anchoTexto > $maxX) {
+                                    $x = 20;
+                                    $y += 5;
+                                }
+
+                                // Imprimir el texto
+                                $this->pdf->Text($x, $y, $textoPDF);
+
+                                // Avanzar X según el ancho del texto + espacio
+                                $x += $anchoTexto + $espaciado;
+                            } else {
+                               $this->pdf->Text(161,176, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
+                            }
+                        }
+
+                        $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                        $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
+                        $this->pdf->designUp();
+
+                        if ($modo != 'imprimir') {
+                        $this->pdf->image(base_url() . "assets/img/bioestimulador/3.png", 0, 0, 215.9, 279.4);
+                        }
+
+                        $this->pdf->setXY(11, 29);
+                        $this->pdf->setXY(11, 29);
+                        $this->pdf->Text(80, 101, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(80, 120, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
 
                         $this->pdf->Output(); //Salida al navegador del pdf
                     }
@@ -2383,6 +2438,52 @@ class Consult extends CI_Controller
 
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(73, 170, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+                        $campos = [
+                                    'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
+                                    'RITIDES' => 'Ritides',
+                                    'BRUXISMO' => 'Bruxismo',
+                                    'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
+                                    'ESTRIAS' => 'Estrías',
+                                    'VARICES' => 'Várices',
+                                    'HIPERMEGTACION' => 'Hiperpigmentación',
+                                    'ALOPECIA' => 'Alopecia',
+                                    'VERRUGAS' => 'Verrugas',
+                                    'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
+                                    'ACNE' => 'Acné',
+                                    'PEFE' => 'Celulitis',
+                                    'CICATRICES' => 'Cicatrices',
+                                    'ROSACEA' => 'Rosácea',
+                                    'HIPERHIDROSIS' => 'Hiperhidrósis',
+        
+                                ];
+
+                        $x = 161;          // Coordenada X inicial
+                        $y = 176;         // Coordenada Y inicial
+                        $maxX = 205;      // Límite derecho de la página (ajusta según tu margen)
+                        $espaciado = 3; // Espacio entre textos
+
+                        foreach ($campos as $campo => $texto) {
+                            if ($ROW_CONSULT[0][$campo] == 1) {
+                                // Convertir texto al encoding correcto
+                                $textoPDF = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
+
+                                // Obtener ancho real del texto
+                                $anchoTexto = $this->pdf->GetStringWidth($textoPDF);
+
+                                // Si ya no cabe en la línea actual, pasa a la siguiente
+                                if ($x + $anchoTexto > $maxX) {
+                                    $x = 20;
+                                    $y += 5;
+                                }
+
+                                // Imprimir el texto
+                                $this->pdf->Text($x, $y, $textoPDF);
+
+                                // Avanzar X según el ancho del texto + espacio
+                                $x += $anchoTexto + $espaciado;
+                            } 
+                            $this->pdf->Text(161,176, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
+                        }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 8); //Arial, negrita, 12 puntos
@@ -2475,7 +2576,7 @@ class Consult extends CI_Controller
                         }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
-                        $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
+                        $this->pdf->SetFont('Arial', '', 8); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
@@ -2484,14 +2585,64 @@ class Consult extends CI_Controller
 
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(73, 141, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->SetFont('Arial', '', 9);
+                        $this->pdf->Text(162,146, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
+
+                        $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                        $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
+                        $this->pdf->designUp();
+
+                        if ($modo != 'imprimir') {
+                        $this->pdf->image(base_url() . "assets/img/enzimas/4.png", 0, 0, 215.9, 279.4);
+                        }
+
+                        $this->pdf->setXY(11, 29);
+                        $this->pdf->Text(80, 58, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(80, 76.5, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+
 
                         $this->pdf->Output(); //Salida al navegador del pdf
                     }
 
+                    //----------------TIPO DE CONSULTA 7 ------------------
+
+                    if($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 7){
+                        $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                        $this->pdf->SetFont('Arial', '', 10); //Arial, negrita, 12 puntos
+                        $this->pdf->designUp();
+
+                        if ($modo != 'imprimir') {
+                        $this->pdf->image(base_url() . "assets/img/hialuronidasa/1.png", 0, 0, 215.9, 279.4);
+                        }
+                        $this->pdf->setXY(11, 29);
+                        $this->pdf->Text(60, 32, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(60, 40, $ROW_CONSULT[0]['ID_CONSULTA']);
+                        $this->pdf->Text(60, 48, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(60, 56, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+
+                        $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                        $this->pdf->SetFont('Arial', '', 8); //Arial, negrita, 12 puntos
+                        $this->pdf->designUp();
+
+                        if ($modo != 'imprimir') {
+                        $this->pdf->image(base_url() . "assets/img/hialuronidasa/2.png", 0, 0, 215.9, 279.4);
+                        }
+                        $this->pdf->Text(73, 208, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+
+                        $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                        $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
+                        $this->pdf->designUp();
+
+                        if ($modo != 'imprimir') {
+                        $this->pdf->image(base_url() . "assets/img/hialuronidasa/3.png", 0, 0, 215.9, 279.4);
+                        }
+                        $this->pdf->setXY(11, 29);
+                        $this->pdf->Text(80, 124, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(80, 143, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
 
 
-
-
+                        $this->pdf->Output(); //Salida al navegador del pdf
+                    }
 
                     //----------------TIPO DE CONSULTA 8 ------------------
 
@@ -2503,7 +2654,6 @@ class Consult extends CI_Controller
                         if ($modo != 'imprimir') {
                         $this->pdf->image(base_url() . "assets/img/peeling/1.png", 0, 0, 215.9, 279.4);
                         }
-
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(60, 32, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
                         $this->pdf->Text(60, 40, $ROW_CONSULT[0]['ID_CONSULTA']);
@@ -2517,7 +2667,6 @@ class Consult extends CI_Controller
                         if ($modo != 'imprimir') {
                         $this->pdf->image(base_url() . "assets/img/peeling/2.png", 0, 0, 215.9, 279.4);
                         }
-
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
@@ -2525,11 +2674,50 @@ class Consult extends CI_Controller
                         if ($modo != 'imprimir') {
                         $this->pdf->image(base_url() . "assets/img/peeling/3.png", 0, 0, 215.9, 279.4);
                         }
-
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(73, 33, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
                         $this->pdf->Text(80, 200, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
                         $this->pdf->Text(80, 219, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+
+                        $this->pdf->Output(); //Salida al navegador del pdf
+                    }
+
+                    //----------------TIPO DE CONSULTA 9 ------------------
+
+                    if($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 9){
+                        $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                        $this->pdf->SetFont('Arial', '', 10); //Arial, negrita, 12 puntos
+                        $this->pdf->designUp();
+
+                        if ($modo != 'imprimir') {
+                        $this->pdf->image(base_url() . "assets/img/toxina/1.png", 0, 0, 215.9, 279.4);
+                        }
+
+                        $this->pdf->setXY(11, 29);
+                        $this->pdf->Text(60, 32, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(60, 40, $ROW_CONSULT[0]['ID_CONSULTA']);
+                        $this->pdf->Text(60, 48, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(60, 56, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+
+                        $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                        $this->pdf->SetFont('Arial', '', 8); //Arial, negrita, 12 puntos
+                        $this->pdf->designUp();
+
+                        if ($modo != 'imprimir') {
+                        $this->pdf->image(base_url() . "assets/img/toxina/2.png", 0, 0, 215.9, 279.4);
+                        }
+                        $this->pdf->Text(73, 152, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+
+                        $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
+                        $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
+                        $this->pdf->designUp();
+
+                        if ($modo != 'imprimir') {
+                        $this->pdf->image(base_url() . "assets/img/toxina/3.png", 0, 0, 215.9, 279.4);
+                        }
+                        $this->pdf->setXY(11, 29);
+                        $this->pdf->Text(80, 72, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(80, 90, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
 
                         $this->pdf->Output(); //Salida al navegador del pdf
                     }
