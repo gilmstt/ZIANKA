@@ -40,7 +40,7 @@ class PDF extends FPDF{
 
     function designUp($espejo = 0){
        // $this->Rect( (13 + $espejo), 13, 15, 10); //Marco exterior
-        $this->Image(base_url()."assets/img/logo1.png",35,7,28);
+        //$this->Image(base_url()."assets/img/logo1.png",35,7,28);
         $this->SetDrawColor(84,109,175);
         $this->SetTextColor(6,6,6);
         

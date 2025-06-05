@@ -11,23 +11,23 @@ $(document).ready(function () {
    });
    $('#dataConsult').DataTable({
       "dom": "<'row'<'col-md-6'<'col-lg-12'fB>><'col-md-6 text-right'l>><'row op'<'col-md-12't>><'row'<'col-md-12'i>><'row'<'col-md-12'p>>",
-      "language": {"url": raiz_url+"assets/plugins/dataTables/Spanish.json"},
+      "language": { "url": raiz_url + "assets/plugins/dataTables/Spanish.json" },
       "processing": true,
       "retrieve": true,
       "serverSide": true,
       "order": [],
-      "buttons": ['excel'],          
+      "buttons": ['excel'],
       "ajax": {
          url: raiz_url + "Consult/ajax_get_all_consults",
          type: "POST"
       },
       drawCallback: function () {
          $('[data-toggle="tooltip"]').tooltip({
-    trigger : 'hover'
-})
+            trigger: 'hover'
+         })
       }
    });
-// SEND FORM FICHA =================================================================//
+   // SEND FORM FICHA =================================================================//
    $("#NEW_CONSULT").validator().on('submit', function (e) {
       if (e.isDefaultPrevented()) {
          // handle the invalid form...
@@ -86,27 +86,27 @@ $(document).ready(function () {
 
       }
    });
-   $("#SELECT_TARIFA").change(function(){
+   $("#SELECT_TARIFA").change(function () {
       let percent = $(this).find(':selected').data('percent');
       let nombre = $(this).find(':selected').data('nombre');
       let precioConsult = $(this).find(':selected').data('precioconsulta');
 
       $("#DESC_TARIFA").val(percent);
-      $("#NOMBRE_TARIFA").html(" "+nombre+" ");
+      $("#NOMBRE_TARIFA").html(" " + nombre + " ");
       $("#PRECIO_CONSULTA").val(precioConsult);
-      get_total_final(percent);  
+      get_total_final(percent);
    })
-   $("#SELECT_TARIFA_U").change(function(){
+   $("#SELECT_TARIFA_U").change(function () {
       let percent = $(this).find(':selected').data('percent');
       let nombre = $(this).find(':selected').data('nombre');
       let precioConsult = $(this).find(':selected').data('precioconsulta');
-      
+
       $("#PRECIO_CONSULTA").val(precioConsult);
       $("#DESC_TARIFA").val(percent);
-      $("#NOMBRE_TARIFA").html(" "+nombre+" ");
-      get_total_final(percent);  
+      $("#NOMBRE_TARIFA").html(" " + nombre + " ");
+      get_total_final(percent);
    })
-// INIT SELECT 2 ==================================================================//
+   // INIT SELECT 2 ==================================================================//
    $('#SEARCH_PROCEDIMIENTO').select2({
       placeholder: "Elige un procedimiento",
       dropdownParent: $("#modal"),
@@ -118,30 +118,30 @@ $(document).ready(function () {
 
    $("#SELECT_TIPO_CONSULTA").change(function () {
       var id_tipo_consulta = $(this).val();
-  
-      if (id_tipo_consulta) {
-          $.ajax({
-              type: "POST",
-              url: raiz_url + "Consult/ajax_get_procedimientos_por_tipo",
-              data: { id_tipo_consulta: id_tipo_consulta },
-              dataType: "json",
-              success: function (response) {
-                  var select = $("#SEARCH_PROCEDIMIENTO");
-                  select.empty(); // limpia anteriores
-                  select.append('<option value="" disabled selected>Elige</option>');
-  
-                  if (response.length > 0) {
-                      $.each(response, function (index, item) {
-                          select.append('<option value="' + item.descripcion_procedimiento + '">' + item.descripcion_procedimiento + '</option>');
-                      });
-                  }
-              }
-          });
-      }
-  });
 
-  
-// MODAL FICHA CONSUMO - TEMP PROCEDIMIENTOS =====================================//
+      if (id_tipo_consulta) {
+         $.ajax({
+            type: "POST",
+            url: raiz_url + "Consult/ajax_get_procedimientos_por_tipo",
+            data: { id_tipo_consulta: id_tipo_consulta },
+            dataType: "json",
+            success: function (response) {
+               var select = $("#SEARCH_PROCEDIMIENTO");
+               select.empty(); // limpia anteriores
+               select.append('<option value="" disabled selected>Elige</option>');
+
+               if (response.length > 0) {
+                  $.each(response, function (index, item) {
+                     select.append('<option value="' + item.descripcion_procedimiento + '">' + item.descripcion_procedimiento + '</option>');
+                  });
+               }
+            }
+         });
+      }
+   });
+
+
+   // MODAL FICHA CONSUMO - TEMP PROCEDIMIENTOS =====================================//
    $("#SEARCH_PROCEDIMIENTO").change(function () {
       let txt = $("#SEARCH_PROCEDIMIENTO").val();
       if (txt) {
@@ -204,7 +204,7 @@ $(document).ready(function () {
                $("#SEARCH_PROCEDIMIENTO").val("").trigger('change');
                $("#msj_temp").hide();
                $("#msj_success").show().delay(2500).fadeOut("fast");
-                  
+
                load_temProcedimientos();
                get_total_final(descuento);
 
@@ -223,12 +223,12 @@ $(document).ready(function () {
          type: "POST",
          data: { id_temp: id }
       })
-      .done(function () {
-         /* let desc = $("#DESCUENTO").val(); */
-         let desc = $("#DESC_TARIFA").val();
-         get_total_final(desc);
-         load_temProcedimientos();
-      });
+         .done(function () {
+            /* let desc = $("#DESCUENTO").val(); */
+            let desc = $("#DESC_TARIFA").val();
+            get_total_final(desc);
+            load_temProcedimientos();
+         });
 
    });// Elimino el procedimiento temporal
    function load_temProcedimientos() {
@@ -242,26 +242,26 @@ $(document).ready(function () {
             var suma = respuesta.suma['PRECIO_PROCEDIMIENTO'];
 
             if (data.length > 0) {
-               let html = ""; 
+               let html = "";
                for (let i = 0; i < data.length; i++) {
-                  const cant    = data[i]['CANT_PROCEDIMIENTO'];
-                  const costo   = data[i]['PRECIO_PROCEDIMIENTO'];
-                  const nombre  = data[i]['NOMBRE_PROCEDIMIENTO'];
+                  const cant = data[i]['CANT_PROCEDIMIENTO'];
+                  const costo = data[i]['PRECIO_PROCEDIMIENTO'];
+                  const nombre = data[i]['NOMBRE_PROCEDIMIENTO'];
                   const id_temp = data[i]['ID_TEMP'];
 
                   html += "<tr><td class='td-hidden'>" + nombre + "</td>" +
-                  "<td>"  + cant + "</td>" +
-                  "<td>$" + costo+ "</td>" +
-                  "<td> <a data-idtemp='" + id_temp + "' id='temp-del'> <i class='fas fa-trash-alt'</a> </td></tr>";
+                     "<td>" + cant + "</td>" +
+                     "<td>$" + costo + "</td>" +
+                     "<td> <a data-idtemp='" + id_temp + "' id='temp-del'> <i class='fas fa-trash-alt'</a> </td></tr>";
                }
-               if($("#ID_MEMBRESIA").val()){
+               if ($("#ID_MEMBRESIA").val()) {
                   suma = 0;
-               }else{
+               } else {
                   suma = suma;
                }
-                  html += "<td></td> <td>TOTAL</td> <td>"+suma+"</td> <td></td>";
+               html += "<td></td> <td>TOTAL</td> <td>" + suma + "</td> <td></td>";
 
-                  $("#tbody_procedimientos").html(html);
+               $("#tbody_procedimientos").html(html);
             } else {
                var html = "<div id='msj_temp' class='alert alert-warning'> No se han agregado procedimientos..</div>";
                $("#div_msj").html(html);
@@ -271,7 +271,7 @@ $(document).ready(function () {
       });
    }// Listo los procedimientos temporales
 
-// MODAL FICHA CONSUMO - TEMP PRODUCTOS =========================================//
+   // MODAL FICHA CONSUMO - TEMP PRODUCTOS =========================================//
    $("#SEARCH_PRODUCTO").change(function () {
       let txt = $("#SEARCH_PRODUCTO").val();
       if (txt) {
@@ -298,7 +298,7 @@ $(document).ready(function () {
       }
 
    });// Busco el producto por nombre
-   $("#select_procedimiento").change(function(){
+   $("#select_procedimiento").change(function () {
       let $this = "#select_procedimiento option:selected";
       $("#proc_costo").val($($this).data('precio_proce'));
    })
@@ -328,7 +328,7 @@ $(document).ready(function () {
             .show()
             .delay(2500)
             .fadeOut("fast");
-      }else {
+      } else {
          $.ajax({
             type: "POST",
             url: raiz_url + "Consult/ajax_temp_producto",
@@ -362,12 +362,12 @@ $(document).ready(function () {
          type: "POST",
          data: { id_temp: id }
       })
-      .done(function () {
-         /* let desc = $("#DESCUENTO").val(); */
-         let desc = $("#DESC_TARIFA").val();
-         get_total_final(desc);
-         load_tempProductos();
-      });
+         .done(function () {
+            /* let desc = $("#DESCUENTO").val(); */
+            let desc = $("#DESC_TARIFA").val();
+            get_total_final(desc);
+            load_tempProductos();
+         });
 
    });// Elimino el producto temporal
    function load_tempProductos() {
@@ -378,43 +378,43 @@ $(document).ready(function () {
          success: function (respuesta) {
             var data = respuesta.data;
             var suma = respuesta.sumaProductos['PRECIO_PRODUCTO'];
-           /*  let tarifa = $("#ID_TARIFA").val(); 
-            let desc = $("#DESC_TARIFA").val();    */         
-        /*     desc = desc.replace(".00", ""); */
+            /*  let tarifa = $("#ID_TARIFA").val(); 
+             let desc = $("#DESC_TARIFA").val();    */
+            /*     desc = desc.replace(".00", ""); */
 
             if (data.length > 0) {
-              /*  let html = "";
-               if(tarifa){
-                  for (let i = 0; i < data.length; i++) {
-                     const nombre = data[i]['NOMBRE_PRODUCTO'];
-                     const total = data[i]['PRECIO_PRODUCTO'];
-                     const cant = data[i]['CANT_PRODUCTO'];
-                     const id_temp = data[i]['ID_TEMP'];
+               /*  let html = "";
+                if(tarifa){
+                   for (let i = 0; i < data.length; i++) {
+                      const nombre = data[i]['NOMBRE_PRODUCTO'];
+                      const total = data[i]['PRECIO_PRODUCTO'];
+                      const cant = data[i]['CANT_PRODUCTO'];
+                      const id_temp = data[i]['ID_TEMP'];
+ 
+                      html += "<tr><td class='td-hidden'><span data-toggle='tooltip' title="+nombre+">" + nombre + "</span></td>" +
+                      "<td>" + desc + "%</td>" +
+                      "<td>"  + cant  + "</td>" +
+                      "<td>$" + total + "</td>" +
+                      "<td> <a data-idtemp='" + id_temp + "' id='temp-del2'> <i class='fas fa-trash-alt'</a> </td></tr>";
+                   } 
+                   $("#onlyurgency").show();
+                }else{ */
+               for (let i = 0; i < data.length; i++) {
+                  const nombre = data[i]['NOMBRE_PRODUCTO'];
+                  const costo = data[i]['PRECIO_PRODUCTO'];
+                  const cant = data[i]['CANT_PRODUCTO'];
+                  const id_temp = data[i]['ID_TEMP'];
 
-                     html += "<tr><td class='td-hidden'><span data-toggle='tooltip' title="+nombre+">" + nombre + "</span></td>" +
-                     "<td>" + desc + "%</td>" +
-                     "<td>"  + cant  + "</td>" +
-                     "<td>$" + total + "</td>" +
-                     "<td> <a data-idtemp='" + id_temp + "' id='temp-del2'> <i class='fas fa-trash-alt'</a> </td></tr>";
-                  } 
-                  $("#onlyurgency").show();
-               }else{ */
-                  for (let i = 0; i < data.length; i++) {
-                     const nombre = data[i]['NOMBRE_PRODUCTO'];
-                     const costo = data[i]['PRECIO_PRODUCTO'];
-                     const cant = data[i]['CANT_PRODUCTO'];
-                     const id_temp = data[i]['ID_TEMP'];
-
-                     html += "<tr><td class='td-hidden'><span data-toggle='tooltip' title="+nombre+">" + nombre + "</span></td>" +
-                     "<td>"  + cant  + "</td>" +
+                  html += "<tr><td class='td-hidden'><span data-toggle='tooltip' title=" + nombre + ">" + nombre + "</span></td>" +
+                     "<td>" + cant + "</td>" +
                      "<td>$" + costo + "</td>" +
                      "<td> <a data-idtemp='" + id_temp + "' id='temp-del2'> <i class='fas fa-trash-alt'</a> </td></tr>";
-                  }
-            /*       $("#onlyurgency").hide();
                }
-               let td = (tarifa ? "<td></td>" : ""); */
+               /*       $("#onlyurgency").hide();
+                  }
+                  let td = (tarifa ? "<td></td>" : ""); */
 
-               html += /* td+ */"<td></td> <td>TOTAL</td> <td>"+suma+"</td> <td></td>";
+               html += /* td+ */"<td></td> <td>TOTAL</td> <td>" + suma + "</td> <td></td>";
                $("#tbody_productos").html(html);
             } else {
                var html = "<div id='msj_temp2' class='alert alert-warning'> No se han agregado productos..</div>";
@@ -425,11 +425,11 @@ $(document).ready(function () {
       });
    }// Listo los productos temporales      
 
-// MODAL FICHA CONSUMO ====================================//
-  // Habilito el modo edicion
-  function actualizarSeleccion() {
+   // MODAL FICHA CONSUMO ====================================//
+   // Habilito el modo edicion
+   function actualizarSeleccion() {
       var id_tarifa = $('#id_tarifa').val();
-      $('#tarifa_select_urgency option').each(function() {
+      $('#tarifa_select_urgency option').each(function () {
          $(this).prop('selected', false);
          if ($(this).val() == id_tarifa) {
             $(this).prop('selected', true);
@@ -437,14 +437,14 @@ $(document).ready(function () {
          }
       });
    }
-    // Función para establecer el valor de id_tarifa y actualizar la selección
-    function setIdTarifaC(value) {
+   // Función para establecer el valor de id_tarifa y actualizar la selección
+   function setIdTarifaC(value) {
       $('#id_tarifa').val(value);
       actualizarSeleccion();
-  }
+   }
 
-  // Exponer la función setIdTarifa globalmente si es necesario
-  window.setIdTarifaC = setIdTarifaC;
+   // Exponer la función setIdTarifa globalmente si es necesario
+   window.setIdTarifaC = setIdTarifaC;
 
    $("body").on("click", "#BTN_FICHA_CONSUMO", function () {
 
@@ -452,34 +452,34 @@ $(document).ready(function () {
 
       let ficha = $(this).data('id_ficha');
       let membresia = $(this).data('membresia');
-      let tarifa = $(this).data('desc_tarifa'); tarifa = (tarifa ? tarifa.replace(".00", ""):"");     
+      let tarifa = $(this).data('desc_tarifa'); tarifa = (tarifa ? tarifa.replace(".00", "") : "");
       /* let descuento = $(this).data('desc_membresia'); descuento = (descuento ? descuento.replace(".00", "") : ""); */
-    
-      $("#id_ficha_consumo").val(ficha);    
-      setIdTarifaC($(this).data('id_tarifa'));           
+
+      $("#id_ficha_consumo").val(ficha);
+      setIdTarifaC($(this).data('id_tarifa'));
       //$("#id_tarifa").val($(this).data('id_tarifa'));  
       $("#id_consulta_consumo").val($(this).data('id_consulta'));
       $("#id_paciente_consumo").val($(this).data('id_paciente'));
-     
+
       $("#paciente_name").html($(this).data('nombre_paciente'));
       $("#close_consulta").val($(this).data('close'));
       $("#FOLIO_CONSULTA").val($(this).data('folio'));
       $("#FOLIO_CONSULTA_M").val($(this).data('folio_m'));
-      
-      get_procedimientos(ficha);
-      get_productos(ficha);    
 
-      if ($(this).data('id_tarifa')){
+      get_procedimientos(ficha);
+      get_productos(ficha);
+
+      if ($(this).data('id_tarifa')) {
          $("#DESC_TARIFA_INDEX").val(tarifa);
-         $("#TYPE").html("TARIFA "+"<font class='type_modal'>"+ $(this).data('tarifa')+"</font>");
+         $("#TYPE").html("TARIFA " + "<font class='type_modal'>" + $(this).data('tarifa') + "</font>");
          $("#FOOTER_T").show();
          $("#FOOTER_M").hide();
          $("#precio_consult").val($(this).data('precio_consult'));
          $("#DIV_PRECIO_PROCE").show();
-         
+
          $("#tarifa_select").val($(this).data('id_tarifa'));
-         get_total(tarifa,ficha);
-      }else{
+         get_total(tarifa, ficha);
+      } else {
          $("#MEMBRESIA").val(membresia);
          $("#FOOTER_T").hide();
          $("#FOOTER_M").show();
@@ -488,16 +488,16 @@ $(document).ready(function () {
          $("#proc_costo").val(0);
          $("#DIV_PRECIO_PROCE").hide();
 
-         $("#TYPE").html("MEMBRESIA "+"<font class='type_modal'>"+$(this).data('membresia')+"</font>");
-         get_total(0,ficha);
+         $("#TYPE").html("MEMBRESIA " + "<font class='type_modal'>" + $(this).data('membresia') + "</font>");
+         get_total(0, ficha);
       }
-      if ($(this).data('close')===0){
+      if ($(this).data('close') === 0) {
          $("#BTN_EDIT_FICHA").show();
-      }else{
+      } else {
          $("#BTN_EDIT_FICHA").hide();
       }
    });// Envio parametros para que me de los rows de rel procedimiento y productos
-   $("#tarifa_select").change(function(){
+   $("#tarifa_select").change(function () {
       let desc = $(this).find(':selected').data('desc');
       let name = $(this).find(':selected').data('name');
       let precioC = $(this).find(':selected').data('precioconsulta');
@@ -507,53 +507,52 @@ $(document).ready(function () {
       $("#DESC_TARIFA_INDEX").val(desc);
       $("#precio_consult").val(precioC);
       $(".type_modal").text(name);
-      get_total(desc,ficha);
-            
+      get_total(desc, ficha);
+
       $.ajax({
          type: "POST",
-         url: raiz_url+"Consult/change_tarifa",
-         data: {ficha:ficha , id_tarifa:selectVal},
+         url: raiz_url + "Consult/change_tarifa",
+         data: { ficha: ficha, id_tarifa: selectVal },
          dataType: "POST",
          success: function (response) {
-           
+
          }
       });
 
    })
    $("body").on("click", "#BTN_EDIT_FICHA", function () {
       let html = $(this).html();
-      if (html === 'Editar')
-      {
+      if (html === 'Editar') {
          isEdit = true;
          $(this).html('Terminar').toggleClass('btn-info').toggleClass('btn-success');
-         $("#DESC_TARIFA_INDEX").attr('readonly',false);
-         $("#FOLIO_CONSULTA").attr('readonly',false);
-         $("#FOLIO_CONSULTA_M").attr('readonly',false);
-         $(".product-quantityC").attr('readonly',false);
-         if($("#id_tarifa").val()>0){
+         $("#DESC_TARIFA_INDEX").attr('readonly', false);
+         $("#FOLIO_CONSULTA").attr('readonly', false);
+         $("#FOLIO_CONSULTA_M").attr('readonly', false);
+         $(".product-quantityC").attr('readonly', false);
+         if ($("#id_tarifa").val() > 0) {
             $("#tarifa_edit").toggle();
             $("#labelType").toggle();
-         } 
-      } else
-      {
-         $(".product-quantityC").attr('readonly',true);
+         }
+      } else {
+         $(".product-quantityC").attr('readonly', true);
          isEdit = false;
          $(this).html('Editar').toggleClass('btn-success').toggleClass('btn-info');
-         
-         if($("#DESC_TARIFA_INDEX").val()){
-         
-            $("#DESC_TARIFA_INDEX").attr('readonly',true);
+
+         if ($("#DESC_TARIFA_INDEX").val()) {
+
+            $("#DESC_TARIFA_INDEX").attr('readonly', true);
             $.ajax({
                type: "post",
-               url: raiz_url+"Consult/ajax_edit_desc_tarifa",
-               data: {desc:$("#DESC_TARIFA_INDEX").val(),
-                     TotPag:$("#TOTAL_PAGADO_CONSULTA").val(),
-                     FolCon:$("#FOLIO_CONSULTA").val(),
-                     ficha:$("#id_ficha_consumo").val(),
-                     consulta:$("#id_consulta").val()
-               },          
-               success:function(data){
-                  if(data == 'repetido'){
+               url: raiz_url + "Consult/ajax_edit_desc_tarifa",
+               data: {
+                  desc: $("#DESC_TARIFA_INDEX").val(),
+                  TotPag: $("#TOTAL_PAGADO_CONSULTA").val(),
+                  FolCon: $("#FOLIO_CONSULTA").val(),
+                  ficha: $("#id_ficha_consumo").val(),
+                  consulta: $("#id_consulta").val()
+               },
+               success: function (data) {
+                  if (data == 'repetido') {
                      Swal.fire({
                         title: 'Atención!',
                         text: 'Folio repetido',
@@ -561,8 +560,8 @@ $(document).ready(function () {
                         showConfirmButton: false,
                         timer: 2500
                      });
-                  }else{
-                     if(data == 'no ficha'){
+                  } else {
+                     if (data == 'no ficha') {
                         Swal.fire({
                            title: 'Atención!',
                            text: 'Ficha no creada',
@@ -570,22 +569,24 @@ $(document).ready(function () {
                            showConfirmButton: false,
                            timer: 2500
                         });
-                     }else{
-                        $('#dataConsult').DataTable().ajax.reload(); 
-                     }  
+                     } else {
+                        $('#dataConsult').DataTable().ajax.reload();
+                     }
                   }
-               }       
+               }
             });
 
-         } else{
+         } else {
             $.ajax({
                type: "post",
-               url: raiz_url+"Consult/ajax_edit_desc_tarifa",
-               data: {FolConM:$("#FOLIO_CONSULTA_M").val(),
-               ficha:$("#id_ficha_consumo").val(),
-               consulta:$("#id_consulta").val()},          
-               success:function(data){
-                  if(data == 'repetido'){
+               url: raiz_url + "Consult/ajax_edit_desc_tarifa",
+               data: {
+                  FolConM: $("#FOLIO_CONSULTA_M").val(),
+                  ficha: $("#id_ficha_consumo").val(),
+                  consulta: $("#id_consulta").val()
+               },
+               success: function (data) {
+                  if (data == 'repetido') {
                      Swal.fire({
                         title: 'Atención!',
                         text: 'Folio repetido',
@@ -593,8 +594,8 @@ $(document).ready(function () {
                         showConfirmButton: false,
                         timer: 2500
                      });
-                  }else{
-                     if(data == 'no ficha'){
+                  } else {
+                     if (data == 'no ficha') {
                         Swal.fire({
                            title: 'Atención!',
                            text: 'Ficha no creada',
@@ -602,37 +603,37 @@ $(document).ready(function () {
                            showConfirmButton: false,
                            timer: 2500
                         });
-                     }else{
-                        $('#dataConsult').DataTable().ajax.reload(); 
-                     }  
+                     } else {
+                        $('#dataConsult').DataTable().ajax.reload();
+                     }
                   }
-               }        
+               }
             });
          }
-         if($("#id_tarifa").val()>0){
+         if ($("#id_tarifa").val() > 0) {
             $("#tarifa_edit").toggle();
             $("#labelType").toggle();
-         } 
+         }
 
-        /* $.toast({
-            heading: 'Éxito',
-            text: 'Cambios guardados',
-            showHideTransition: 'slide',
-            icon: 'success',
-            loader:false,
-            hideAfter: 2000,
-        }) */
+         /* $.toast({
+             heading: 'Éxito',
+             text: 'Cambios guardados',
+             showHideTransition: 'slide',
+             icon: 'success',
+             loader:false,
+             hideAfter: 2000,
+         }) */
       }
-      $("#TOTAL_PAGADO_CONSULTA").attr('readonly',false);
+      $("#TOTAL_PAGADO_CONSULTA").attr('readonly', false);
       $(".div_adds").toggle();
       $(".del_rel").toggle();
       $(".del_relp").toggle();
       $("#BTN_PRINT_FICHA").toggle();
-    
+
 
    });// Habilito el modo edicion   
 
-// MODAL FICHA CONSUMO - REL  PROCEDIMIENTO ====================================//
+   // MODAL FICHA CONSUMO - REL  PROCEDIMIENTO ====================================//
    $("body").on("click", "#del_rel", function (event) {
       event.preventDefault();
 
@@ -647,27 +648,27 @@ $(document).ready(function () {
             id_ficha: ficha
          }
       })
-      .done(function (respuesta) {
-         let desc = $("#DESC_TARIFA_INDEX").val();
-         get_procedimientos(ficha);
-         get_total(desc,ficha);
+         .done(function (respuesta) {
+            let desc = $("#DESC_TARIFA_INDEX").val();
+            get_procedimientos(ficha);
+            get_total(desc, ficha);
 
-      });
+         });
 
    });// Cacheo el id procedimiento y lo elimino
    $("#SUBMIT_REL_PROCEDIMIENTO_C").click(function () {
       let formData = new FormData();
 
       var msj_cant = '';
-      var ficha    = $("#id_ficha_consumo").val();
-      var tarifa   = $("#id_tarifa").val();
-      var descuento= $("#DESC_TARIFA_INDEX").val();
+      var ficha = $("#id_ficha_consumo").val();
+      var tarifa = $("#id_tarifa").val();
+      var descuento = $("#DESC_TARIFA_INDEX").val();
       var consulta = $("#id_consulta_consumo").val();
       var paciente = $("#id_paciente_consumo").val();
-      var select   = $("#select_procedimiento").val();
-      var cant     = $("#cant_relprocedimiento").val();
+      var select = $("#select_procedimiento").val();
+      var cant = $("#cant_relprocedimiento").val();
       var precioPC = $("#proc_costo").val();
-      
+
       formData.append('precio_proce', precioPC);
       formData.append('cantidad', cant);
       formData.append('id_ficha', ficha);
@@ -725,46 +726,46 @@ $(document).ready(function () {
          data: { id_ficha: ficha },
          dataType: 'json'
       })
-      .done(function (response) {
-         var html = "";
-         var display = "";
-         if (response.length > 0) {
-            $("#msj_tableEmptyProce").hide();            
-            display = ($("#BTN_EDIT_FICHA").html() === 'Terminar' ? "" : "none");
+         .done(function (response) {
+            var html = "";
+            var display = "";
+            if (response.length > 0) {
+               $("#msj_tableEmptyProce").hide();
+               display = ($("#BTN_EDIT_FICHA").html() === 'Terminar' ? "" : "none");
 
-            for (let i = 0; i < response.length; i++) {
-               const nombre = response[i]['NOMBRE_PROCEDIMIENTO'];
-               const cant = response[i]['CANT_PROCEDIMIENTO'];
-               const precio = response[i]['PRECIO_PROCEDIMIENTO'];
-               const id = response[i]['ID'];
+               for (let i = 0; i < response.length; i++) {
+                  const nombre = response[i]['NOMBRE_PROCEDIMIENTO'];
+                  const cant = response[i]['CANT_PROCEDIMIENTO'];
+                  const precio = response[i]['PRECIO_PROCEDIMIENTO'];
+                  const id = response[i]['ID'];
 
-               html += "<tr><td class='td-hidden'><span title='"+nombre+"'>" + nombre + "</span></td>" +
-                  "<td>" + cant + "</td>" +
-                  "<td>$" + precio + "</td>" +
-                  "<td>"+
-                     "<a class='del_rel btn' style='display:" + display + "' href='#'  data-id_ficha='" + id_ficha + "' data-idrel='" + id + "' id='del_rel'>"+
-                        " <i class='fas fa-trash-alt'></i>"+
-                     "</a> </td>"+
-                  "</tr>";
+                  html += "<tr><td class='td-hidden'><span title='" + nombre + "'>" + nombre + "</span></td>" +
+                     "<td>" + cant + "</td>" +
+                     "<td>$" + precio + "</td>" +
+                     "<td>" +
+                     "<a class='del_rel btn' style='display:" + display + "' href='#'  data-id_ficha='" + id_ficha + "' data-idrel='" + id + "' id='del_rel'>" +
+                     " <i class='fas fa-trash-alt'></i>" +
+                     "</a> </td>" +
+                     "</tr>";
+               }
+            } else {
+               $("#msj_tableEmptyProce").show();
             }
-         } else {
-            $("#msj_tableEmptyProce").show();
-         }
-         $("#tbody_procedimientos").html(html);
-      });
+            $("#tbody_procedimientos").html(html);
+         });
    }// Obtengo los procedimientos by id ficha  from rel_procedimientos
-   
-// MODAL FICHA CONSUMO - REL  PRODUCTO=========================================//
+
+   // MODAL FICHA CONSUMO - REL  PRODUCTO=========================================//
    $("#SUBMIT_REL_PRODUCTO_C").click(function () {
       let formData = new FormData();
-      var cant     = $("#cant_relproducto").val();
-      var ficha    = $("#id_ficha_consumo");
-      var tarifa   = $("#id_tarifa").val();
-      var select   = $("#select_producto").val();
+      var cant = $("#cant_relproducto").val();
+      var ficha = $("#id_ficha_consumo");
+      var tarifa = $("#id_tarifa").val();
+      var select = $("#select_producto").val();
       var id_ficha = $("#id_ficha_consumo").val();
       var consulta = $("#id_consulta_consumo").val();
       var paciente = $("#id_paciente_consumo").val();
-     /*  var descuento= $("#DESCUENTO").val(); */
+      /*  var descuento= $("#DESCUENTO").val(); */
       var tarifa_desc = $("#DESC_TARIFA_INDEX").val();
 
       formData.append('cantidad', cant);
@@ -796,7 +797,7 @@ $(document).ready(function () {
                cant == 1 ? msj_cant = ' Producto' : msj_cant = ' Productos';
                ficha.val(id_ficha);
                get_productos(id_ficha);
-               get_total(tarifa_desc,id_ficha);
+               get_total(tarifa_desc, id_ficha);
 
                $("#msj_cant_prod")
                   .html(cant + msj_cant);
@@ -828,15 +829,15 @@ $(document).ready(function () {
             id_ficha: ficha
          }
       })
-      .done(function (respuesta) {
-         let desc = $("#DESC_TARIFA_INDEX").val();
-         get_productos(ficha);
-         get_total(desc,ficha);
-      });
+         .done(function (respuesta) {
+            let desc = $("#DESC_TARIFA_INDEX").val();
+            get_productos(ficha);
+            get_total(desc, ficha);
+         });
 
    });// Cacheo el id producto a eliminar
    function get_productos(ficha) {
-     
+
       let id_ficha = ficha;
       $.ajax({
          type: "POST",
@@ -844,43 +845,42 @@ $(document).ready(function () {
          data: { id_ficha: ficha },
          dataType: 'json'
       })
-      .done(function (response)
-      {         
-         var html2 = "";
-         var display = '';                
+         .done(function (response) {
+            var html2 = "";
+            var display = '';
 
-         if (response.length > 0) {
-            $("#msj_tableEmptyProdu").hide();           
-            display = ($("#BTN_EDIT_FICHA").html() === 'Terminar' ? "" : "none");
+            if (response.length > 0) {
+               $("#msj_tableEmptyProdu").hide();
+               display = ($("#BTN_EDIT_FICHA").html() === 'Terminar' ? "" : "none");
 
-            /* if(tarifa){               
-               tarifa = (tarifa ? tarifa.replace(".00", "") : "");
-               for (let i = 0; i < response.length; i++){
-                  const nombre = response[i]['NOMBRE_PRODUCTO'];
-                  const cant = response[i]['CANT_PRODUCTO'];
-                  const precio = response[i]['PRECIO_PRODUCTO'];
-                  const id = response[i]['ID'];
-   
-                  html2 += 
-                  "<tr>" +
-                     "<td class='td-hidden'><span title='"+nombre+"'>" + nombre + "</span></td>" +
-                     "<td>" + tarifa + "%</td>" +
-                     "<td>" + cant + "</td>" +
-                     "<td>$" + precio + "</td>" +
-                     "<td> <a class='btn del_relp' style='display:" + display + "' data-idrelp='" + id + "' data-id_ficha='" + id_ficha + "' id='del_relp'>" +
-                     "<i class='fas fa-trash-alt'</a></td>" +
-                  "</tr>";
-               }
-            }else{ */
+               /* if(tarifa){               
+                  tarifa = (tarifa ? tarifa.replace(".00", "") : "");
+                  for (let i = 0; i < response.length; i++){
+                     const nombre = response[i]['NOMBRE_PRODUCTO'];
+                     const cant = response[i]['CANT_PRODUCTO'];
+                     const precio = response[i]['PRECIO_PRODUCTO'];
+                     const id = response[i]['ID'];
+      
+                     html2 += 
+                     "<tr>" +
+                        "<td class='td-hidden'><span title='"+nombre+"'>" + nombre + "</span></td>" +
+                        "<td>" + tarifa + "%</td>" +
+                        "<td>" + cant + "</td>" +
+                        "<td>$" + precio + "</td>" +
+                        "<td> <a class='btn del_relp' style='display:" + display + "' data-idrelp='" + id + "' data-id_ficha='" + id_ficha + "' id='del_relp'>" +
+                        "<i class='fas fa-trash-alt'</a></td>" +
+                     "</tr>";
+                  }
+               }else{ */
                for (let i = 0; i < response.length; i++) {
                   const nombre = response[i]['NOMBRE_PRODUCTO'];
                   const cant = response[i]['CANT_PRODUCTO'];
                   const precio = response[i]['PRECIO_PRODUCTO'];
                   const id = response[i]['ID'];
-   
+
                   let readonly = isEdit ? "" : "readonly";
-                  html2 += 
-                  "<tr>" +
+                  html2 +=
+                     "<tr>" +
                      "<td>" + nombre + "</td>" +
                      "<td>" +
                      "<input type='number' class='product-quantityC form-control' " + readonly + " value='" + cant + "' data-idrelp='" + id + "' />" +
@@ -888,16 +888,16 @@ $(document).ready(function () {
                      "<td>$" + precio + "</td>" +
                      "<td> <a class='btn del_relp' style='display:" + display + "' data-idrelp='" + id + "' data-id_ficha='" + id_ficha + "' id='del_relp'>" +
                      "<i class='fas fa-trash-alt'</a></td>" +
-                  "</tr>";
+                     "</tr>";
                }
-            /* } */
+               /* } */
 
-            
-         } else {
-            $("#msj_tableEmptyProdu").show();
-         }
-         $("#tbody_productos").html(html2);
-      });
+
+            } else {
+               $("#msj_tableEmptyProdu").show();
+            }
+            $("#tbody_productos").html(html2);
+         });
    }// Obtengo los productos by id ficha from rel_productos
 
    $('body').on("change", ".product-quantityC", function (e) {
@@ -905,18 +905,18 @@ $(document).ready(function () {
       $.ajax({
          url: raiz_url + "Urgency/ajax_update_cantidad_producto",
          type: 'POST',
-         data: {id:idrel, cantidad: $(this).val()},
+         data: { id: idrel, cantidad: $(this).val() },
          success: function (id_ficha) {
             if (id_ficha > 0) {
                var descuento = $("#DESC_TARIFA_INDEX").val() || 0;
                get_productos(id_ficha);
-               get_total(descuento,id_ficha);
+               get_total(descuento, id_ficha);
             }
          }
-      }); 
-   } );
+      });
+   });
 
-// MODAL FICHA DIAGNOSTIC ====================================================//
+   // MODAL FICHA DIAGNOSTIC ====================================================//
    $("body").on("click", "#BTN_FICHA_CLINICA", function (event) {
       let id_patient = $(this).data('id_paciente');
       let id_consult = $(this).data('id_consulta');
@@ -928,61 +928,61 @@ $(document).ready(function () {
          url: raiz_url + "Consult/ajax_get_consulta_by_id",
          data: { consulta: id_consult, paciente: id_patient, tarifa: id_tarifa }
       })
-      .done(function (respuesta) {
-         let json = JSON.parse(respuesta);
-         let patient = json.Paciente;
-         let consult = json.Consulta;
-         let doctors = json.Medicos;
+         .done(function (respuesta) {
+            let json = JSON.parse(respuesta);
+            let patient = json.Paciente;
+            let consult = json.Consulta;
+            let doctors = json.Medicos;
 
-         set_medico_consulta(doctors, consult.ID_MEDICO);
-         $("#ID_TARIFA").val(consult.ID_TARIFA);
-         $("#ID_PACIENTE").val(consult.ID_PACIENTE);
-         $("#ID_CONSULT").val(consult.ID_CONSULTA);
+            set_medico_consulta(doctors, consult.ID_MEDICO);
+            $("#ID_TARIFA").val(consult.ID_TARIFA);
+            $("#ID_PACIENTE").val(consult.ID_PACIENTE);
+            $("#ID_CONSULT").val(consult.ID_CONSULTA);
 
-         var options = { day: 'numeric', month: 'numeric', year: 'numeric' };
-         var fecha_i = new Date(consult.FECHA_CONSULTA+'T00:00:00');
-         var fecha_e = new Date(consult.FECHAEGRESO_CONSULTA+'T00:00:00');
+            var options = { day: 'numeric', month: 'numeric', year: 'numeric' };
+            var fecha_i = new Date(consult.FECHA_CONSULTA + 'T00:00:00');
+            var fecha_e = new Date(consult.FECHAEGRESO_CONSULTA + 'T00:00:00');
 
-         var formatFechaI = fecha_i.toLocaleDateString("es-MX",options);      
-         var formatFechaE  = "";
-         
-         if(consult.FECHAEGRESO_CONSULTA != null){
-            formatFechaE = fecha_e.toLocaleDateString("es-MX",options);
-         }else{
-          /*   let FechaEgreso = new Date("");
-            formatFechaE = FechaEgreso.toLocaleDateString("es-MX",options); */
-            formatFechaE = "Sin registrar";
-         }
+            var formatFechaI = fecha_i.toLocaleDateString("es-MX", options);
+            var formatFechaE = "";
 
-         $("#NOMBRE_PACIENTE").html(patient.NOMBRE_PACIENTE + ' ' + patient.APELLIDO_PATERNO_PACIENTE + ' ' + patient.APELLIDO_MATERNO_PACIENTE);
-         $("#ORIGEN").val(consult.ORIGEN_CONSULTA);
-         $("#CONDICION").val(consult.CONDICION_CONSULTA);
-         $("#INICIOEVOLUCION").val(consult.INICIOEVOLUCION_CONSULTA);
-         $("#SIGNOS_VITALES").val(consult.SIGNOS_VITALES);
-         $("#FC").val(consult.FC_CONSULTA);
-         $("#RC").val(consult.RITMO_CARDIACO_CONSULTA);
-         $("#TEMP").val(consult.TEMP_CONSULTA);
-         $("#FR").val(consult.FR_CONSULTA);
-         $("#SAT").val(consult.SAT_CONSULTA);
-         $("#GC").val(consult.GLICEMIA_CAPILAR_CONSULTA);
-         $("#PE").val(consult.PESO_CONSULTA);
-         $("#TA").val(consult.TALLA_CONSULTA);
-         $("#PC").val(consult.PC);
-         $("#PA").val(consult.PA);
-         $("#EVOLUCION").val(consult.EVOLUCION_CONSULTA);
-         $("#MANEJO_INTRAHOSPITALARIO_CONSULTA").val(consult.MANEJO_INTRAHOSPITALARIO_CONSULTA);
-         $("#TRATAMIENTO").val(consult.TRATAMIENTO_CONSULTA);
-         $("#FECHA_INGRESO").val(formatFechaI);
-         $("#HORA_INGRESO").val(consult.HORA_CONSULTA);
-         $("#MOTIVO").val(consult.MOTIVO_CONSULTA);
-         $("#DIAGNOSTICO").val(consult.DIAGNOSTICO);
-         $("#EXPLORACION").val(consult.EXPLORACION_FISICA);
-         $("#ANTECEDENTES").val(patient.ANTECEDENTES_PACIENTE);
-         $("#FECHA_EGRESO").val(formatFechaE);
-         $("#OBSERVACION").val(consult.OBSERVACIONES_CONSULTA);
-         $("#DIAGNOSTICO_CON").val(consult.DIAGNOSTICO_EGRESO_CONSULTA);
-         $("#HORA_EGRESO").val(consult.HREGRESO_CONSULTA);
-      });
+            if (consult.FECHAEGRESO_CONSULTA != null) {
+               formatFechaE = fecha_e.toLocaleDateString("es-MX", options);
+            } else {
+               /*   let FechaEgreso = new Date("");
+                 formatFechaE = FechaEgreso.toLocaleDateString("es-MX",options); */
+               formatFechaE = "Sin registrar";
+            }
+
+            $("#NOMBRE_PACIENTE").html(patient.NOMBRE_PACIENTE + ' ' + patient.APELLIDO_PATERNO_PACIENTE + ' ' + patient.APELLIDO_MATERNO_PACIENTE);
+            $("#ORIGEN").val(consult.ORIGEN_CONSULTA);
+            $("#CONDICION").val(consult.CONDICION_CONSULTA);
+            $("#INICIOEVOLUCION").val(consult.INICIOEVOLUCION_CONSULTA);
+            $("#SIGNOS_VITALES").val(consult.SIGNOS_VITALES);
+            $("#FC").val(consult.FC_CONSULTA);
+            $("#RC").val(consult.RITMO_CARDIACO_CONSULTA);
+            $("#TEMP").val(consult.TEMP_CONSULTA);
+            $("#FR").val(consult.FR_CONSULTA);
+            $("#SAT").val(consult.SAT_CONSULTA);
+            $("#GC").val(consult.GLICEMIA_CAPILAR_CONSULTA);
+            $("#PE").val(consult.PESO_CONSULTA);
+            $("#TA").val(consult.TALLA_CONSULTA);
+            $("#PC").val(consult.PC);
+            $("#PA").val(consult.PA);
+            $("#EVOLUCION").val(consult.EVOLUCION_CONSULTA);
+            $("#MANEJO_INTRAHOSPITALARIO_CONSULTA").val(consult.MANEJO_INTRAHOSPITALARIO_CONSULTA);
+            $("#TRATAMIENTO").val(consult.TRATAMIENTO_CONSULTA);
+            $("#FECHA_INGRESO").val(formatFechaI);
+            $("#HORA_INGRESO").val(consult.HORA_CONSULTA);
+            $("#MOTIVO").val(consult.MOTIVO_CONSULTA);
+            $("#DIAGNOSTICO").val(consult.DIAGNOSTICO);
+            $("#EXPLORACION").val(consult.EXPLORACION_FISICA);
+            $("#ANTECEDENTES").val(patient.ANTECEDENTES_PACIENTE);
+            $("#FECHA_EGRESO").val(formatFechaE);
+            $("#OBSERVACION").val(consult.OBSERVACIONES_CONSULTA);
+            $("#DIAGNOSTICO_CON").val(consult.DIAGNOSTICO_EGRESO_CONSULTA);
+            $("#HORA_EGRESO").val(consult.HREGRESO_CONSULTA);
+         });
    });//recibo y muestro info en campos del modal
    $("#BTN_EDIT_DIAGNOSTIC").click(function () {
 
@@ -1074,7 +1074,7 @@ $(document).ready(function () {
 
    }
 
-// ADJUNTAR ARCHIVOS ========================================================//
+   // ADJUNTAR ARCHIVOS ========================================================//
    $('body').on("click", ".btn-del-file-client", function (e) {
       var ID_CONSULTA = $(this).attr('data-id-consulta');
       var ID_DOCUMENTO = $(this).attr('data-id-document');
@@ -1154,17 +1154,17 @@ $(document).ready(function () {
 
                $.each(data2, function (arrayID, row) {
                   $("#tbodyTableFilesClient").append("<tr>" +
-                    "<td><b>" + cont + "</b></td>"+
-                    "<td>" + row.NOMBRE_DOCUMENTO + "</td>\n\
+                     "<td><b>" + cont + "</b></td>" +
+                     "<td>" + row.NOMBRE_DOCUMENTO + "</td>\n\
                      <td>" + row.TIPO_DOCUMENTO + "</td>\n\
-                     <td>" +                     
-                        "<button id='btnDeleteFileClient' class='btn btn-danger pull-left btn-actions btn-del-file-client'\n\
-                           data-original-title='Borrar archivo' data-toggle='tooltip' data-document-name='"+row.NOMBRE_DOCUMENTO +"' data-id-consulta='" + row['ID_CONSULTA'] + "' data-id-document='" + row['ID_DOCUMENTO'] + "'>\n\
+                     <td>" +
+                     "<button id='btnDeleteFileClient' class='btn btn-danger pull-left btn-actions btn-del-file-client'\n\
+                           data-original-title='Borrar archivo' data-toggle='tooltip' data-document-name='"+ row.NOMBRE_DOCUMENTO + "' data-id-consulta='" + row['ID_CONSULTA'] + "' data-id-document='" + row['ID_DOCUMENTO'] + "'>\n\
                            <i class='fa fa-trash' aria-hidden='true'></i>\n\
                         </button>" +
-                        "<a  href='" + raiz_url + 'FILES/' + row.NOMBRE_DOCUMENTO + "'target='_blank'  class='btn pull-right btn-success btn-actions btn-down-file-client' data-original-title='Descargar archivo' data-toggle='tooltip' data-id-consulta='" + row['ID_CONSULTA'] + "' data-document-name=" + row.NOMBRE_DOCUMENTO + " data-id-document='" + row['ID_DOCUMENTO'] + "'>" +
-                           "<i class='fa fa-download' aria-hidden='true'></i>\n\
-                        </a>" +                    
+                     "<a  href='" + raiz_url + 'FILES/' + row.NOMBRE_DOCUMENTO + "'target='_blank'  class='btn pull-right btn-success btn-actions btn-down-file-client' data-original-title='Descargar archivo' data-toggle='tooltip' data-id-consulta='" + row['ID_CONSULTA'] + "' data-document-name=" + row.NOMBRE_DOCUMENTO + " data-id-document='" + row['ID_DOCUMENTO'] + "'>" +
+                     "<i class='fa fa-download' aria-hidden='true'></i>\n\
+                        </a>" +
                      "</td>" +
                      "</tr>");
                   cont++;
@@ -1181,11 +1181,11 @@ $(document).ready(function () {
       });
    }// Obtengo los archivos existentes
 
-// ELIMINAR CONSULTAS ======================================================//
+   // ELIMINAR CONSULTAS ======================================================//
    $("body").on('click', '#BTN_ELIMINAR_CONSULTA', function () {
 
       var id = $(this).data('id-consult');
-     
+
       Swal.fire({
          title: '¿Estás seguro?',
          text: "No se puede revertir esto!",
@@ -1201,58 +1201,58 @@ $(document).ready(function () {
                url: raiz_url + "Consult/ajax_delete_consult",
                data: { id_consulta: id }
             })
-            .done(function () {
-               Swal.fire({
-                  title: 'Registro eliminado!',
-                  icon: 'success',
-                  showConfirmButton: false,
-                  timer: 1500,
-                  onClose: function () {
-                     $('#dataConsult').DataTable().ajax.reload();
-                  }
+               .done(function () {
+                  Swal.fire({
+                     title: 'Registro eliminado!',
+                     icon: 'success',
+                     showConfirmButton: false,
+                     timer: 1500,
+                     onClose: function () {
+                        $('#dataConsult').DataTable().ajax.reload();
+                     }
+                  });
                });
-            });
          }
       });
    });
-// REFRESH TOTAL ======================================================//
-   $(".DESC_TARIFA").keyup(function(){
+   // REFRESH TOTAL ======================================================//
+   $(".DESC_TARIFA").keyup(function () {
       let desc = $(this).val();
       let ficha = $("#id_ficha_consumo").val();
-      get_total(desc,ficha);
+      get_total(desc, ficha);
    })
-   $("#REFRESH_TOTAL_INDEX").click(function(){
+   $("#REFRESH_TOTAL_INDEX").click(function () {
       let desc = $("#DESCUENTO").val();
       let ficha = $("#id_ficha_consumo").val();
-      get_total(desc,ficha);
+      get_total(desc, ficha);
    })
-   
+
 
    /* $("#DESCUENTO_NEWCONSULT").keyup(function(){
       let desc = $(this).val();
       get_total_final(desc);
    }) */
-   $("#DESC_TARIFA").keyup(function(){
+   $("#DESC_TARIFA").keyup(function () {
       let desc = $(this).val();
       get_total_final(desc);
    })
-   $("#PRECIO_CONSULTA").keyup(function(){
-    
+   $("#PRECIO_CONSULTA").keyup(function () {
+
       var DescTemp = $("#DESC_TARIFA").val();
       get_total_final(DescTemp);
    })
-  
-   $("#DESC_TARIFA_INDEX").keyup(function(){
+
+   $("#DESC_TARIFA_INDEX").keyup(function () {
       let desc = $(this).val();
       let ficha = $("#id_ficha_consumo").val();
-      get_total(desc,ficha);
+      get_total(desc, ficha);
    })
-// FORMATOS DE IMPRESION ======================================================//
+   // FORMATOS DE IMPRESION ======================================================//
    $('#BTN_PRINT_FICHA').on('click', function () {
       var CONSULT_ID = $('#id_consulta_consumo').val();
       var close = $('#close_consulta').val();
 
-      if(close <= 0){
+      if (close <= 0) {
          Swal.fire({
             title: '¿Estás seguro?',
             html: "No se podrá <b>EDITAR</b> la ficha después de imprimir!",
@@ -1273,7 +1273,7 @@ $(document).ready(function () {
                         $('#close_consulta').val('1');
                         $('#dataConsult').DataTable().ajax.reload();
                         $("#BTN_EDIT_FICHA").hide();
-                        window.open ( raiz_url + "Consult/creaPdf/" + CONSULT_ID);
+                        window.open(raiz_url + "Consult/creaPdf/" + CONSULT_ID);
 
                      } else {
                         alert('Hubo un error, intente de nuevo');
@@ -1282,10 +1282,10 @@ $(document).ready(function () {
 
             }
          })
-      }else{
+      } else {
          window.open(raiz_url + "Consult/creaPdf/" + CONSULT_ID);
       }
-   });   
+   });
    $('#BTN_PRINT_DIAG_CONSULT').on('click', function () {
       var CONSULT_ID = $('#ID_CONSULT').val();
 
@@ -1296,20 +1296,20 @@ $(document).ready(function () {
             timer: 2000,
             showConfirmButton: false,
             html: '<div class="class_invalid">¡ESTABLECE FECHA Y HORA EGRESO!<br><br><span>Haz click en editar para elegir fecha y hora</span></div>',
-          
+
          });
       } else {
          window.open(raiz_url + "Consult/creaPdfFichaDiagnostic/" + CONSULT_ID);
 
       }
    });
-//ON CLOSE MODAL FICHA CONSUMO
+   //ON CLOSE MODAL FICHA CONSUMO
    $("#ficha_consumo").on("hidden.bs.modal", function () {
       let modal = $("#ficha_consumo");
       let BtnFinish = modal.find('button[data-btn="edit-ficha"]');
       let txt = BtnFinish.html();
 
-      if (txt === 'Terminar'){
+      if (txt === 'Terminar') {
          BtnFinish.click();
 
       }
@@ -1318,44 +1318,44 @@ $(document).ready(function () {
       let modal = $("#ficha_diagnostico");
       let BtnFinish = modal.find('button[data-cancel="cancel"]');
       let txt = BtnFinish.html();
-   
-      if (txt === 'Cancelar'){
+
+      if (txt === 'Cancelar') {
          BtnFinish.click();
 
       }
-      
+
    });
    //OTHER FUNCTIONS ======================================================//
-   
-   
-   animation_modal(".modal-proced","#modal");
-   animation_modal(".modal-product","#modal2");
-   function animation_modal(button, modal){
+
+
+   animation_modal(".modal-proced", "#modal");
+   animation_modal(".modal-product", "#modal2");
+   function animation_modal(button, modal) {
       var modalBtn = $(button);
       var modal = $(modal);
       var animInClass = "";
       var animOutClass = "";
 
-      modalBtn.on('click', function() {
-      animInClass = "zoomIn";
-      animOutClass = "zoomOut";
-      if ( animInClass == '' || animOutClass == '' ) {
-         alert("Please select an in and out animation type.");
-      } else {
-         modal.addClass(animInClass);
-         modal.modal({backdrop: true});
-      }
+      modalBtn.on('click', function () {
+         animInClass = "zoomIn";
+         animOutClass = "zoomOut";
+         if (animInClass == '' || animOutClass == '') {
+            alert("Please select an in and out animation type.");
+         } else {
+            modal.addClass(animInClass);
+            modal.modal({ backdrop: true });
+         }
       })
       modal.on('show.bs.modal', function () {
-      var closeModalBtns = modal.find('button[data-custom-dismiss="modal"]');
-      closeModalBtns.one('click', function() {
-         modal.on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function( evt ) {
-            modal.modal('hide')
-         });
-         modal.removeClass(animInClass).addClass(animOutClass);
+         var closeModalBtns = modal.find('button[data-custom-dismiss="modal"]');
+         closeModalBtns.one('click', function () {
+            modal.on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (evt) {
+               modal.modal('hide')
+            });
+            modal.removeClass(animInClass).addClass(animOutClass);
+         })
       })
-      })
-      modal.on('hidden.bs.modal', function ( evt ) {
+      modal.on('hidden.bs.modal', function (evt) {
 
          /* ///////////////////////////////////////////////////////
          $("#id_producto").val('');
@@ -1371,31 +1371,33 @@ $(document).ready(function () {
          modal.removeClass(animOutClass)
          modal.off('webkitAnimationEnd oanimationend msAnimationEnd animationend')
          closeModalBtns.off('click')
-      })   
-   }   
-   function get_total(desc,ficha){
+      })
+   }
+   function get_total(desc, ficha) {
       let precio_consult = $("#precio_consult").val();
       let IsTarifa = $("#id_tarifa").val();
       $.ajax({
          type: "POST",
          url: raiz_url + "Consult/ajax_costo_total",
-         data: {descuento:desc, 
-            ficha:ficha,
-            precio:precio_consult,
-            tarifa:IsTarifa},
+         data: {
+            descuento: desc,
+            ficha: ficha,
+            precio: precio_consult,
+            tarifa: IsTarifa
+         },
          success: function (response) {
             var json = JSON.parse(response);
             $("#SUBTOTAL_INDEX").val(json.costo);
-             $("#DESCUENTO_TOTAL_INDEX").val(json.desc);
-            
-            $("#TOTAL_FINAL_INDEX").val(json.total); 
-            $("#TOTAL_FINAL_INDEX_T").val(json.total); 
+            $("#DESCUENTO_TOTAL_INDEX").val(json.desc);
+
+            $("#TOTAL_FINAL_INDEX").val(json.total);
+            $("#TOTAL_FINAL_INDEX_T").val(json.total);
             $("#TOTAL_PAGADO_CONSULTA").val(json.totalpagado);
-          
-         }  
+
+         }
       });
    }//index
-   function get_total_final(desc){
+   function get_total_final(desc) {
       let PrecioConsult = $("#PRECIO_CONSULTA").val();
       let IsMembresia = $("#ID_MEMBRESIA").val();
       let tarifa = $('#SELECT_TARIFA,#SELECT_TARIFA_U,#ID_TARIFA').val();
@@ -1403,11 +1405,12 @@ $(document).ready(function () {
       $.ajax({
          type: "POST",
          url: raiz_url + "Consult/ajax_total_final",
-         data: {descuento:desc,
-               precio:PrecioConsult,
-               membresia:IsMembresia,
-               tarifa:tarifa
-            },        
+         data: {
+            descuento: desc,
+            precio: PrecioConsult,
+            membresia: IsMembresia,
+            tarifa: tarifa
+         },
          success: function (response) {
             var json = JSON.parse(response);
 
@@ -1417,23 +1420,51 @@ $(document).ready(function () {
             $("#TOTAL_FINAL_T").val(json.total);
             $("#TOTAL_PAGADO_CONSULTA").val(json.totalpagado);
 
-         }  
+         }
       });
    }
    $("body").on('click', '.btn-receta-show', function () {
       var ID_CONSULT = $(this).attr('data-id_consulta');
-      window.open(raiz_url + "consult/creaPdfReceta/" + ID_CONSULT);
-      
+      window.open(raiz_url + "consult/creaPdfReceta/" + ID_CONSULT + "?modo=imprimir");
    });
-   /*document.onkeyup = function (e) {
-      if (e.shiftKey && e.which == 66) {
-        
-         location.href = raiz_url+"Inventary/form_add_buy";
-      }
-   }*/
+
+   $("body").on('click', '.btn-receta-ver', function () {
+      var ID_CONSULT = $(this).attr('data-id_consulta');
+      window.open(raiz_url + "consult/creaPdfReceta/" + ID_CONSULT);
+   });
+
+   $("body").on('click', '.btn_hist_clinica', function () {
+      var ID_CONSULT = $(this).attr('data-id_consulta');
+      window.open(raiz_url + "consult/creaHistClinica/" + ID_CONSULT);
+   });
+
+      $("body").on('click', '.btn_impr_clinica', function () {
+         
+         var ID_CONSULT = $(this).attr('data-id_consulta');
+         window.open(raiz_url + "consult/creaHistClinica/" + ID_CONSULT + "?modo=imprimir");
+   });
+
+      $("body").on('click', '.btn_consentimiento', function () {
+         var ID_CONSULT = $(this).attr('data-id_consulta');
+         window.open(raiz_url + "consult/creaConsentimiento/" + ID_CONSULT);
+   });
+
+   $("body").on('click', '.btn_impr_consentimiento', function () {
+         var ID_CONSULT = $(this).attr('data-id_consulta');
+         window.open(raiz_url + "consult/creaConsentimiento/" + ID_CONSULT + "?modo=imprimir");
+   });
+   
+   
+   
+      /*document.onkeyup = function (e) {
+         if (e.shiftKey && e.which == 66) {
+           
+            location.href = raiz_url+"Inventary/form_add_buy";
+         }
+      }*/
 
 
-});
- /* $(window).load(function() {
-   $("html, body").animate({ scrollTop: $(document).height() }, 1000);
-}); */
+   /* $(window).load(function() {
+     $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+  }); */
+})

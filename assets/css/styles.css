@@ -778,7 +778,15 @@ button:active {
     box-shadow: inset 0px 0px 500px rgba(0,0,0,.1);
     opacity: 1;
 }
-
+.dropdown-menu {
+    min-width: 200px; /* o el ancho que prefieras */
+}
+.dropdown-menu li a {
+    padding: 8px 15px;
+    display: block;
+    clear: both;
+    white-space: nowrap;
+}
 .hidex{display:none}
 /* END SERGIO*/
 .btn-default,
