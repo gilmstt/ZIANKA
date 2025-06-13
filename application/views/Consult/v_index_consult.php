@@ -518,18 +518,18 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
                </div>
                <div class="col-lg-6">
                   <!-- // PANEL DETALLES // -->
-                  <div class="row">
+                  <!-- <div class="row">
                      <div class="col-lg-12 col-mdx-12 col-sm-12 bg-grey pd-details hidex" id="FOOTER_M">
                         <div class="col-lg-12 text-center p-none">
                            <div class="form-group">
-                              <label class="label_card">FOLIO</label>
+                               <label class="label_card">FOLIO</label>
                               <div class="input-group">
                                  <span class="input-group-addon br-0"><i class="fas fa-hashtag"></i></span>
-                                 <input type="text" id="FOLIO_CONSULTA_M" class="form-control text-center"
-                                    placeholder="Folio" readonly>
+                                  <input type="text" id="FOLIO_CONSULTA_M" class="form-control text-center"
+                                    placeholder="Folio" readonly> 
                               </div>
                            </div>
-                        </div>
+                        </div> -->
                         <div  class="col-lg-6 text-center p-none">
                            <div class="form-group">
                               <label class="label_card">MEMBRESÍA</label>
@@ -552,7 +552,7 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
                            </div>
                         </div>
                        
-                     </div>
+                      </div>
                      <div class="col-lg-12 col-mdx-12 col-sm-12 bg-grey pd-details hidex" id="FOOTER_T">
                         <div class="col-lg-12 text-center p-none">
                            <div class="form-group">
@@ -563,7 +563,7 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
                                     placeholder="Folio" readonly>
                               </div>
                            </div>
-                        </div>
+                        </div> 
                        
                         <div class="col-lg-6 text-center p-none">
                            <div class="form-group">

@@ -1207,6 +1207,25 @@ class Mconsult extends CI_Model
                 <i class="fas fa-file-medical fa-fw" style="margin-right: 8px;"></i>
                 Adjuntar Archivo
             </a>
+        </li>
+        <li>
+            <a id="BTN_FICHA_CONSUMO" class="btn_defaultz" 
+                title="Ficha consumo" data-toggle="tooltip"
+                data-nombre_paciente="' . $row['NOMBRE_PACIENTE'] .'"
+                data-id_paciente="' . $row['ID_PACIENTE'] .'"
+                data-id_consulta="' . $row['ID_CONSULTA'] .'"
+                data-id_ficha="' . $row['ID_FICHA'] .'"
+                data-precio_consult="' . $PrecioC .'"
+                data-close="' . $row['CLOSE_CONSULTA'] .'"
+                data-desc_tarifa="' . $row['DESC_TARIFA'] .'"
+                data-membresia="' . $row['NOMBRE_MEMBRESIA'] .'"
+                data-tarifa="' . $NameTarifa .'"
+                data-folio="' . $row['FOLIO_CONSULTA'] .'"
+                data-folio_m="' . $row['FOLIO_CONSULTA'] .'"
+                data-id_tarifa="' . $row['ID_TARIFA'] .'">
+                <i class="fas fa-file-invoice fa-fw" style="margin-right: 8px; aria-hidden="true"></i>
+                Ficha consumo
+            </a>
         </li>'.
     
         /*<button id='BTN_FICHA_CLINICA'  class='btn btn-defaultx' type='button'
