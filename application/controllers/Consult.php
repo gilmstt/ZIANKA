@@ -966,7 +966,8 @@ class Consult extends CI_Controller
                         $this->pdf->setXY(131, 137);
                         $this->pdf->Cell(33, 5, '  ', 1, 1, 'C');
                     }
-
+                    
+                    $y = $this->pdf->GetY();
                     $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
                     $this->pdf->setXY(13, 255);
                     $this->pdf->Cell(0, 0, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 0, 'C');
