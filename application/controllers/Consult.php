@@ -785,7 +785,9 @@ class Consult extends CI_Controller
                     $this->pdf->setXY(164, 137);
                     $this->pdf->Cell(41, 5, ' ', 1, 1, 'C');
                     $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(179, 141, to_currency($ROW_CONSULT[0]['TOTAL_PAGADO_CONSULTA']));
+                    $SUMATOT = $SUM_PROC[0]['suma'] + $SUM_FICHA[0]['sumaficha'];
+                    $this->pdf->Text(179, 141, to_currency($SUMATOT));
+                    //$this->pdf->Text(179, 141, to_currency($ROW_CONSULT[0]['TOTAL_PAGADO_CONSULTA']));
 
                     if ($ROW_CONSULT[0]['TARIFA2'] > NULO) {
                         $ROW_TARIFA = $this->mconfig->get_tarifa_by_id($ROW_CONSULT[0]['TARIFA2']);
@@ -906,7 +908,7 @@ class Consult extends CI_Controller
 
                     $this->pdf->setXY(110, 120);
                     $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(55, 20, 'TOTAL', 0, 0, 'C');
+                    $this->pdf->Cell(55, 20, 'TOTAL2', 0, 0, 'C');
 
                     $this->pdf->setXY(186, 127);
                     $this->pdf->SetFont('Arial', '', 10);
@@ -1225,7 +1227,7 @@ class Consult extends CI_Controller
                         $this->pdf->setXY(131, 137);
                         $this->pdf->Cell(33, 5, '  ', 1, 1, 'C');
                     }
-
+                    
                     $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
                     $this->pdf->setXY(13, 255);
                     $this->pdf->Cell(0, 0, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 0, 'C');
