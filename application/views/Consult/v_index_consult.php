@@ -547,7 +547,7 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
                               <div class="input-group">
                                  <span class="input-group-addon br-0"><i class="fas fa-dollar-sign"></i></span>
                                  <input type="text" id="TOTAL_FINAL_INDEX" class="form-control text-center"
-                                    placeholder="Total" readonly>
+                                    placeholder="Total" >
                               </div>
                            </div>
                         </div>

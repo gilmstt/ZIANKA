@@ -1190,7 +1190,7 @@ fieldset[disabled] .form-control {
                                 <i class="fas fa-usd-circle fa-3x"></i>
                             </div>
                             <p class="jss959 fz-13">
-                                <span>TOTAL PAGADO</span>
+                                <span>TOTAL A PAGAR</span>
                             </p>
 
                             <h3 class="jss956"><br>
