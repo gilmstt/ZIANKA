@@ -27,6 +27,9 @@ $(document).ready(function () {
          })
       }
    });
+
+   let totalProductos = 0;
+   let totalProcedimientos = 0;
    // SEND FORM FICHA =================================================================//
    $("#NEW_CONSULT").validator().on('submit', function (e) {
       if (e.isDefaultPrevented()) {
@@ -205,9 +208,8 @@ $(document).ready(function () {
                $("#msj_temp").hide();
                $("#msj_success").show().delay(2500).fadeOut("fast");
 
-               load_temProcedimientos();
                get_total_final(descuento);
-
+               load_temProcedimientos();
             }
          });
       }
@@ -231,6 +233,9 @@ $(document).ready(function () {
          });
 
    });// Elimino el procedimiento temporal
+
+   load_temProcedimientos();
+   load_tempProductos();
    function load_temProcedimientos() {
       $.ajax({
          type: "POST",
@@ -239,7 +244,7 @@ $(document).ready(function () {
          success: function (respuesta) {
 
             var data = respuesta.data;
-            var suma = respuesta.suma['PRECIO_PROCEDIMIENTO'];
+            var suma = parseFloat(respuesta.suma?.['PRECIO_PROCEDIMIENTO']) || 0;
 
             if (data.length > 0) {
                let html = "";
@@ -256,9 +261,8 @@ $(document).ready(function () {
                }
                if ($("#ID_MEMBRESIA").val()) {
                   suma = 0;
-               } else {
-                  suma = suma;
                }
+
                html += "<td></td> <td>TOTAL</td> <td>" + suma + "</td> <td></td>";
 
                $("#tbody_procedimientos").html(html);
@@ -267,6 +271,9 @@ $(document).ready(function () {
                $("#div_msj").html(html);
                $("#tbody_procedimientos").html('');
             }
+            totalProcedimientos = suma || 0;
+            actualizarTotal();
+            actualizarTotalFinalIndex();
          }
       });
    }// Listo los procedimientos temporales
@@ -377,7 +384,7 @@ $(document).ready(function () {
          dataType: 'json',
          success: function (respuesta) {
             var data = respuesta.data;
-            var suma = respuesta.sumaProductos['PRECIO_PRODUCTO'];
+            var suma = parseFloat(respuesta.sumaProductos?.['PRECIO_PRODUCTO']) || 0;
             /*  let tarifa = $("#ID_TARIFA").val(); 
              let desc = $("#DESC_TARIFA").val();    */
             /*     desc = desc.replace(".00", ""); */
@@ -421,10 +428,16 @@ $(document).ready(function () {
                $("#div_msj2").html(html);
                $("#tbody_productos").html('');
             }
+            totalProductos = parseFloat(suma) || 0;
+            actualizarTotal();
+            actualizarTotalFinalIndex();
          }
       });
    }// Listo los productos temporales      
-
+   function actualizarTotal() {
+      let totalFinal = totalProcedimientos + totalProductos;
+      $("#TOTAL_PAGADO").val(totalFinal);
+   }
    // MODAL FICHA CONSUMO ====================================//
    // Habilito el modo edicion
    function actualizarSeleccion() {
@@ -449,6 +462,8 @@ $(document).ready(function () {
    $("body").on("click", "#BTN_FICHA_CONSUMO", function () {
 
       $("#ficha_consumo").modal('toggle');
+      totalProductos = 0;
+      totalProcedimientos = 0;
 
       let ficha = $(this).data('id_ficha');
       let membresia = $(this).data('membresia');
@@ -700,6 +715,10 @@ $(document).ready(function () {
                $("#id_ficha_consumo").val(id_ficha);
                get_procedimientos(id_ficha);
                get_total(descuento, id_ficha);
+               actualizarTotal();
+               actualizarTotalFinalIndex();
+               console.log("Total Procedimientos: ", totalProcedimientos);
+               console.log("Total Productos: ", totalProductos);
 
                cant == 1 ? msj_cant = '  Procedimiento' : msj_cant = '  Procedimientos';
 
@@ -1394,9 +1413,16 @@ $(document).ready(function () {
             $("#TOTAL_FINAL_INDEX_T").val(json.total);
             $("#TOTAL_PAGADO_CONSULTA").val(json.totalpagado);
 
+            totalProcedimientos = parseFloat(json.total) || 0;
+            actualizarTotalFinalIndex();
+
          }
       });
    }//index
+   function actualizarTotalFinalIndex() {
+      const totalFinal = totalProcedimientos + totalProductos;
+      $("#TOTAL_FINAL_INDEX").val(totalFinal.toFixed(2));
+   }
    function get_total_final(desc) {
       let PrecioConsult = $("#PRECIO_CONSULTA").val();
       let IsMembresia = $("#ID_MEMBRESIA").val();
@@ -1438,30 +1464,30 @@ $(document).ready(function () {
       window.open(raiz_url + "consult/creaHistClinica/" + ID_CONSULT);
    });
 
-      $("body").on('click', '.btn_impr_clinica', function () {
-         
-         var ID_CONSULT = $(this).attr('data-id_consulta');
-         window.open(raiz_url + "consult/creaHistClinica/" + ID_CONSULT + "?modo=imprimir");
+   $("body").on('click', '.btn_impr_clinica', function () {
+
+      var ID_CONSULT = $(this).attr('data-id_consulta');
+      window.open(raiz_url + "consult/creaHistClinica/" + ID_CONSULT + "?modo=imprimir");
    });
 
-      $("body").on('click', '.btn_consentimiento', function () {
-         var ID_CONSULT = $(this).attr('data-id_consulta');
-         window.open(raiz_url + "consult/creaConsentimiento/" + ID_CONSULT);
+   $("body").on('click', '.btn_consentimiento', function () {
+      var ID_CONSULT = $(this).attr('data-id_consulta');
+      window.open(raiz_url + "consult/creaConsentimiento/" + ID_CONSULT);
    });
 
    $("body").on('click', '.btn_impr_consentimiento', function () {
-         var ID_CONSULT = $(this).attr('data-id_consulta');
-         window.open(raiz_url + "consult/creaConsentimiento/" + ID_CONSULT + "?modo=imprimir");
+      var ID_CONSULT = $(this).attr('data-id_consulta');
+      window.open(raiz_url + "consult/creaConsentimiento/" + ID_CONSULT + "?modo=imprimir");
    });
-   
-   
-   
-      /*document.onkeyup = function (e) {
-         if (e.shiftKey && e.which == 66) {
-           
-            location.href = raiz_url+"Inventary/form_add_buy";
-         }
-      }*/
+
+
+
+   /*document.onkeyup = function (e) {
+      if (e.shiftKey && e.which == 66) {
+        
+         location.href = raiz_url+"Inventary/form_add_buy";
+      }
+   }*/
 
 
    /* $(window).load(function() {

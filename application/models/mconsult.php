@@ -355,7 +355,7 @@ class Mconsult extends CI_Model
         $procedimientos = $this->db->select_sum('PRECIO_PROCEDIMIENTO', 'sumProcedimientos')->get_where('rel_procedimiento_ficha', array('ID_FICHA' => $ficha))->row();
 
         $suma_productos = $productos->sumProductos;
-        $suma_procedimientos = ($IsTarifa != "") ? $procedimientos->sumProcedimientos : 0;
+        $suma_procedimientos = $procedimientos->sumProcedimientos;
         $suma = $suma_productos + $suma_procedimientos + $PrecioConsulta;
 
         if ($descuento) {
