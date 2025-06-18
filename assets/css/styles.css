@@ -519,7 +519,7 @@ span #NOMBRE_PACIENTE,span #paciente_name {font-weight: 500;color: #FFEB3B;;}
 		width: 70px;
 		height: 50px;
 		position: absolute;
-		background: #08296c;
+		background: #A6A38A;
 		color: #fff;
 		z-index: 2;
 	}
@@ -554,7 +554,7 @@ span #NOMBRE_PACIENTE,span #paciente_name {font-weight: 500;color: #FFEB3B;;}
 
 	.var_nav:hover .link_bg {
 		width: 100%;
-		background: #08296c;
+		background: #A6A38A;
 		-webkit-transition: all 0.3s ease-in-out;
 		-moz-transition: all 0.3s ease-in-out;
 		-o-transition: all 0.3s ease-in-out;
@@ -595,7 +595,7 @@ span #NOMBRE_PACIENTE,span #paciente_name {font-weight: 500;color: #FFEB3B;;}
 	.link-title-a {
 		display: block;
 		position: absolute;
-		color: #08296c;
+		color: #64645d;
 		text-decoration: none;
 		/* width: 100%; */
 		height: 50px;

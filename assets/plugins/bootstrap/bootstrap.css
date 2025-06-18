@@ -4544,7 +4544,7 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 }
 
 .nav-tabs>li.active>a {
-    background-color: #337ab7!important;
+    background-color: #64645d!important;
     color: #fff!important
 }
 
@@ -5162,7 +5162,7 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 }
 
 .navbar-inverse .navbar-nav>li>a {
-    color: #08296c
+    color: #A6A38A
 }
 
 .navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {
@@ -5171,7 +5171,7 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
     color: #fff!important;
-    background-color: #08296c
+    background-color: #A6A38A
 }
 
 .navbar-inverse .navbar-nav>.disabled>a, .navbar-inverse .navbar-nav>.disabled>a:focus, .navbar-inverse .navbar-nav>.disabled>a:hover {
@@ -5283,7 +5283,7 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
     padding: 6px 12px;
     margin-left: -1px;
     line-height: 1.42857143;
-    color: #337ab7;
+    color: #A6A38A;
     text-decoration: none;
     background-color: #fff;
     border: 1px solid #ddd
@@ -5311,8 +5311,8 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
     z-index: 3;
     color: #fff;
     cursor: default;
-    background-color: #337ab7;
-    border-color: #337ab7
+    background-color: #A6A38A;
+    border-color: #A6A38A
 }
 
 .pagination>.disabled>a, .pagination>.disabled>a:focus, .pagination>.disabled>a:hover, .pagination>.disabled>span, .pagination>.disabled>span:focus, .pagination>.disabled>span:hover {
@@ -6245,8 +6245,8 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:focus, a.list-g
 
 .panel-primary>.panel-heading {
     color: #fff;
-    background-color: #08296c;
-    border-color: #02337f
+    background-color: #A6A38A;
+    border-color: #A6A38A
 }
 
 .panel-primary>.panel-heading+.panel-collapse>.panel-body {

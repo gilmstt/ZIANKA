@@ -14,7 +14,7 @@
 }
 
 #header_webpage{
-    height:85px; background-color: #08296c;
+    height:85px; background-color: #A6A38A;
 }
 
 .backred{
@@ -113,7 +113,7 @@
 }
 .btn-header{
     margin-top:6px;
-    background:#337ab7;
+    background:#64645d;
     color:white !important;
     font-weight: 700;
     text-transform: uppercase;

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>ZIANKA</title>
-        <!--<link rel="shortcut icon" href="img/favicon.png" type="image/x-icon"  />-->
+        <title>IRIDECENCE</title>
+        <link rel="shortcut icon" href="<?= base_url(); ?>/assets/img/favicon.png" type="image/x-icon"  />
         <script type="text/javascript">
             var raiz_url = '<?php echo base_url() ?>';
         </script>
@@ -97,7 +97,7 @@
                                         <span class="icon-bar"></span>
                                     </button>
                                     <a class="navbar-brand" href="<?= base_url()?>">
-                                        <img src="<?= base_url(); ?>/assets/img/logo.png" width="70" class=" img-responsive img-index" alt="GRWS">
+                                        <img src="<?= base_url(); ?>/assets/img/logo2.png" width="80" class=" img-responsive img-index" alt="GRWS">
                                     </a>
                                 </div>
                                 <div id="nav_ma_toggle" class="navbar-collapse collapse">

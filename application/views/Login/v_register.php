@@ -85,7 +85,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>ZIANKA</title>
+	<title>IRIDECENCE</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -117,12 +117,12 @@
             </div>
 			<div class="wrap-login100 animated " id="MAIN">
 				<div class="login100-pic js-tilt" data-tilt>
-					<!--<img src="<?php echo base_url();?>assets/plugins/login/img-01.png" alt="IMG">-->
+					<img src="<?php echo base_url();?>assets/img/logo2.png" alt="IMG">
 				</div>
 
 				<form class="login100-form validate-form" id="LOGIN_FORM">
 					<span class="login100-form-title">
-						ZIANKA
+						IRIDECENCE
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "El usuario es requerido">
