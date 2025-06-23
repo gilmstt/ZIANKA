@@ -961,6 +961,7 @@ class Mconsult extends CI_Model
             $this->db->from('consulta as c');
             $this->db->join('ficha_consumo as fc', 'c.ID_FICHA=fc.ID_FICHA');
             $this->db->join('rel_procedimiento_ficha as rpf', 'fc.ID_FICHA=rpf.ID_FICHA');
+            $this->db->join('procedimiento as proc', 'rpf.ID_PROCEDIMIENTO=proc.id_procedimiento');
             $this->db->where('c.ID_CONSULTA', $ID_CONSULT);
             $query = $this->db->get();
             return $query->result_array();
@@ -972,10 +973,16 @@ class Mconsult extends CI_Model
     function get_producto_by_consult_id($ID_CONSULT)
     {
         try {
-            $this->db->select("*");
+            $this->db->select("
+            prod.NOMBRE_PRODUCTO,
+            rp.CANT_PRODUCTO,
+            rp.PRECIO_PRODUCTO as PRECIO_TOTAL,
+            prod.PRECIO_PRODUCTO as PRECIO_UNITARIO
+            ");
             $this->db->from('consulta as c');
             $this->db->join('ficha_consumo as fc', 'c.ID_FICHA=fc.ID_FICHA');
             $this->db->join('rel_producto_ficha as rp', 'rp.ID_FICHA=fc.ID_FICHA');
+            $this->db->join('producto as prod', 'rp.ID_PRODUCTO=prod.ID_PRODUCTO');
             $this->db->where('c.ID_CONSULTA', $ID_CONSULT);
             $query = $this->db->get();
             return $query->result_array();

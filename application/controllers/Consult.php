@@ -818,11 +818,11 @@ class Consult extends CI_Controller
                         $this->pdf->Text(100, 43, $ROW_PERFIL[0]['NOMBRE_PERFIL']);
                     }
 
-                    $this->pdf->setXY(11, 44);
+                    /*$this->pdf->setXY(11, 44);
                     $this->pdf->SetFont('Arial', 'B', 10);
-                    //$this->pdf->Cell(194, 5, utf8_decode('DIAGNÓSTICO:'), 1, 1, 'L');
+                    $this->pdf->Cell(194, 5, utf8_decode('DIAGNÓSTICO:'), 1, 1, 'L');
                     $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(60, 48, utf8_decode(mb_strtoupper($ROW_CONSULT[0]['MOTIVO_CONSULTA'])));
+                    $this->pdf->Text(60, 48, utf8_decode(mb_strtoupper($ROW_CONSULT[0]['MOTIVO_CONSULTA'])));/*
 
                     /*$this->pdf->SetFont('Arial', 'B', 10);
                     $this->pdf->Text(26, 56, 'PROCEDIMIENTOS');
@@ -846,97 +846,73 @@ class Consult extends CI_Controller
                     $this->pdf->setXY(184, 57);
                     $this->pdf->Cell(21, 5, 'COSTO', 1, 1, 'C');*/
 
-                    $posicionY = 62;
-                    $this->pdf->SetFont('Arial', 'B', 8);
+                    $posicionY = 133;
+                    //$this->pdf->SetFont('Arial', 'B', 8);
 
-                    for ($x = 0; $x < 14; $x++) {
+                    for ($x = 0; $x < 9; $x++) {
                         $NOMBRE_PROCEDIMIENTO = isset($ROW_PROC[$x]['NOMBRE_PROCEDIMIENTO']) ? $ROW_PROC[$x]['NOMBRE_PROCEDIMIENTO'] : '';
                         $CANT_PROCEDIMIENTO = isset($ROW_PROC[$x]['CANT_PROCEDIMIENTO']) ? $ROW_PROC[$x]['CANT_PROCEDIMIENTO'] : '';
                         $PRECIO_PROCEDIMIENTO = isset($ROW_PROC[$x]['PRECIO_PROCEDIMIENTO']) ? $ROW_PROC[$x]['PRECIO_PROCEDIMIENTO'] : '';
+                        $PNETO_PROCEDIMIENTO = isset($ROW_PROC[$x]['precio_procedimiento']) ? $ROW_PROC[$x]['precio_procedimiento'] : '';
 
-                        //$NOMBRE_PRODUCTO = isset($ROW_MAT[$x]['NOMBRE_PRODUCTO']) ? $ROW_MAT[$x]['NOMBRE_PRODUCTO'] : '';
+                        //-------------- PROCEDIMIENTOS ------------
+                        if(!empty($NOMBRE_PROCEDIMIENTO)){
+                            $this->pdf->SetFont('Arial', '', 9);
+                            $limit = strlen($NOMBRE_PROCEDIMIENTO);
+                            $nom_Procedim = '';
+
+                            if ($limit > 29) {
+                                $nom_Procedim = substr(utf8_decode($NOMBRE_PROCEDIMIENTO), 0, 28) . '...';
+                            } else {
+                                $nom_Procedim = $NOMBRE_PROCEDIMIENTO;
+                            }
+                            $this->pdf->setXY(11, $posicionY);
+                            $this->pdf->Cell(10, 6, utf8_decode($nom_Procedim));
+
+                            $this->pdf->setXY(122, $posicionY);
+                            $this->pdf->Cell(20,6, $CANT_PROCEDIMIENTO);
+
+                            $this->pdf->setXY(152, $posicionY);
+                            $this->pdf->Cell(30,6, $PNETO_PROCEDIMIENTO); 
+
+                            $this->pdf->setXY(184, $posicionY);
+                            $this->pdf->Cell(30,6, floatval($PRECIO_PROCEDIMIENTO) > 0 ? to_currency(floatval($PRECIO_PROCEDIMIENTO)) : "");
+                            $posicionY += 10;
+                        }
+                    }
+
+                        //------------- PRODUCTOS   Y   MEDICAMENTOS ---------------
+
+                        for ($x = 0; $x < 9; $x++) {        
+                        $NOMBRE_PRODUCTO = isset($ROW_MAT[$x]['NOMBRE_PRODUCTO']) ? $ROW_MAT[$x]['NOMBRE_PRODUCTO'] : '';
                         $CANT_PRODUCTO = isset($ROW_MAT[$x]['CANT_PRODUCTO']) ? $ROW_MAT[$x]['CANT_PRODUCTO'] : '';
-                        $PRECIO_PRODUCTO = isset($ROW_MAT[$x]['PRECIO_PRODUCTO']) ? $ROW_MAT[$x]['PRECIO_PRODUCTO'] : '';
+                        $PRECIO_PRODUCTO = isset($ROW_MAT[$x]['PRECIO_TOTAL']) ? $ROW_MAT[$x]['PRECIO_TOTAL'] : '';
+                        $PNETO_PRODUCTO = isset($ROW_MAT[$x]['PRECIO_UNITARIO']) ? $ROW_MAT[$x]['PRECIO_UNITARIO'] : '';
 
                         $this->pdf->setXY(11, $posicionY);
-                        $this->pdf->SetFont('Arial', '', 8);
-                        $limit = strlen($NOMBRE_PROCEDIMIENTO);
-                        $nom_Procedim = '';
 
-                        if ($limit > 29) {
-                            $nom_Procedim = substr(utf8_decode($NOMBRE_PROCEDIMIENTO), 0, 28) . '...';
-                        } else {
-                            $nom_Procedim = $NOMBRE_PROCEDIMIENTO;
-                        }
-                        //NOMBRE DE LOS PROCEDIMIENTOS EN CELDA
-                        //$this->pdf->Cell(55, 5, utf8_decode($nom_Procedim), 1, 1, 'L');
-
-                        $this->pdf->setXY(66, $posicionY);
-                        //-----ESTA ES LA CANTIDAD DE PRODUCTO DE PROCEDIMIENTO------
-                        //$this->pdf->Cell(20, 5, $CANT_PROCEDIMIENTO, 1, 1, 'C');
-
-                        $this->pdf->setXY(86, $posicionY);
-
-                        //-----ESTA ES EL PRECIO DE PRODUCTO DE PROCEDIMIENTO------
-                        //$this->pdf->Cell(23, 5, floatval($PRECIO_PROCEDIMIENTO) > 0 ? to_currency(floatval($PRECIO_PROCEDIMIENTO)) : "", 1, 1, 'R');
-
-                        /*$this->pdf->setXY(11, $posicionY);
-                        $limit = strlen($NOMBRE_PRODUCTO);
-                        $nom_Producto = '';
-                        if ($limit > 30) {
-                            $nom_Producto = substr(utf8_decode($NOMBRE_PRODUCTO), 0, 29) . '...';
-                        } else {
-                            $nom_Producto = $NOMBRE_PRODUCTO;
-                        }
-                        //NOMBRE DE LOS PRODUCTOS EN CELDAS
-                        $this->pdf->Cell(10, 150, utf8_decode($nom_Producto));*/
-                        
-
-                        //-------NUEVO CODIGO----------
-
-
-                        $posicionY = 136; // Y inicial
-                        $incrementoY = 10; // Espacio entre cada producto
-
-                        
-                        if (isset($ROW_MAT) && is_array($ROW_MAT)) {
-                            
-                            foreach ($ROW_MAT as $material) {
-                                
-                                if (empty($material['NOMBRE_PRODUCTO'])) {
-                                    continue;
-                                }
-
-                                $NOMBRE_PRODUCTO = $material['NOMBRE_PRODUCTO'];
-                                $limit = strlen($NOMBRE_PRODUCTO);
-
-                                if ($limit > 50) {
-                                    $nom_Producto = substr(utf8_decode($NOMBRE_PRODUCTO), 0, 49) . '...';
-                                } else {
-                                    $nom_Producto = utf8_decode($NOMBRE_PRODUCTO);
-                                }
-
-                                // Mostrar en PDF en nueva línea
-                                $this->pdf->Text(20, $posicionY, $nom_Producto);
-                                $posicionY += $incrementoY;
+                        if(!empty($NOMBRE_PRODUCTO)){
+                            $this->pdf->SetFont('Arial', '', 9);
+                            $limit = strlen($NOMBRE_PRODUCTO);
+                            $nom_Producto = '';
+                            if ($limit > 50) {
+                                $nom_Producto = substr(utf8_decode($NOMBRE_PRODUCTO), 0, 49) . '...';
+                            } else {
+                                $nom_Producto = $NOMBRE_PRODUCTO;
                             }
+
+                            $this->pdf->Cell(10, 6, utf8_decode($nom_Producto));
+                            
+                            $this->pdf->setXY(122, $posicionY);
+                            $this->pdf->Cell(20, 6, $CANT_PRODUCTO);
+
+                            $this->pdf->setXY(152, $posicionY);
+                            $this->pdf->Cell(30,6, $PNETO_PRODUCTO); 
+
+                            $this->pdf->setXY(184, $posicionY);
+                            $this->pdf->Cell(40, 6, floatval($PRECIO_PRODUCTO) > 0 ? to_currency(floatval($PRECIO_PRODUCTO)) : "");
+                            $posicionY += 10;
                         }
-
-
-
-
-
-
-
-                        $this->pdf->setXY(164, $posicionY);
-                        //-----ESTA ES LA CANTIDAD DE PRODUCTO DE MEDICAMENTO------
-                        //$this->pdf->Cell(20, 5, $CANT_PRODUCTO, 1, 1, 'C');
-
-                        $this->pdf->setXY(184, $posicionY);
-                        //-----ESTA ES EL PRECIO DE PRODUCTO DE MEDICAMENTOS------
-                        //$this->pdf->Cell(21, 5, floatval($PRECIO_PRODUCTO) > 0 ? to_currency(floatval($PRECIO_PRODUCTO)) : "", 1, 1, 'R');
-
-                        $posicionY += 5;
                     }
                     //$this->pdf->setXY(11, 120);
                     //$this->pdf->SetFont('Arial', 'B', 10);
@@ -950,7 +926,7 @@ class Consult extends CI_Controller
                     } else {
                         $this->pdf->setXY(86, 127);
                         $this->pdf->SetFont('Arial', '', 10);
-                        $this->pdf->Cell(23, 5, to_currency($SUM_PROC[0]['suma']), 1, 1, 'R');
+                        //$this->pdf->Cell(23, 5, to_currency($SUM_PROC[0]['suma']), 1, 1, 'R');
                     }
 
                     /*$this->pdf->setXY(110, 120);
@@ -997,7 +973,7 @@ class Consult extends CI_Controller
                         $this->pdf->SetFont('Arial', '', 10);
                         $this->pdf->Text(72, 141, utf8_decode('%' . $porcentaje));
 
-                        $this->pdf->setXY(66, 137);
+                        /*$this->pdf->setXY(66, 137);
                         $this->pdf->Cell(21, 5, ' ', 1, 1, 'C');
 
 
@@ -1013,7 +989,7 @@ class Consult extends CI_Controller
 
 
                         $this->pdf->setXY(131, 137);
-                        $this->pdf->Cell(33, 5, '  ', 1, 1, 'C');
+                        $this->pdf->Cell(33, 5, '  ', 1, 1, 'C');*/
                     }
                     
                     /*$y = $this->pdf->GetY();
