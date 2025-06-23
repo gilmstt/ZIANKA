@@ -746,7 +746,7 @@ class Consult extends CI_Controller
 
                     $this->pdf->setXY(11, 29);
                     //$this->pdf->Cell(66, 5, 'FECHA:', 1, 1, 'L');
-                    $this->pdf->SetFont('Arial', '', 11);
+                    $this->pdf->SetFont('Arial', '', 12);
                     $this->pdf->Text(160, 56, $ROW_CONSULT[0]['FECHA_CONSULTA']);
 
                     $this->pdf->setXY(77, 29);
@@ -762,11 +762,14 @@ class Consult extends CI_Controller
                     $this->pdf->Text(183, 32.5, $ROW_CONSULT[0]['HREGRESO_CONSULTA']);
 
                     $this->pdf->setXY(11, 34);
-                    $this->pdf->SetFont('Arial', 'B', 10);
+                    //$this->pdf->SetFont('Arial', 'B', 10);
                    // $this->pdf->Cell(138, 5, 'NOMBRE DEL PACIENTE:', 1, 1, 'L');
                     $this->pdf->SetFont('Arial', '', 12);
                     $this->pdf->Text(30, 90, utf8_decode(mb_strtoupper($ROW_CONSULT[0]['NOMBRE_PACIENTE'])) . ' ' . utf8_decode(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'])) . ' ' . utf8_decode(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'])));
-
+                    $this->pdf->Text(160, 46, $ROW_CONSULT[0]['ID_CONSULTA']);
+                    $this->pdf->Text(33, 99, utf8_decode($ROW_CONSULT[0]['CALLE_PACIENTE']) . ' ' . utf8_decode($ROW_CONSULT[0]['NUMERO_PACIENTE']) . ' ' . utf8_decode($ROW_CONSULT[0]['COLONIA_PACIENTE']));
+                    $this->pdf->Text(33, 109, $ROW_CONSULT[0]['TELEFONO_PACIENTE']);
+                    $this->pdf->Text(120, 109, $ROW_CONSULT[0]['EMAIL_PACIENTE']);
                     /*$this->pdf->setXY(149, 34);
                     $this->pdf->SetFont('Arial', 'B', 10);
                     $this->pdf->Cell(30, 5, 'EDAD:', 1, 1, 'L');
