@@ -21,6 +21,17 @@
 			<div class="link_bg"></div>
 			<div class="link_title">
 				<div class=icon>
+					<i class="fa fa-list fa-x"></i>
+				</div>
+				<a class="link-title-a" href="<?= base_url() ?>Inventary/index_tipos_consultas">
+					<span class="link-title-span">Tipos de consulta</span>
+				</a>
+			</div>
+		</li>
+		<li class="var_nav">
+			<div class="link_bg"></div>
+			<div class="link_title">
+				<div class=icon>
 					<i class="fa fa-tasks fa-x"></i>
 				</div>
 				<a class="link-title-a" href="<?= base_url() ?>Inventary/index_procedure">

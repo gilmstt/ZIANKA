@@ -2,13 +2,16 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Minventary extends CI_Model {
+class Minventary extends CI_Model
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
     }
 
-    function obtenerNombres() {
+    function obtenerNombres()
+    {
         try {
             $this->db->distinct();
             $this->db->select("NOMBRE_PRODUCTO");
@@ -22,7 +25,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function get_all_valid_products() {
+    function get_all_valid_products()
+    {
         try {
             $this->db->select("*");
             $this->db->from('producto');
@@ -37,7 +41,8 @@ class Minventary extends CI_Model {
 
     /* AGREGAR NUEVO PRODUCTO */
 
-    function add_new_product_on_db($row) {
+    function add_new_product_on_db($row)
+    {
 
         try {
             $this->db->insert('producto', $row);
@@ -50,7 +55,8 @@ class Minventary extends CI_Model {
 
     /* obtener prodyctos by id */
 
-    function get_product_by_id($ID_PRODUCT) {
+    function get_product_by_id($ID_PRODUCT)
+    {
         try {
             $this->db->select("*");
             $this->db->from('producto');
@@ -62,7 +68,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function edit_product_on_db($row, $id_product) {
+    function edit_product_on_db($row, $id_product)
+    {
         try {
             $this->db->where('ID_PRODUCTO', $id_product);
             $this->db->update('producto', $row);
@@ -72,7 +79,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function disable_product_on_db($ID_PRODUCT) {
+    function disable_product_on_db($ID_PRODUCT)
+    {
         try {
             $data = array(
                 'ACTIVO_PRODUCTO' => 0,
@@ -87,7 +95,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function get_all_valid_procedures() {
+    function get_all_valid_procedures()
+    {
         try {
             $this->db->select("*");
             $this->db->from('procedimiento');
@@ -102,24 +111,26 @@ class Minventary extends CI_Model {
 
     /* PROCEDIMIENTOS CRUD */
 
-    function add_new_procedure_on_db($row) {
+    function add_new_procedure_on_db($row)
+    {
         try {
             $data = array(
                 //'ID_PRODUCTO' => $row['ID_PRODUCTO'],
                 'descripcion_procedimiento' => $row['descripcion_procedimiento'],
                 'precio_procedimiento' => $row['precio_procedimiento'],
-                    // 'ACTIVO_PROCEDIMIENTO' => $row['ACTIVO_PROCEDIMIENTO']
+                // 'ACTIVO_PROCEDIMIENTO' => $row['ACTIVO_PROCEDIMIENTO']
             );
 
             $this->db->insert('procedimiento', $data);
             //var_dump($this->db->last_query());
             return $this->db->insert_id();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
-    function get_procedure_by_id($ID_PROC) {
+    function get_procedure_by_id($ID_PROC)
+    {
         try {
             $this->db->select("*");
             $this->db->from('procedimiento');
@@ -131,7 +142,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function edit_procedure_on_db($row) {
+    function edit_procedure_on_db($row)
+    {
         try {
             $data = array(
                 'id_procedimiento' => trim($row['id_procedimiento']),
@@ -146,7 +158,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function disable_procedure_on_db($ID_PROC) {
+    function disable_procedure_on_db($ID_PROC)
+    {
         try {
             $data = array(
                 'activo_procedimiento' => 0
@@ -156,15 +169,27 @@ class Minventary extends CI_Model {
             $this->db->update('procedimiento', $data);
             return $this->db->affected_rows();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
     /*  END CRUD PROCEDIMIENTOS */
-
+    function get_all_valid_types_consults()
+    {
+        try {
+            $this->db->select("*");
+            $this->db->from('tipo_consulta');
+            $this->db->where('vigencia_tipo_consulta', 1);
+            $query = $this->db->get();
+            return $query->result_array();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
     /*  suuuupliers CURD */
 
-    function getBuybyDates($dates) {
+    function getBuybyDates($dates)
+    {
         try {
             $this->db->select("*");
             $this->db->from('compra as c');
@@ -180,7 +205,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function getAllValidSuppliers() {
+    function getAllValidSuppliers()
+    {
         try {
             $this->db->select("*");
             $this->db->from('proveedor');
@@ -193,7 +219,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function add_new_supplier_on_db($row) {
+    function add_new_supplier_on_db($row)
+    {
         try {
             $this->db->insert('proveedor', $row);
             return $this->db->insert_id();
@@ -202,7 +229,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function get_supplier_by_id_on_db($ID_SUPPLIER) {
+    function get_supplier_by_id_on_db($ID_SUPPLIER)
+    {
         try {
             $this->db->select("*");
             $this->db->from('proveedor');
@@ -214,7 +242,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function edit_supplier_on_db($ID_PROVEEDOR, $row) {
+    function edit_supplier_on_db($ID_PROVEEDOR, $row)
+    {
         try {
             $this->db->where('ID_PROVEEDOR', $ID_PROVEEDOR);
             $this->db->update('proveedor', $row);
@@ -224,7 +253,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function disable_supplier_on_db($ID_SUPPLIER) {
+    function disable_supplier_on_db($ID_SUPPLIER)
+    {
         try {
             $data = array(
                 'VIGENTE_PROVEEDOR' => NULO
@@ -238,7 +268,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function get_buy_temp_on_db() {
+    function get_buy_temp_on_db()
+    {
         try {
             $this->db->select("*");
             $this->db->from('producto_compra_temp as POT');
@@ -250,7 +281,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function cancel_buy() {
+    function cancel_buy()
+    {
         try {
             $ID_BUY = $this->input->post('ID_BUY');
 
@@ -266,7 +298,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function get_product_temp_by_id_on_db($ID_PRODUCTO) {
+    function get_product_temp_by_id_on_db($ID_PRODUCTO)
+    {
         try {
             $this->db->select("*");
             $this->db->from('producto_compra_temp');
@@ -278,7 +311,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function get_product_search_suggestions($search, $limit = 25) {
+    function get_product_search_suggestions($search, $limit = 25)
+    {
         $suggestions = array();
 
         $this->db->from('producto');
@@ -297,7 +331,8 @@ class Minventary extends CI_Model {
         return $suggestions;
     }
 
-    function searchs_products_by_string($ROW) {
+    function searchs_products_by_string($ROW)
+    {
         try {
             $this->db->select("*");
             $this->db->from('producto');
@@ -311,7 +346,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function update_product_compra_temp_on_db($ID_PRODUCTO, $row) {
+    function update_product_compra_temp_on_db($ID_PRODUCTO, $row)
+    {
         try {
             $this->db->where('ID_PRODUCTO', $ID_PRODUCTO);
             $this->db->update('producto_compra_temp', $row);
@@ -321,7 +357,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function add_product_compra_temp_on_db($row) {
+    function add_product_compra_temp_on_db($row)
+    {
         try {
 
             $this->db->insert('producto_compra_temp', $row);
@@ -332,7 +369,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function get_all_valid_payments_type() {
+    function get_all_valid_payments_type()
+    {
         try {
             $this->db->select("*");
             $this->db->from('tipopago');
@@ -344,7 +382,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function delete_product_buy_compra_by_id($ID_PRODUCT) {
+    function delete_product_buy_compra_by_id($ID_PRODUCT)
+    {
         try {
             $this->db->where('ID_PRODUCTO_ORDEN_TEMP', $ID_PRODUCT);
             $this->db->delete('producto_compra_temp');
@@ -354,7 +393,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function delete_compra_temp() {
+    function delete_compra_temp()
+    {
         try {
             $this->db->truncate('producto_compra_temp');
             return 1;
@@ -363,7 +403,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function add_new_compra_on_db($row) {
+    function add_new_compra_on_db($row)
+    {
         try {
             $this->db->insert('compra', $row);
             return $this->db->insert_id();
@@ -372,7 +413,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function add_product_compra_on_db($row) {
+    function add_product_compra_on_db($row)
+    {
         try {
             $this->db->insert('producto_compra', $row);
             return $this->db->insert_id();
@@ -381,7 +423,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function delete_compra_buy_temp() {
+    function delete_compra_buy_temp()
+    {
         try {
             $this->db->truncate('producto_compra_temp');
             return 1;
@@ -390,7 +433,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function get_buy_by_id($ID_COMPRA) {
+    function get_buy_by_id($ID_COMPRA)
+    {
         try {
             $this->db->select("*");
             $this->db->from('compra AS C');
@@ -404,7 +448,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function get_producto_compra_by_id($ID_COMPRA) {
+    function get_producto_compra_by_id($ID_COMPRA)
+    {
         try {
             $this->db->select("*");
             $this->db->from('producto_compra as PC');
@@ -417,12 +462,13 @@ class Minventary extends CI_Model {
         }
     }
 
-    function update_product_on_db_from_compra($row) {
+    function update_product_on_db_from_compra($row)
+    {
         try {
             $data = array(
-            'STOCK_PRODUCTO' => $row['STOCK_PRODUCTO'],
-            'COSTO_PRODUCTO' => $row['COSTO'],
-            'PRECIO_PRODUCTO' => $row['PRECIO']
+                'STOCK_PRODUCTO' => $row['STOCK_PRODUCTO'],
+                'COSTO_PRODUCTO' => $row['COSTO'],
+                'PRECIO_PRODUCTO' => $row['PRECIO']
             );
             $this->db->where('ID_PRODUCTO', $row['ID_PRODUCTO']);
             $this->db->update('producto', $data);
@@ -433,12 +479,13 @@ class Minventary extends CI_Model {
     }
 
     // ======== ServerSide Processing Productos ================ //
-    function make_query_products() {
+    function make_query_products()
+    {
 
         $order_column = array(NULL, "NOMBRE_PRODUCTO", "CODIGO_PRODUCTO", "STOCK_PRODUCTO", "STOCK_MINIMO_PRODUCTO", "PRECIO_PRODUCTO");
 
         $this->db->select("*");
-        $this->db->from('producto as p');   
+        $this->db->from('producto as p');
         $this->db->join('VIGENCIA as v', 'p.ACTIVO_PRODUCTO = v.VIGENCIA');
         $this->db->where('ID_TIPO_PRODUCTO', 1);
         $this->db->where('ACTIVO_PRODUCTO', ACTIVO);
@@ -446,7 +493,6 @@ class Minventary extends CI_Model {
         if ($_POST["search"]["value"] != "") {
             $this->db->like("CODIGO_PRODUCTO", $_POST["search"]["value"]);
             $this->db->or_like("NOMBRE_PRODUCTO", $_POST["search"]["value"]);
-           
         }
 
         if (isset($_POST["order"])) {
@@ -457,7 +503,8 @@ class Minventary extends CI_Model {
     }
 
     // ======== ServerSide Processing Productos ================ //
-    function make_query_med() {
+    function make_query_med()
+    {
 
         $order_column = array(NULL, "NOMBRE_PRODUCTO", "CODIGO_PRODUCTO", "STOCK_PRODUCTO", "STOCK_MINIMO_PRODUCTO", "PRECIO_PRODUCTO");
 
@@ -478,7 +525,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function make_datatables_products() {
+    function make_datatables_products()
+    {
         $this->make_query_products();
 
         if ($_POST["length"] != -1) {
@@ -488,7 +536,8 @@ class Minventary extends CI_Model {
         return $query;
     }
 
-    function make_datatables_med() {
+    function make_datatables_med()
+    {
         $this->make_query_med();
 
         if ($_POST["length"] != -1) {
@@ -498,26 +547,30 @@ class Minventary extends CI_Model {
         return $query;
     }
 
-    function get_all_data_products() {
+    function get_all_data_products()
+    {
         $this->db->select("*");
         $this->db->from("producto");
         $this->db->where("ACTIVO_PRODUCTO", ACTIVO);
         return $this->db->count_all_results();
     }
 
-    function get_filtered_data_products() {
+    function get_filtered_data_products()
+    {
         $this->make_query_products();
         $query = $this->db->get();
         return $query->num_rows();
     }
 
-    function get_filtered_data_med() {
+    function get_filtered_data_med()
+    {
         $this->make_query_med();
         $query = $this->db->get();
         return $query->num_rows();
     }
 
-    function get_products() {
+    function get_products()
+    {
         $fetch_data = $this->make_datatables_products();
         $total_products = $this->get_all_data_products();
         $filt_products = $this->get_filtered_data_products();
@@ -552,7 +605,8 @@ class Minventary extends CI_Model {
         return $output;
     }
 
-    function get_med() {
+    function get_med()
+    {
         $fetch_data = $this->make_datatables_med();
         $total_products = $this->get_all_data_products();
         $filt_products = $this->get_filtered_data_med();
@@ -588,7 +642,8 @@ class Minventary extends CI_Model {
     }
 
     // ======== ServerSide Processing Compras =================== //
-    function make_query_compras($dates) {
+    function make_query_compras($dates)
+    {
 
         $order_column = array(NULL, "FECHA_COMPRA", "NOMBRE_USUARIO", "EMPRESA_PROVEEDOR", NULL, "COMENTARIOS_COMPRA");
 
@@ -613,7 +668,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function make_datatables_compras($dates) {
+    function make_datatables_compras($dates)
+    {
 
         $this->make_query_compras($dates);
 
@@ -624,20 +680,23 @@ class Minventary extends CI_Model {
         return $query;
     }
 
-    function get_all_data_compras() {
+    function get_all_data_compras()
+    {
         $this->db->select("*");
         $this->db->from("compra");
         /* $this->db->get('urgencias')->num_rows(); */
         return $this->db->count_all_results();
     }
 
-    function get_filtered_data_compras($dates) {
+    function get_filtered_data_compras($dates)
+    {
         $this->make_query_compras($dates);
         $query = $this->db->get();
         return $query->num_rows();
     }
 
-    function get_compras($dates) {
+    function get_compras($dates)
+    {
         $fetch_data = $this->make_datatables_compras($dates);
         $total_compras = $this->get_all_data_compras();
         $filt_compras = $this->get_filtered_data_compras($dates);
@@ -685,7 +744,8 @@ class Minventary extends CI_Model {
     }
 
     // ======== ServerSide Processing Provedores ================//
-    function make_query_supliers() {
+    function make_query_supliers()
+    {
 
         $order_column = array(NULL, "EMPRESA_PROVEEDOR", "TELEFONO_PROVEEDOR", "DOMICILIO_PROVEEDOR");
 
@@ -706,7 +766,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function make_datatables_supliers() {
+    function make_datatables_supliers()
+    {
         $this->make_query_supliers();
 
         if ($_POST["length"] != -1) {
@@ -716,20 +777,23 @@ class Minventary extends CI_Model {
         return $query;
     }
 
-    function get_all_data_supliers() {
+    function get_all_data_supliers()
+    {
         $this->db->select("*");
         $this->db->from("proveedor");
         /* $this->db->get('urgencias')->num_rows(); */
         return $this->db->count_all_results();
     }
 
-    function get_filtered_data_supliers() {
+    function get_filtered_data_supliers()
+    {
         $this->make_query_supliers();
         $query = $this->db->get();
         return $query->num_rows();
     }
 
-    function get_supliers() {
+    function get_supliers()
+    {
         $fetch_data = $this->make_datatables_supliers();
         $total_supliers = $this->get_all_data_supliers();
         $filt_supliers = $this->get_filtered_data_supliers();
@@ -769,7 +833,8 @@ class Minventary extends CI_Model {
     }
 
     // ======== ServerSide Processing Procedimientos ================//
-    function make_query_procedure() {
+    function make_query_procedure()
+    {
 
         $order_column = array(NULL, "descripcion_procedimiento", "precio_procedimiento");
 
@@ -789,7 +854,8 @@ class Minventary extends CI_Model {
         }
     }
 
-    function make_datatables_procedure() {
+    function make_datatables_procedure()
+    {
         $this->make_query_procedure();
 
         if ($_POST["length"] != -1) {
@@ -799,20 +865,23 @@ class Minventary extends CI_Model {
         return $query;
     }
 
-    function get_all_data_procedure() {
+    function get_all_data_procedure()
+    {
         $this->db->select("*");
         $this->db->from("procedimiento");
         /* $this->db->get('urgencias')->num_rows(); */
         return $this->db->count_all_results();
     }
 
-    function get_filtered_data_procedure() {
+    function get_filtered_data_procedure()
+    {
         $this->make_query_procedure();
         $query = $this->db->get();
         return $query->num_rows();
     }
 
-    function get_procedures() {
+    function get_procedures()
+    {
         $fetch_data = $this->make_datatables_procedure();
         $total_procedure = $this->get_all_data_procedure();
         $filt_procedure = $this->get_filtered_data_procedure();
@@ -858,7 +927,129 @@ class Minventary extends CI_Model {
           } */
     }
 
-    function get_all_valid_products_type() {
+    function add_new_treatment_on_db($row)
+    {
+        try {
+            $data = array(
+                'nombre_tipo_consulta' => $row['nombre_tipo_consulta'],
+            );
+
+            $this->db->insert('tipo_consulta', $data);
+            return $this->db->insert_id();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+    public function add_tipo_consulta_procedimiento($id_tipo_consulta, $id_procedimiento)
+    {
+        $data = array(
+            'id_tipo_consulta' => $id_tipo_consulta,
+            'id_procedimiento' => $id_procedimiento,
+        );
+
+        $this->db->insert('tipo_consulta_procedimientos', $data);
+    }
+
+
+    // ======== ServerSide Processing Tratamientos ================//
+    function make_query_treatments()
+    {
+        $order_column = array(NULL, "nombre_tipo_consulta", "procedimientos");
+
+        $this->db->select("
+        tipo_consulta.id_tipo_consulta,
+        nombre_tipo_consulta,
+        GROUP_CONCAT(DISTINCT descripcion_procedimiento ORDER BY descripcion_procedimiento SEPARATOR ', ') AS procedimientos
+    ", false);
+        $this->db->from('tipo_consulta');
+        $this->db->join('tipo_consulta_procedimientos', 'tipo_consulta_procedimientos.id_tipo_consulta = tipo_consulta.id_tipo_consulta', 'left');
+        $this->db->join('procedimiento', 'tipo_consulta_procedimientos.id_procedimiento = procedimiento.id_procedimiento', 'left');
+        $this->db->where('vigencia_tipo_consulta', 1);
+        $this->db->group_by('tipo_consulta.id_tipo_consulta');
+        $this->db->order_by('nombre_tipo_consulta', 'DESC');
+
+        if (!empty($_POST["search"]["value"])) {
+            $this->db->like("nombre_tipo_consulta", $_POST["search"]["value"]);
+        }
+
+        if (isset($_POST["order"])) {
+            $this->db->order_by($order_column[$_POST["order"]['0']['column']], $_POST['order']['0']['dir']);
+        } else {
+            $this->db->order_by("nombre_tipo_consulta", "DESC");
+        }
+    }
+    function make_datatables_treatments()
+    {
+        $this->make_query_treatments();
+
+        if ($_POST["length"] != -1) {
+            $this->db->limit($_POST["length"], $_POST["start"]);
+        }
+        $query = $this->db->get();
+        $result = $query->result_array();
+
+        return $result;
+    }
+    function get_all_data_treatments()
+    {
+        $this->db->select("*");
+        $this->db->from("tipo_consulta");
+        $this->db->where("vigencia_tipo_consulta", 1);
+        return $this->db->count_all_results();
+    }
+    function get_filtered_data_treatments()
+    {
+        $this->make_query_treatments();
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+    function get_treatments()
+    {
+        $fetch_data = $this->make_datatables_treatments();
+        $total_procedure = $this->get_all_data_treatments();
+        $filt_procedure = $this->get_filtered_data_treatments();
+
+        $data = array();
+        /*  if (count($fetch_data) > 0) {   */
+        foreach ($fetch_data as $row) {
+            $actions = "
+            <button id='btnEditTreatment' class='btn btn-defaultx btn-edit-treatment' 
+            data-title='Editar tratamiento' 
+            data-toggle='tooltip' 
+            data-placement='right'
+            data-id-treatment='" . $row['id_tipo_consulta'] . "'>
+                <i class='fa fa-edit fa-x'></i>
+            </button>
+            <button id='btnDeleteTreatment' class='btn btn-defaultz btn-delete-treatment' 
+            data-title='Eliminar tratamiento' 
+            data-toggle='tooltip' 
+            data-placement='right'
+            data-id-treatment='" . $row['id_tipo_consulta'] . "' >
+                <i class='fa fa-trash fa-x'></i>
+            </button>";
+
+            $sub_array = array();
+
+            $sub_array[] = $actions;
+            $sub_array[] = mb_strtoupper($row['nombre_tipo_consulta']);
+            $sub_array[] = mb_strtoupper($row['procedimientos']);
+            $data[] = $sub_array;
+        }
+
+        $output = array(
+            "draw" => intval($_POST['draw']),
+            "recordsTotal" => $total_procedure,
+            "recordsFiltered" => $filt_procedure,
+            "data" => $data
+        );
+        return $output;
+        /*  } else {
+          return false;
+          } */
+    }
+
+    function get_all_valid_products_type()
+    {
         try {
             $this->db->select("*");
             $this->db->from("tipo_producto");
@@ -868,16 +1059,16 @@ class Minventary extends CI_Model {
             return $e->getMessage();
         }
     }
-    function get_cod_product($codigo) {
+    function get_cod_product($codigo)
+    {
         try {
             $this->db->select("*");
             $this->db->from('PRODUCTO');
-            $this->db->where('CODIGO_PRODUCTO',$codigo);
+            $this->db->where('CODIGO_PRODUCTO', $codigo);
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
             return $e->getMessage();
         }
     }
-
 }
