@@ -6,12 +6,14 @@ $(document).ready(function () {
    var datepick = $("input[data-type='datepicker']");
 
    var date = new Date();
-   var options_num = {day: 'numeric', month: 'numeric',  year: 'numeric',};
-   var currentDate = date.getDate(), currentMonth = "11",currentYear = date.getFullYear();
+   var options_num = { day: 'numeric', month: 'numeric', year: 'numeric', };
+   var currentDate = date.getDate(), currentMonth = "11", currentYear = date.getFullYear();
 
    var fecha = new Date(currentYear, currentMonth, currentDate);
-   var max_Date= fecha.toLocaleDateString("es-MX",options_num);    
- 
+   var max_Date = fecha.toLocaleDateString("es-MX", options_num);
+   $(document).ready(function () {
+      $('.selectpicker').selectpicker();
+   });
    $.datepicker.regional['es'] = {
       closeText: 'Cerrar',
       prevText: '< Ant',
@@ -22,7 +24,7 @@ $(document).ready(function () {
       dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
       dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
       dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-      weekHeader: 'Sm', 
+      weekHeader: 'Sm',
       dateFormat: "dd/mm/yy",
       firstDay: 1,
       isRTL: false,
@@ -33,18 +35,18 @@ $(document).ready(function () {
 
    datepick.datepicker({
       changeMonth: true,
-      changeYear: true, 
+      changeYear: true,
       showButtonPanel: false,
       dateFormat: "dd/mm/yy",
-      showAnim: 'slideDown',      
+      showAnim: 'slideDown',
       maxDate: max_Date,
-      yearRange: '1980'+":"+currentYear,
+      yearRange: '1980' + ":" + currentYear,
       container: '.modal-body'
    });
 
    $('[data-toggle="tooltip"]').tooltip({
-    trigger : 'hover'
-})
+      trigger: 'hover'
+   })
 
    $('#dataProducts').DataTable({
       "dom": "<'row'<'col-md-6'<'col-lg-12 p-dt'fB>><'col-md-6 text-right'l>><'row op'<'col-md-12 p-dt't>><'row'<'col-md-12 p-dt'i>><'row'<'col-md-12 p-dt'p>>",
@@ -63,8 +65,8 @@ $(document).ready(function () {
       ],
       drawCallback: function () {
          $('[data-toggle="tooltip"]').tooltip({
-    trigger : 'hover'
-})
+            trigger: 'hover'
+         })
       }
    })
    $('#dataMed').DataTable({
@@ -84,8 +86,8 @@ $(document).ready(function () {
       ],
       drawCallback: function () {
          $('[data-toggle="tooltip"]').tooltip({
-    trigger : 'hover'
-})
+            trigger: 'hover'
+         })
       }
    })
    $('#dataVentasDia').DataTable({
@@ -111,8 +113,8 @@ $(document).ready(function () {
       ],
       drawCallback: function () {
          $('[data-toggle="tooltip"]').tooltip({
-    trigger : 'hover'
-})
+            trigger: 'hover'
+         })
       }
    });
    $("#dataSupliers").DataTable({
@@ -133,8 +135,8 @@ $(document).ready(function () {
       ],
       drawCallback: function () {
          $('[data-toggle="tooltip"]').tooltip({
-    trigger : 'hover'
-})
+            trigger: 'hover'
+         })
       }
    });
    $("#dataProcedure").DataTable({
@@ -155,11 +157,33 @@ $(document).ready(function () {
       ],
       drawCallback: function () {
          $('[data-toggle="tooltip"]').tooltip({
-    trigger : 'hover'
-})
+            trigger: 'hover'
+         })
       }
    });
-   
+   $("#dataTreatment").DataTable({
+      "dom": "<'row'<'col-md-6'<'col-lg-12 p-dt'fB>><'col-md-6 text-right'l>><'row op'<'col-md-12 p-dt't>><'row'<'col-md-12 p-dt'i>><'row'<'col-md-12 p-dt'p>>",
+      "language": { "url": raiz_url + "assets/plugins/dataTables/Spanish.json" },
+      "buttons": ['excel'],
+      "processing": true,
+      "retrieve": true,
+      "serverSide": true,
+      "order": [],
+      "ajax": {
+         url: raiz_url + "Inventary/ajax_dt_treatments",
+         type: "POST",
+      },
+      "columnDefs": [
+         { "targets": [0], "orderable": false },
+         { "targets": [0, 1, 2], "className": 'text-center' },
+      ],
+      drawCallback: function () {
+         $('[data-toggle="tooltip"]').tooltip({
+            trigger: 'hover'
+         })
+      }
+   });
+
    $("#btnCargaVentas").click(function (e) {
       e.preventDefault();
       $("#RG_BUSCAR").val(1);
@@ -218,25 +242,25 @@ $(document).ready(function () {
                      },
                   })
                } else {
-                   if (data == -2) {
-                  Swal.fire({
-                     title: 'Error al Registrar!',
-                     text: 'Este producto ya existe',
-                     icon: 'error',
-                     showConfirmButton: false,
-                     timer: 1500,
-                  })
+                  if (data == -2) {
+                     Swal.fire({
+                        title: 'Error al Registrar!',
+                        text: 'Este producto ya existe',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500,
+                     })
+                  }
+                  else {
+                     Swal.fire({
+                        title: 'Error al Registrar!',
+                        text: 'hubo un error al registrar el producto',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500,
+                     })
+                  }
                }
-               else {
-                  Swal.fire({
-                     title: 'Error al Registrar!',
-                     text: 'hubo un error al registrar el producto',
-                     icon: 'error',
-                     showConfirmButton: false,
-                     timer: 1500,
-                  })
-              }
-          }
             },
          });
       }
@@ -331,7 +355,7 @@ $(document).ready(function () {
 
       }
    });
-   
+
    /*DELETE MEDICAMENTO*/
    $('body').on("click", ".btn-delete-med", function (e) {
       var ID_PRODUCT = $(this).attr('data-id-med');
@@ -378,35 +402,35 @@ $(document).ready(function () {
 
       }
    });
-   
-   $('#btnAddProduct').attr('href',raiz_url + 'inventary/form_add_product/1');
-   
-   $('#mat').click(function(){
-       $('#btnAddProduct').attr('href',raiz_url + 'inventary/form_add_product/1');
+
+   $('#btnAddProduct').attr('href', raiz_url + 'inventary/form_add_product/1');
+
+   $('#mat').click(function () {
+      $('#btnAddProduct').attr('href', raiz_url + 'inventary/form_add_product/1');
    });
-   
-   $('#med').click(function(){
-       $('#btnAddProduct').attr('href', raiz_url + 'inventary/form_add_product/2');
+
+   $('#med').click(function () {
+      $('#btnAddProduct').attr('href', raiz_url + 'inventary/form_add_product/2');
    });
-   
+
    /*********************USO INTERNO*****************************/
-   $("#SEARCH_PRODUCTO_USAGE").change(function(){
+   $("#SEARCH_PRODUCTO_USAGE").change(function () {
       let val = $(this).val();
       let name = $("#SEARCH_PRODUCTO_USAGE option:selected").text();
       let code = $("#SEARCH_PRODUCTO_USAGE option:selected").data('code');
       let table = "#TABLE_ADD_USAGE";
       let inputCantidad = "<input type='number' class='form-control text-center' value='1' name='cant[]'>";
-      let inputProduct = "<input type='hidden' value='"+val+"' name='idProduct[]'>";
-      
-      
+      let inputProduct = "<input type='hidden' value='" + val + "' name='idProduct[]'>";
+
+
       $(table).append('<tr></tr>');
-		$(table+' tr:last').append('<td> <a href="" class="delete-product"><i class="fas fa-trash"></i></td>');
-		$(table+' tr:last').append('<td>'+code+'</td>');
-		$(table+' tr:last').append('<td>'+inputCantidad+'</td>');
-		$(table+' tr:last').append('<td>'+name+inputProduct+'</td>');
+      $(table + ' tr:last').append('<td> <a href="" class="delete-product"><i class="fas fa-trash"></i></td>');
+      $(table + ' tr:last').append('<td>' + code + '</td>');
+      $(table + ' tr:last').append('<td>' + inputCantidad + '</td>');
+      $(table + ' tr:last').append('<td>' + name + inputProduct + '</td>');
    })
-   
-   $("#TABLE_ADD_USAGE").on("click", ".delete-product", function(e) {
+
+   $("#TABLE_ADD_USAGE").on("click", ".delete-product", function (e) {
       e.preventDefault();
       $(this).closest("tr").remove();
    });
@@ -441,11 +465,55 @@ $(document).ready(function () {
                      timer: 1500,
                   })
                }
-            },           
+            },
          });
       }
    });
-     /*********************PROCEDIMIENTOS*****************************/
+   $('#formRecordTreatment').validator().on('submit', function (e) {
+      if (e.isDefaultPrevented()) {
+         // handle the invalid form...
+
+      } else {
+         // everything looks good!
+         e.preventDefault();
+         $.ajax({
+            url: raiz_url + "inventary/ajax_add_treatment",
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function (data) {
+               if (data > 0) {
+                  Swal.fire({
+                     title: 'Procedimiento Registrado!',
+                     icon: 'success',
+                     showConfirmButton: false,
+                     timer: 1500,
+                     onClose: function () {
+                        window.location.href = raiz_url + "inventary/index_tipos_consultas";
+                     },
+                  })
+               } else {
+                  Swal.fire({
+                     title: 'Error al Registrar!',
+                     text: 'Hubo un error con el registro',
+                     icon: 'error',
+                     showConfirmButton: false,
+                     timer: 1500,
+                  })
+               }
+            },
+            error: function () {
+               Swal.fire({
+                  title: 'Procedimiento Existente',
+                  text: 'Este procedimiento ya existe',
+                  icon: 'info',
+                  showConfirmButton: false,
+                  timer: 1500,
+               })
+            }
+         });
+      }
+   });
+   /*********************PROCEDIMIENTOS*****************************/
    //AGREGAR PROEDIMIENTO
    $('#formRecordProcedure').validator().on('submit', function (e) {
       if (e.isDefaultPrevented()) {
@@ -783,7 +851,7 @@ $(document).ready(function () {
                $('#RG_CANTIDAD_PRODUCTO_ORDEN_TEMP').closest('.form-group').removeClass('has-success').addClass('has-error');
             if (!$('#RG_COSTO_PRODUCTO_ORDEN_TEMP').val())
                $('#RG_COSTO_PRODUCTO_ORDEN_TEMP').closest('.form-group').removeClass('has-success').addClass('has-error');
-           if (!$('#RG_PRECIO_PRODUCTO_ORDEN_TEMP').val())
+            if (!$('#RG_PRECIO_PRODUCTO_ORDEN_TEMP').val())
                $('#RG_PRECIO_PRODUCTO_ORDEN_TEMP').closest('.form-group').removeClass('has-success').addClass('has-error');
          } else {
 
@@ -838,7 +906,7 @@ $(document).ready(function () {
    });
    $('#SEARCH_PRODUCTO_USAGE').select2({
       placeholder: "Elige un producto",
- 
+
    });
    function traeArticulo() {
       $.ajax({
@@ -886,7 +954,7 @@ $(document).ready(function () {
             var id;
             if (data.length > 0) {
                $.each(data, function (arrayID, row) {
-                  $("#suggestionsProd").append('<div class="display_box" align="left" data-unit="' + row['COSTO_PRODUCTO']+  '" cant-act="' + row['STOCK_PRODUCTO'] +'" pre="' + row['PRECIO_PRODUCTO'] + '" id="' + row['ID_PRODUCTO'] + '" codigo="' + row['CODIGO_PRODUCTO'] + '">' +
+                  $("#suggestionsProd").append('<div class="display_box" align="left" data-unit="' + row['COSTO_PRODUCTO'] + '" cant-act="' + row['STOCK_PRODUCTO'] + '" pre="' + row['PRECIO_PRODUCTO'] + '" id="' + row['ID_PRODUCTO'] + '" codigo="' + row['CODIGO_PRODUCTO'] + '">' +
                      row['NOMBRE_PRODUCTO'] + ' ' + row['CODIGO_PRODUCTO'] + '</div>');
 
                });
@@ -1000,7 +1068,7 @@ $(document).ready(function () {
                   })
                }
             }
-         });   
+         });
       }
    });
 

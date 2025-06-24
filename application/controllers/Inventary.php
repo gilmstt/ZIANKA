@@ -8,6 +8,11 @@ if (!defined('BASEPATH')) {
 
 class Inventary extends CI_Controller
 {
+   /** @var minventary
+    *
+    */
+
+   public $minventary;
 
    public function __construct()
    {
@@ -53,7 +58,7 @@ class Inventary extends CI_Controller
    {
       if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
          $data = getActive("classInv");
-         $data['ID_TIPO_PRODUCTO' ] = $param;
+         $data['ID_TIPO_PRODUCTO'] = $param;
          $this->load->view('esqueleton/header', $data);
          $data['ROW_TYPE_PRODUCT'] = $this->minventary->get_all_valid_products_type();
          $this->load->view('Inventary/v_add_product', $data);
@@ -77,16 +82,16 @@ class Inventary extends CI_Controller
          $data['FECHA_CADUCIDAD_MES'] = trim($this->input->post("RG_FECHA_MES_PRODUCTO"));
          $data['FECHA_CADUCIDAD_AÑO'] = trim($this->input->post("RG_FECHA_ANNIO_PRODUCTO"));
          $data['ACTIVO_PRODUCTO'] = 1;
-         
+
          $ID_PRODUCTO = -3;
          $rep = array();
-         if($data['CODIGO_PRODUCTO']!="") $rep = $this->minventary->get_cod_product($data['CODIGO_PRODUCTO']);
-         if(count($rep)>0){
-                    $ID_PRODUCTO = -2;
-                }else{
-                    $ID_PRODUCTO = $this->minventary->add_new_product_on_db($data);
-                }
-                echo $ID_PRODUCTO;
+         if ($data['CODIGO_PRODUCTO'] != "") $rep = $this->minventary->get_cod_product($data['CODIGO_PRODUCTO']);
+         if (count($rep) > 0) {
+            $ID_PRODUCTO = -2;
+         } else {
+            $ID_PRODUCTO = $this->minventary->add_new_product_on_db($data);
+         }
+         echo $ID_PRODUCTO;
       } else {
          redirect('inventary');
       }
@@ -133,10 +138,10 @@ class Inventary extends CI_Controller
          $data['ID_TIPO_PRODUCTO'] = trim($this->input->post("RG_TIPO_PRODUCTO"));
          $data['FECHA_CADUCIDAD_MES'] = trim($this->input->post("RG_FECHA_MES_PRODUCTO"));
          $data['FECHA_CADUCIDAD_AÑO'] = trim($this->input->post("RG_FECHA_ANNIO_PRODUCTO"));
-         
+
 
          $id_product = $this->input->post("RG_ID_PRODUCT");
-         $AFFECTED_ROWS = $this->minventary->edit_product_on_db($data,$id_product);
+         $AFFECTED_ROWS = $this->minventary->edit_product_on_db($data, $id_product);
          if ($AFFECTED_ROWS > NULO) {
             echo $AFFECTED_ROWS;
          } else {
@@ -256,6 +261,70 @@ class Inventary extends CI_Controller
    }
 
    /* FIN PROCEDIMIENTOS */
+   public function index_tipos_consultas()
+   {
+      if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
+         $data = getActive("classInv");
+         $this->load->view('esqueleton/header', $data);
+         $data['ROW_TIPOS_CONSULTAS'] = $this->minventary->get_all_valid_types_consults();
+         $this->load->view('Inventary/v_index_tipos_consultas', $data);
+         $this->load->view('esqueleton/footer');
+      } else {
+         redirect('login/salir');
+      }
+   }
+
+   public function form_add_treatment()
+   {
+      if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
+         $data = getActive("classInv");
+         $data['DATA_TIPOS_PROCEDIMIENTO'] = $this->minventary->get_all_valid_procedures();
+
+         $this->load->view("esqueleton/header", $data);
+         $this->load->view('Inventary/v_add_tipo_consulta', $data);
+         $this->load->view("esqueleton/footer");
+      } else {
+         redirect('login/salir');
+      }
+   }
+
+   public function ajax_add_treatment()
+   {
+      if ($this->input->is_ajax_request()) {
+
+         $data['nombre_tipo_consulta'] = trim($this->input->post("RG_NOMBRE_TRATAMIENTO"));
+         $data['activo_procedimiento'] = 1;
+         $ID_TRATAMIENTO = $this->minventary->add_new_treatment_on_db($data);
+
+         if ($ID_TRATAMIENTO > NULO) {
+            $tiposProcedimientos = $this->input->post("RG_PROCEDIMIENTO");
+            if (!empty($tiposProcedimientos)) {
+               if (!is_array($tiposProcedimientos)) {
+                  $tiposProcedimientos = array($tiposProcedimientos);
+               }
+               foreach ($tiposProcedimientos as $id_procedimiento) {
+                  $this->minventary->add_tipo_consulta_procedimiento($ID_TRATAMIENTO, $id_procedimiento);
+               }
+            }
+            echo $ID_TRATAMIENTO;
+         } else {
+            echo -1;
+         }
+      } else {
+         redirect('inventary');
+      }
+   }
+
+   public function ajax_dt_treatments()
+   {
+      if ($this->input->is_ajax_request()) {
+         $SUPLIERS = $this->minventary->get_treatments();
+         echo json_encode($SUPLIERS);
+      } else {
+         redirect('inventary');
+      }
+   }
+
 
    /* INICIO COMPRAS */
 
@@ -298,13 +367,12 @@ class Inventary extends CI_Controller
       } else {
          show_404();
       }
-
    }
 
    public function index_supplier()
    {
       if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
-         
+
          $this->load->view("esqueleton/header", getActive("classInv"));
          $this->load->view("Inventary/v_index_supplier");
          $this->load->view("esqueleton/footer");
@@ -532,15 +600,15 @@ class Inventary extends CI_Controller
    {
       if ($this->input->is_ajax_request()) {
          $AFFECTED_ROWS = $this->minventary->cancel_buy();
-         if($AFFECTED_ROWS>0){
-             $ROW_ITEMS = $this->minventary->get_producto_compra_by_id($this->input->post('ID_BUY'));
-             foreach ($ROW_ITEMS as $ROW){
-                 $producto_db = $this->minventary->get_product_by_id($ROW['ID_PRODUCTO']);
-                 $stock_producto_db = $producto_db[0]['STOCK_PRODUCTO'];
-                 $new_stock = $stock_producto_db - $ROW['CANTIDAD'];
-                 $data['STOCK_PRODUCTO'] = $new_stock;
-                 $aff = $this->minventary->edit_product_on_db($data,$ROW['ID_PRODUCTO']);
-             }
+         if ($AFFECTED_ROWS > 0) {
+            $ROW_ITEMS = $this->minventary->get_producto_compra_by_id($this->input->post('ID_BUY'));
+            foreach ($ROW_ITEMS as $ROW) {
+               $producto_db = $this->minventary->get_product_by_id($ROW['ID_PRODUCTO']);
+               $stock_producto_db = $producto_db[0]['STOCK_PRODUCTO'];
+               $new_stock = $stock_producto_db - $ROW['CANTIDAD'];
+               $data['STOCK_PRODUCTO'] = $new_stock;
+               $aff = $this->minventary->edit_product_on_db($data, $ROW['ID_PRODUCTO']);
+            }
          }
          echo $AFFECTED_ROWS;
       } else {
@@ -575,7 +643,7 @@ class Inventary extends CI_Controller
             //$ITEM_ON_DB = $this->minventary->get_product_by_id($ROW['ID_PRODUCTO']);
             //$data['STOCK_PRODUCTO'] = $ITEM_ON_DB[0]['STOCK_PRODUCTO'] + $ROW['CANTIDAD_PRODUCTO_ORDEN_TEMP'];
             $data['STOCK_PRODUCTO'] = $ROW['CANTIDAD_ACTUAL_PRODUCTO_ORDEN_TEMP'] + $ROW['CANTIDAD_PRODUCTO_ORDEN_TEMP'];
-            log_message("error", "producto: ". $ROW['NOMBRE_PRODUCTO'] . ", descripcion: ". $ROW['DESCRIPCION_PRODUCTO'] . ", id producto: " . $ROW['ID_PRODUCTO'] . ", costo: " . $ROW['COSTO_PRODUCTO_ORDEN_TEMP'] . ", stock anterior: " . $ITEM_ON_DB[0]['STOCK_PRODUCTO'] . ", stock actual: " . $data['STOCK_PRODUCTO']);
+            log_message("error", "producto: " . $ROW['NOMBRE_PRODUCTO'] . ", descripcion: " . $ROW['DESCRIPCION_PRODUCTO'] . ", id producto: " . $ROW['ID_PRODUCTO'] . ", costo: " . $ROW['COSTO_PRODUCTO_ORDEN_TEMP'] . ", stock anterior: " . $ITEM_ON_DB[0]['STOCK_PRODUCTO'] . ", stock actual: " . $data['STOCK_PRODUCTO']);
             $UPDATE = $this->minventary->update_product_on_db_from_compra($data);
             unset($data);
          }
@@ -612,7 +680,7 @@ class Inventary extends CI_Controller
                $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
                $this->pdf->designUp();
                $this->pdf->image(base_url() . "assets/img/encabezado.png", 76, 8, 70);
-               
+
                $this->pdf->setXY(178, 15);
                $this->pdf->Cell(27, 5, 'FECHA', 1, 1, 'C');
 
@@ -660,19 +728,17 @@ class Inventary extends CI_Controller
                foreach ($ROW_NOMBRE as $ROW) {
 
                   $importe = 0;
-                  $this->pdf->SetXY(11,$posicionY);
-                  $this->pdf->Multicell(77, 5.5, utf8_decode($ROW['NOMBRE_PRODUCTO']),0,'L');
-                  $this->pdf->Text(90, $posicionY+3, $ROW['CANTIDAD']);
-                  $this->pdf->Text(129, $posicionY+3, $ROW['COSTO']);
-                  $importe += $this->pdf->Text(178, $posicionY+3, $ROW['CANTIDAD'] * $ROW['COSTO']);
+                  $this->pdf->SetXY(11, $posicionY);
+                  $this->pdf->Multicell(77, 5.5, utf8_decode($ROW['NOMBRE_PRODUCTO']), 0, 'L');
+                  $this->pdf->Text(90, $posicionY + 3, $ROW['CANTIDAD']);
+                  $this->pdf->Text(129, $posicionY + 3, $ROW['COSTO']);
+                  $importe += $this->pdf->Text(178, $posicionY + 3, $ROW['CANTIDAD'] * $ROW['COSTO']);
                   $posicionY = $this->pdf->GetY();
-
-                  
                }
-                  $posicionY = $this->pdf->GetY();
-                  $this->pdf->setXY(165, $posicionY);
-                  $this->pdf->Cell(26, 5, utf8_decode('TOTAL:'), 0, 0, 'L');
-                  $this->pdf->Text(177, $posicionY+3, '$'.' '.$ROW_BUY[0]['TOTAL_COMPRA']);
+               $posicionY = $this->pdf->GetY();
+               $this->pdf->setXY(165, $posicionY);
+               $this->pdf->Cell(26, 5, utf8_decode('TOTAL:'), 0, 0, 'L');
+               $this->pdf->Text(177, $posicionY + 3, '$' . ' ' . $ROW_BUY[0]['TOTAL_COMPRA']);
 
                $this->pdf->Output(); //Salida al navegador del pdf
             } else {
@@ -686,7 +752,7 @@ class Inventary extends CI_Controller
    public function index_usage()
    {
       if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
-         
+
          $this->load->view("esqueleton/header", getActive("classInv"));
          $this->load->view("Inventary/v_index_usage");
          $this->load->view("esqueleton/footer");
@@ -697,7 +763,7 @@ class Inventary extends CI_Controller
    public function add_usage()
    {
       if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
-         
+
          $this->load->view("esqueleton/header", getActive("classInv"));
          $this->load->view("Inventary/v_add_usage");
          $this->load->view("esqueleton/footer");
@@ -708,29 +774,28 @@ class Inventary extends CI_Controller
    public function ajax_add_usage()
    {
       if ($this->input->is_ajax_request()) {
-                  
+
          $date = date("Y-m-d");
-			$cant = $this->input->post('cant');			
+         $cant = $this->input->post('cant');
          $ids  = $this->input->post('idProduct');
          $desc = $this->input->post('RG_DESCRIPCION');
 
          $data = array(
             'DESCRIPCION' =>  $desc,
             'ID_MEDICO' => $this->session->userdata('CAREYES_ID_USUARIO'),
-            'FECHA' =>  $date 
+            'FECHA' =>  $date
          );
          $this->db->insert('uso_interno', $data);
-         
-			foreach($ids as $i => $row)
-			{
+
+         foreach ($ids as $i => $row) {
             $this->db->select('STOCK_PRODUCTO');
-            $this->db->where('ID_PRODUCTO',$ids[$i]);
+            $this->db->where('ID_PRODUCTO', $ids[$i]);
             $stock = $this->db->get('producto')->row();
-           
+
             $stock2 = $stock->STOCK_PRODUCTO - $cant[$i];
 
-            $this->db->where('ID_PRODUCTO',$ids[$i]);
-            $this->db->update('producto',array('STOCK_PRODUCTO'=>$stock2));				
+            $this->db->where('ID_PRODUCTO', $ids[$i]);
+            $this->db->update('producto', array('STOCK_PRODUCTO' => $stock2));
          }
          echo "sucess";
       } else {
