@@ -788,15 +788,17 @@ class Consult extends CI_Controller
                     $this->pdf->setXY(164, 137);
                     $this->pdf->Cell(41, 5, ' ', 1, 1, 'C');*/
                     $this->pdf->SetFont('Arial', '', 12);
-                    $SUBTOTAL = $SUM_PROC[0]['suma'] + $SUM_FICHA[0]['sumaficha'];
-                    $IVA = $SUBTOTAL * 0.16;
-                    $TOTAL = $IVA + $SUBTOTAL;
+                    $TOTAL = $SUM_PROC[0]['suma'] + $SUM_FICHA[0]['sumaficha'];
+                    $SUBTOTAL = $TOTAL / 1.16;
+                    $IVA = ($TOTAL - $SUBTOTAL);
                     $this->pdf->Text(182, 221, to_currency($SUBTOTAL));
                     $this->pdf->Text(182, 234, to_currency($IVA));
                     $this->pdf->Text(182, 246, to_currency($TOTAL));
                     //$this->pdf->Text(179, 141, to_currency($ROW_CONSULT[0]['TOTAL_PAGADO_CONSULTA']));
 
                     if ($ROW_CONSULT[0]['TARIFA2'] > NULO) {
+
+                        //---------TO DO -> RECALCULAR EL IVA CON EL SUBTOTAL PARA CORRECION DEL TOTA -------------
                         $ROW_TARIFA = $this->mconfig->get_tarifa_by_id($ROW_CONSULT[0]['TARIFA2']);
                         $suma = $SUM_PROC[0]['suma'] + $SUM_FICHA[0]['sumaficha'] + $ROW_TARIFA[0]['CONSULTA_TARIFA'];
                         $NOMBRE_TARIFA = $ROW_TARIFA[0]['NOMBRE_TARIFA'];
@@ -876,10 +878,10 @@ class Consult extends CI_Controller
                             $this->pdf->Cell(20,6, $CANT_PROCEDIMIENTO);
 
                             $this->pdf->setXY(152, $posicionY);
-                            $this->pdf->Cell(30,6, $PNETO_PROCEDIMIENTO); 
+                            $this->pdf->Cell(30,6, floatval($PNETO_PROCEDIMIENTO) > 0 ? to_currency(floatval($PNETO_PROCEDIMIENTO/1.16)) : ""); 
 
                             $this->pdf->setXY(184, $posicionY);
-                            $this->pdf->Cell(30,6, floatval($PRECIO_PROCEDIMIENTO) > 0 ? to_currency(floatval($PRECIO_PROCEDIMIENTO)) : "");
+                            $this->pdf->Cell(30,6, floatval($PRECIO_PROCEDIMIENTO) > 0 ? to_currency(floatval($PRECIO_PROCEDIMIENTO/1.16)) : "");
                             $posicionY += 10;
                         }
                     }
@@ -910,10 +912,10 @@ class Consult extends CI_Controller
                             $this->pdf->Cell(20, 6, $CANT_PRODUCTO);
 
                             $this->pdf->setXY(152, $posicionY);
-                            $this->pdf->Cell(30,6, $PNETO_PRODUCTO); 
+                            $this->pdf->Cell(30,6, floatval($PNETO_PRODUCTO) > 0 ? to_currency(floatval($PNETO_PRODUCTO/1.16)) : ""); 
 
                             $this->pdf->setXY(184, $posicionY);
-                            $this->pdf->Cell(40, 6, floatval($PRECIO_PRODUCTO) > 0 ? to_currency(floatval($PRECIO_PRODUCTO)) : "");
+                            $this->pdf->Cell(40, 6, floatval($PRECIO_PRODUCTO) > 0 ? to_currency(floatval($PRECIO_PRODUCTO/1.16)) : "");
                             $posicionY += 10;
                         }
                     }
@@ -2117,7 +2119,10 @@ class Consult extends CI_Controller
                     $mes_nombre = mb_convert_encoding($mes_nombre, 'ISO-8859-1', 'UTF-8');
                     $this->pdf->Text(70, 188, $mes_nombre);
                     $this->pdf->Text(103, 188, date('Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
-
+                    $this->pdf->Text(64, 217, mb_convert_encoding($ROW_CONSULT[0]['PROC_PROPUESTO'], 'ISO-8859-1', 'UTF-8'));
+                    $this->pdf->Text(58, 230, mb_convert_encoding($ROW_CONSULT[0]['IND_TERAPEUTICA'], 'ISO-8859-1', 'UTF-8'));
+                    $this->pdf->Text(62, 244, mb_convert_encoding($ROW_CONSULT[0]['PROC_REALIZAR'], 'ISO-8859-1', 'UTF-8'));
+                    
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->designUp();
 
@@ -2125,6 +2130,8 @@ class Consult extends CI_Controller
                         $this->pdf->image(base_url() . "assets/img/historiaClinica/4.png", 0, 0, 215.9, 279.4);
                     }
 
+                    $this->pdf->Text(58, 3, mb_convert_encoding($ROW_CONSULT[0]['PRE_PROCEDIMIENTO'], 'ISO-8859-1', 'UTF-8'));
+                    $this->pdf->Text(60, 16, mb_convert_encoding($ROW_CONSULT[0]['POST_PROCEDIMIENTO'], 'ISO-8859-1', 'UTF-8'));
                     $this->pdf->Text(20, 40, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
                     $this->pdf->Text(145, 40, calcula_edad_2($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'], $ROW_CONSULT[0]['FECHA_CONSULTA']));
                     $this->pdf->Text(128, 84, date('d', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
@@ -2133,6 +2140,8 @@ class Consult extends CI_Controller
                     $this->pdf->Text(153, 84, $mes_nombre);
                     $this->pdf->Text(192, 84, date('Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
                     $this->pdf->Text(40, 92, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+                    
+
 
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->designUp();
@@ -2492,7 +2501,7 @@ class Consult extends CI_Controller
                                 ];
 
                         $x = 161;          // Coordenada X inicial
-                        $y = 176;         // Coordenada Y inicial
+                        $y = 175;         // Coordenada Y inicial
                         $maxX = 205;      // Límite derecho de la página (ajusta según tu margen)
                         $espaciado = 3; // Espacio entre textos
                         $mtvActivo = false; // Variable para controlar si se ha impreso "Otros tratamientos estéticos"
@@ -2552,10 +2561,10 @@ class Consult extends CI_Controller
                         }
 
                         $this->pdf->setXY(11, 29);
-                        $this->pdf->Text(60, 32, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
-                        $this->pdf->Text(60, 40, $ROW_CONSULT[0]['ID_CONSULTA']);
-                        $this->pdf->Text(60, 48, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
-                        $this->pdf->Text(60, 56, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                        $this->pdf->Text(60, 30, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(60, 38, $ROW_CONSULT[0]['ID_CONSULTA']);
+                        $this->pdf->Text(60, 47, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(60, 55, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
@@ -2602,10 +2611,10 @@ class Consult extends CI_Controller
                         }
 
                         $this->pdf->setXY(11, 29);
-                        $this->pdf->Text(60, 32, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
-                        $this->pdf->Text(60, 40, $ROW_CONSULT[0]['ID_CONSULTA']);
-                        $this->pdf->Text(60, 48, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
-                        $this->pdf->Text(60, 56, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                        $this->pdf->Text(60, 30, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(60, 38, $ROW_CONSULT[0]['ID_CONSULTA']);
+                        $this->pdf->Text(60, 46, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
+                        $this->pdf->Text(60, 54, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos

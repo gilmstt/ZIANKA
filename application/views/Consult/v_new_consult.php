@@ -690,6 +690,49 @@ fieldset[disabled] .form-control {
 
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="h3Antecedentes"> DIAGNÓSTICO PRICIPAL</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="">PROCEDIMIENTOS PROPUESTOS</label>
+                                        <textarea class="form-control" name="DP_PROCP" id="LS" rows="PP"
+                                            placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="">INDICACION TERAPÉUTICA</label>
+                                        <textarea class="form-control" name="DP_IND_TERP" id="IT"
+                                            rows="2" placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="">PROCEDIMIENTO A REALIZAR</label>
+                                        <textarea class="form-control" name="DP_PROC_RELZ" id="PR"
+                                            rows="2" placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="">NOTA PRE-PROCEDIMIENTO</label>
+                                        <textarea class="form-control" name="DP_PRE_PROC" id="PRE_PROC"
+                                            rows="2" placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="">NOTA POST-PROCEDIMIENTO</label>
+                                        <textarea class="form-control" name="DP_POST_PROC" id="POST_PROC"
+                                            rows="2" placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
                                     <h4 class="h3Antecedentes"> LABORATORIOS</h4>
                                 </div>
                             </div>
