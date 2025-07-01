@@ -114,17 +114,6 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
                         </div>
                      </div>
                   </div>
-                  <!-- <div class="col-lg-3">
-                            <div class="form-group">
-                                <label for="">Condición</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fas fa-user"></i></span>
-                                    <input type="text" class="form-control require" readonly id="CONDICION"
-                                           placeholder="Escribe aquí.." name="RG_CONDICION_CONSULTA">
-                                </div>
-                            </div>
-                            <div class="help-block with-errors"></div>
-                        </div> -->
                   <div class="col-lg-3">
                      <div class="form-group">
                         <label for="">Origen</label>
@@ -147,15 +136,6 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
                      </div>
                   </div>
 
-                  <!--<div class="col-lg-12">
-                            <div class="form-group">
-                                <div class="alert alert-info">
-                                    <label for="">Antecedentes :</label>
-                                    <textarea class="form-control txt-antecedentes" name="ANTECEDENTES" id="ANTECEDENTES"
-                                              rows="1" placeholder="Escribe aquí.."></textarea>
-                                </div>
-                            </div>
-                        </div>-->
                   <div class="col-lg-12">
                      <div class="form-group">
                         <label for="">Motivo consulta :</label>
@@ -338,36 +318,28 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
             <input type="hidden" id="id_consulta_consumo">
             <input type="hidden" id="id_paciente_consumo">
             <span class="modal-title" id="myModalLabel">FICHA CONSUMO DE <span id="paciente_name"></span></span>
-            <span class="float-right color-white" id="labelType">
+            <!-- <span class="float-right color-white" id="labelType">-->
                <font id="TYPE"></font>
             </span>
             <span class="float-right color-white" style="display:none" id="tarifa_edit">
                Tarifa
                <select name="" id="tarifa_select">
-               <option value="">--SELECCIONE--</option>
+                  <option value="">--SELECCIONE--</option>
                   <?php
-                        $CI = &get_instance();
-                        $Tarifas = $this->db->get_where("tarifa", array('VIGENCIA_TARIFA' => 1))->result_array();
-                        foreach ($Tarifas as $row) {
-                            $nombre = $row['NOMBRE_TARIFA'];
-                            $id = $row['ID_TARIFA'];
-                            $desc = $row['PORCENTAJE_TARIFA'];
-                            $consulta = $row['CONSULTA_TARIFA'];
+                  $CI = &get_instance();
+                  $Tarifas = $this->db->get_where("tarifa", array('VIGENCIA_TARIFA' => 1))->result_array();
+                  foreach ($Tarifas as $row) {
+                     $nombre = $row['NOMBRE_TARIFA'];
+                     $id = $row['ID_TARIFA'];
+                     $desc = $row['PORCENTAJE_TARIFA'];
+                     $consulta = $row['CONSULTA_TARIFA'];
 
-                            echo "<option data-precioConsulta='" . $consulta . "' data-name='" . $nombre . "' data-desc='" . $desc . "' value='" . $id . "'>" . $nombre . "</option>";
-                        }
-                        ?>
+                     echo "<option data-precioConsulta='" . $consulta . "' data-name='" . $nombre . "' data-desc='" . $desc . "' value='" . $id . "'>" . $nombre . "</option>";
+                  }
+                  ?>
 
                </select>
             </span>
-            <!-- <span class="float-right hide" id="membre_edit">
-                    Tarifa
-                    <select name="" id="">
-                    <option value="">A</option>
-                    <option value="">B</option>
-                    <option value="">C</option>
-                    </select>
-                </span> -->
 
          </div>
          <div class="modal-body pd-3rem">
@@ -380,13 +352,13 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
                         <select name="proc" id="select_procedimiento" class="form-control">
                            <option id="optSelected" value="" selected>Elige un procedimiento</option>
                            <?php
-                                $CI = &get_instance();
-                                $Procedimientos = $CI->db->get('procedimiento')->result_array();
+                           $CI = &get_instance();
+                           $Procedimientos = $CI->db->get('procedimiento')->result_array();
 
-                                foreach ($Procedimientos as $row) {
-                                    echo "<option data-precio_proce='" . $row["precio_procedimiento"] . "' value='" . $row["id_procedimiento"] . "'>" . $row['descripcion_procedimiento'] . "</option>";
-                                }
-                                ?>
+                           foreach ($Procedimientos as $row) {
+                              echo "<option data-precio_proce='" . $row["precio_procedimiento"] . "' value='" . $row["id_procedimiento"] . "'>" . $row['descripcion_procedimiento'] . "</option>";
+                           }
+                           ?>
                         </select>
 
                         <div class="class_invalid hidex mb-10 animated shake fast" id="msj_validSelect_proc">
@@ -449,15 +421,15 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
                                  Se ha añadido  <span id="msj_cant_proce"></span></span></div>
                         </div>
                      </div>
-                      <!-- // PANEL PRODUCTOS // -->
+                     <!-- // PANEL PRODUCTOS // -->
                      <div class="col-lg-12 col-sm-12 col-md-12 div_adds p-none hidex" id="addProducto">
                         <label for="">Agregar producto</label>
                         <select name="producto" id="select_producto" class="form-control">
                            <option value="" selected>Elige un producto</option>
                            <?php
-                              foreach ($PRODUCTOS as $row) {
-                                 echo "<option value='" . $row["ID_PRODUCTO"] . "'> " . $row['NOMBRE_PRODUCTO'] . "</option>";
-                              }
+                           foreach ($PRODUCTOS as $row) {
+                              echo "<option value='" . $row["ID_PRODUCTO"] . "'> " . $row['NOMBRE_PRODUCTO'] . "</option>";
+                           }
                            ?>
                         </select>
 
@@ -522,16 +494,16 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
                      <div class="col-lg-12 col-mdx-12 col-sm-12 bg-grey pd-details hidex" id="FOOTER_M">
                         <div class="col-lg-12 text-center p-none">
                            <div class="form-group">
-                               <!-- <label class="label_card">FOLIO</label> -->
+                              <!-- <label class="label_card">FOLIO</label> -->
                               <div class="input-group">
                                  <!-- <span class="input-group-addon br-0"><i class="fas fa-hashtag"></i></span> 
                                   <input type="text" id="FOLIO_CONSULTA_M" class="form-control text-center"
                                     placeholder="Folio" readonly> -->
                               </div>
                            </div>
-                        </div> 
+                        </div>
                         <div  class="col-lg-6 text-center p-none">
-                           <div class="form-group">
+                           <!--<div class="form-group">
                               <label class="label_card">MEMBRESÍA</label>
                               <div class="input-group">
                                  <span class="input-group-addon"><i class="fas fa-credit-card"></i></span>
@@ -539,7 +511,7 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
                                     id="MEMBRESIA">
 
                               </div>
-                           </div>
+                           </div>-->
                         </div>
                         <div class="col-lg-6 text-center p-none">
                            <div class="form-group">
@@ -547,12 +519,12 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
                               <div class="input-group">
                                  <span class="input-group-addon br-0"><i class="fas fa-dollar-sign"></i></span>
                                  <input type="text" id="TOTAL_FINAL_INDEX" class="form-control text-center"
-                                    placeholder="Total" >
+                                    placeholder="Total">
                               </div>
                            </div>
                         </div>
-                       
-                      </div>
+
+                     </div>
                      <div class="col-lg-12 col-mdx-12 col-sm-12 bg-grey pd-details hidex" id="FOOTER_T">
                         <div class="col-lg-12 text-center p-none">
                            <div class="form-group">
@@ -563,8 +535,8 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
                                     placeholder="Folio" readonly>
                               </div>
                            </div>
-                        </div> 
-                       
+                        </div>
+
                         <div class="col-lg-6 text-center p-none">
                            <div class="form-group">
                               <label class="label_card">PRECIO CONSULTA</label>

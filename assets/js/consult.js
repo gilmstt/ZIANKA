@@ -17,6 +17,8 @@ $(document).ready(function () {
       "serverSide": true,
       "order": [],
       "buttons": ['excel'],
+      "pageLength": 25, // 👈 Establece 25 como valor por defecto
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]], // 👈 Agrega opción "Todos"
       "ajax": {
          url: raiz_url + "Consult/ajax_get_all_consults",
          type: "POST"
@@ -760,7 +762,7 @@ $(document).ready(function () {
 
                   html += "<tr><td class='td-hidden'><span title='" + nombre + "'>" + nombre + "</span></td>" +
                      "<td>" + cant + "</td>" +
-                     "<td>$" + precio + "</td>" +
+                     "<td>" + parseFloat(precio).toFixed(2) + "</td>" +
                      "<td>" +
                      "<a class='del_rel btn' style='display:" + display + "' href='#'  data-id_ficha='" + id_ficha + "' data-idrel='" + id + "' id='del_rel'>" +
                      " <i class='fas fa-trash-alt'></i>" +
@@ -904,7 +906,7 @@ $(document).ready(function () {
                      "<td>" +
                      "<input type='number' class='product-quantityC form-control' " + readonly + " value='" + cant + "' data-idrelp='" + id + "' />" +
                      "</td>" +
-                     "<td>$" + precio + "</td>" +
+                     "<td>$" + parseFloat(precio).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "</td>" +
                      "<td> <a class='btn del_relp' style='display:" + display + "' data-idrelp='" + id + "' data-id_ficha='" + id_ficha + "' id='del_relp'>" +
                      "<i class='fas fa-trash-alt'</a></td>" +
                      "</tr>";
@@ -1421,7 +1423,7 @@ $(document).ready(function () {
    }//index
    function actualizarTotalFinalIndex() {
       const totalFinal = totalProcedimientos + totalProductos;
-      $("#TOTAL_FINAL_INDEX").val(totalFinal.toFixed(2));
+      $("#TOTAL_FINAL_INDEX").val(totalFinal.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
    }
    function get_total_final(desc) {
       let PrecioConsult = $("#PRECIO_CONSULTA").val();

@@ -24,7 +24,7 @@
 					<i class="fa fa-list fa-x"></i>
 				</div>
 				<a class="link-title-a" href="<?= base_url() ?>Inventary/index_tipos_consultas">
-					<span class="link-title-span">Tipos de consulta</span>
+					<span class="link-title-span">Tratamientos</span>
 				</a>
 			</div>
 		</li>

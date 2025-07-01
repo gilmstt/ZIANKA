@@ -745,56 +745,31 @@ class Consult extends CI_Controller
                     $this->pdf->image(base_url() . "assets/img/FichaConsumo/1.png", 0, 0, 215.9, 279.4);
 
                     $this->pdf->setXY(11, 29);
-                    //$this->pdf->Cell(66, 5, 'FECHA:', 1, 1, 'L');
                     $this->pdf->SetFont('Arial', '', 12);
                     $this->pdf->Text(160, 56, $ROW_CONSULT[0]['FECHA_CONSULTA']);
 
                     $this->pdf->setXY(77, 29);
                     $this->pdf->SetFont('Arial', 'B', 10);
-                    //$this->pdf->Cell(66, 5, 'HORA DE INGRESO:', 1, 1, 'L');
-                    /*$this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(118, 32.5, $ROW_CONSULT[0]['HORA_CONSULTA']);*/
 
                     $this->pdf->setXY(143, 29);
                     $this->pdf->SetFont('Arial', 'B', 10);
-                    //$this->pdf->Cell(62, 5, 'HORA DE EGRESO:', 1, 1, 'L');
                     $this->pdf->SetFont('Arial', '', 10);
                     $this->pdf->Text(183, 32.5, $ROW_CONSULT[0]['HREGRESO_CONSULTA']);
 
                     $this->pdf->setXY(11, 34);
-                    //$this->pdf->SetFont('Arial', 'B', 10);
-                   // $this->pdf->Cell(138, 5, 'NOMBRE DEL PACIENTE:', 1, 1, 'L');
                     $this->pdf->SetFont('Arial', '', 12);
-                    $this->pdf->Text(30, 90, utf8_decode(mb_strtoupper($ROW_CONSULT[0]['NOMBRE_PACIENTE'])) . ' ' . utf8_decode(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'])) . ' ' . utf8_decode(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'])));
+                    $this->pdf->Text(30, 90, mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['NOMBRE_PACIENTE']), 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE']), 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE']), 'ISO-8859-1', 'UTF-8'));
                     $this->pdf->Text(160, 46, $ROW_CONSULT[0]['ID_CONSULTA']);
-                    $this->pdf->Text(33, 99, utf8_decode($ROW_CONSULT[0]['CALLE_PACIENTE']) . ' ' . utf8_decode($ROW_CONSULT[0]['NUMERO_PACIENTE']) . ' ' . utf8_decode($ROW_CONSULT[0]['COLONIA_PACIENTE']));
+                    $this->pdf->Text(33, 99, mb_convert_encoding($ROW_CONSULT[0]['CALLE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['NUMERO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['COLONIA_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
                     $this->pdf->Text(33, 109, $ROW_CONSULT[0]['TELEFONO_PACIENTE']);
                     $this->pdf->Text(120, 109, $ROW_CONSULT[0]['EMAIL_PACIENTE']);
-                    /*$this->pdf->setXY(149, 34);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(30, 5, 'EDAD:', 1, 1, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(166, 37, utf8_decode(calcula_edad_2($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'], $ROW_CONSULT[0]['FECHA_CONSULTA'])));*/
 
-                    /*$this->pdf->setXY(179, 34);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(26, 5, 'SEXO:', 1, 1, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(196, 37, $ROW_CONSULT[0]['ABREV_SEXO']);*/
-
-                    /*$this->pdf->setXY(164, 132);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(41, 5, 'TOTAL PAGADO', 1, 1, 'C');
-                    $this->pdf->setXY(164, 137);
-                    $this->pdf->Cell(41, 5, ' ', 1, 1, 'C');*/
-                    $this->pdf->SetFont('Arial', '', 12);
                     $TOTAL = $SUM_PROC[0]['suma'] + $SUM_FICHA[0]['sumaficha'];
                     $SUBTOTAL = $TOTAL / 1.16;
                     $IVA = ($TOTAL - $SUBTOTAL);
                     $this->pdf->Text(182, 221, to_currency($SUBTOTAL));
                     $this->pdf->Text(182, 234, to_currency($IVA));
                     $this->pdf->Text(182, 246, to_currency($TOTAL));
-                    //$this->pdf->Text(179, 141, to_currency($ROW_CONSULT[0]['TOTAL_PAGADO_CONSULTA']));
 
                     if ($ROW_CONSULT[0]['TARIFA2'] > NULO) {
 
@@ -823,36 +798,7 @@ class Consult extends CI_Controller
                         $this->pdf->Text(100, 43, $ROW_PERFIL[0]['NOMBRE_PERFIL']);
                     }
 
-                    /*$this->pdf->setXY(11, 44);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(194, 5, utf8_decode('DIAGNÓSTICO:'), 1, 1, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(60, 48, utf8_decode(mb_strtoupper($ROW_CONSULT[0]['MOTIVO_CONSULTA'])));/*
-
-                    /*$this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Text(26, 56, 'PROCEDIMIENTOS');
-                    $this->pdf->Text(113, 56, 'MATERIAL Y MEDICAMENTOS UTILIZADOS');*/
-
-                    /*$this->pdf->setXY(11, 57);
-                    $this->pdf->Cell(55, 5, 'NOMBRE', 1, 1, 'C');
-
-                    $this->pdf->setXY(66, 57);
-                    $this->pdf->Cell(20, 5, 'CANT.', 1, 1, 'C');
-
-                    $this->pdf->setXY(86, 57);
-                    $this->pdf->Cell(23, 5, 'COSTO', 1, 1, 'C');
-
-                    $this->pdf->setXY(109, 57);
-                    $this->pdf->Cell(55, 5, 'NOMBRE', 1, 1, 'C');
-
-                    $this->pdf->setXY(164, 57);
-                    $this->pdf->Cell(20, 5, 'CANT.', 1, 1, 'C');
-
-                    $this->pdf->setXY(184, 57);
-                    $this->pdf->Cell(21, 5, 'COSTO', 1, 1, 'C');*/
-
                     $posicionY = 133;
-                    //$this->pdf->SetFont('Arial', 'B', 8);
 
                     for ($x = 0; $x < 9; $x++) {
                         $NOMBRE_PROCEDIMIENTO = isset($ROW_PROC[$x]['NOMBRE_PROCEDIMIENTO']) ? $ROW_PROC[$x]['NOMBRE_PROCEDIMIENTO'] : '';
@@ -861,34 +807,34 @@ class Consult extends CI_Controller
                         $PNETO_PROCEDIMIENTO = isset($ROW_PROC[$x]['precio_procedimiento']) ? $ROW_PROC[$x]['precio_procedimiento'] : '';
 
                         //-------------- PROCEDIMIENTOS ------------
-                        if(!empty($NOMBRE_PROCEDIMIENTO)){
+                        if (!empty($NOMBRE_PROCEDIMIENTO)) {
                             $this->pdf->SetFont('Arial', '', 9);
                             $limit = strlen($NOMBRE_PROCEDIMIENTO);
                             $nom_Procedim = '';
 
                             if ($limit > 29) {
-                                $nom_Procedim = substr(utf8_decode($NOMBRE_PROCEDIMIENTO), 0, 28) . '...';
+                                $nom_Procedim = substr(mb_convert_encoding($NOMBRE_PROCEDIMIENTO, 'ISO-8859-1', 'UTF-8'), 0, 28) . '...';
                             } else {
                                 $nom_Procedim = $NOMBRE_PROCEDIMIENTO;
                             }
                             $this->pdf->setXY(11, $posicionY);
-                            $this->pdf->Cell(10, 6, utf8_decode($nom_Procedim));
+                            $this->pdf->Cell(10, 6, mb_convert_encoding($nom_Procedim, 'ISO-8859-1', 'UTF-8'));
 
                             $this->pdf->setXY(122, $posicionY);
-                            $this->pdf->Cell(20,6, $CANT_PROCEDIMIENTO);
+                            $this->pdf->Cell(20, 6, $CANT_PROCEDIMIENTO);
 
                             $this->pdf->setXY(152, $posicionY);
-                            $this->pdf->Cell(30,6, floatval($PNETO_PROCEDIMIENTO) > 0 ? to_currency(floatval($PNETO_PROCEDIMIENTO/1.16)) : ""); 
+                            $this->pdf->Cell(30, 6, floatval($PNETO_PROCEDIMIENTO) > 0 ? to_currency(floatval($PNETO_PROCEDIMIENTO / 1.16)) : "");
 
                             $this->pdf->setXY(184, $posicionY);
-                            $this->pdf->Cell(30,6, floatval($PRECIO_PROCEDIMIENTO) > 0 ? to_currency(floatval($PRECIO_PROCEDIMIENTO/1.16)) : "");
+                            $this->pdf->Cell(30, 6, floatval($PRECIO_PROCEDIMIENTO) > 0 ? to_currency(floatval($PRECIO_PROCEDIMIENTO / 1.16)) : "");
                             $posicionY += 10;
                         }
                     }
 
-                        //------------- PRODUCTOS   Y   MEDICAMENTOS ---------------
+                    //------------- PRODUCTOS   Y   MEDICAMENTOS ---------------
 
-                        for ($x = 0; $x < 9; $x++) {        
+                    for ($x = 0; $x < 9; $x++) {
                         $NOMBRE_PRODUCTO = isset($ROW_MAT[$x]['NOMBRE_PRODUCTO']) ? $ROW_MAT[$x]['NOMBRE_PRODUCTO'] : '';
                         $CANT_PRODUCTO = isset($ROW_MAT[$x]['CANT_PRODUCTO']) ? $ROW_MAT[$x]['CANT_PRODUCTO'] : '';
                         $PRECIO_PRODUCTO = isset($ROW_MAT[$x]['PRECIO_TOTAL']) ? $ROW_MAT[$x]['PRECIO_TOTAL'] : '';
@@ -896,32 +842,29 @@ class Consult extends CI_Controller
 
                         $this->pdf->setXY(11, $posicionY);
 
-                        if(!empty($NOMBRE_PRODUCTO)){
+                        if (!empty($NOMBRE_PRODUCTO)) {
                             $this->pdf->SetFont('Arial', '', 9);
                             $limit = strlen($NOMBRE_PRODUCTO);
                             $nom_Producto = '';
                             if ($limit > 50) {
-                                $nom_Producto = substr(utf8_decode($NOMBRE_PRODUCTO), 0, 49) . '...';
+                                $nom_Producto = substr(mb_convert_encoding($NOMBRE_PRODUCTO, 'ISO-8859-1', 'UTF-8'), 0, 49) . '...';
                             } else {
                                 $nom_Producto = $NOMBRE_PRODUCTO;
                             }
 
-                            $this->pdf->Cell(10, 6, utf8_decode($nom_Producto));
-                            
+                            $this->pdf->Cell(10, 6, mb_convert_encoding($nom_Producto, 'ISO-8859-1', 'UTF-8'));
+
                             $this->pdf->setXY(122, $posicionY);
                             $this->pdf->Cell(20, 6, $CANT_PRODUCTO);
 
                             $this->pdf->setXY(152, $posicionY);
-                            $this->pdf->Cell(30,6, floatval($PNETO_PRODUCTO) > 0 ? to_currency(floatval($PNETO_PRODUCTO/1.16)) : ""); 
+                            $this->pdf->Cell(30, 6, floatval($PNETO_PRODUCTO) > 0 ? to_currency(floatval($PNETO_PRODUCTO / 1.16)) : "");
 
                             $this->pdf->setXY(184, $posicionY);
-                            $this->pdf->Cell(40, 6, floatval($PRECIO_PRODUCTO) > 0 ? to_currency(floatval($PRECIO_PRODUCTO/1.16)) : "");
+                            $this->pdf->Cell(40, 6, floatval($PRECIO_PRODUCTO) > 0 ? to_currency(floatval($PRECIO_PRODUCTO / 1.16)) : "");
                             $posicionY += 10;
                         }
                     }
-                    //$this->pdf->setXY(11, 120);
-                    //$this->pdf->SetFont('Arial', 'B', 10);
-                    //$this->pdf->Cell(55, 20, 'TOTAL', 0, 0, 'C');
 
                     if ($ROW_CONSULT[0]['MEMBRECIA2'] > NULL) {
 
@@ -931,18 +874,7 @@ class Consult extends CI_Controller
                     } else {
                         $this->pdf->setXY(86, 127);
                         $this->pdf->SetFont('Arial', '', 10);
-                        //$this->pdf->Cell(23, 5, to_currency($SUM_PROC[0]['suma']), 1, 1, 'R');
                     }
-
-                    /*$this->pdf->setXY(110, 120);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(55, 20, 'TOTAL2', 0, 0, 'C');
-
-                    $this->pdf->setXY(186, 127);
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Cell(19, 5, to_currency($SUM_FICHA[0]['sumaficha']), 0, 0, 'R');*/
-
-
 
                     if ($ROW_CONSULT[0]['TARIFA2'] > NULO) {
 
@@ -977,32 +909,7 @@ class Consult extends CI_Controller
                         $this->pdf->Cell(21, 5, 'DESC. TARIFA', 1, 1, 'C');
                         $this->pdf->SetFont('Arial', '', 10);
                         $this->pdf->Text(72, 141, utf8_decode('%' . $porcentaje));
-
-                        /*$this->pdf->setXY(66, 137);
-                        $this->pdf->Cell(21, 5, ' ', 1, 1, 'C');
-
-
-
-                        $this->pdf->setXY(87, 137);
-                        $this->pdf->Cell(22, 5, ' ', 1, 1, 'C');
-
-
-
-                        $this->pdf->setXY(109, 137);
-                        $this->pdf->Cell(22, 5, ' ', 1, 1, 'C');
-
-
-
-                        $this->pdf->setXY(131, 137);
-                        $this->pdf->Cell(33, 5, '  ', 1, 1, 'C');*/
                     }
-                    
-                    /*$y = $this->pdf->GetY();
-                    $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
-                    $this->pdf->setXY(13, 255);
-                    $this->pdf->Cell(0, 0, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 0, 'C');
-                    $this->pdf->line(12, $y + 257, 205, $y + 257);*/
-                    //Posición 0 || 1 || 2 || 3
 
                     $this->pdf->Output(); //Salida al navegador del pdf
                 } else {
@@ -1255,7 +1162,7 @@ class Consult extends CI_Controller
                         $this->pdf->setXY(131, 137);
                         $this->pdf->Cell(33, 5, '  ', 1, 1, 'C');
                     }
-                    
+
                     $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
                     $this->pdf->setXY(13, 255);
                     $this->pdf->Cell(0, 0, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 0, 'C');
@@ -2122,7 +2029,7 @@ class Consult extends CI_Controller
                     $this->pdf->Text(64, 217, mb_convert_encoding($ROW_CONSULT[0]['PROC_PROPUESTO'], 'ISO-8859-1', 'UTF-8'));
                     $this->pdf->Text(58, 230, mb_convert_encoding($ROW_CONSULT[0]['IND_TERAPEUTICA'], 'ISO-8859-1', 'UTF-8'));
                     $this->pdf->Text(62, 244, mb_convert_encoding($ROW_CONSULT[0]['PROC_REALIZAR'], 'ISO-8859-1', 'UTF-8'));
-                    
+
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->designUp();
 
@@ -2140,7 +2047,7 @@ class Consult extends CI_Controller
                     $this->pdf->Text(153, 84, $mes_nombre);
                     $this->pdf->Text(192, 84, date('Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
                     $this->pdf->Text(40, 92, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
-                    
+
 
 
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
@@ -2218,13 +2125,13 @@ class Consult extends CI_Controller
 
                     //----------------TIPO DE CONSULTA 1 ------------------
 
-                    if($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 1){
+                    if ($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 1) {
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/acidoHialuronico/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/acidoHialuronico/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2240,7 +2147,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/acidoHialuronico/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/acidoHialuronico/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2249,23 +2156,23 @@ class Consult extends CI_Controller
                         $this->pdf->Text(73, 222, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
 
                         $campos = [
-                                    'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
-                                    'RITIDES' => 'Ritides',
-                                    'BRUXISMO' => 'Bruxismo',
-                                    'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
-                                    'ESTRIAS' => 'Estrías',
-                                    'VARICES' => 'Várices',
-                                    'HIPERMEGTACION' => 'Hiperpigmentación',
-                                    'ALOPECIA' => 'Alopecia',
-                                    'VERRUGAS' => 'Verrugas',
-                                    'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
-                                    'ACNE' => 'Acné',
-                                    'PEFE' => 'Celulitis',
-                                    'CICATRICES' => 'Cicatrices',
-                                    'ROSACEA' => 'Rosácea',
-                                    'HIPERHIDROSIS' => 'Hiperhidrósis',
-        
-                                ];
+                            'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
+                            'RITIDES' => 'Ritides',
+                            'BRUXISMO' => 'Bruxismo',
+                            'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
+                            'ESTRIAS' => 'Estrías',
+                            'VARICES' => 'Várices',
+                            'HIPERMEGTACION' => 'Hiperpigmentación',
+                            'ALOPECIA' => 'Alopecia',
+                            'VERRUGAS' => 'Verrugas',
+                            'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
+                            'ACNE' => 'Acné',
+                            'PEFE' => 'Celulitis',
+                            'CICATRICES' => 'Cicatrices',
+                            'ROSACEA' => 'Rosácea',
+                            'HIPERHIDROSIS' => 'Hiperhidrósis',
+
+                        ];
 
                         $x = 161;          // Coordenada X inicial
                         $y = 227;         // Coordenada Y inicial
@@ -2300,9 +2207,9 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/acidoHialuronico/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/acidoHialuronico/3.png", 0, 0, 215.9, 279.4);
                         }
-                        
+
                         $this->pdf->setXY(11, 29);
                         $this->pdf->SetFont('Arial', '', 9);
 
@@ -2313,14 +2220,14 @@ class Consult extends CI_Controller
                     }
 
                     //----------------TIPO DE CONSULTA 2 ------------------
-                    
-                    if($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 2){
+
+                    if ($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 2) {
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/bioestimulador/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/bioestimulador/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2335,29 +2242,29 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/bioestimulador/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/bioestimulador/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(73, 187, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
                         $campos = [
-                                    'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
-                                    'RITIDES' => 'Ritides',
-                                    'BRUXISMO' => 'Bruxismo',
-                                    'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
-                                    'ESTRIAS' => 'Estrías',
-                                    'VARICES' => 'Várices',
-                                    'HIPERMEGTACION' => 'Hiperpigmentación',
-                                    'ALOPECIA' => 'Alopecia',
-                                    'VERRUGAS' => 'Verrugas',
-                                    'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
-                                    'ACNE' => 'Acné',
-                                    'PEFE' => 'Celulitis',
-                                    'CICATRICES' => 'Cicatrices',
-                                    'ROSACEA' => 'Rosácea',
-                                    'HIPERHIDROSIS' => 'Hiperhidrósis',
-        
-                                ];
+                            'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
+                            'RITIDES' => 'Ritides',
+                            'BRUXISMO' => 'Bruxismo',
+                            'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
+                            'ESTRIAS' => 'Estrías',
+                            'VARICES' => 'Várices',
+                            'HIPERMEGTACION' => 'Hiperpigmentación',
+                            'ALOPECIA' => 'Alopecia',
+                            'VERRUGAS' => 'Verrugas',
+                            'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
+                            'ACNE' => 'Acné',
+                            'PEFE' => 'Celulitis',
+                            'CICATRICES' => 'Cicatrices',
+                            'ROSACEA' => 'Rosácea',
+                            'HIPERHIDROSIS' => 'Hiperhidrósis',
+
+                        ];
 
                         $x = 161;          // Coordenada X inicial
                         $y = 192;         // Coordenada Y inicial
@@ -2386,19 +2293,19 @@ class Consult extends CI_Controller
 
                                 // Avanzar X según el ancho del texto + espacio
                                 $x += $anchoTexto + $espaciado;
-                            } 
-                        }
-                            if(!$mtvActivo){
-                                // Si no se ha impreso "Otros tratamientos estéticos", lo imprimimos aquí
-                                $this->pdf->Text(161,176, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
                             }
+                        }
+                        if (!$mtvActivo) {
+                            // Si no se ha impreso "Otros tratamientos estéticos", lo imprimimos aquí
+                            $this->pdf->Text(161, 176, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
+                        }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/bioestimulador/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/bioestimulador/3.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2411,13 +2318,13 @@ class Consult extends CI_Controller
 
                     //----------------TIPO DE CONSULTA 3 ------------------
 
-                    if($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 3){
+                    if ($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 3) {
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/co2/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/co2/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2432,7 +2339,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/co2/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/co2/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2448,13 +2355,13 @@ class Consult extends CI_Controller
 
                     //----------------TIPO DE CONSULTA 4 ------------------
 
-                    if($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 4){
+                    if ($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 4) {
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 10); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/laser/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/laser/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2468,7 +2375,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/laser/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/laser/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
@@ -2476,29 +2383,29 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/laser/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/laser/3.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(73, 170, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
                         $campos = [
-                                    'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
-                                    'RITIDES' => 'Ritides',
-                                    'BRUXISMO' => 'Bruxismo',
-                                    'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
-                                    'ESTRIAS' => 'Estrías',
-                                    'VARICES' => 'Várices',
-                                    'HIPERMEGTACION' => 'Hiperpigmentación',
-                                    'ALOPECIA' => 'Alopecia',
-                                    'VERRUGAS' => 'Verrugas',
-                                    'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
-                                    'ACNE' => 'Acné',
-                                    'PEFE' => 'Celulitis',
-                                    'CICATRICES' => 'Cicatrices',
-                                    'ROSACEA' => 'Rosácea',
-                                    'HIPERHIDROSIS' => 'Hiperhidrósis',
-        
-                                ];
+                            'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
+                            'RITIDES' => 'Ritides',
+                            'BRUXISMO' => 'Bruxismo',
+                            'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
+                            'ESTRIAS' => 'Estrías',
+                            'VARICES' => 'Várices',
+                            'HIPERMEGTACION' => 'Hiperpigmentación',
+                            'ALOPECIA' => 'Alopecia',
+                            'VERRUGAS' => 'Verrugas',
+                            'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
+                            'ACNE' => 'Acné',
+                            'PEFE' => 'Celulitis',
+                            'CICATRICES' => 'Cicatrices',
+                            'ROSACEA' => 'Rosácea',
+                            'HIPERHIDROSIS' => 'Hiperhidrósis',
+
+                        ];
 
                         $x = 161;          // Coordenada X inicial
                         $y = 175;         // Coordenada Y inicial
@@ -2527,19 +2434,19 @@ class Consult extends CI_Controller
 
                                 // Avanzar X según el ancho del texto + espacio
                                 $x += $anchoTexto + $espaciado;
-                            } 
-                        }
-                            if(!$mtvActivo){
-                                // Si no se ha impreso "Otros tratamientos estéticos", lo imprimimos aquí
-                                $this->pdf->Text(161,176, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
                             }
+                        }
+                        if (!$mtvActivo) {
+                            // Si no se ha impreso "Otros tratamientos estéticos", lo imprimimos aquí
+                            $this->pdf->Text(161, 176, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
+                        }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 8); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/laser/4.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/laser/4.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2551,13 +2458,13 @@ class Consult extends CI_Controller
 
                     //----------------TIPO DE CONSULTA 5 ------------------
 
-                    if($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 5){
+                    if ($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 5) {
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 10); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/endolifting/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/endolifting/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2571,7 +2478,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/endolifting/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/endolifting/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
@@ -2579,17 +2486,17 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/endolifting/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/endolifting/3.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
-                        
+
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/endolifting/4.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/endolifting/4.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2601,13 +2508,13 @@ class Consult extends CI_Controller
 
                     //----------------TIPO DE CONSULTA 6 ------------------
 
-                    if($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 6){
+                    if ($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 6) {
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 10); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/enzimas/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/enzimas/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2621,7 +2528,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/enzimas/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/enzimas/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
@@ -2629,30 +2536,30 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/enzimas/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/enzimas/3.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(73, 141, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
                         $this->pdf->SetFont('Arial', '', 9);
                         $campos = [
-                                    'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
-                                    'RITIDES' => 'Ritides',
-                                    'BRUXISMO' => 'Bruxismo',
-                                    'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
-                                    'ESTRIAS' => 'Estrías',
-                                    'VARICES' => 'Várices',
-                                    'HIPERMEGTACION' => 'Hiperpigmentación',
-                                    'ALOPECIA' => 'Alopecia',
-                                    'VERRUGAS' => 'Verrugas',
-                                    'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
-                                    'ACNE' => 'Acné',
-                                    'PEFE' => 'Celulitis',
-                                    'CICATRICES' => 'Cicatrices',
-                                    'ROSACEA' => 'Rosácea',
-                                    'HIPERHIDROSIS' => 'Hiperhidrósis',
-        
-                                ];
+                            'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
+                            'RITIDES' => 'Ritides',
+                            'BRUXISMO' => 'Bruxismo',
+                            'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
+                            'ESTRIAS' => 'Estrías',
+                            'VARICES' => 'Várices',
+                            'HIPERMEGTACION' => 'Hiperpigmentación',
+                            'ALOPECIA' => 'Alopecia',
+                            'VERRUGAS' => 'Verrugas',
+                            'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
+                            'ACNE' => 'Acné',
+                            'PEFE' => 'Celulitis',
+                            'CICATRICES' => 'Cicatrices',
+                            'ROSACEA' => 'Rosácea',
+                            'HIPERHIDROSIS' => 'Hiperhidrósis',
+
+                        ];
 
                         $x = 162;          // Coordenada X inicial
                         $y = 146;         // Coordenada Y inicial
@@ -2681,19 +2588,19 @@ class Consult extends CI_Controller
 
                                 // Avanzar X según el ancho del texto + espacio
                                 $x += $anchoTexto + $espaciado;
-                            } 
-                        }
-                            if(!$mtvActivo){
-                                // Si no se ha impreso "Otros tratamientos estéticos", lo imprimimos aquí
-                                $this->pdf->Text(161,176, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
                             }
+                        }
+                        if (!$mtvActivo) {
+                            // Si no se ha impreso "Otros tratamientos estéticos", lo imprimimos aquí
+                            $this->pdf->Text(161, 176, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
+                        }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/enzimas/4.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/enzimas/4.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2706,13 +2613,13 @@ class Consult extends CI_Controller
 
                     //----------------TIPO DE CONSULTA 7 ------------------
 
-                    if($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 7){
+                    if ($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 7) {
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 10); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/hialuronidasa/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/hialuronidasa/1.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(60, 32, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2725,27 +2632,27 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/hialuronidasa/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/hialuronidasa/2.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->Text(73, 208, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
                         $campos = [
-                                    'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
-                                    'RITIDES' => 'Ritides',
-                                    'BRUXISMO' => 'Bruxismo',
-                                    'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
-                                    'ESTRIAS' => 'Estrías',
-                                    'VARICES' => 'Várices',
-                                    'HIPERMEGTACION' => 'Hiperpigmentación',
-                                    'ALOPECIA' => 'Alopecia',
-                                    'VERRUGAS' => 'Verrugas',
-                                    'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
-                                    'ACNE' => 'Acné',
-                                    'PEFE' => 'Celulitis',
-                                    'CICATRICES' => 'Cicatrices',
-                                    'ROSACEA' => 'Rosácea',
-                                    'HIPERHIDROSIS' => 'Hiperhidrósis',
-        
-                                ];
+                            'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
+                            'RITIDES' => 'Ritides',
+                            'BRUXISMO' => 'Bruxismo',
+                            'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
+                            'ESTRIAS' => 'Estrías',
+                            'VARICES' => 'Várices',
+                            'HIPERMEGTACION' => 'Hiperpigmentación',
+                            'ALOPECIA' => 'Alopecia',
+                            'VERRUGAS' => 'Verrugas',
+                            'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
+                            'ACNE' => 'Acné',
+                            'PEFE' => 'Celulitis',
+                            'CICATRICES' => 'Cicatrices',
+                            'ROSACEA' => 'Rosácea',
+                            'HIPERHIDROSIS' => 'Hiperhidrósis',
+
+                        ];
 
                         $x = 154;          // Coordenada X inicial
                         $y = 213;         // Coordenada Y inicial
@@ -2774,19 +2681,19 @@ class Consult extends CI_Controller
 
                                 // Avanzar X según el ancho del texto + espacio
                                 $x += $anchoTexto + $espaciado;
-                            } 
-                        }
-                            if(!$mtvActivo){
-                                // Si no se ha impreso "Otros tratamientos estéticos", lo imprimimos aquí
-                                $this->pdf->Text(161,176, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
                             }
+                        }
+                        if (!$mtvActivo) {
+                            // Si no se ha impreso "Otros tratamientos estéticos", lo imprimimos aquí
+                            $this->pdf->Text(161, 176, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
+                        }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/hialuronidasa/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/hialuronidasa/3.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(80, 124, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2798,13 +2705,13 @@ class Consult extends CI_Controller
 
                     //----------------TIPO DE CONSULTA 8 ------------------
 
-                    if($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 8){
+                    if ($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 8) {
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 10); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/peeling/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/peeling/1.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(60, 32, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2817,35 +2724,35 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/peeling/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/peeling/2.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/peeling/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/peeling/3.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(73, 33, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
                         $campos = [
-                                    'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
-                                    'RITIDES' => 'Ritides',
-                                    'BRUXISMO' => 'Bruxismo',
-                                    'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
-                                    'ESTRIAS' => 'Estrías',
-                                    'VARICES' => 'Várices',
-                                    'HIPERMEGTACION' => 'Hiperpigmentación',
-                                    'ALOPECIA' => 'Alopecia',
-                                    'VERRUGAS' => 'Verrugas',
-                                    'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
-                                    'ACNE' => 'Acné',
-                                    'PEFE' => 'Celulitis',
-                                    'CICATRICES' => 'Cicatrices',
-                                    'ROSACEA' => 'Rosácea',
-                                    'HIPERHIDROSIS' => 'Hiperhidrósis',
-        
-                                ];
+                            'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
+                            'RITIDES' => 'Ritides',
+                            'BRUXISMO' => 'Bruxismo',
+                            'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
+                            'ESTRIAS' => 'Estrías',
+                            'VARICES' => 'Várices',
+                            'HIPERMEGTACION' => 'Hiperpigmentación',
+                            'ALOPECIA' => 'Alopecia',
+                            'VERRUGAS' => 'Verrugas',
+                            'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
+                            'ACNE' => 'Acné',
+                            'PEFE' => 'Celulitis',
+                            'CICATRICES' => 'Cicatrices',
+                            'ROSACEA' => 'Rosácea',
+                            'HIPERHIDROSIS' => 'Hiperhidrósis',
+
+                        ];
 
                         $x = 175;          // Coordenada X inicial
                         $y = 39;         // Coordenada Y inicial
@@ -2874,12 +2781,12 @@ class Consult extends CI_Controller
 
                                 // Avanzar X según el ancho del texto + espacio
                                 $x += $anchoTexto + $espaciado;
-                            } 
-                        }
-                            if(!$mtvActivo){
-                                // Si no se ha impreso "Otros tratamientos estéticos", lo imprimimos aquí
-                                $this->pdf->Text(161,176, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
                             }
+                        }
+                        if (!$mtvActivo) {
+                            // Si no se ha impreso "Otros tratamientos estéticos", lo imprimimos aquí
+                            $this->pdf->Text(161, 176, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
+                        }
                         $this->pdf->Text(80, 200, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
                         $this->pdf->Text(80, 219, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
 
@@ -2888,13 +2795,13 @@ class Consult extends CI_Controller
 
                     //----------------TIPO DE CONSULTA 9 ------------------
 
-                    if($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 9){
+                    if ($ROW_CONSULT[0]['ID_TIPO_CONSULTA'] == 9) {
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 10); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/toxina/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/toxina/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2908,27 +2815,27 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/toxina/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/toxina/2.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->Text(73, 152, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
                         $campos = [
-                                    'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
-                                    'RITIDES' => 'Ritides',
-                                    'BRUXISMO' => 'Bruxismo',
-                                    'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
-                                    'ESTRIAS' => 'Estrías',
-                                    'VARICES' => 'Várices',
-                                    'HIPERMEGTACION' => 'Hiperpigmentación',
-                                    'ALOPECIA' => 'Alopecia',
-                                    'VERRUGAS' => 'Verrugas',
-                                    'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
-                                    'ACNE' => 'Acné',
-                                    'PEFE' => 'Celulitis',
-                                    'CICATRICES' => 'Cicatrices',
-                                    'ROSACEA' => 'Rosácea',
-                                    'HIPERHIDROSIS' => 'Hiperhidrósis',
-        
-                                ];
+                            'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
+                            'RITIDES' => 'Ritides',
+                            'BRUXISMO' => 'Bruxismo',
+                            'ADIP_LOCALIZADA' => 'Adiposidad Localizada',
+                            'ESTRIAS' => 'Estrías',
+                            'VARICES' => 'Várices',
+                            'HIPERMEGTACION' => 'Hiperpigmentación',
+                            'ALOPECIA' => 'Alopecia',
+                            'VERRUGAS' => 'Verrugas',
+                            'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
+                            'ACNE' => 'Acné',
+                            'PEFE' => 'Celulitis',
+                            'CICATRICES' => 'Cicatrices',
+                            'ROSACEA' => 'Rosácea',
+                            'HIPERHIDROSIS' => 'Hiperhidrósis',
+
+                        ];
 
                         $x = 161;          // Coordenada X inicial
                         $y = 157;         // Coordenada Y inicial
@@ -2957,19 +2864,19 @@ class Consult extends CI_Controller
 
                                 // Avanzar X según el ancho del texto + espacio
                                 $x += $anchoTexto + $espaciado;
-                            } 
-                        }
-                            if(!$mtvActivo){
-                                // Si no se ha impreso "Otros tratamientos estéticos", lo imprimimos aquí
-                                $this->pdf->Text(161,176, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
                             }
+                        }
+                        if (!$mtvActivo) {
+                            // Si no se ha impreso "Otros tratamientos estéticos", lo imprimimos aquí
+                            $this->pdf->Text(161, 176, mb_convert_encoding($ROW_CONSULT[0]['OTROS_TRATAMIENTOS_ESTETICOS'], 'ISO-8859-1', 'UTF-8'));
+                        }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/toxina/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(base_url() . "assets/img/toxina/3.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(80, 72, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2977,7 +2884,6 @@ class Consult extends CI_Controller
 
                         $this->pdf->Output(); //Salida al navegador del pdf
                     }
-
                 } else {
                     echo "redirect('Consult/index')";
                 }
