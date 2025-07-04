@@ -65,15 +65,15 @@
                                                         $sel = "";
                                                         if ($ROW['ID_SEXO'] == $ROW_DATA_PATIENT->ID_SEXO)
                                                             $sel = "selected";
-                                                        ?>
+                                                ?>
 
-                                                <option <?= $sel ?> value="<?= $ROW['ID_SEXO'] ?>">
-                                                    <?= mb_strtoupper($ROW['NOMBRE_SEXO']) ?></option>
-                                                <?php
+                                                        <option <?= $sel ?> value="<?= $ROW['ID_SEXO'] ?>">
+                                                            <?= mb_strtoupper($ROW['NOMBRE_SEXO']) ?></option>
+                                                    <?php
                                                     endforeach;
                                                 else:
                                                     ?>
-                                                <option value="-1">No hay registros</option>
+                                                    <option value="-1">No hay registros</option>
                                                 <?php
                                                 endif;
                                                 ?>
@@ -148,7 +148,7 @@
                                             <span class="input-group-addon">#</span>
                                             <input type="text" name="RG_NUMERO_PACIENTE" id="RG_NUMERO_PACIENTE"
                                                 class="form-control" placeholder="Número domicilio paciente"
-                                                value="<?= $ROW_DATA_PATIENT->NUMERO_PACIENTE?>">
+                                                value="<?= $ROW_DATA_PATIENT->NUMERO_PACIENTE ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -159,7 +159,7 @@
                                             <span class="input-group-addon"><i class="fad fa-street-view"></i></span>
                                             <input type="text" name="RG_COLONIA_PACIENTE" id="RG_COLONIA_PACIENTE"
                                                 class="form-control" placeholder="Colonia domicilio paciente"
-                                                value="<?= $ROW_DATA_PATIENT->COLONIA_PACIENTE?>">
+                                                value="<?= $ROW_DATA_PATIENT->COLONIA_PACIENTE ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -171,7 +171,7 @@
                                             <span class="input-group-addon"><i class="fa fa-at"></i></span>
                                             <input type="email" name="RG_EMAIL_PACIENTE" id="RG_EMAIL_PACIENTE"
                                                 class="form-control" placeholder="Correo electrónico"
-                                                value="<?= $ROW_DATA_PATIENT->EMAIL_PACIENTE?>">
+                                                value="<?= $ROW_DATA_PATIENT->EMAIL_PACIENTE ?>">
                                         </div>
                                         <div class=" help-block with-errors"></div>
                                     </div>
@@ -191,7 +191,7 @@
                                 <div class="col-sm-6 col-mdx-2 col-lg-2">
                                     <div class="form-group">
                                         <label for="RG_TELEFONO_URGENCIA" class="control-label text-left">Contacto de
-                                            eMERGENCIA</label>
+                                            EMERGENCIA</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-phone"></i></span>
                                             <input type="text" name="RG_TELEFONO_URGENCIA" id="RG_TELEFONO_URGENCIA"
@@ -209,20 +209,20 @@
                                             <select class="form-control" required id="RG_ID_TIPO_SANGRE"
                                                 name="RG_ID_TIPO_SANGRE">
                                                 <?php
-                                                $CI = &get_instance();
-                                                $Tipo_sangre = $this->db->get('sangre')->result_array();
-                                                if (count($Tipo_sangre) > NULO):
-                                                    foreach ($Tipo_sangre as $ROW):
-                                                        $_sel = ($ROW['id_sangre'] == $id_sangre) ? "selected" : "";
+                                                if (count($ROW_SANGRE) > NULO):
+                                                    foreach ($ROW_SANGRE as $ROW):
+                                                        $sel = "";
+                                                        if ($ROW['id_sangre'] == $ROW_DATA_PATIENT->ID_SANGRE)
+                                                            $sel = "selected";
                                                 ?>
-                                                <option value="<?= $ROW['id_sangre'] ?>">
-                                                    <?= mb_strtoupper($ROW['tipo_sangre']) ?>
-                                                </option>
-                                                <?php
+
+                                                        <option <?= $sel ?> value="<?= $ROW['id_sangre'] ?>">
+                                                            <?= mb_strtoupper($ROW['tipo_sangre']) ?></option>
+                                                    <?php
                                                     endforeach;
                                                 else:
                                                     ?>
-                                                <option value="-1">No hay registros</option>
+                                                    <option value="-1">No hay registros</option>
                                                 <?php
                                                 endif;
                                                 ?>
@@ -1256,9 +1256,9 @@
                         </div>
                     </div>
                 </div>
+            </form>
         </div>
     </div>
-    </form>
 </div>
 <div class="col-lg-2"></div>
 </div>

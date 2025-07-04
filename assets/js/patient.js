@@ -6,8 +6,8 @@ $(document).ready(function () {
    var date = new Date();
    var currentYear = date.getFullYear();
 
-   $("#RG_FECHA_NAC_PACIENTE, #RG_FECHA_NAC_PTIENT" ).datepicker({
-      yearRange:"1900:"+currentYear,
+   $("#RG_FECHA_NAC_PACIENTE, #RG_FECHA_NAC_PTIENT").datepicker({
+      yearRange: "1900:" + currentYear,
       changeMonth: true,
       changeYear: true,
       dateFormat: "dd/mm/yy",
@@ -31,8 +31,8 @@ $(document).ready(function () {
       ],
       drawCallback: function () {
          $('[data-toggle="tooltip"]').tooltip({
-      trigger : 'hover'
-   });
+            trigger: 'hover'
+         });
       }
    });
 
@@ -64,13 +64,13 @@ $(document).ready(function () {
       $('#ID_TARIFA').val('');
       $('#RG_ID_CASA').val('');
    })
-   
+
    //Onchange house
-   $("#RG_ID_CASA").on("change", function(){
-       var selected = $(this).find('option:selected');
-       $("#RG_NOMBRE_MEMBRESIA").val((selected.data('membership')));
-       $("#RG_ID_MEMBRESIA").val(selected.data('id-membership'));
-       $('#ID_TARIFA').val('');
+   $("#RG_ID_CASA").on("change", function () {
+      var selected = $(this).find('option:selected');
+      $("#RG_NOMBRE_MEMBRESIA").val((selected.data('membership')));
+      $("#RG_ID_MEMBRESIA").val(selected.data('id-membership'));
+      $('#ID_TARIFA').val('');
    });
 
    //filtros--
@@ -107,7 +107,7 @@ $(document).ready(function () {
       } else {
          e.preventDefault();
          $.ajax({
-            url: raiz_url + "Patient/ajax_add_patient", 
+            url: raiz_url + "Patient/ajax_add_patient",
             type: 'POST',
             data: $(this).serialize(),
             success: function (data) {
@@ -236,111 +236,111 @@ $(document).ready(function () {
          })
       }
    });
-// ADJUNTAR ARCHIVOS ========================================================//
-$('body').on("click", ".btn-del-file-client", function (e) {
-   var ID_PACIENTE = $(this).attr('data-id-paciente');
-   var ID_DOCUMENTO = $(this).attr('data-id-document');
-   var NOMBRE_DOCUMENTO = $(this).attr('data-document-name');
-   $.ajax({
-      url: raiz_url + "Patient/ajax_delete_file_by_id",
-      type: 'POST',
-      data: 'ID_PACIENTE=' + ID_PACIENTE + "&ID_DOCUMENTO=" + ID_DOCUMENTO + "&NOMBRE_DOCUMENTO=" + NOMBRE_DOCUMENTO,
-      success: function (data) {
-         if (data > 0) {
-            console.log("BORRANDO" + data);
-            load_tbody_files();
+   // ADJUNTAR ARCHIVOS ========================================================//
+   $('body').on("click", ".btn-del-file-client", function (e) {
+      var ID_PACIENTE = $(this).attr('data-id-paciente');
+      var ID_DOCUMENTO = $(this).attr('data-id-document');
+      var NOMBRE_DOCUMENTO = $(this).attr('data-document-name');
+      $.ajax({
+         url: raiz_url + "Patient/ajax_delete_file_by_id",
+         type: 'POST',
+         data: 'ID_PACIENTE=' + ID_PACIENTE + "&ID_DOCUMENTO=" + ID_DOCUMENTO + "&NOMBRE_DOCUMENTO=" + NOMBRE_DOCUMENTO,
+         success: function (data) {
+            if (data > 0) {
+               console.log("BORRANDO" + data);
+               load_tbody_files();
 
 
+            }
          }
-      }
-   });
-   // $('#modAddFiles').modal('toggle');
-   // $('#ID_CLIENTE').val(ID_CLIENTE);
+      });
+      // $('#modAddFiles').modal('toggle');
+      // $('#ID_CLIENTE').val(ID_CLIENTE);
 
-   load_tbody_files();
+      load_tbody_files();
 
-});// Elimino archivo by id
-$("#formFilesPatient").on('submit', (function (e) {
-   e.preventDefault();
-   $.ajax({
-      url: raiz_url + "Patient/ajax_subir_archivo",
-      type: "POST",
-      data: new FormData(this),
-      mimeType: "multipart/form-data",
-      contentType: false,
-      cache: false,
-      processData: false,
-      beforeSend: function () {
+   });// Elimino archivo by id
+   $("#formFilesPatient").on('submit', (function (e) {
+      e.preventDefault();
+      $.ajax({
+         url: raiz_url + "Patient/ajax_subir_archivo",
+         type: "POST",
+         data: new FormData(this),
+         mimeType: "multipart/form-data",
+         contentType: false,
+         cache: false,
+         processData: false,
+         beforeSend: function () {
 
-         $("#divMensajesFiles").html('<br><span class="before text-left" ><b>Adjuntando archivo...</b></span>');
-      },
-      success: function (data) {
-         $("#divMensajesFiles").html('');
-         //console.log('data insert..'+data);
-         if (data > 0) {
+            $("#divMensajesFiles").html('<br><span class="before text-left" ><b>Adjuntando archivo...</b></span>');
+         },
+         success: function (data) {
+            $("#divMensajesFiles").html('');
+            //console.log('data insert..'+data);
+            if (data > 0) {
 
-            //TABLA QUE SE LLENE POR AJAX..
-            load_tbody_files();
+               //TABLA QUE SE LLENE POR AJAX..
+               load_tbody_files();
 
-         } else if (data == -2) {
-            $("#divMensajesFiles").html("<span class='error text-left' style='color:#F00;'><b>El archivo ha excedido el tamaño maximo permitido 40MB..</b></span>");
+            } else if (data == -2) {
+               $("#divMensajesFiles").html("<span class='error text-left' style='color:#F00;'><b>El archivo ha excedido el tamaño maximo permitido 40MB..</b></span>");
 
+            }
+         },
+         error: function () {
+
+            $("#divMensajesFiles").html("<span class='error text-left'><b>Ha ocurrido un error..</b></span>");
          }
-      },
-      error: function () {
+      });
+   }));// Envio peticion para insertar nuevos archivos
+   $("body").on('click', '#BTN_ADJUNTAR_ARCHIVOP', function () {
+      $("#ID_PACIENTE").val($(this).data('id_patient'));
 
-         $("#divMensajesFiles").html("<span class='error text-left'><b>Ha ocurrido un error..</b></span>");
-      }
-   });
-}));// Envio peticion para insertar nuevos archivos
-$("body").on('click', '#BTN_ADJUNTAR_ARCHIVOP', function () {
-   $("#ID_PACIENTE").val($(this).data('id_patient'));
+      load_tbody_files();
+   });// Al abrir el modal listo los archivos existentes
+   function load_tbody_files() {
+      $('#userfile').val('');
+      var ID_CLIENTE = $('#ID_PACIENTE').val();
+      //  $('#modAddFiles').modal('toggle');
 
-   load_tbody_files();
-});// Al abrir el modal listo los archivos existentes
-function load_tbody_files() {
-   $('#userfile').val('');
-   var ID_CLIENTE = $('#ID_PACIENTE').val();
-   //  $('#modAddFiles').modal('toggle');
+      $.ajax({
+         url: raiz_url + "Patient/ajax_get_files_patient",
+         type: 'POST',
+         data: 'ID_PACIENTE=' + ID_CLIENTE,
+         success: function (data2) {
 
-   $.ajax({
-      url: raiz_url + "Patient/ajax_get_files_patient",
-      type: 'POST',
-      data: 'ID_PACIENTE=' + ID_CLIENTE,
-      success: function (data2) {
+            if (data2.length > 0) {
+               var cont = 1;
 
-         if (data2.length > 0) {
-            var cont = 1;
+               $("#tbodyTableFilesClient").empty();
 
-            $("#tbodyTableFilesClient").empty();
-
-            $.each(data2, function (arrayID, row) {
-               $("#tbodyTableFilesClient").append("<tr>" +
-                 "<td><b>" + cont + "</b></td>"+
-                 "<td>" + row.NOMBRE_DOCUMENTO + "</td>\n\
+               $.each(data2, function (arrayID, row) {
+                  $("#tbodyTableFilesClient").append("<tr>" +
+                     "<td><b>" + cont + "</b></td>" +
+                     "<td>" + row.NOMBRE_DOCUMENTO + "</td>\n\
                   <td>" + row.TIPO_DOCUMENTO + "</td>\n\
-                  <td>" +                     
+                  <td>" +
                      "<button id='btnDeleteFileClient' class='btn btn-danger pull-left btn-actions btn-del-file-client'\n\
-                        data-original-title='Borrar archivo' data-toggle='tooltip' data-document-name='"+row.NOMBRE_DOCUMENTO +"' data-id-paciente='" + row['ID_PACIENTE'] + "' data-id-document='" + row['ID_DOCUMENTO'] + "'>\n\
+                        data-original-title='Borrar archivo' data-toggle='tooltip' data-document-name='"+ row.NOMBRE_DOCUMENTO + "' data-id-paciente='" + row['ID_PACIENTE'] + "' data-id-document='" + row['ID_DOCUMENTO'] + "'>\n\
                         <i class='fa fa-trash' aria-hidden='true'></i>\n\
                      </button>" +
-                     "<a href='" + raiz_url + 'FILES/' + row.NOMBRE_DOCUMENTO + "' download='"+row.NOMBRE_DOCUMENTO+"' id='btnDownloadFileClient' class='btn pull-right btn-success btn-actions btn-down-file-client' data-original-title='Descargar archivo' data-toggle='tooltip' data-id-paciente='" + row['ID_PACIENTE'] + "' data-document-name=" + row.NOMBRE_DOCUMENTO + " data-id-document='" + row['ID_DOCUMENTO'] + "'>" +
-                        "<i class='fa fa-download' aria-hidden='true'></i>\n\
-                     </a>" +                    
-                  "</td>" +
-                  "</tr>");
-               cont++;
+                     "<a href='" + raiz_url + 'FILES/' + row.NOMBRE_DOCUMENTO + "' download='" + row.NOMBRE_DOCUMENTO + "' id='btnDownloadFileClient' class='btn pull-right btn-success btn-actions btn-down-file-client' data-original-title='Descargar archivo' data-toggle='tooltip' data-id-paciente='" + row['ID_PACIENTE'] + "' data-document-name=" + row.NOMBRE_DOCUMENTO + " data-id-document='" + row['ID_DOCUMENTO'] + "'>" +
+                     "<i class='fa fa-download' aria-hidden='true'></i>\n\
+                     </a>" +
+                     "</td>" +
+                     "</tr>");
+                  cont++;
 
-            });
+               });
 
-         } else {
-            $('#tbodyTableFilesClient').empty().append('<tr><td colspan="4" ><b>No se encontraron archivos adjuntos..</b></td></tr>');
+            } else {
+               $('#tbodyTableFilesClient').empty().append('<tr><td colspan="4" ><b>No se encontraron archivos adjuntos..</b></td></tr>');
+            }
+
+         }, error: function (data) {
+            ('#modAddFiles').modal('hide');
          }
-
-      }, error: function (data) {
-         ('#modAddFiles').modal('hide');
-      }
-   });
-}// Obtengo los archivos existentes
+      });
+   }// Obtengo los archivos existentes
 
 });

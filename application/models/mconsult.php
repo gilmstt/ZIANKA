@@ -934,7 +934,7 @@ class Mconsult extends CI_Model
             $this->db->from('consulta as c');
             $this->db->join('usuario as u', 'c.ID_MEDICO=u.ID_USUARIO');
             $this->db->join('paciente as p', 'c.ID_PACIENTE=p.ID_PACIENTE');
-            //$this->db->join('tarifa as t', 'c.ID_TARIFA=t.ID_TARIFA');
+            $this->db->join('antecedentes as an', 'p.ID_PACIENTE=an.ID_PACIENTE' );
             $this->db->join('sexo as s', 'p.ID_SEXO=s.ID_SEXO');
             $this->db->join('sangre as sa', 'p.ID_SANGRE=sa.id_sangre');
             $this->db->where('c.ID_CONSULTA', $ID_CONSULT);

@@ -11,10 +11,10 @@
             <div class="panel-heading header-primary">
                 <ul class="nav nav-tabs">
                     <li id="li_Users" <?= $user_active ?>><a href="#USUARIOS" data-toggle="tab"><i class="fa fa-users"></i> USUARIOS</a></li>
-                    <li id="li_Tarifas" <?= $tar_active ?>><a href="#TARIFAS" data-toggle="tab"><i class="fa fa-dollar-sign"></i> TARIFAS</a></li>
+                    <!--<li id="li_Tarifas" <?= $tar_active ?>><a href="#TARIFAS" data-toggle="tab"><i class="fa fa-dollar-sign"></i> TARIFAS</a></li>
                     <li id="li_Membresias" <?= $mem_active ?>><a href="#MEMBRESIAS" data-toggle="tab"><i class="fa fa-credit-card"></i> MEMBRESIAS</a></li>
                     <li id="li_Perfil" <?= $per_active ?>><a href="#PERFILES" data-toggle="tab"><i class="fa fa-user"></i> PERFILES</a></li>
-                    <li id="li_Casas" <?= $cas_active ?>><a href="#CASAS" data-toggle="tab"><i class="fa fa-home"></i> CASAS</a></li>
+                    <li id="li_Casas" <?= $cas_active ?>><a href="#CASAS" data-toggle="tab"><i class="fa fa-home"></i> CASAS</a></li>-->
                     <?php
                     $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? "" : "disabled";
                     if ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR):
