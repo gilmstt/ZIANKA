@@ -3,7 +3,7 @@ $ID_TARIFA = (isset($row_user->ID_TARIFA)) ? $row_user->ID_TARIFA : 0;
 //$ID_MEMBRESIA = (isset($row_user->ID_MEMBRESIA)) ? $row_user->ID_MEMBRESIA : 0;
 $ID_CASA = (isset($row_user->ID_CASA)) ? $row_user->ID_CASA : 0;
 
-$CI = & get_instance();
+$CI = &get_instance();
 $AllTarifas = $CI->db->get('tarifa')->result_array();
 $Tarifas = $CI->db->get_where('tarifa', array('ID_TARIFA' => $ID_TARIFA))->row();
 $TipoConsu = $CI->db->get('tipo_consulta')->result_array();
@@ -16,30 +16,30 @@ $Procedimientos = $CI->db->get_where('procedimiento', array("activo_procedimient
 $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_user->ID_PACIENTE))->row();
 ?>
 <style>
-@media screen and (min-width: 768px) {
-    .modal {
-        text-align: center;
+    @media screen and (min-width: 768px) {
+        .modal {
+            text-align: center;
+        }
+
+        .modal:before {
+            display: inline-block;
+            vertical-align: middle;
+            content: " ";
+            height: 100%;
+        }
     }
 
-    .modal:before {
+    .modal-dialog {
         display: inline-block;
+        text-align: left;
         vertical-align: middle;
-        content: " ";
-        height: 100%;
     }
-}
 
-.modal-dialog {
-    display: inline-block;
-    text-align: left;
-    vertical-align: middle;
-}
-
-.form-control[disabled],
-.form-control[readonly],
-fieldset[disabled] .form-control {
-    background-color: #b7bec133;
-}
+    .form-control[disabled],
+    .form-control[readonly],
+    fieldset[disabled] .form-control {
+        background-color: #b7bec133;
+    }
 </style>
 <div class="container animated fadeIn"><br>
     <div class="row">
@@ -57,60 +57,250 @@ fieldset[disabled] .form-control {
                         <div class="row">
                             <input type="hidden" name="ID_PACIENTE" value="<?= $row_user->ID_PACIENTE ?>">
 
-                            <!-- <div class="col-sm-12 col-mdx-12 col-lg-12">
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingOne" style="background: #e8e8e8;">
-                                    <h4 class="panel-title" style="padding-top:15px;text-align:center">
-                                        <a style="font-size: 20px;font-weight: 700;" role="button" data-toggle="collapse"
-                                        data-parent="#accordion" href="#collapseOne" aria-expanded="true"
-                                        aria-controls="collapseOne">
-                                        ANTECEDENTES GENERALES
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
-                                    aria-labelledby="headingOne">
-                                    <div class="panel-body" style="padding:0px">
-                                        <div class="form-group" style="margin-bottom:0px">
-                                        <div class="alert alert-info" style="margin-bottom:0px">
-                                            <label for="">Patologicos :</label>
-                                            <textarea readonly class="form-control txt-antecedentes" cols="10" rows="5"
-                                                placeholder="Escribe aquí.."><?= count($Antecedentes) > 0 ? $Antecedentes->PATOLOGICO : "" ?></textarea><br>
-                                            <label for="">No. Patologicos :</label>
-                                            <textarea readonly class="form-control txt-antecedentes" cols="10" rows="5"
-                                                placeholder="Escribe aquí.."><?= count($Antecedentes) > 0 ? $Antecedentes->NO_PATOLOGICO : "" ?></textarea>
-                                            <label for="">Heredo Familiares :</label>
-                                            <textarea readonly class="form-control txt-antecedentes" cols="10" rows="5"
-                                                placeholder="Escribe aquí.."><?= count($Antecedentes) > 0 ? $Antecedentes->HEREDO_FAMILIARES : "" ?></textarea>
-                                            <label for="">Quirúrgicos</label>
-                                            <textarea readonly class="form-control txt-antecedentes" cols="10" rows="5"
-                                                placeholder="Escribe aquí.."><?= count($Antecedentes) > 0 ? $Antecedentes->QUIRURGICOS : "" ?></textarea>
-                                            <label for="">Gineco-obstetricos</label>
-                                            <textarea readonly class="form-control txt-antecedentes" cols="10" rows="5"
-                                                placeholder="Escribe aquí.."><?= count($Antecedentes) > 0 ? $Antecedentes->QUIRURGICOS : "" ?></textarea>
-                                            <label for="">alergias</label>
-                                            <textarea readonly class="form-control txt-antecedentes" cols="10" rows="5"
-                                                placeholder="Escribe aquí.."><?= count($Antecedentes) > 0 ? $Antecedentes->ALERGIAS : "" ?></textarea>
-                                            <label for="">Medicamentos</label>
-                                            <textarea readonly class="form-control txt-antecedentes" cols="10" rows="5"
-                                                placeholder="Escribe aquí.."><?= count($Antecedentes) > 0 ? $Antecedentes->MEDICAMENTOS : "" ?></textarea>
-                                            <label for="">PRENATALES</label>
-                                            <textarea readonly class="form-control txt-antecedentes" cols="10" rows="5"
-                                                placeholder="Escribe aquí.."><?= count($Antecedentes) > 0 ? $Antecedentes->PRENATALES : "" ?></textarea>
-                                            <label for="">Perinatales</label>
-                                            <textarea readonly class="form-control txt-antecedentes" cols="10" rows="5"
-                                                placeholder="Escribe aquí.."><?= count($Antecedentes) > 0 ? $Antecedentes->PERINATALES : "" ?></textarea>
-                                            <label for="">Posnatales</label>
-                                            <textarea readonly class="form-control txt-antecedentes" cols="10" rows="5"
-                                                placeholder="Escribe aquí.."><?= count($Antecedentes) > 0 ? $Antecedentes->POSNATALES : "" ?></textarea>
+                            <div data-type="readonly" class="col-sm-12 col-mdx-12 col-lg-12">
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne" style="background: #e8e8e8;">
+                                            <h4 class="panel-title" style="padding-top:15px;text-align:center">
+                                                <a style="font-size: 20px;font-weight: 700;" role="button" data-toggle="collapse"
+                                                    data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                                    aria-controls="collapseOne">
+                                                    ANTECEDENTES GENERALES
+                                                </a>
+                                            </h4>
                                         </div>
+                                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                                            aria-labelledby="headingOne">
+                                            <div class="panel-body alert alert-info" style="padding:0px">
+                                                <div class="form-group " style="margin-bottom:0px">
+                                                    <div class="alert alert-info" style="margin-bottom:0px">
+                                                        <label for="">Antecedentes Heredofamiliares :</label>
+
+                                                        <!-- MADRE -->
+                                                        <div class="col-12 mt-2">
+                                                            <label>MADRE:</label>
+                                                            <div class="row">
+                                                                <?php
+                                                                $madre = ['DIABETES', 'HIPERTENSION', 'ENF_AUTOINMUNES', 'CANCER'];
+                                                                foreach ($madre as $item):
+                                                                    $name = "{$item}_MADRE";
+                                                                ?>
+                                                                    <div class="col-sm-3">
+                                                                        <input class="form-check-input" type="checkbox" name="<?= $name ?>" id="<?= $name ?>"
+                                                                            <?= (isset($Antecedentes->$name) && $Antecedentes->$name == 1) ? 'checked' : '' ?>>
+
+
+                                                                        <label class="form-check-label" for="<?= $name ?>"><?= str_replace('_', ' ', $item) ?></label>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- PADRE -->
+                                                        <div class="col-12 mt-3">
+                                                            <label>PADRE</label>
+                                                            <div class="row">
+                                                                <?php
+                                                                $padre = ['DIABETES', 'HIPERTENSION', 'ENF_AUTOINMUNES', 'CANCER'];
+                                                                foreach ($padre as $item):
+                                                                    $name = "{$item}_PADRE";
+                                                                ?>
+                                                                    <div class="col-sm-3">
+                                                                        <input class="form-check-input" type="checkbox" name="<?= $name ?>" id="<?= $name ?>"
+                                                                            <?= (isset($Antecedentes->$name) && $Antecedentes->$name == 1) ? 'checked' : '' ?>>
+                                                                        <label class="form-check-label" for="<?= $name ?>"><?= str_replace('_', ' ', $item) ?></label>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- HERMANOS -->
+                                                        <div class="col-12 mt-3">
+                                                            <label>HERMANOS</label>
+                                                            <div class="row">
+                                                                <?php
+                                                                $hermanos = ['DIABETES', 'HIPERTENSION', 'ENF_AUTOINMUNES', 'CANCER'];
+                                                                foreach ($hermanos as $item):
+                                                                    $name = "{$item}_HERMANOS";
+                                                                ?>
+                                                                    <div class="col-sm-3">
+                                                                        <input class="form-check-input" type="checkbox" name="<?= $name ?>" id="<?= $name ?>"
+                                                                            <?= (isset($Antecedentes->$name) && $Antecedentes->$name == 1) ? 'checked' : '' ?>>
+                                                                        <label class="form-check-label" for="<?= $name ?>"><?= str_replace('_', ' ', $item) ?></label>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- OTROS -->
+                                                        <div class="col-12 mt-3">
+                                                            <label>Otros</label>
+                                                            <textarea class="form-control" name="OTROS_HEREDOFAMILIARES" rows="3"
+                                                                placeholder="Escribe aquí..."><?= isset($Antecedentes->OTROS_HEREDOFAMILIARES) ? $Antecedentes->OTROS_HEREDOFAMILIARES : '' ?></textarea>
+                                                        </div>
+
+                                                        <?php
+                                                        function checked($field, $value, $obj)
+                                                        {
+                                                            return (isset($obj->$field) && $obj->$field == $value) ? 'checked' : '';
+                                                        }
+                                                        function textarea_val($field, $obj)
+                                                        {
+                                                            return isset($obj->$field) ? $obj->$field : '';
+                                                        }
+                                                        ?>
+
+                                                        <div class="row"><br>
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <h4 class="h3Antecedentes">ANTECEDENTES PERSONALES PATOLÓGICOS Y NO PATOLÓGICOS</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6 col-md-6"></div>
+                                                            <label class="col-sm-12 col-md-6 offset-sm-12 text-end">
+                                                                TIEMPO DE EVOLUCIÓN / TRATAMIENTO
+                                                            </label>
+                                                        </div>
+
+                                                        <?php
+                                                        $items = [
+                                                            ['DIABETES_MELLITUS', 'TIEMPO_EVOLUCION_DIABETES', 'Diabetes Mellitus'],
+                                                            ['HIPERTENSION_ARTERIAL', 'TIEMPO_EVOLUCION_HIPERTENSION', 'Hipertensión Arterial'],
+                                                            ['ENFERMEDADES_ENDOCRINOLOGICAS', 'TIEMPO_EVOLUCION_ENFERMEDADES_ENDOCRINOLOGICAS', 'Enfermedades Endocrinológicas'],
+                                                            ['ENFERMEDADES_PSIQUIATRICAS', 'TIEMPO_EVOLUCION_ENFERMEDADES_PSIQUIATRICAS', 'Enfermedades Psiquiátricas'],
+                                                            ['ENFERMEDADES_AUTOINMUNES', 'TIEMPO_EVOLUCION_ENFERMEDADES_AUTOINMUNES', 'Enfermedades Autoinmunes'],
+                                                            ['VIH', 'TIEMPO_EVOLUCION_VIH', 'Virus Inmunodeficiencia Humana (VIH)'],
+                                                            ['HERPES_LABIAL', 'TIEMPO_EVOLUCION_HERPES_LABIAL', 'Herpes Labial / Herpes Zoster'],
+                                                            ['TRANSFUSIONES_SANGUINEAS', 'TIEMPO_EVOLUCION_TRANSFUSIONES_SANGUINEAS', 'Transfusiones Sanguíneas'],
+                                                            ['FRACTURAS', 'TIEMPO_EVOLUCION_FRACTURAS', 'Traumatismos / Fracturas'],
+                                                            ['HOSPITALIZACIONES', 'TIEMPO_EVOLUCION_HOSPITALIZACIONES', 'Hospitalizaciones'],
+                                                            ['CIRUGIAS_PREVIAS', 'TIEMPO_EVOLUCION_CIRUGIAS_PREVIAS', 'Cirugías Previas'],
+                                                            ['HEPATITIS', 'TIEMPO_EVOLUCION_HEPATITIS', 'Hepatitis'],
+                                                            ['CANCER', 'TIEMPO_EVOLUCION_CANCER', 'Cáncer'],
+                                                            ['EPILEPSIA', 'TIEMPO_EVOLUCION_EPILEPSIA', 'Epilepsia'],
+                                                            ['ALERGIAS', 'TIEMPO_EVOLUCION_ALERGIAS', 'Alergias'],
+                                                            ['__OTROS__'],
+                                                            ['FUMA', 'FUMA_CUANTOS', '¿Fuma?'],
+                                                            ['ADICCIONES', 'ESPECIFIQUE_ADICCIONES', '¿Adicciones?'],
+                                                            ['BEBE_ALCOHOL', 'ESPECIFIQUE_ALCOHOL', '¿Bebe alcohol?'],
+                                                            ['FOBIA', null, '¿Fobia a la sangre o agujas?'],
+                                                            ['DESMAYOS', null, '¿Es propenso a los desmayos?'],
+                                                            ['ASPIRINA', null, '¿Toma aspirina, warfarina o anticoagulantes?'],
+                                                            ['MORETES', null, '¿Es propenso a sufrir moretes?'],
+                                                            ['BRONCEADO', null, '¿Ha usado cama de bronceado en los últimos 3 meses?'],
+                                                            ['ANESTESIA', null, '¿Le han administrado anestesia local?'],
+                                                            ['PROBLEMA_ANESTESIA', 'ESPECIFIQUE_PROBLEMA_ANESTESIA', '¿Ha tenido problemas con anestesia?'],
+                                                            ['INMUNIZACION', 'ESPECIFIQUE_INMUNIZACION', '¿Ha recibido alguna inmunización en los últimos 3 meses?'],
+                                                            ['INFECCION_PIEL', 'ESPECIFIQUE_INFECCION_PIEL', '¿Ha tenido infección en la piel en los últimos 3 meses?'],
+                                                            ['ESTEROIDES', 'ESPECIFIQUE_ESTEROIDES', '¿Ha recibido tratamiento con esteroides u otros medicamentos?'],
+                                                            ['EJERCICIO', 'ESPECIFIQUE_EJERCICIO', '¿Hace ejercicio?'],
+                                                            ['DIETA', 'ESPECIFIQUE_DIETA', '¿Sigue alguna dieta?'],
+                                                        ];
+                                                        ?>
+
+                                                        <?php foreach ($items as $item): ?>
+                                                            <?php if ($item[0] === '__OTROS__'): ?>
+                                                                <div class="col-sm-12 col-mdx-12 col-lg-12">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label text-left">OTROS</label>
+                                                                        <textarea class="form-control" name="OTROS_PATOLOGICO" placeholder="Escribe aquí.." rows="5"><?= textarea_val('OTROS_PATOLOGICO', $Antecedentes) ?></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <?php continue; ?>
+                                                            <?php endif; ?>
+
+                                                            <div class="row col-sm-12 col-mdx-12 col-lg-12"><br>
+                                                                <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                                                    <label class="control-label" for="<?= $item[0] ?>">
+                                                                        <?= $item[2] ?>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                                                    <input class="form-check-input" type="radio" name="<?= $item[0] ?>" id="<?= $item[0] ?>" value="1" <?= checked($item[0], 1, $Antecedentes) ?>>
+                                                                    <label class="form-check-label" for="<?= $item[0] ?>">SI</label>
+                                                                </div>
+                                                                <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                                                    <input class="form-check-input" type="radio" name="<?= $item[0] ?>" id="<?= $item[0] ?>_NO" value="0" <?= checked($item[0], 0, $Antecedentes) ?>>
+                                                                    <label class="form-check-label" for="<?= $item[0] ?>_NO">NO</label>
+                                                                </div>
+                                                                <?php if (!empty($item[1])): ?>
+                                                                    <div class="col-sm-6 col-mdx-6 col-lg-6">
+                                                                        <textarea class="form-control" name="<?= $item[1] ?>" placeholder="Escribe aquí.." rows="1"><?= textarea_val($item[1], $Antecedentes) ?></textarea>
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        <?php endforeach; ?>
+
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <h4 class="h3Antecedentes">ANTECEDENTES GINECOBSTÉTRICOS</h4>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row col-sm-12 col-mdx-12 col-lg-12"><br>
+                                                            <div class="col-sm-6 col-mdx-6 col-lg-6">
+                                                                <label class="control-label" for="ACTUALMENTE_EMBARAZADA">
+                                                                    ¿ESTÁ ACTUALMENTE EMBARAZADA, EN PERIODO DE LACTANCIA O EN TRATAMIENTO DE FERTILIZACIÓN IN VITRO?
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                                                <input class="form-check-input" type="radio" name="ACTUALMENTE_EMBARAZADA" id="ACTUALMENTE_EMBARAZADA" value="1" <?= checked('ACTUALMENTE_EMBARAZADA', 1, $Antecedentes) ?>>
+                                                                <label class="form-check-label" for="ACTUALMENTE_EMBARAZADA">SI</label>
+                                                            </div>
+                                                            <div class="col-sm-4 col-mdx-4 col-lg-4">
+                                                                <input class="form-check-input" type="radio" name="ACTUALMENTE_EMBARAZADA" id="ACTUALMENTE_EMBARAZADA_NO" value="0" <?= checked('ACTUALMENTE_EMBARAZADA', 0, $Antecedentes) ?>>
+                                                                <label class="form-check-label" for="ACTUALMENTE_EMBARAZADA_NO">NO</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row col-sm-12 col-mdx-12 col-lg-12"><br>
+                                                            <div class="col-sm-3 col-mdx-3 col-lg-3">
+                                                                <label class="control-label text-left">MENARCA</label>
+                                                                <textarea class="form-control" name="MENARCA" placeholder="Escribe aquí.." rows="1"><?= textarea_val('MENARCA', $Antecedentes) ?></textarea>
+                                                            </div>
+                                                            <div class="col-sm-3 col-mdx-3 col-lg-3">
+                                                                <label class="control-label text-left">F.U.M</label>
+                                                                <textarea class="form-control" name="FUM" placeholder="Escribe aquí.." rows="1"><?= textarea_val('FUM', $Antecedentes) ?></textarea>
+                                                            </div>
+                                                            <div class="col-sm-3 col-mdx-3 col-lg-3">
+                                                                <label class="control-label text-left">RITMO MENSTRUAL</label>
+                                                                <textarea class="form-control" name="RITMO_MENSTRUAL" placeholder="Escribe aquí.." rows="1"><?= textarea_val('RITMO_MENSTRUAL', $Antecedentes) ?></textarea>
+                                                            </div>
+                                                            <div class="col-sm-3 col-mdx-3 col-lg-3">
+                                                                <label class="control-label text-left">FUP O CESÁREA</label>
+                                                                <textarea class="form-control" name="FUP_CESAREA" placeholder="Escribe aquí.." rows="1"><?= textarea_val('FUP_CESAREA', $Antecedentes) ?></textarea>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row col-sm-12 col-mdx-12 col-lg-12"><br>
+                                                            <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                                                <label class="control-label text-left">G</label>
+                                                                <textarea class="form-control" name="G" placeholder="Escribe aquí.." rows="1"><?= textarea_val('G', $Antecedentes) ?></textarea>
+                                                            </div>
+                                                            <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                                                <label class="control-label text-left">P</label>
+                                                                <textarea class="form-control" name="P" placeholder="Escribe aquí.." rows="1"><?= textarea_val('P', $Antecedentes) ?></textarea>
+                                                            </div>
+                                                            <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                                                <label class="control-label text-left">A</label>
+                                                                <textarea class="form-control" name="A" placeholder="Escribe aquí.." rows="1"><?= textarea_val('A', $Antecedentes) ?></textarea>
+                                                            </div>
+                                                            <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                                                <label class="control-label text-left">C</label>
+                                                                <textarea class="form-control" name="C" placeholder="Escribe aquí.." rows="1"><?= textarea_val('C', $Antecedentes) ?></textarea>
+                                                            </div>
+                                                            <div class="col-sm-4 col-mdx-4 col-lg-4">
+                                                                <label class="control-label text-left">MÉTODO ANTICONCEPTIVO</label>
+                                                                <textarea class="form-control" name="METODO_ANTICONCEPTIVO" placeholder="Escribe aquí.." rows="1"><?= textarea_val('METODO_ANTICONCEPTIVO', $Antecedentes) ?></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            </div>
-                        </div>-->
 
                             <div class="col-sm-12 col-mdx-12 col-lg-12">
                                 <div class="col-sm-12 col-mdx-6 col-lg-3">
@@ -134,15 +324,15 @@ fieldset[disabled] .form-control {
                                                 id="SELECT_TIPO_CONSULTA" required>
                                                 <option value="" disabled selected>Seleccionar...</option>
                                                 <?php
-                                                    foreach ($TipoConsu as $row) {
-                                                        $id = $row['id_tipo_consulta'];
-                                                        $nombre = $row['nombre_tipo_consulta'];
-                                                        $selected = "";
-                                                        if ($this->session->userdata('CAREYES_ID_ROL') == MEDICO && $this->session->userdata('CAREYES_ID_USUARIO') == $id)
-                                                            $selected = "selected";
-                                                        echo "<option value='$id' $selected>$nombre</option>";
-                                                    }
-                                                    ?>
+                                                foreach ($TipoConsu as $row) {
+                                                    $id = $row['id_tipo_consulta'];
+                                                    $nombre = $row['nombre_tipo_consulta'];
+                                                    $selected = "";
+                                                    if ($this->session->userdata('CAREYES_ID_ROL') == MEDICO && $this->session->userdata('CAREYES_ID_USUARIO') == $id)
+                                                        $selected = "selected";
+                                                    echo "<option value='$id' $selected>$nombre</option>";
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
@@ -167,295 +357,295 @@ fieldset[disabled] .form-control {
                                             <select class="form-control" name="ID_MEDICO" id="" required>
                                                 <option value="" disabled selected>Elige un médico</option>
                                                 <?php
-                                                        foreach ($Medicos as $row) {
-                                                            $id = $row['ID_USUARIO'];
-                                                            $nombre = $row['NOMBRE_USUARIO'];
-                                                            $selected = "";
-                                                            if ($this->session->userdata('CAREYES_ID_ROL') == MEDICO && $this->session->userdata('CAREYES_ID_USUARIO') == $id)
-                                                                $selected = "selected";
-                                                            echo "<option value='$id' $selected>$nombre</option>";
-                                                        }
-                                                        ?>
+                                                foreach ($Medicos as $row) {
+                                                    $id = $row['ID_USUARIO'];
+                                                    $nombre = $row['NOMBRE_USUARIO'];
+                                                    $selected = "";
+                                                    if ($this->session->userdata('CAREYES_ID_ROL') == MEDICO && $this->session->userdata('CAREYES_ID_USUARIO') == $id)
+                                                        $selected = "selected";
+                                                    echo "<option value='$id' $selected>$nombre</option>";
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <h4 class="h3Antecedentes">FOTO PROTECCIÓN</h4>
-                                    </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="h3Antecedentes">FOTO PROTECCIÓN</h4>
                                 </div>
+                            </div>
 
-                                <div class=" row col-sm-12 col-mdx-12 col-lg-12"><br>
+                            <div class=" row col-sm-12 col-mdx-12 col-lg-12"><br>
+                                <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                    <label class="control-label" for=" EXPOSICION_SOLAR">
+                                        EXPOSICIÓN SOLAR:
+                                    </label>
+                                </div>
+                                <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                    <input class="form-check-input" type="checkbox" name="EXPOSICION_SOLAR_SI"
+                                        id="EXPOSICION_SOLAR_SI">
+                                    <label class="form-check-label" for="EXPOSICION_SOLAR_SI">
+                                        SI
+                                    </label>
+                                </div>
+                                <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                    <input class="form-check-input" type="checkbox" name="EXPOSICION_SOLAR_NO"
+                                        id="EXPOSICION_SOLAR_NO">
+                                    <label class="form-check-label" for="EXPOSICIÓN_SOLAR_NO">
+                                        NO
+                                    </label>
+                                </div>
+                                <div class="col-sm-6 col-mdx-6 col-lg-6">
+                                    <label class="control-label text-left"> TIEMPO DE EXPOSICIÓN SOLAR:</label>
+                                    <textarea class="form-control" name="TIEMPO_EXPOSICION_SOLAR"
+                                        placeholder="Escribe aquí.." rows="1"></textarea>
+                                </div>
+                            </div>
+
+                            <div class=" row col-sm-12 col-mdx-12 col-lg-12"><br>
+                                <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                    <label class="control-label" for=" USO_PROTECTOR_SOLAR">
+                                        USO DE PROTECCIÓN SOLAR:
+                                    </label>
+                                </div>
+                                <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                    <input class="form-check-input" type="checkbox" name="USO_PROTECTOR_SOLAR_SI"
+                                        id="USO_PROTECTOR_SOLAR_SI">
+                                    <label class="form-check-label" for="USO_PROTECTOR_SOLAR_SI">
+                                        SI
+                                    </label>
+                                </div>
+                                <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                    <input class="form-check-input" type="checkbox" name="USO_PROTECTOR_SOLAR_NO"
+                                        id="USO_PROTECTOR_SOLAR_NO">
+                                    <label class="form-check-label" for="USO_PROTECTOR_SOLAR_NO">
+                                        NO
+                                    </label>
+                                </div>
+                                <div class="col-sm-3 col-mdx-3 col-lg-3">
+                                    <label class="control-label text-left">MARCA PROTECTOR SOLAR:</label>
+                                    <textarea class="form-control" name="MARCA_PROTECTOR_SOLAR"
+                                        placeholder="Escribe aquí.." rows="1"></textarea>
+                                </div>
+                                <div class="col-sm-3 col-mdx-3 col-lg-3">
+                                    <label class="control-label text-left">FPS:</label>
+                                    <textarea class="form-control" name="FPS_PROTECTOR_SOLAR"
+                                        placeholder="Escribe aquí.." rows="1"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="h3Antecedentes">MOTIVO DE CONSULTA</h4>
+                                </div>
+                            </div>
+
+                            <div class="form-check">
+                                <div class=" row col-sm-12 col-mdx-12 col-lg-12">
                                     <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                        <label class="control-label" for=" EXPOSICION_SOLAR">
-                                            EXPOSICIÓN SOLAR:
+                                        <label class="control-label" for="ENVEJECIMIENTO_CUTANEO">
+                                            Envejecimiento Cutáneo
                                         </label>
                                     </div>
                                     <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                        <input class="form-check-input" type="checkbox" name="EXPOSICION_SOLAR_SI"
-                                            id="EXPOSICION_SOLAR_SI">
-                                        <label class="form-check-label" for="EXPOSICION_SOLAR_SI">
-                                            SI
+                                        <input class="form-check-input" type="checkbox"
+                                            name="ENVEJECIMIENTO_CUTANEO" id="ENVEJECIMIENTO_CUTANEO">
+                                    </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <label class="control-label" for="RITIDES">
+                                            Ritides (Arrugas)
                                         </label>
                                     </div>
                                     <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                        <input class="form-check-input" type="checkbox" name="EXPOSICION_SOLAR_NO"
-                                            id="EXPOSICION_SOLAR_NO">
-                                        <label class="form-check-label" for="EXPOSICIÓN_SOLAR_NO">
-                                            NO
-                                        </label>
+                                        <input class="form-check-input" type="checkbox" name="RITIDES" id="RITIDES">
                                     </div>
-                                    <div class="col-sm-6 col-mdx-6 col-lg-6">
-                                        <label class="control-label text-left"> TIEMPO DE EXPOSICIÓN SOLAR:</label>
-                                        <textarea class="form-control" name="TIEMPO_EXPOSICION_SOLAR"
-                                            placeholder="Escribe aquí.." rows="1"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class=" row col-sm-12 col-mdx-12 col-lg-12"><br>
                                     <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                        <label class="control-label" for=" USO_PROTECTOR_SOLAR">
-                                            USO DE PROTECCIÓN SOLAR:
+                                        <label class="control-label" for="BRUXISMO">
+                                            Bruxismo
                                         </label>
                                     </div>
                                     <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                        <input class="form-check-input" type="checkbox" name="USO_PROTECTOR_SOLAR_SI"
-                                            id="USO_PROTECTOR_SOLAR_SI">
-                                        <label class="form-check-label" for="USO_PROTECTOR_SOLAR_SI">
-                                            SI
+                                        <input class="form-check-input" type="checkbox" name="BRUXISMO"
+                                            id="BRUXISMO">
+                                    </div>
+                                </div>
+
+                                <div class=" row col-sm-12 col-mdx-12 col-lg-12">
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <label class="control-label" for="ADIP_LOCALIZADA">
+                                            Adiposidad Localizada
                                         </label>
                                     </div>
                                     <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                        <input class="form-check-input" type="checkbox" name="USO_PROTECTOR_SOLAR_NO"
-                                            id="USO_PROTECTOR_SOLAR_NO">
-                                        <label class="form-check-label" for="USO_PROTECTOR_SOLAR_NO">
-                                            NO
+                                        <input class="form-check-input" type="checkbox" name="ADIP_LOCALIZADA"
+                                            id="ADIP_LOCALIZADA">
+                                    </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <label class="control-label" for="ESTRIAS">
+                                            Estrías
                                         </label>
                                     </div>
-                                    <div class="col-sm-3 col-mdx-3 col-lg-3">
-                                        <label class="control-label text-left">MARCA PROTECTOR SOLAR:</label>
-                                        <textarea class="form-control" name="MARCA_PROTECTOR_SOLAR"
-                                            placeholder="Escribe aquí.." rows="1"></textarea>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <input class="form-check-input" type="checkbox" name="ESTRIAS" id="ESTRIAS">
                                     </div>
-                                    <div class="col-sm-3 col-mdx-3 col-lg-3">
-                                        <label class="control-label text-left">FPS:</label>
-                                        <textarea class="form-control" name="FPS_PROTECTOR_SOLAR"
-                                            placeholder="Escribe aquí.." rows="1"></textarea>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <label class="control-label" for="VARICES">
+                                            Várices
+                                        </label>
                                     </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <h4 class="h3Antecedentes">MOTIVO DE CONSULTA</h4>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <input class="form-check-input" type="checkbox" name="VARICES" id="VARICES">
                                     </div>
                                 </div>
 
-                                <div class="form-check">
-                                    <div class=" row col-sm-12 col-mdx-12 col-lg-12">
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="ENVEJECIMIENTO_CUTANEO">
-                                                Envejecimiento Cutáneo
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox"
-                                                name="ENVEJECIMIENTO_CUTANEO" id="ENVEJECIMIENTO_CUTANEO">
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="RITIDES">
-                                                Ritides (Arrugas)
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="RITIDES" id="RITIDES">
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="BRUXISMO">
-                                                Bruxismo
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="BRUXISMO"
-                                                id="BRUXISMO">
-                                        </div>
+                                <div class=" row col-sm-12 col-mdx-12 col-lg-12">
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <label class="control-label" for="HIPERMEGTACION">
+                                            Hiperpigmentación
+                                        </label>
                                     </div>
-
-                                    <div class=" row col-sm-12 col-mdx-12 col-lg-12">
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="ADIP_LOCALIZADA">
-                                                Adiposidad Localizada
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="ADIP_LOCALIZADA"
-                                                id="ADIP_LOCALIZADA">
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="ESTRIAS">
-                                                Estrías
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="ESTRIAS" id="ESTRIAS">
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="VARICES">
-                                                Várices
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="VARICES" id="VARICES">
-                                        </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <input class="form-check-input" type="checkbox" name="HIPERMEGTACION"
+                                            id="HIPERMEGTACION">
                                     </div>
-
-                                    <div class=" row col-sm-12 col-mdx-12 col-lg-12">
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="HIPERMEGTACION">
-                                                Hiperpigmentación
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="HIPERMEGTACION"
-                                                id="HIPERMEGTACION">
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="ALOPECIA">
-                                                Alopecia
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="ALOPECIA"
-                                                id="ALOPECIA">
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="VERRUGAS">
-                                                Verrugas
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="VERRUGAS"
-                                                id="VERRUGAS">
-                                        </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <label class="control-label" for="ALOPECIA">
+                                            Alopecia
+                                        </label>
                                     </div>
-
-                                    <div class=" row col-sm-12 col-mdx-12 col-lg-12">
-                                        <br>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="FLACIDEZ_CUTANEA">
-                                                Flacidez Cutánea
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="FLACIDEZ_CUTANEA"
-                                                id="FLACIDEZ_CUTANEA">
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="ACNE">
-                                                Acné
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="ACNE" id="ACNE">
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="PEFE">
-                                                PEFE (Celulitis)
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="PEFE" id="PEFE">
-                                        </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <input class="form-check-input" type="checkbox" name="ALOPECIA"
+                                            id="ALOPECIA">
                                     </div>
-
-                                    <div class=" row col-sm-12 col-mdx-12 col-lg-12">
-                                        <br>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="CICATRICES">
-                                                Cicatrices
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="CICATRICES"
-                                                id="CICATRICES">
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="ROSACEA">
-                                                Rosácea
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="ROSACEA" id="ROSACEA">
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <label class="control-label" for="HIPERHIDROSIS">
-                                                Hiperhidrosis
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                            <input class="form-check-input" type="checkbox" name="HIPERHIDROSIS"
-                                                id="HIPERHIDROSIS">
-                                        </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <label class="control-label" for="VERRUGAS">
+                                            Verrugas
+                                        </label>
                                     </div>
-                                    <div class="col-sm-12 col-mdx-12 col-lg-12">
-                                        <label class="control-label text-left">OTROS:</label>
-                                        <textarea class="form-control" name="OTROS_MOTIVO_CONSULTA"
-                                            placeholder="Escribe aquí.." rows="1"></textarea>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <input class="form-check-input" type="checkbox" name="VERRUGAS"
+                                            id="VERRUGAS">
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <h4 class="h3Antecedentes">TRATAMIENTOS ESTÉTICOS PREVIOS</h4>
-                                    </div>
-                                </div>
-
-                                <div class="row col-sm-12 col-mdx-12 col-lg-12">
-                                    <div class="col-sm-4 col-mdx-4 col-lg-4">
-                                        <label class="control-label">PROCEDIMIENTO</label>
-                                    </div>
-                                    <div class="col-sm-4 col-mdx-4 col-lg-4">
-                                        <label class="control-label">PRODUCTO / MARCA</label>
-                                    </div>
-                                    <div class="col-sm-4 col-mdx-4 col-lg-4">
-                                        <label class="control-label">FECHA DE APLICACIÓN</label>
-                                    </div>
-                                </div>
-
-                                <!-- Container for dynamic rows -->
-                                <div id="tratamientos_previos_container" class="row col-sm-12 col-mdx-12 col-lg-12">
-                                    <!-- Rows will be added here dynamically -->
-                                </div>
-
-                                <!-- Button to add new row -->
-                                <div class="row col-sm-12 col-mdx-12 col-lg-12 mt-2">
+                                <div class=" row col-sm-12 col-mdx-12 col-lg-12">
                                     <br>
-                                    <div class="col-sm-12">
-                                        <button type="button" class="btn btn-info btn-sm" id="add_tratamiento_row">
-                                            <i class="fas fa-plus-circle"></i> Agregar Tratamiento
-                                        </button>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <label class="control-label" for="FLACIDEZ_CUTANEA">
+                                            Flacidez Cutánea
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <input class="form-check-input" type="checkbox" name="FLACIDEZ_CUTANEA"
+                                            id="FLACIDEZ_CUTANEA">
+                                    </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <label class="control-label" for="ACNE">
+                                            Acné
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <input class="form-check-input" type="checkbox" name="ACNE" id="ACNE">
+                                    </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <label class="control-label" for="PEFE">
+                                            PEFE (Celulitis)
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <input class="form-check-input" type="checkbox" name="PEFE" id="PEFE">
                                     </div>
                                 </div>
 
-                                <!-- Otros field -->
-                                <div class="col-sm-12 col-mdx-12 col-lg-12 mt-3">
-                                    <div class="form-group">
-                                        <label class="control-label text-left">Otros</label>
-                                        <textarea class="form-control" name="OTROS_TRATAMIENTOS_ESTETICOS"
-                                            id="OTROS_TRATAMIENTOS_ESTETICOS" placeholder="Escribe aquí.."
-                                            rows="5"></textarea>
+                                <div class=" row col-sm-12 col-mdx-12 col-lg-12">
+                                    <br>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <label class="control-label" for="CICATRICES">
+                                            Cicatrices
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <input class="form-check-input" type="checkbox" name="CICATRICES"
+                                            id="CICATRICES">
+                                    </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <label class="control-label" for="ROSACEA">
+                                            Rosácea
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <input class="form-check-input" type="checkbox" name="ROSACEA" id="ROSACEA">
+                                    </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <label class="control-label" for="HIPERHIDROSIS">
+                                            Hiperhidrosis
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2 col-mdx-2 col-lg-2">
+                                        <input class="form-check-input" type="checkbox" name="HIPERHIDROSIS"
+                                            id="HIPERHIDROSIS">
                                     </div>
                                 </div>
-
-                                
-
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <h4 class="h3Antecedentes"> EXPLORACIÓN FÍSICA</h4>
-                                    </div>
+                                <div class="col-sm-12 col-mdx-12 col-lg-12">
+                                    <label class="control-label text-left">OTROS:</label>
+                                    <textarea class="form-control" name="OTROS_MOTIVO_CONSULTA"
+                                        placeholder="Escribe aquí.." rows="1"></textarea>
                                 </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="h3Antecedentes">TRATAMIENTOS ESTÉTICOS PREVIOS</h4>
+                                </div>
+                            </div>
+
+                            <div class="row col-sm-12 col-mdx-12 col-lg-12">
+                                <div class="col-sm-4 col-mdx-4 col-lg-4">
+                                    <label class="control-label">PROCEDIMIENTO</label>
+                                </div>
+                                <div class="col-sm-4 col-mdx-4 col-lg-4">
+                                    <label class="control-label">PRODUCTO / MARCA</label>
+                                </div>
+                                <div class="col-sm-4 col-mdx-4 col-lg-4">
+                                    <label class="control-label">FECHA DE APLICACIÓN</label>
+                                </div>
+                            </div>
+
+                            <!-- Container for dynamic rows -->
+                            <div id="tratamientos_previos_container" class="row col-sm-12 col-mdx-12 col-lg-12">
+                                <!-- Rows will be added here dynamically -->
+                            </div>
+
+                            <!-- Button to add new row -->
+                            <div class="row col-sm-12 col-mdx-12 col-lg-12 mt-2">
+                                <br>
+                                <div class="col-sm-12">
+                                    <button type="button" class="btn btn-info btn-sm" id="add_tratamiento_row">
+                                        <i class="fas fa-plus-circle"></i> Agregar Tratamiento
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Otros field -->
+                            <div class="col-sm-12 col-mdx-12 col-lg-12 mt-3">
+                                <div class="form-group">
+                                    <label class="control-label text-left">Otros</label>
+                                    <textarea class="form-control" name="OTROS_TRATAMIENTOS_ESTETICOS"
+                                        id="OTROS_TRATAMIENTOS_ESTETICOS" placeholder="Escribe aquí.."
+                                        rows="5"></textarea>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="h3Antecedentes"> EXPLORACIÓN FÍSICA</h4>
+                                </div>
+                            </div>
 
                             <!-- FITZPATRICK -->
                             <div class="form-group">
@@ -463,22 +653,22 @@ fieldset[disabled] .form-control {
                                     <div class="col-sm-4 col-mdx-4 col-lg-4">
                                         <label class="control-label">FITZPATRICK:</label><br>
                                         <?php for ($i = 1; $i <= 6; $i++): ?>
-                                        <input class="form-check-input" type="radio" name="FITZPATRICK"
-                                            id="FITZPATRICK_<?php echo $i; ?>" value="<?php echo $i; ?>">
-                                        <label class="form-check-label" for="FITZPATRICK_<?php echo $i; ?>">
-                                            <?php echo $i; ?>
-                                        </label>
+                                            <input class="form-check-input" type="radio" name="FITZPATRICK"
+                                                id="FITZPATRICK_<?php echo $i; ?>" value="<?php echo $i; ?>">
+                                            <label class="form-check-label" for="FITZPATRICK_<?php echo $i; ?>">
+                                                <?php echo $i; ?>
+                                            </label>
                                         <?php endfor; ?>
                                     </div>
 
                                     <div class="col-sm-4 col-mdx-4 col-lg-4">
                                         <label class="control-label">GLOGAU:</label><br>
                                         <?php for ($i = 1; $i <= 4; $i++): ?>
-                                        <input class="form-check-input" type="radio" name="GLOGAU"
-                                            id="GLOGAU_<?php echo $i; ?>" value="<?php echo $i; ?>">
-                                        <label class="form-check-label" for="GLOGAU_<?php echo $i; ?>">
-                                            <?php echo $i; ?>
-                                        </label>
+                                            <input class="form-check-input" type="radio" name="GLOGAU"
+                                                id="GLOGAU_<?php echo $i; ?>" value="<?php echo $i; ?>">
+                                            <label class="form-check-label" for="GLOGAU_<?php echo $i; ?>">
+                                                <?php echo $i; ?>
+                                            </label>
                                         <?php endfor; ?>
                                     </div>
 
@@ -500,24 +690,24 @@ fieldset[disabled] .form-control {
                             <div class="col-sm-12">
                                 <label class="control-label">TIPO DE ROSTRO:</label><br>
 
-                                    <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
-                                        id="TIPO_ROSTRO_OVALADO" value="OVALADO">
-                                    <label class="form-check-label" for="TIPO_ROSTRO_OVALADO">OVALADO</label>
-                                    <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
-                                        id="TIPO_ROSTRO_RECTANGULAR" value="RECTANGULAR">
-                                    <label class="form-check-label" for="TIPO_ROSTRO_RECTANGULAR">RECTANGULAR</label>
-                                    <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
-                                        id="TIPO_ROSTRO_REDONDO" value="REDONDO">
-                                    <label class="form-check-label" for="TIPO_ROSTRO_REDONDO">REDONDO</label>
-                                    <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
-                                        id="TIPO_ROSTRO_CUADRADO" value="CUADRADO">
-                                    <label class="form-check-label" for="TIPO_ROSTRO_CUADRADO">CUADRADO</label>
-                                    <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
-                                        id="TIPO_ROSTRO_TRIANGULAR" value="TRIANGULAR">
-                                    <label class="form-check-label" for="TIPO_ROSTRO_TRIANGULAR">TRIANGULAR</label>
-                                    <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
-                                        id="TIPO_ROSTRO_DIAMANTE" value="DIAMANTE">
-                                    <label class="form-check-label" for="TIPO_ROSTRO_DIAMANTE">DIAMANTE</label>
+                                <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
+                                    id="TIPO_ROSTRO_OVALADO" value="OVALADO">
+                                <label class="form-check-label" for="TIPO_ROSTRO_OVALADO">OVALADO</label>
+                                <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
+                                    id="TIPO_ROSTRO_RECTANGULAR" value="RECTANGULAR">
+                                <label class="form-check-label" for="TIPO_ROSTRO_RECTANGULAR">RECTANGULAR</label>
+                                <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
+                                    id="TIPO_ROSTRO_REDONDO" value="REDONDO">
+                                <label class="form-check-label" for="TIPO_ROSTRO_REDONDO">REDONDO</label>
+                                <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
+                                    id="TIPO_ROSTRO_CUADRADO" value="CUADRADO">
+                                <label class="form-check-label" for="TIPO_ROSTRO_CUADRADO">CUADRADO</label>
+                                <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
+                                    id="TIPO_ROSTRO_TRIANGULAR" value="TRIANGULAR">
+                                <label class="form-check-label" for="TIPO_ROSTRO_TRIANGULAR">TRIANGULAR</label>
+                                <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
+                                    id="TIPO_ROSTRO_DIAMANTE" value="DIAMANTE">
+                                <label class="form-check-label" for="TIPO_ROSTRO_DIAMANTE">DIAMANTE</label>
                             </div>
 
 
@@ -784,11 +974,11 @@ fieldset[disabled] .form-control {
                      
                      </div>
                      <?php
-                            $valida = 0;
-                            if ($ID_TARIFA) {
-                                $valida = 1;
-                                $readonlyx = "";
-                                ?>
+                        $valida = 0;
+                        if ($ID_TARIFA) {
+                            $valida = 1;
+                            $readonlyx = "";
+                        ?>
                      <div class="col-sm-12 col-mdx-6 col-lg-3">
                         <div class="form-group">
                            <label for="">Tarifa</label>
@@ -800,27 +990,27 @@ fieldset[disabled] .form-control {
                               <select class="form-control" id="SELECT_TARIFA" name="ID_TARIFA" required>
                                  <option value="" disabled selected>Elige una Tarifa</option>
                                  <?php
-                                                foreach ($AllTarifas as $row) {
-                                                    $id = $row['ID_TARIFA'];
-                                                    $percent = $row['PORCENTAJE_TARIFA'];
-                                                    $nombre = $row['NOMBRE_TARIFA'];
-                                                    $PrecioConsulta = $row['CONSULTA_TARIFA'];
-                                                    $selected = "";
-                                                    if ($ID_TARIFA == $id)
-                                                        $selected = "selected";
-                                                    echo "<option data-percent='$percent' data-precioconsulta='$PrecioConsulta' data-nombre='$nombre' value='$id' $selected>$nombre</option>";
-                                                }
-                                                ?>
+                                    foreach ($AllTarifas as $row) {
+                                        $id = $row['ID_TARIFA'];
+                                        $percent = $row['PORCENTAJE_TARIFA'];
+                                        $nombre = $row['NOMBRE_TARIFA'];
+                                        $PrecioConsulta = $row['CONSULTA_TARIFA'];
+                                        $selected = "";
+                                        if ($ID_TARIFA == $id)
+                                            $selected = "selected";
+                                        echo "<option data-percent='$percent' data-precioconsulta='$PrecioConsulta' data-nombre='$nombre' value='$id' $selected>$nombre</option>";
+                                    }
+                                    ?>
                               </select>
                            </div>
                         </div>
                      </div>
                      <?php
-                            }
-                            if ($ID_MEMBRESIA) {
-                                $valida = 1;
-                                $readonlyx = "readonly";
-                                ?>
+                        }
+                        if ($ID_MEMBRESIA) {
+                            $valida = 1;
+                            $readonlyx = "readonly";
+                        ?>
                      <div class="col-sm-12 col-mdx-6 col-lg-3">
                         <div class="form-group">
                            <label for="">Membresia</label>
@@ -829,9 +1019,9 @@ fieldset[disabled] .form-control {
                                  <i class="fas fa-credit-card"></i>
                               </span>
                               <?php
-                                            $nombre_membresia = $Membresia->NOMBRE_MEMBRESIA;
-                                            $ide_membresia = $Membresia->ID_MEMBRESIA;
-                                            ?>
+                                $nombre_membresia = $Membresia->NOMBRE_MEMBRESIA;
+                                $ide_membresia = $Membresia->ID_MEMBRESIA;
+                                ?>
                               <input type="hidden" id="ID_MEMBRESIA" name="ID_MEMBRESIA" value="<?= $ide_membresia ?>">
                               <input type="text" class="form-control" readonly value="<?= $nombre_membresia ?>"
                                  placeholder="Escribe aquí..">
@@ -839,15 +1029,15 @@ fieldset[disabled] .form-control {
                         </div>
                      </div>
                      <?php
-                            }
-                            if ($valida == 0) {
-                                ?>
+                        }
+                        if ($valida == 0) {
+                        ?>
                      <div class="col-sm-12 col-mdx-6 col-lg-3">
                         <label style="color:red;">Para asignar una tarifa o membresía "favor de editar el
                            paciente"</label>
                      </div>
                      <?php }
-                            ?>
+                        ?>
                      <?php if ($ID_CASA > 0): ?>
                      <div class="col-sm-12 col-mdx-6 col-lg-4">
                         <div class="form-group">
@@ -855,9 +1045,9 @@ fieldset[disabled] .form-control {
                            <div class="input-group">
                               <span class="input-group-addon"><i class="fas fa-home"></i></span>
                               <?php
-                                        $nombre_casa = $Casa->NOMBRE_CASA;
-                                        $id_casa = $Casa->ID_CASA;
-                                        ?>
+                                $nombre_casa = $Casa->NOMBRE_CASA;
+                                $id_casa = $Casa->ID_CASA;
+                                ?>
                               <input type="hidden" id="ID_CASA" name="ID_CASA" value="<?= $id_casa ?>">
                               <input type="text" class="form-control" readonly value="<?= $nombre_casa ?>"
                                  placeholder="Escribe aquí..">
@@ -1083,148 +1273,148 @@ fieldset[disabled] .form-control {
         <div class="col-lg-6">
             <div class="row">
                 <?php if ($ID_MEMBRESIA > 0): ?>
-                <div class="col-lg-6">
-                    <div class="jss442 blue-x">
-                        <div class="jss459 jss467 jss464 jss465">
-                            <div class="jss473 jss474 bg-morado">
-                                <i class="fas fa-user fa-3x"></i>
-                            </div>
-                            <p class="jss959 fz-13">
-                                <!--  DESC. POR --> MEMBRESIA
-                            </p>
-                            <h3 class="jss956"><br>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fas fa-credit-card"></i></span>
-                                        <input type="text" class="form-control numeric" placeholder="0"
-                                            value="<?= $nombre_membresia ?>" readonly id="MEMBRESIA_NAME"
-                                            name="MEMBRESIA_NAME">
-                                    </div>
+                    <div class="col-lg-6">
+                        <div class="jss442 blue-x">
+                            <div class="jss459 jss467 jss464 jss465">
+                                <div class="jss473 jss474 bg-morado">
+                                    <i class="fas fa-user fa-3x"></i>
                                 </div>
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="jss442 blue-x">
-                        <div class="jss459 jss467 jss464 jss465">
-                            <div class="jss473 jss474 bg-morado">
-                                <i class="fas fa-usd-circle fa-3x"></i>
-                            </div>
-                            <p class="jss959 fz-13">
-                                <span>TOTAL A PAGAR</span>
-                            </p>
-
-                            <h3 class="jss956"><br>
-                                <div class="col-lg-12 p-none">
+                                <p class="jss959 fz-13">
+                                    <!--  DESC. POR --> MEMBRESIA
+                                </p>
+                                <h3 class="jss956"><br>
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i
-                                                    class="fas fa-hand-holding-usd"></i></span>
-                                            <input type="text" id="TOTAL_FINAL" class="form-control" placeholder="Total"
-                                                readonly>
+                                            <span class="input-group-addon"><i class="fas fa-credit-card"></i></span>
+                                            <input type="text" class="form-control numeric" placeholder="0"
+                                                value="<?= $nombre_membresia ?>" readonly id="MEMBRESIA_NAME"
+                                                name="MEMBRESIA_NAME">
                                         </div>
                                     </div>
-                                </div>
-                            </h3>
+                                </h3>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php endif; ?>
+                    <div class="col-lg-6">
+                        <div class="jss442 blue-x">
+                            <div class="jss459 jss467 jss464 jss465">
+                                <div class="jss473 jss474 bg-morado">
+                                    <i class="fas fa-usd-circle fa-3x"></i>
+                                </div>
+                                <p class="jss959 fz-13">
+                                    <span>TOTAL A PAGAR</span>
+                                </p>
 
-                <?php if ($ID_TARIFA > 0):?>
-                <div hidden class="col-lg-6">
-                    <div class="jss442 blue-x">
-                        <div class="jss459 jss467 jss464 jss465">
-                            <div class="jss473 jss474 bg-morado">
-                                <span class="fz19 f-bold"> <i class="fas fa-file-signature"></i></span>
-                            </div>
-                            <p class="jss959 fz-13">
-                                PRECIO CONSULTA
-                            </p>
-                            <h3 class="jss956"><br>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <?php $readonly = ($ID_TARIFA) ? "" : "readonly"; ?>
-                                        <input type="text" id="PRECIO_CONSULTA" name="PRECIO_CONSULTA"
-                                            onClick="this.setSelectionRange(0, this.value.length)"
-                                            class="form-control text-right" <?= $readonly ?>
-                                            value="<?= $Tarifas->CONSULTA_TARIFA; ?>">
-                                        <span class="input-group-addon"><i class="fas fa-dollar-sign"></i></span>
-                                    </div>
-                                </div>
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div hidden class="col-lg-6">
-                    <div class="jss442 blue-x">
-                        <div class="jss459 jss467 jss464 jss465">
-                            <div class="jss473 jss474 bg-morado">
-                                <span class="fz19 f-bold" id="NOMBRE_TARIFA"> <?= $Tarifas->NOMBRE_TARIFA; ?> </span>
-                            </div>
-                            <p class="jss959 fz-13">
-                                DESC. POR TARIFA
-                            </p>
-                            <h3 class="jss956"><br>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <?php $readonly = ($ID_TARIFA) ? "" : "readonly"; ?>
-                                        <input type="text" id="DESC_TARIFA" name="DESC_TARIFA"
-                                            onClick="this.setSelectionRange(0, this.value.length)"
-                                            class="form-control text-right" <?= $readonly ?>
-                                            value="<?= $Tarifas->PORCENTAJE_TARIFA; ?>">
-                                        <span class="input-group-addon"><i class="fas fa-percent"></i></span>
-                                    </div>
-                                </div>
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12 mb-2rem">
-                    <div class="jss442 blue-x">
-                        <div class="jss459 jss467 jss464 jss465">
-                            <h3 class="jss956">
-                                <br>
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="form-group d-inline-block">
-                                            <label for="TOTAL">Subtotal</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i
-                                                        class="fas fa-dollar-sign"></i></span>
-                                                <input type="text" id="TOTAL" class="form-control text-center"
-                                                    placeholder="subtotal" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group d-inline-block">
-                                            <label for="DESCUENTO_TOTAL">DESCUENTO</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fas fa-minus"></i></span>
-                                                <input type="text" id="DESCUENTO_TOTAL" class="form-control text-center"
-                                                    placeholder="desc" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
+                                <h3 class="jss956"><br>
+                                    <div class="col-lg-12 p-none">
                                         <div class="form-group">
-                                            <label for="TOTAL_FINAL">Total</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i
                                                         class="fas fa-hand-holding-usd"></i></span>
-                                                <input type="text" id="TOTAL_FINAL_T" class="form-control text-center"
-                                                    placeholder="total" readonly>
-                                                <span class="input-group-addon c-u">.00</span>
+                                                <input type="text" id="TOTAL_FINAL" class="form-control" placeholder="Total"
+                                                    readonly>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </h3>
+                                </h3>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php endif; ?>
+
+                <?php if ($ID_TARIFA > 0): ?>
+                    <div hidden class="col-lg-6">
+                        <div class="jss442 blue-x">
+                            <div class="jss459 jss467 jss464 jss465">
+                                <div class="jss473 jss474 bg-morado">
+                                    <span class="fz19 f-bold"> <i class="fas fa-file-signature"></i></span>
+                                </div>
+                                <p class="jss959 fz-13">
+                                    PRECIO CONSULTA
+                                </p>
+                                <h3 class="jss956"><br>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <?php $readonly = ($ID_TARIFA) ? "" : "readonly"; ?>
+                                            <input type="text" id="PRECIO_CONSULTA" name="PRECIO_CONSULTA"
+                                                onClick="this.setSelectionRange(0, this.value.length)"
+                                                class="form-control text-right" <?= $readonly ?>
+                                                value="<?= $Tarifas->CONSULTA_TARIFA; ?>">
+                                            <span class="input-group-addon"><i class="fas fa-dollar-sign"></i></span>
+                                        </div>
+                                    </div>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div hidden class="col-lg-6">
+                        <div class="jss442 blue-x">
+                            <div class="jss459 jss467 jss464 jss465">
+                                <div class="jss473 jss474 bg-morado">
+                                    <span class="fz19 f-bold" id="NOMBRE_TARIFA"> <?= $Tarifas->NOMBRE_TARIFA; ?> </span>
+                                </div>
+                                <p class="jss959 fz-13">
+                                    DESC. POR TARIFA
+                                </p>
+                                <h3 class="jss956"><br>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <?php $readonly = ($ID_TARIFA) ? "" : "readonly"; ?>
+                                            <input type="text" id="DESC_TARIFA" name="DESC_TARIFA"
+                                                onClick="this.setSelectionRange(0, this.value.length)"
+                                                class="form-control text-right" <?= $readonly ?>
+                                                value="<?= $Tarifas->PORCENTAJE_TARIFA; ?>">
+                                            <span class="input-group-addon"><i class="fas fa-percent"></i></span>
+                                        </div>
+                                    </div>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 mb-2rem">
+                        <div class="jss442 blue-x">
+                            <div class="jss459 jss467 jss464 jss465">
+                                <h3 class="jss956">
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group d-inline-block">
+                                                <label for="TOTAL">Subtotal</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i
+                                                            class="fas fa-dollar-sign"></i></span>
+                                                    <input type="text" id="TOTAL" class="form-control text-center"
+                                                        placeholder="subtotal" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group d-inline-block">
+                                                <label for="DESCUENTO_TOTAL">DESCUENTO</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fas fa-minus"></i></span>
+                                                    <input type="text" id="DESCUENTO_TOTAL" class="form-control text-center"
+                                                        placeholder="desc" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="TOTAL_FINAL">Total</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i
+                                                            class="fas fa-hand-holding-usd"></i></span>
+                                                    <input type="text" id="TOTAL_FINAL_T" class="form-control text-center"
+                                                        placeholder="total" readonly>
+                                                    <span class="input-group-addon c-u">.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
                 <?php endif; ?>
                 <div class="col-lg-12 mb-2rem">
                     <div class="jss442 blue-x">
@@ -1268,59 +1458,59 @@ fieldset[disabled] .form-control {
     </div>
 </div><br>
 <script>
-$(document).ready(function() {
-    // Exclusividad para EXPOSICIÓN SOLAR
-    $('#EXPOSICION_SOLAR_SI').on('change', function() {
-        if (this.checked) {
-            $('#EXPOSICION_SOLAR_NO').prop('checked', false);
-        }
-    });
-
-    $('#EXPOSICION_SOLAR_NO').on('change', function() {
-        if (this.checked) {
-            $('#EXPOSICION_SOLAR_SI').prop('checked', false);
-        }
-    });
-
-    // Exclusividad para USO DE PROTECCIÓN SOLAR
-    $('#USO_PROTECTOR_SOLAR_SI').on('change', function() {
-        if (this.checked) {
-            $('#USO_PROTECTOR_SOLAR_NO').prop('checked', false);
-        }
-    });
-
-    $('#USO_PROTECTOR_SOLAR_NO').on('change', function() {
-        if (this.checked) {
-            $('#USO_PROTECTOR_SOLAR_SI').prop('checked', false);
-        }
-    });
-
-    // Available treatments
-    const tratamientos = <?php echo json_encode($tratamientos); ?>;
-    let rowIndex = 0;
-
-    // Function to generate select options, excluding selected treatments
-    function getSelectOptions(exclude = [], include = null) {
-        let options = '<option value="" selected disabled>Selecciona un tratamiento</option>';
-        $.each(tratamientos, function(key, value) {
-            if (!exclude.includes(key) || key === include) {
-                options += `<option value="${key}">${value}</option>`;
+    $(document).ready(function() {
+        // Exclusividad para EXPOSICIÓN SOLAR
+        $('#EXPOSICION_SOLAR_SI').on('change', function() {
+            if (this.checked) {
+                $('#EXPOSICION_SOLAR_NO').prop('checked', false);
             }
         });
-        return options;
-    }
 
-    // Function to add a new row
-    function addTratamientoRow() {
-        // Get currently selected treatments
-        let selectedTreatments = [];
-        $('.tratamiento-select').each(function() {
-            let val = $(this).val();
-            if (val) selectedTreatments.push(val);
+        $('#EXPOSICION_SOLAR_NO').on('change', function() {
+            if (this.checked) {
+                $('#EXPOSICION_SOLAR_SI').prop('checked', false);
+            }
         });
 
-        // Generate HTML for new row
-        let rowHtml = `
+        // Exclusividad para USO DE PROTECCIÓN SOLAR
+        $('#USO_PROTECTOR_SOLAR_SI').on('change', function() {
+            if (this.checked) {
+                $('#USO_PROTECTOR_SOLAR_NO').prop('checked', false);
+            }
+        });
+
+        $('#USO_PROTECTOR_SOLAR_NO').on('change', function() {
+            if (this.checked) {
+                $('#USO_PROTECTOR_SOLAR_SI').prop('checked', false);
+            }
+        });
+
+        // Available treatments
+        const tratamientos = <?php echo json_encode($tratamientos); ?>;
+        let rowIndex = 0;
+
+        // Function to generate select options, excluding selected treatments
+        function getSelectOptions(exclude = [], include = null) {
+            let options = '<option value="" selected disabled>Selecciona un tratamiento</option>';
+            $.each(tratamientos, function(key, value) {
+                if (!exclude.includes(key) || key === include) {
+                    options += `<option value="${key}">${value}</option>`;
+                }
+            });
+            return options;
+        }
+
+        // Function to add a new row
+        function addTratamientoRow() {
+            // Get currently selected treatments
+            let selectedTreatments = [];
+            $('.tratamiento-select').each(function() {
+                let val = $(this).val();
+                if (val) selectedTreatments.push(val);
+            });
+
+            // Generate HTML for new row
+            let rowHtml = `
             <div class="row tratamiento-row mb-2" data-index="${rowIndex}">
                 <br><div class="col-sm-4 col-mdx-4 col-lg-4">
                     <select class="form-control tratamiento-select" 
@@ -1349,91 +1539,91 @@ $(document).ready(function() {
             </div>
         `;
 
-        // Append row to container
-        $('#tratamientos_previos_container').append(rowHtml);
+            // Append row to container
+            $('#tratamientos_previos_container').append(rowHtml);
 
-        // Initialize datepicker for the new row
-        $(`[data-index="${rowIndex}"] .datepicker`).datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true,
-            language: 'es'
-        });
+            // Initialize datepicker for the new row
+            $(`[data-index="${rowIndex}"] .datepicker`).datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                language: 'es'
+            });
 
-        // Increment row index
-        rowIndex++;
-    }
-
-    // Handle add row button click
-    $('#add_tratamiento_row').on('click', function() {
-        addTratamientoRow();
-    });
-
-    // Handle treatment selection change to update available options
-    $(document).on('change', '.tratamiento-select', function() {
-        let currentSelect = $(this);
-        let currentVal = currentSelect.val();
-
-        // Store all current selections
-        let selections = {};
-        $('.tratamiento-select').each(function() {
-            let select = $(this);
-            selections[select.closest('.tratamiento-row').data('index')] = select.val() || '';
-        });
-
-        // Get currently selected treatments, excluding the current select
-        let selectedTreatments = [];
-        $('.tratamiento-select').not(currentSelect).each(function() {
-            let val = $(this).val();
-            if (val) selectedTreatments.push(val);
-        });
-
-        // Update options for each select
-        $('.tratamiento-select').each(function() {
-            let select = $(this);
-            let index = select.closest('.tratamiento-row').data('index');
-            let selectedVal = selections[index]; // Use stored selection
-
-            // Determine which treatments to exclude
-            let excludeList = selectedVal ? selectedTreatments.concat(selectedVal) :
-                selectedTreatments;
-            if (select.is(currentSelect)) {
-                excludeList = selectedTreatments; // Current select should include its own value
-            }
-
-            // Update options
-            select.html(getSelectOptions(excludeList, selectedVal));
-            select.val(selectedVal); // Restore selected value
-        });
-    });
-
-    // Handle row removal
-    $(document).on('click', '.remove-row', function() {
-        $(this).closest('.tratamiento-row').remove();
-        // Trigger change to update select options
-        $('.tratamiento-select').first().trigger('change');
-    });
-
-    // Form validation
-    $('#NEW_CONSULT').on('submit', function(e) {
-        let isValid = true;
-        $('.tratamiento-row').each(function() {
-            let select = $(this).find('.tratamiento-select');
-            let textarea = $(this).find('textarea');
-            let date = $(this).find('.datepicker');
-            if (!select.val() || !textarea.val() || !date.val()) {
-                isValid = false;
-                $(this).addClass('has-error');
-            } else {
-                $(this).removeClass('has-error');
-            }
-        });
-
-        if (!isValid) {
-            e.preventDefault();
-            alert('Por favor, completa todos los campos en los tratamientos previos.');
+            // Increment row index
+            rowIndex++;
         }
+
+        // Handle add row button click
+        $('#add_tratamiento_row').on('click', function() {
+            addTratamientoRow();
+        });
+
+        // Handle treatment selection change to update available options
+        $(document).on('change', '.tratamiento-select', function() {
+            let currentSelect = $(this);
+            let currentVal = currentSelect.val();
+
+            // Store all current selections
+            let selections = {};
+            $('.tratamiento-select').each(function() {
+                let select = $(this);
+                selections[select.closest('.tratamiento-row').data('index')] = select.val() || '';
+            });
+
+            // Get currently selected treatments, excluding the current select
+            let selectedTreatments = [];
+            $('.tratamiento-select').not(currentSelect).each(function() {
+                let val = $(this).val();
+                if (val) selectedTreatments.push(val);
+            });
+
+            // Update options for each select
+            $('.tratamiento-select').each(function() {
+                let select = $(this);
+                let index = select.closest('.tratamiento-row').data('index');
+                let selectedVal = selections[index]; // Use stored selection
+
+                // Determine which treatments to exclude
+                let excludeList = selectedVal ? selectedTreatments.concat(selectedVal) :
+                    selectedTreatments;
+                if (select.is(currentSelect)) {
+                    excludeList = selectedTreatments; // Current select should include its own value
+                }
+
+                // Update options
+                select.html(getSelectOptions(excludeList, selectedVal));
+                select.val(selectedVal); // Restore selected value
+            });
+        });
+
+        // Handle row removal
+        $(document).on('click', '.remove-row', function() {
+            $(this).closest('.tratamiento-row').remove();
+            // Trigger change to update select options
+            $('.tratamiento-select').first().trigger('change');
+        });
+
+        // Form validation
+        $('#NEW_CONSULT').on('submit', function(e) {
+            let isValid = true;
+            $('.tratamiento-row').each(function() {
+                let select = $(this).find('.tratamiento-select');
+                let textarea = $(this).find('textarea');
+                let date = $(this).find('.datepicker');
+                if (!select.val() || !textarea.val() || !date.val()) {
+                    isValid = false;
+                    $(this).addClass('has-error');
+                } else {
+                    $(this).removeClass('has-error');
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                alert('Por favor, completa todos los campos en los tratamientos previos.');
+            }
+        });
     });
-});
 </script>
 
 <div class="modal animated faster" role="dialog" aria-hidden="true" id="modal">
