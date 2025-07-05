@@ -325,6 +325,51 @@ class Inventary extends CI_Controller
       }
    }
 
+   public function form_edit_treatment($PARAM)
+   {
+      if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
+         $ID_TREATMENT = intval($PARAM);
+         if ($ID_TREATMENT > NULO) {
+            $ROW_TREATMENT = $this->minventary->get_treatment_by_id($ID_TREATMENT);
+            if (count($ROW_TREATMENT) > NULO) {
+               //CARGAR LA VISTA..
+               $data = getActive("classPat");
+               $this->load->view('esqueleton/header', $data);
+               $data['DATA_TIPOS_PROCEDIMIENTO'] = $this->minventary->get_all_valid_procedures();
+               $data['ROW_DATA_TREATMENT'] = $ROW_TREATMENT;
+               $this->load->view('Inventary/v_edit_tipo_consulta', $data);
+               $this->load->view('esqueleton/footer');
+            } else {
+               redirect('Inventary/index_tipos_consultas');
+            }
+         } else {
+            redirect('Inventary/index_tipos_consultas');
+         }
+      } else {
+         redirect('login/salir');
+      }
+   }
+   public function ajax_edit_treatment()
+   {
+      if ($this->input->is_ajax_request()) {
+         $ID_TREATMENT = intval($this->input->post('RG_ID_TREATMENT'));
+         $NOMBRE_TRATAMIENTO = trim($this->input->post('RG_NOMBRE_TRATAMIENTO'));
+         $PROCEDIMIENTOS = $this->input->post('RG_PROCEDIMIENTO'); // array
+
+         // Verificamos si realmente hay datos para actualizar
+         if ($ID_TREATMENT > 0 && !empty($NOMBRE_TRATAMIENTO)) {
+            // Modelo para actualizar
+            $result = $this->minventary->update_treatment($ID_TREATMENT, $NOMBRE_TRATAMIENTO, $PROCEDIMIENTOS);
+
+            echo $result ? "success" : "nochange";
+         } else {
+            echo "invalid";
+         }
+      } else {
+         show_404();
+      }
+   }
+
 
    /* INICIO COMPRAS */
 

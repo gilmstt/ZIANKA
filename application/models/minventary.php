@@ -35,7 +35,7 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -49,7 +49,7 @@ class Minventary extends CI_Model
             //var_dump($this->db->last_query());
             return $this->db->insert_id();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -64,7 +64,7 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -91,7 +91,7 @@ class Minventary extends CI_Model
             $this->db->update('producto', $data);
             return $this->db->affected_rows();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -105,9 +105,51 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
+    function get_procedimientos_by_tipo_consulta($ID_TREATMENT)
+    {
+        try {
+            $this->db->select('tcp.id_procedimiento');
+            $this->db->from('tipo_consulta_procedimientos as tcp');
+            $this->db->where('tcp.id_tipo_consulta', $ID_TREATMENT);
+            $query = $this->db->get();
+            return $query->result_array();
+        } catch (Exception $ex) {
+            return [];
+        }
+    }
+    public function update_treatment($ID_TREATMENT, $NOMBRE_TRATAMIENTO, $PROCEDIMIENTOS = [])
+    {
+        $this->db->trans_start();
+
+        // Actualizar nombre del tratamiento
+        $this->db->where('id_tipo_consulta', $ID_TREATMENT);
+        $this->db->update('tipo_consulta', ['nombre_tipo_consulta' => $NOMBRE_TRATAMIENTO]);
+
+        // Borrar procedimientos anteriores
+        $this->db->where('id_tipo_consulta', $ID_TREATMENT);
+        $this->db->delete('tipo_consulta_procedimientos');
+
+        // Insertar nuevos procedimientos (si hay)
+        if (!empty($PROCEDIMIENTOS) && is_array($PROCEDIMIENTOS)) {
+            $insertData = [];
+            foreach ($PROCEDIMIENTOS as $id_procedimiento) {
+                $insertData[] = [
+                    'id_tipo_consulta' => $ID_TREATMENT,
+                    'id_procedimiento' => $id_procedimiento,
+                ];
+            }
+
+            $this->db->insert_batch('tipo_consulta_procedimientos', $insertData);
+        }
+
+        $this->db->trans_complete();
+
+        return $this->db->trans_status(); // true si todo fue bien
+    }
+
 
     /* PROCEDIMIENTOS CRUD */
 
@@ -138,7 +180,7 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -201,7 +243,7 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -215,7 +257,7 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -225,7 +267,7 @@ class Minventary extends CI_Model
             $this->db->insert('proveedor', $row);
             return $this->db->insert_id();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -238,7 +280,7 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -264,7 +306,7 @@ class Minventary extends CI_Model
             $this->db->update('proveedor', $data);
             return $this->db->affected_rows();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -277,7 +319,7 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -294,7 +336,7 @@ class Minventary extends CI_Model
             $this->db->update('compra', $data);
             return $this->db->affected_rows();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -307,7 +349,7 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -342,7 +384,7 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -353,7 +395,7 @@ class Minventary extends CI_Model
             $this->db->update('producto_compra_temp', $row);
             return $this->db->affected_rows();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -365,7 +407,7 @@ class Minventary extends CI_Model
             //var_dump($this->db->last_query());
             return $this->db->insert_id();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -378,7 +420,7 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -389,7 +431,7 @@ class Minventary extends CI_Model
             $this->db->delete('producto_compra_temp');
             return $this->db->affected_rows();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -409,7 +451,7 @@ class Minventary extends CI_Model
             $this->db->insert('compra', $row);
             return $this->db->insert_id();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -419,7 +461,7 @@ class Minventary extends CI_Model
             $this->db->insert('producto_compra', $row);
             return $this->db->insert_id();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -429,7 +471,7 @@ class Minventary extends CI_Model
             $this->db->truncate('producto_compra_temp');
             return 1;
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -444,7 +486,7 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -458,7 +500,7 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -474,7 +516,7 @@ class Minventary extends CI_Model
             $this->db->update('producto', $data);
             return $this->db->affected_rows();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -1056,7 +1098,21 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
+        }
+    }
+
+    function get_treatment_by_id($ID_TREATMENT)
+    {
+        try {
+            $this->db->select("tc.*, tcp.id_procedimiento");
+            $this->db->from('tipo_consulta as tc');
+            $this->db->join('tipo_consulta_procedimientos as tcp', 'tc.id_tipo_consulta = tcp.id_tipo_consulta', 'left');
+            $this->db->where('tc.id_tipo_consulta', $ID_TREATMENT);
+            $query = $this->db->get();
+            return $query->row();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
         }
     }
     function get_cod_product($codigo)
@@ -1068,7 +1124,7 @@ class Minventary extends CI_Model
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 }
