@@ -513,6 +513,50 @@ $(document).ready(function () {
          });
       }
    });
+
+   $('body').on("click", ".btn-edit-treatment", function (e) {
+      var ID_TREATMENT = $(this).attr('data-id-treatment');
+      console.log(ID_TREATMENT);
+      window.location.href = raiz_url + "Inventary/form_edit_treatment/" + ID_TREATMENT;
+   });
+
+   $('#formEditTreatment').validator().on('submit', function (e) {
+      if (e.isDefaultPrevented()) {
+         // handle the invalid form...
+      } else {
+         // everything looks good!
+         e.preventDefault();
+
+         $.ajax({
+            url: raiz_url + "Inventary/ajax_edit_treatment",
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function (data) {
+               console.log(data);
+               if (data === "success") {
+                  Swal.fire({
+                     title: 'Cambios guardados!',
+                     text: 'Se edito la información correctamente',
+                     icon: 'success',
+                     showConfirmButton: false,
+                     timer: 2500,
+                     onClose: function () {
+                        window.location.href = raiz_url + "Inventary/index_tipos_consultas";
+                     },
+                  })
+               } else {
+                  Swal.fire({
+                     title: 'Realiza un cambio',
+                     text: 'No hubo ningún cambio',
+                     icon: 'info',
+                     showConfirmButton: false,
+                     timer: 2500,
+                  })
+               }
+            }
+         });
+      }
+   });
    /*********************PROCEDIMIENTOS*****************************/
    //AGREGAR PROEDIMIENTO
    $('#formRecordProcedure').validator().on('submit', function (e) {
