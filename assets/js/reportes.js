@@ -76,13 +76,15 @@ $(document).ready(function () {
                   "data-hrIngreso='"+ respuesta[i]["HORA_CONSULTA"]+"'"+
                   "data-hregreso='"+ respuesta[i]["HORAEGRESO_CONSULTA"]+"'"+
                   "data-fechaEgreso='"+ respuesta[i]["FECHAEGRESO_CONSULTA"]+"'"+
+                  "data-fechaCita='"+ respuesta[i]["FECHA_CITA"]+"'"+
                   '><i class="fas fa-eye "></i></button></td>' +
                   '<td>' + respuesta[i]["NOMBRE_PACIENTE"] + '</td>' +
                   '<td>' + respuesta[i]["NOMBRE_USUARIO"] + '</td>' +
-                  '<td>' + tar_mem + '</td>' +
-                  '<td>' + respuesta[i]["MOTIVO_CONSULTA"] + '</td>' +
                   '<td>' + respuesta[i]["FECHA_CONSULTA"] + '</td>' +
-                  '<td>' + respuesta[i]["HORA_CONSULTA"] + '</td></tr>';
+                  '<td>' + respuesta[i]["HORA_CONSULTA"] + '</td>' +
+                  '<td>' + respuesta[i]["MOTIVO_CONSULTA"] + '</td>' + 
+                  '<td>' + respuesta[i]["HORA_CONSULTA"] + '</td>' +
+                  '<td>' + respuesta[i]["FECHA_CITA"] + '</td></tr>';
             }
             $('#tbody_reportes').html(html);
             var Table = $('#tablaReportes').dataTable({

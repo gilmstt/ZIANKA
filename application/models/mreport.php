@@ -415,6 +415,7 @@ class Mreport extends CI_Model {
             $this->db->from("consulta as c");
             $this->db->join("paciente as p", "c.ID_PACIENTE = p.ID_PACIENTE", "INNER");
             $this->db->join("usuario as u", "c.ID_MEDICO = u.ID_USUARIO", "INNER");
+            $this->db->join("cita as ct", "c.ID_PACIENTE = ct.ID_PACIENTE", "left" );
             if ($tipo_descuento == 0) {
                 $this->db->join("tarifa as t", "c.ID_TARIFA = t.ID_TARIFA", "left");
                 $this->db->join("membresia as m", "c.ID_MEMBRESIA = m.ID_MEMBRESIA", "left");
@@ -422,7 +423,7 @@ class Mreport extends CI_Model {
             if ($tipo_descuento == 1)
                 $this->db->join("tarifa as t", "c.ID_TARIFA = t.ID_TARIFA", "INNER");
             if ($tipo_descuento == 2)
-                $this->db->join("membresia as m", "c.ID_MEMBRESIA = m.ID_MEMBRESIA", "INNER");
+            $this->db->join("membresia as m", "c.ID_MEMBRESIA = m.ID_MEMBRESIA", "INNER");
             $this->db->where("FECHA_CONSULTA >=", $fechas["inicio"]);
             $this->db->where("FECHA_CONSULTA <=", $fechas["final"]);
             $this->db->where("p.ACTIVO_PACIENTE", 1);

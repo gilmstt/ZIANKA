@@ -37,7 +37,7 @@ class Report extends CI_Controller {
             $data['entries'] = $this->all_consultas();
 
             $this->load->view('esqueleton/header', $data);
-            $this->load->view('Reportes/v_paciente', $data);
+            $this->load->view('Reportes/v_consultas', $data);
             $this->load->view('esqueleton/footer');
         } else {
             redirect('login/salir');
