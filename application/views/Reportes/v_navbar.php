@@ -25,6 +25,17 @@
 				</a>
 			</div>
 		</li>
+		<li class="var_nav">
+			<div class="link_bg"></div>
+			<div class="link_title">
+				<div class=icon>
+					<i class="fa fa-user fa-x"></i>
+				</div>
+				<a class="link-title-a" href="<?= base_url() ?>Report/consultas">
+					<span class="link-title-span">Registro</span>
+				</a>
+			</div>
+		</li>
         <!--<li class="var_nav">
 			<div class="link_bg"></div>
 			<div class="link_title">
