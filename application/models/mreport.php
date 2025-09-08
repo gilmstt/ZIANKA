@@ -2,9 +2,11 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Mreport extends CI_Model {
+class Mreport extends CI_Model
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->load->helper('general');
     }
@@ -12,7 +14,8 @@ class Mreport extends CI_Model {
     /* 	Busca y filtra las fichas por fecha, regresa un solo array con los Id
      */
 
-    function obtenerFichas($fechas) {
+    function obtenerFichas($fechas)
+    {
         try {
             $this->db->select("ID_FICHA");
             $this->db->from("ficha_consumo");
@@ -33,14 +36,15 @@ class Mreport extends CI_Model {
     }
 
     /* 	Busqueda de procedimientos respecto al id de las fichas (array),
-      suma la cantidad y precio, los agrupa por el nombre.
+     *  suma la cantidad y precio, los agrupa por el nombre.
      */
 
-    function informacionProcedimientos($fichaId) {
+    function informacionProcedimientos($fichaId)
+    {
         try {
             if (count($fichaId) > 0) {
                 $this->db->select(
-                        "rel.NOMBRE_PROCEDIMIENTO, SUM(rel.CANT_PROCEDIMIENTO), SUM(rel.PRECIO_PROCEDIMIENTO)"
+                    "rel.NOMBRE_PROCEDIMIENTO, SUM(rel.CANT_PROCEDIMIENTO), SUM(rel.PRECIO_PROCEDIMIENTO)"
                 );
                 $this->db->from("rel_procedimiento_ficha as rel");
                 $this->db->where_in("ID_FICHA", $fichaId);
@@ -54,14 +58,15 @@ class Mreport extends CI_Model {
     }
 
     /* 	Busqueda de productos respecto al id de las fichas (array),
-      suma la cantidad, costo y precio, los agrupa por el nombre.
+     *  suma la cantidad, costo y precio, los agrupa por el nombre.
      */
 
-    function informacionProductos($fichaId) {
+    function informacionProductos($fichaId)
+    {
         try {
             if (count($fichaId) > 0) {
                 $this->db->select(
-                        "rel.NOMBRE_PRODUCTO, SUM(rel.CANT_PRODUCTO), SUM(rel.PRECIO_PRODUCTO)"
+                    "rel.NOMBRE_PRODUCTO, SUM(rel.CANT_PRODUCTO), SUM(rel.PRECIO_PRODUCTO)"
                 );
                 $this->db->from("rel_producto_ficha as rel");
                 $this->db->where_in("ID_FICHA", $fichaId);
@@ -77,7 +82,8 @@ class Mreport extends CI_Model {
     /* 	Funciones para el auto-complete del medico
      */
 
-    function obtenerApMedico() {
+    function obtenerApMedico()
+    {
         try {
             $this->db->distinct();
             $this->db->select("APELLIDO_USUARIO");
@@ -92,7 +98,8 @@ class Mreport extends CI_Model {
         return array();
     }
 
-    function obtenerNomMedico($ap) {
+    function obtenerNomMedico($ap)
+    {
         try {
             $this->db->distinct();
             $this->db->select("NOMBRE_USUARIO");
@@ -107,16 +114,17 @@ class Mreport extends CI_Model {
         }
         return array();
     }
-    
-    function get_consults_houses_by_dates($dates) {
+
+    function get_consults_houses_by_dates($dates)
+    {
         try {
             $this->db->select("COUNT(c.ID_CONSULTA) as suma, p.ID_CASA, ca.NOMBRE_CASA");
             $this->db->from('consulta as c');
-            $this->db->join('paciente as p','c.ID_PACIENTE=p.ID_PACIENTE');
-            $this->db->join('casas as ca','ca.ID_CASA=p.ID_CASA');
-            $this->db->where('c.FECHA_CONSULTA >= "'. $dates['FECHAINI'] . '"');
-            $this->db->where('c.FECHA_CONSULTA <= "'. $dates['FECHAFIN'] . '"');
-           // $this->db->where('VIGENCIA_PACIENTE', 1);
+            $this->db->join('paciente as p', 'c.ID_PACIENTE=p.ID_PACIENTE');
+            $this->db->join('casas as ca', 'ca.ID_CASA=p.ID_CASA');
+            $this->db->where('c.FECHA_CONSULTA >= "' . $dates['FECHAINI'] . '"');
+            $this->db->where('c.FECHA_CONSULTA <= "' . $dates['FECHAFIN'] . '"');
+            // $this->db->where('VIGENCIA_PACIENTE', 1);
             $this->db->group_by('p.ID_CASA');
             $query = $this->db->get();
             return $query->result_array();
@@ -125,14 +133,15 @@ class Mreport extends CI_Model {
         }
         return array();
     }
-    function get_urgencies_houses_by_dates($dates) {
+    function get_urgencies_houses_by_dates($dates)
+    {
         try {
             $this->db->select("COUNT(u.ID_URGENCIA) as suma, p.ID_CASA, ca.NOMBRE_CASA");
             $this->db->from('urgencia as u');
-            $this->db->join('paciente as p','u.ID_PACIENTE=p.ID_PACIENTE');
-            $this->db->join('casas as ca','ca.ID_CASA=p.ID_CASA');
-            $this->db->where('u.FECHA_URGENCIA >= "'. $dates['FECHAINI'] . '"');
-            $this->db->where('u.FECHA_URGENCIA <= "' . $dates['FECHAFIN']. '"');
+            $this->db->join('paciente as p', 'u.ID_PACIENTE=p.ID_PACIENTE');
+            $this->db->join('casas as ca', 'ca.ID_CASA=p.ID_CASA');
+            $this->db->where('u.FECHA_URGENCIA >= "' . $dates['FECHAINI'] . '"');
+            $this->db->where('u.FECHA_URGENCIA <= "' . $dates['FECHAFIN'] . '"');
             $this->db->group_by('p.ID_CASA');
             $query = $this->db->get();
             return $query->result_array();
@@ -145,7 +154,8 @@ class Mreport extends CI_Model {
     /* 	Funciones para el auto-complete del paciente
      */
 
-    function obtenerAppPaciente() {
+    function obtenerAppPaciente()
+    {
         try {
             $this->db->distinct();
             $this->db->select("APELLIDO_PATERNO_PACIENTE");
@@ -159,7 +169,8 @@ class Mreport extends CI_Model {
         return array();
     }
 
-    function obtenerApmPaciente($app) {
+    function obtenerApmPaciente($app)
+    {
         try {
             $this->db->distinct();
             $this->db->select("APELLIDO_MATERNO_PACIENTE");
@@ -174,7 +185,8 @@ class Mreport extends CI_Model {
         return array();
     }
 
-    function obtenerNomPaciente($app, $apm) {
+    function obtenerNomPaciente($app, $apm)
+    {
         try {
             $this->db->distinct();
             $this->db->select("NOMBRE_PACIENTE");
@@ -194,7 +206,8 @@ class Mreport extends CI_Model {
      * 	y regresa los ID dentro de un mismo array, sin keys.
      */
 
-    function obtenerPacientes($datos) {
+    function obtenerPacientes($datos)
+    {
         try {
             if (hasInfo($datos)) {
                 $this->db->select("ID_PACIENTE");
@@ -226,7 +239,8 @@ class Mreport extends CI_Model {
      * 	y regresa los ID dentro de un mismo array, sin keys.
      */
 
-    function obtenerMedicos($datos) {
+    function obtenerMedicos($datos)
+    {
         try {
             if (hasInfo($datos)) {
                 $this->db->select("ID_USUARIO");
@@ -255,7 +269,8 @@ class Mreport extends CI_Model {
     /* 	Busca y regresa los registros de la tabla especificada
      */
 
-    function obtenerRegistros($arrayID, $select, $table, $column) {
+    function obtenerRegistros($arrayID, $select, $table, $column)
+    {
         if (!empty($arrayID)) {
             try {
                 $this->db->select($select);
@@ -279,11 +294,12 @@ class Mreport extends CI_Model {
     /* 	Regresa la informacion de las consultas para mostrar en la pagina
      */
 
-    function InformacionConsultas($consultaId, $fechas, $tipo_descuento = 1, $tarifa = 0, $membresia = 0) {
+    function InformacionConsultas($consultaId, $fechas, $tipo_descuento = 1, $tarifa = 0, $membresia = 0)
+    {
         if (!empty($consultaId)) {
             try {
                 $this->db->select(
-                        "*"
+                    "*"
                 );
 
                 $this->db->from("consulta as c");
@@ -327,11 +343,12 @@ class Mreport extends CI_Model {
         return array();
     }
 
-    function InformacionConsultaPaciente($paciente) {
+    function InformacionConsultaPaciente($paciente)
+    {
 
         try {
             $this->db->select(
-                    "*"
+                "*"
             );
 
             $this->db->from("consulta as c");
@@ -352,11 +369,12 @@ class Mreport extends CI_Model {
 
         return array();
     }
-    function InformacionUrgenciaPaciente($paciente) {
+    function InformacionUrgenciaPaciente($paciente)
+    {
 
         try {
             $this->db->select(
-                    "*"
+                "*"
             );
 
             $this->db->from("urgencia as u");
@@ -378,11 +396,12 @@ class Mreport extends CI_Model {
         return array();
     }
 
-    function InformacionUrgencias($urgenciaId, $fechas, $tarifa) {
+    function InformacionUrgencias($urgenciaId, $fechas, $tarifa)
+    {
         if ($urgenciaId != null) {
             try {
                 $this->db->select(
-                        "p.NOMBRE_PACIENTE, u.NOMBRE_USUARIO, t.NOMBRE_TARIFA,
+                    "p.NOMBRE_PACIENTE, u.NOMBRE_USUARIO, t.NOMBRE_TARIFA,
 					ur.MOTIVO_URGENCIA, ur.FECHA_URGENCIA, ur.HORA_URGENCIA"
                 );
 
@@ -392,7 +411,7 @@ class Mreport extends CI_Model {
                 $this->db->join("tarifa as t", "ur.ID_TARIFA = t.ID_TARIFA", "INNER");
 
                 if (count($urgenciaId) > 0)
-                $this->db->where_in("ur.ID_URGENCIA", $urgenciaId);
+                    $this->db->where_in("ur.ID_URGENCIA", $urgenciaId);
                 $this->db->where("FECHA_URGENCIA >=", $fechas["inicio"]);
                 $this->db->where("FECHA_URGENCIA <=", $fechas["final"]);
                 $this->db->where("p.ACTIVO_PACIENTE", 1);
@@ -408,7 +427,8 @@ class Mreport extends CI_Model {
         return array();
     }
 
-    function todasConsultas($fechas, $tipo_descuento = 1, $tarifa = 0, $membresia = 0) {
+    function todasConsultas($fechas, $tipo_descuento = 1, $tarifa = 0, $membresia = 0)
+    {
         try {
             // return "ok";
             $this->db->select("*");
@@ -441,9 +461,10 @@ class Mreport extends CI_Model {
         return array();
     }
 
-    function todasUrgencias($fechas, $tipo_descuento = 1, $tarifa = 0, $membresia = 0) {
+    function todasUrgencias($fechas, $tipo_descuento = 1, $tarifa = 0, $membresia = 0)
+    {
         try {
-            $this->db->select( "*" );
+            $this->db->select("*");
 
             $this->db->from("urgencia as ur");
             $this->db->join("paciente as p", "ur.ID_PACIENTE = p.ID_PACIENTE", "INNER");
@@ -471,24 +492,26 @@ class Mreport extends CI_Model {
         }
         return array();
     }
-    function get_pacient_by_id($ID_PACIENTE){
-      try {
-         $this->db->select("*");
-         $this->db->from('paciente as p');
-         $this->db->join("sexo as s", "s.ID_SEXO = p.ID_SEXO");
-         $this->db->join("antecedentes as a","a.ID_PACIENTE = p.ID_PACIENTE");
-         $this->db->where("p.ID_PACIENTE", $ID_PACIENTE);
-         $query = $this->db->get();
-         return $query->result_array();
-      } catch (Exception $ex) {
-         return $e->getMessage();
-      }
-   }
-   function InformacionConsultaPacienteId($id_paciente) {
+    function get_pacient_by_id($ID_PACIENTE)
+    {
+        try {
+            $this->db->select("*");
+            $this->db->from('paciente as p');
+            $this->db->join("sexo as s", "s.ID_SEXO = p.ID_SEXO");
+            $this->db->join("antecedentes as a", "a.ID_PACIENTE = p.ID_PACIENTE");
+            $this->db->where("p.ID_PACIENTE", $ID_PACIENTE);
+            $query = $this->db->get();
+            return $query->result_array();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+    function InformacionConsultaPacienteId($id_paciente)
+    {
 
         try {
             $this->db->select(
-                    "*"
+                "*"
             );
 
             $this->db->from("consulta as c");
@@ -507,12 +530,13 @@ class Mreport extends CI_Model {
 
         return array();
     }
-    
-    function InformacionUrgenciaPacienteId($id_paciente) {
+
+    function InformacionUrgenciaPacienteId($id_paciente)
+    {
 
         try {
             $this->db->select(
-                    "*"
+                "*"
             );
 
             $this->db->from("urgencia as ur");
@@ -531,111 +555,118 @@ class Mreport extends CI_Model {
 
         return array();
     }
-    function consultameses($fechainipast,$fechafinpast){
-      try {
-         $this->db->select("COUNT(ID_CONSULTA) AS TOTAL");
-         $this->db->from('consulta');
-         $this->db->where("FECHA_CONSULTA BETWEEN '".$fechainipast."' AND '".$fechafinpast."'");
-         
-         return $this->db->get()->result_array();
-      } catch (Exception $ex) {
-         return $e->getMessage();
-      }
-   }
-   function consulta_x_tarifas($fechaini, $fechafin){
-       try {
-         $this->db->select("COUNT(ID_CONSULTA) as TOTAL, ID_TARIFA");
-         $this->db->from('consulta');
-         $this->db->where("FECHA_CONSULTA >=",$fechaini);
-         $this->db->where("FECHA_CONSULTA <=",$fechafin);
-         $this->db->group_by("ID_TARIFA");
-         
-         return $this->db->get()->result_array();
-      } catch (Exception $ex) {
-         return $e->getMessage();
-      }
-   }
-   function consulta_x_membresias($fechaini, $fechafin){
-       try {
-         $this->db->select("COUNT(ID_CONSULTA) as TOTAL, ID_MEMBRESIA");
-         $this->db->from('consulta');
-         $this->db->where("FECHA_CONSULTA >=",$fechaini);
-         $this->db->where("FECHA_CONSULTA <=",$fechafin);
-         $this->db->group_by("ID_MEMBRESIA");
-         
-         return $this->db->get()->result_array();
-      } catch (Exception $ex) {
-         return $e->getMessage();
-      }
-   }
-   function consulta_x_membresias_casa($fechaini, $fechafin, $membresia){
-       try {
-         $this->db->select("COUNT(c.ID_CONSULTA) as TOTAL, c.ID_MEMBRESIA, ca.NOMBRE_CASA");
-         $this->db->from('consulta as c');
-         $this->db->join('paciente as p', 'c.ID_PACIENTE=p.ID_PACIENTE');
-         $this->db->join('casas as ca', 'p.ID_CASA=ca.ID_CASA');
-         $this->db->where("c.FECHA_CONSULTA >=",$fechaini);
-         $this->db->where("c.FECHA_CONSULTA <=",$fechafin);
-         $this->db->where("c.ID_MEMBRESIA",$membresia);
-         $this->db->group_by("p.ID_CASA");
-         
-         return $this->db->get()->result_array();
-      } catch (Exception $ex) {
-         return $e->getMessage();
-      }
-   }
-   function urgenciameses($fechainipast,$fechafinpast){
-      try {
-         $this->db->select("COUNT(ID_URGENCIA) AS TOTAL");
-         $this->db->from('urgencia');
-         $this->db->where("FECHA_URGENCIA BETWEEN '".$fechainipast."' AND '".$fechafinpast."'");
-         
-         return $this->db->get()->result_array();
-      } catch (Exception $ex) {
-         return $e->getMessage();
-      }
-   }
-   function urgencia_x_tarifas($fechaini,$fechafin){
-       try {
-         $this->db->select("COUNT(ID_URGENCIA) as TOTAL, ID_TARIFA");
-         $this->db->from('urgencia');
-         $this->db->where("FECHA_URGENCIA >=",$fechaini);
-         $this->db->where("FECHA_URGENCIA <=",$fechafin);
-         $this->db->group_by("ID_TARIFA");
-         
-         return $this->db->get()->result_array();
-      } catch (Exception $ex) {
-         return $e->getMessage();
-      }
-   }
-   function urgencia_x_membresias($fechaini,$fechafin){
-       try {
-         $this->db->select("COUNT(ID_URGENCIA) as TOTAL, ID_MEMBRESIA");
-         $this->db->from('urgencia');
-         $this->db->where("FECHA_URGENCIA >=",$fechaini);
-         $this->db->where("FECHA_URGENCIA <=",$fechafin);
-         $this->db->group_by("ID_MEMBRESIA");
-         
-         return $this->db->get()->result_array();
-      } catch (Exception $ex) {
-         return $e->getMessage();
-      }
-   }
-   function urgencia_x_membresias_casa($fechaini, $fechafin, $membresia){
-       try {
-         $this->db->select("COUNT(u.ID_URGENCIA) as TOTAL, u.ID_MEMBRESIA, ca.NOMBRE_CASA");
-         $this->db->from('urgencia as u');
-         $this->db->join('paciente as p', 'u.ID_PACIENTE=p.ID_PACIENTE');
-         $this->db->join('casas as ca', 'p.ID_CASA=ca.ID_CASA');
-         $this->db->where("u.FECHA_URGENCIA >=",$fechaini);
-         $this->db->where("u.FECHA_URGENCIA <=",$fechafin);
-         $this->db->where("u.ID_MEMBRESIA",$membresia);
-         $this->db->group_by("p.ID_CASA");
-         
-         return $this->db->get()->result_array();
-      } catch (Exception $ex) {
-         return $e->getMessage();
-      }
-   }
+    function consultameses($fechainipast, $fechafinpast)
+    {
+        try {
+            $this->db->select("COUNT(ID_CONSULTA) AS TOTAL");
+            $this->db->from('consulta');
+            $this->db->where("FECHA_CONSULTA BETWEEN '" . $fechainipast . "' AND '" . $fechafinpast . "'");
 
+            return $this->db->get()->result_array();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+    function consulta_x_tarifas($fechaini, $fechafin)
+    {
+        try {
+            $this->db->select("COUNT(ID_CONSULTA) as TOTAL, ID_TARIFA");
+            $this->db->from('consulta');
+            $this->db->where("FECHA_CONSULTA >=", $fechaini);
+            $this->db->where("FECHA_CONSULTA <=", $fechafin);
+            $this->db->group_by("ID_TARIFA");
+
+            return $this->db->get()->result_array();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+    function consulta_x_membresias($fechaini, $fechafin)
+    {
+        try {
+            $this->db->select("COUNT(ID_CONSULTA) as TOTAL, ID_MEMBRESIA");
+            $this->db->from('consulta');
+            $this->db->where("FECHA_CONSULTA >=", $fechaini);
+            $this->db->where("FECHA_CONSULTA <=", $fechafin);
+            $this->db->group_by("ID_MEMBRESIA");
+
+            return $this->db->get()->result_array();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+    function consulta_x_membresias_casa($fechaini, $fechafin, $membresia)
+    {
+        try {
+            $this->db->select("COUNT(c.ID_CONSULTA) as TOTAL, c.ID_MEMBRESIA, ca.NOMBRE_CASA");
+            $this->db->from('consulta as c');
+            $this->db->join('paciente as p', 'c.ID_PACIENTE=p.ID_PACIENTE');
+            $this->db->join('casas as ca', 'p.ID_CASA=ca.ID_CASA');
+            $this->db->where("c.FECHA_CONSULTA >=", $fechaini);
+            $this->db->where("c.FECHA_CONSULTA <=", $fechafin);
+            $this->db->where("c.ID_MEMBRESIA", $membresia);
+            $this->db->group_by("p.ID_CASA");
+
+            return $this->db->get()->result_array();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+    function urgenciameses($fechainipast, $fechafinpast)
+    {
+        try {
+            $this->db->select("COUNT(ID_URGENCIA) AS TOTAL");
+            $this->db->from('urgencia');
+            $this->db->where("FECHA_URGENCIA BETWEEN '" . $fechainipast . "' AND '" . $fechafinpast . "'");
+
+            return $this->db->get()->result_array();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+    function urgencia_x_tarifas($fechaini, $fechafin)
+    {
+        try {
+            $this->db->select("COUNT(ID_URGENCIA) as TOTAL, ID_TARIFA");
+            $this->db->from('urgencia');
+            $this->db->where("FECHA_URGENCIA >=", $fechaini);
+            $this->db->where("FECHA_URGENCIA <=", $fechafin);
+            $this->db->group_by("ID_TARIFA");
+
+            return $this->db->get()->result_array();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+    function urgencia_x_membresias($fechaini, $fechafin)
+    {
+        try {
+            $this->db->select("COUNT(ID_URGENCIA) as TOTAL, ID_MEMBRESIA");
+            $this->db->from('urgencia');
+            $this->db->where("FECHA_URGENCIA >=", $fechaini);
+            $this->db->where("FECHA_URGENCIA <=", $fechafin);
+            $this->db->group_by("ID_MEMBRESIA");
+
+            return $this->db->get()->result_array();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+    function urgencia_x_membresias_casa($fechaini, $fechafin, $membresia)
+    {
+        try {
+            $this->db->select("COUNT(u.ID_URGENCIA) as TOTAL, u.ID_MEMBRESIA, ca.NOMBRE_CASA");
+            $this->db->from('urgencia as u');
+            $this->db->join('paciente as p', 'u.ID_PACIENTE=p.ID_PACIENTE');
+            $this->db->join('casas as ca', 'p.ID_CASA=ca.ID_CASA');
+            $this->db->where("u.FECHA_URGENCIA >=", $fechaini);
+            $this->db->where("u.FECHA_URGENCIA <=", $fechafin);
+            $this->db->where("u.ID_MEMBRESIA", $membresia);
+            $this->db->group_by("p.ID_CASA");
+
+            return $this->db->get()->result_array();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
 }

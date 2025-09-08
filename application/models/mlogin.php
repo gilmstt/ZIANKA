@@ -30,7 +30,7 @@ class Mlogin extends CI_Model {
             return $this->db->affected_rows();
         } catch (Exception $ex) {
 
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 

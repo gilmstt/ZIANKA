@@ -10,8 +10,9 @@ function getActive($menu) {
         "classUrg" => '',
         "classCfg" => '',
         "classSch" => '',
-        "classRep" => '');
-    
+        "classRep" => '',
+        "classVent" => '');
+
     foreach ($menuArray as $key => $value) {
         if ($key == $menu) $menuArray[$key] = 'class="dropdown active"';
     }

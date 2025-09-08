@@ -305,7 +305,7 @@ class Mreceta extends CI_Model {
             return $exception->getMessage();
         }
     }
-    
+
     function get_receta_by_id_consult($ID_RECETA) {
         try {
             $this->db->select("*");
@@ -320,8 +320,8 @@ class Mreceta extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
-    
+
 }

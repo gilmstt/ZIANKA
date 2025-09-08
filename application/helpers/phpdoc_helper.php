@@ -188,6 +188,8 @@ class CI_Output {}
  * Clase que ayuda a Intelephense a reconocer los métodos del Query Builder.
  *
  * @method CI_DB_mysqli_driver select(string $select = '*', bool $escape = null)
+ * @method CI_DB_mysqli_driver select_sum(string $select, string $alias = null, bool $escape = null)
+ * @method CI_DB_mysqli_driver distinct(bool $val = true)
  * @method CI_DB_mysqli_driver where(string|array $key, string $value = null, bool $escape = true)
  * @method CI_DB_mysqli_driver or_where(string|array $key, string $value = null, bool $escape = true)
  * @method CI_DB_mysqli_driver where_in(string $key, array $values)
@@ -202,6 +204,11 @@ class CI_Output {}
  * @method CI_DB_mysqli_driver limit(int $value, int $offset = 0)
  * @method CI_DB_mysqli_driver offset(int $offset)
  * @method CI_DB_mysqli_driver set(string|array $key, string $value = '', bool $escape = true)
+ * @method CI_DB_mysqli_driver query(string $sql, array $binds = [], bool $return_object = true)
+ * @method mixed result(string $table = '', int $limit = null, int $offset = null)
+ * @method mixed row(string $table = '', int $offset = null)
+ * @method mixed row_array(string $table = '', int $offset = null)
+ * @method mixed result_array(string $table = '', int $limit = null, int $offset = null)
  * @method mixed get(string $table = '', int $limit = null, int $offset = null)
  * @method mixed get_where(string $table = '', array $where = null, int $limit = null, int $offset = null)
  * @method int insert(string $table = '', array $set = null)
@@ -211,5 +218,9 @@ class CI_Output {}
  * @method int count_all_results(string $table = '')
  * @method int count_all(string $table = '')
  * @method bool truncate(string $table = '')
+ * @method bool trans_status()
+ * @method void trans_start()
+ * @method void trans_complete()
+ * @method int insert_batch(string $table = '', array $set = null)
  */
 class CI_DB_mysqli_driver {}

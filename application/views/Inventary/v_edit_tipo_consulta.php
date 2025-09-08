@@ -8,7 +8,6 @@
             <form data-toggle="validator" role="form" id="formEditTreatment">
                 <input type="hidden" value="<?= $ROW_DATA_TREATMENT->id_tipo_consulta ?>" name="RG_ID_TREATMENT"
                     id="RG_ID_TREATMENT">
-                    <pre>ID ACTUAL: <?= var_dump($ROW_DATA_TREATMENT->id_tipo_consulta) ?></pre>
                 <div class="control-group text-left">
                     <div class="panel">
                         <div class="panel-heading header-black">

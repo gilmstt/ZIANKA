@@ -38,7 +38,7 @@ class Mconsult extends CI_Model
             $temps_proce = $this->db->get_where('temp_procedimiento', array('ID_SESSION' => $id_user))->result();
             $temps_product = $this->db->get_where('temp_producto', array('ID_SESSION' => $id_user))->result();
 
-            if (count($temps_proce > 0)) {
+            if (count($temps_proce) > 0) {
 
                 foreach ($temps_proce as $row) {
                     $data = array(
@@ -57,7 +57,7 @@ class Mconsult extends CI_Model
                     $this->db->delete('temp_procedimiento');
                 }
             }
-            if (count($temps_product > 0)) {
+            if (count($temps_product) > 0) {
 
                 foreach ($temps_product as $row) {
                     $data = array(
@@ -890,7 +890,7 @@ class Mconsult extends CI_Model
         try {
 
             $this->db->where('ID_DOCUMENTO', $ID_DOCUMENTO);
-            $this->db->delete('DOCUMENTO');
+            $this->db->delete('documento');
             return $this->db->affected_rows();
         } catch (Exception $ex) {
             return $ex->getMessage();
@@ -901,7 +901,7 @@ class Mconsult extends CI_Model
     {
         try {
             $this->db->where('D.ID_CONSULTA', $ID_CONSULTA);
-            $this->db->from('DOCUMENTO AS D');
+            $this->db->from('documento AS D');
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
@@ -919,7 +919,7 @@ class Mconsult extends CI_Model
                 'NOMBRE_DOCUMENTO' => $ROW['NOMBRE_DOCUMENTO'],
                 'FECHA_CREACION_DOCUMENTO' => date("Y-m-d H:i:s")
             );
-            $this->db->insert('DOCUMENTO', $data);
+            $this->db->insert('documento', $data);
             return $this->db->insert_id();
         } catch (Exception $e) {
             return $e->getMessage();
@@ -1080,7 +1080,7 @@ class Mconsult extends CI_Model
         $this->db->join('usuario', 'usuario.ID_USUARIO = consulta.ID_MEDICO');
         $this->db->join('tarifa', 'tarifa.ID_TARIFA = consulta.ID_TARIFA', 'left');
         $this->db->join('membresia', 'membresia.ID_MEMBRESIA = consulta.ID_MEMBRESIA', 'left');
-        $this->db->join('VIGENCIA as v', 'consulta.VIGENCIA_CONSULTA = v.VIGENCIA');
+        $this->db->join('vigencia as v', 'consulta.VIGENCIA_CONSULTA = v.VIGENCIA');
         $this->db->where('VIGENCIA_CONSULTA', 1);
 
 

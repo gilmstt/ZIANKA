@@ -51,5 +51,14 @@ define('VERSION',5);
 define("PATH_TO_UPLOAD_FILES",'FILES');
 define("PATH_TO_UPLOAD_EXCEL_FILES",'FILES_EXCEL');
 
+// PARAMS API
+define("HOST", "http://localhost/api-pos-zianka/"); 
+
+define('GET_SALES', HOST . 'api/sales');
+define('INSERT_SALE', HOST . 'api/sales/insert');
+define('SEARCH_SALE', HOST . 'api/sales/search/');
+define('DELETE_SALE', HOST . 'api/sales/delete/');
+define('SEARCH_PRODUCT', HOST . 'api/product/search/');
+
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
