@@ -367,7 +367,7 @@ class Minventary extends CI_Model
         }
 
         //only return $limit suggestions
-        if (count($suggestions > $limit)) {
+        if (count($suggestions) > $limit) {
             $suggestions = array_slice($suggestions, 0, $limit);
         }
         return $suggestions;
@@ -441,7 +441,7 @@ class Minventary extends CI_Model
             $this->db->truncate('producto_compra_temp');
             return 1;
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -528,7 +528,7 @@ class Minventary extends CI_Model
 
         $this->db->select("*");
         $this->db->from('producto as p');
-        $this->db->join('VIGENCIA as v', 'p.ACTIVO_PRODUCTO = v.VIGENCIA');
+        $this->db->join('vigencia as v', 'p.ACTIVO_PRODUCTO = v.VIGENCIA');
         $this->db->where('ID_TIPO_PRODUCTO', 1);
         $this->db->where('ACTIVO_PRODUCTO', ACTIVO);
 
@@ -1119,7 +1119,7 @@ class Minventary extends CI_Model
     {
         try {
             $this->db->select("*");
-            $this->db->from('PRODUCTO');
+            $this->db->from('producto');
             $this->db->where('CODIGO_PRODUCTO', $codigo);
             $query = $this->db->get();
             return $query->result_array();

@@ -16,10 +16,10 @@ class Mschedule extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
-    
+
     function obtenerApePatPac() {
         try {
             $this->db->distinct();
@@ -29,10 +29,10 @@ class Mschedule extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
-    
+
     function obtenerApeMatPac($APP) {
         try {
             $this->db->distinct();
@@ -43,10 +43,10 @@ class Mschedule extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
-    
+
     function obtenerNombrePac($APP,$APM) {
         try {
             $this->db->distinct();
@@ -58,10 +58,10 @@ class Mschedule extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
-    
+
     function obtenerPaciente($APP,$APM,$NOMBRE) {
         try {
             $this->db->distinct();
@@ -74,10 +74,10 @@ class Mschedule extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
-    
+
     function obtenerNombrePacByAPP($APP) {
         try {
             $this->db->distinct();
@@ -89,10 +89,10 @@ class Mschedule extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
-    
+
     function obtenerPacienteByNomApp($APP, $NOMBRE){
         try {
             $this->db->distinct();
@@ -105,10 +105,10 @@ class Mschedule extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
-    
+
     function obtenerApesMed(){
         try {
             $this->db->distinct();
@@ -119,10 +119,10 @@ class Mschedule extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
-    
+
     function obtenerNombreMed($AP){
         try {
             $this->db->distinct();
@@ -134,10 +134,10 @@ class Mschedule extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
-    
+
     function obtenerMedico($AP, $NOMBRE){
         try {
             $this->db->distinct();
@@ -150,10 +150,10 @@ class Mschedule extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
-    
+
     function add_new_schedule_on_db($data){
         try {
             $this->db->insert('cita', $data);
@@ -162,7 +162,7 @@ class Mschedule extends CI_Model {
             return $e->getMessage();
         }
     }
-    
+
     function get_event_schedule_by_id($ID_CITA){
         try{
             $this->db->select("*");
@@ -172,12 +172,11 @@ class Mschedule extends CI_Model {
             $this->db->where('C.ID_CITA',$ID_CITA);
             $query = $this->db->get();
             return $query->result_array();
-            
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
-    
+
     function disable_schedule_on_db($ID_CITA){
         try {
             $data = array(
@@ -187,8 +186,8 @@ class Mschedule extends CI_Model {
             $this->db->update('cita', $data);
             return $this->db->affected_rows();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
- 
+
 }

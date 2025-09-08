@@ -125,6 +125,7 @@ class Mpatient extends CI_Model
                 'ID_MEMBRESIA' => $id_mempre,
                 'ID_PERFIL_MEMBRESIA' => $tp_membre,
                 'ID_CASA' => $id_casa,
+                'FECHA_REGISTRO' => date('Y-m-d H:i:s'),
             );
 
             //            If exist true

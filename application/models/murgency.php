@@ -34,7 +34,7 @@ class Murgency extends CI_Model {
             $temps_proce = $this->db->get_where('temp_procedimiento', array('ID_SESSION' => $id_user))->result();
             $temps_product = $this->db->get_where('temp_producto', array('ID_SESSION' => $id_user))->result();
 
-            if (count($temps_proce > 0)) {
+            if (count($temps_proce) > 0) {
 
                 foreach ($temps_proce as $row) {
                     $data = array(
@@ -53,7 +53,7 @@ class Murgency extends CI_Model {
                     $this->db->delete('temp_procedimiento');
                 }
             }
-            if (count($temps_product > 0)) {
+            if (count($temps_product) > 0) {
 
                 foreach ($temps_product as $row) {
                     $data = array(
@@ -165,7 +165,7 @@ class Murgency extends CI_Model {
         } catch (Exception $ex) {
             $_data = array(
                 "error" => TRUE,
-                "msj" => $e->getMessage()
+                "msj" => $ex->getMessage()
             );
             echo json_encode($_data);
         }
@@ -212,12 +212,12 @@ class Murgency extends CI_Model {
     function get_all_urgencys() {
         try {
             $query = $this->db->query("SELECT urgencia.* , paciente.NOMBRE_PACIENTE, usuario.NOMBRE_USUARIO, tarifa.NOMBRE_TARIFA FROM urgencia
-         INNER JOIN paciente
-         ON urgencia.ID_PACIENTE = paciente.ID_PACIENTE
-         INNER JOIN usuario
-         ON urgencia.ID_MEDICO = usuario.ID_USUARIO
-         INNER JOIN tarifa
-         ON urgencia.ID_TARIFA = tarifa.ID_TARIFA");
+                INNER JOIN paciente
+                ON urgencia.ID_PACIENTE = paciente.ID_PACIENTE
+                INNER JOIN usuario
+                ON urgencia.ID_MEDICO = usuario.ID_USUARIO
+                INNER JOIN tarifa
+                ON urgencia.ID_TARIFA = tarifa.ID_TARIFA");
 
             return $query->result_array();
         } catch (\Throwable $th) {
@@ -264,7 +264,7 @@ class Murgency extends CI_Model {
             //throw $th;
         }
     }
-    
+
     function get_tarifa_by_id() {
         try {
             $id = $this->input->post('tarifa');
@@ -282,7 +282,7 @@ class Murgency extends CI_Model {
             $data['FOLIO_URGENCIA'] = 0;
             if(intval($this->input->post('FolUrg')>0)) $data['FOLIO_URGENCIA'] = intval($this->input->post('FolUrg'));
             if(intval($this->input->post('FolUrgM')>0)) $data['FOLIO_URGENCIA'] = intval($this->input->post('FolUrgM'));
-            
+
             $ficha = $this->input->post('ficha');
 
             $findFolio = $this->db->get_where("urgencia", array("ID_URGENCIA <> " . $this->input->post('urgencia') . " AND FOLIO_URGENCIA=" => $data['FOLIO_URGENCIA']))->num_rows();
@@ -569,7 +569,7 @@ class Murgency extends CI_Model {
             $this->db->delete('DOCUMENTO');
             return $this->db->affected_rows();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -580,7 +580,7 @@ class Murgency extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -618,7 +618,7 @@ class Murgency extends CI_Model {
             $search_value = $_POST["search"]["value"];
 
             $this->db->like("CONCAT(paciente.NOMBRE_PACIENTE, ' ', `paciente`.`APELLIDO_PATERNO_PACIENTE`, ' ', `paciente`.APELLIDO_MATERNO_PACIENTE)", $search_value);
-            
+
             $this->db->or_like("NOMBRE_USUARIO", $search_value);
             $this->db->or_like("APELLIDO_USUARIO", $search_value);
 
@@ -866,7 +866,7 @@ class Murgency extends CI_Model {
             $query = $this->db->get();
             return $query->result_array();
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -881,10 +881,10 @@ class Murgency extends CI_Model {
     }
 
     public function get_producto_ficha($id)
-    {   
+    {
         try {
             $this->db->from('rel_producto_ficha');
-            $this->db->where('ID', $id); 
+            $this->db->where('ID', $id);
             $query = $this->db->get();
             return $query->row();
         } catch (Exception $ex) {

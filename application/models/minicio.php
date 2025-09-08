@@ -14,7 +14,7 @@ class Minicio extends CI_Model {
 
             return $this->db->get()->row("COUNT(*)");
         } catch (Exception $ex) {
-            return $e->getMessage();
+            return $ex->getMessage();
         }
     }
 }

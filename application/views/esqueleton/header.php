@@ -46,11 +46,11 @@
     <!-- validación para campos numericos -->
     <script src="<?php echo base_url(); ?>assets/js/input.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery.numeric.min.js" type="text/javascript"></script>
-    
+
     <!-- Bootstrap select -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/bootstrap/bootstrap-select.min.css">"/>
     <script src="<?php echo base_url(); ?>assets/plugins/bootstrap/bootstrap-select.min.js"></script>
-    
+
     <!--Datatables-->
     <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css"> -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/dataTables/dataTables.bootstrap.min.css">
@@ -116,6 +116,9 @@
                                     <?php } ?>
                                     <?php if ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) { ?>
                                         <li <?= $classRep ?>> <a href="<?= base_url(); ?>Report/consultas"><i class="fas fa-file-invoice"></i> Reportes</a></li>
+                                    <?php } ?>
+                                    <?php if ($this->session->userdata('VET_ROL_ID') == ADMINISTRADOR || $this->session->userdata('CAREYES_ID_ROL') == MEDICO) { ?>
+                                        <li <?= $classVent ?>> <a href="<?= base_url(); ?>Ventas/index"><i class="fa fa-dollar-sign"></i> Venta</a></li>
                                     <?php } ?>
                                     <?php if ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR || $this->session->userdata('CAREYES_ID_ROL') == MEDICO || $this->session->userdata('CAREYES_ID_ROL') == RECEPCION) { ?>
                                         <li <?= $classCon ?>> <a href="<?= base_url(); ?>Consult/index"><i class="fa fa-stethoscope"></i> Consultas</a></li>
