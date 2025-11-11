@@ -374,71 +374,6 @@ $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_u
 
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-12">
-                                    <h4 class="h3Antecedentes">FOTO PROTECCIÓN</h4>
-                                </div>
-                            </div>
-
-                            <div class=" row col-sm-12 col-mdx-12 col-lg-12"><br>
-                                <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                    <label class="control-label" for=" EXPOSICION_SOLAR">
-                                        EXPOSICIÓN SOLAR:
-                                    </label>
-                                </div>
-                                <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                    <input class="form-check-input" type="checkbox" name="EXPOSICION_SOLAR_SI"
-                                        id="EXPOSICION_SOLAR_SI">
-                                    <label class="form-check-label" for="EXPOSICION_SOLAR_SI">
-                                        SI
-                                    </label>
-                                </div>
-                                <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                    <input class="form-check-input" type="checkbox" name="EXPOSICION_SOLAR_NO"
-                                        id="EXPOSICION_SOLAR_NO">
-                                    <label class="form-check-label" for="EXPOSICIÓN_SOLAR_NO">
-                                        NO
-                                    </label>
-                                </div>
-                                <div class="col-sm-6 col-mdx-6 col-lg-6">
-                                    <label class="control-label text-left"> TIEMPO DE EXPOSICIÓN SOLAR:</label>
-                                    <textarea class="form-control" name="TIEMPO_EXPOSICION_SOLAR"
-                                        placeholder="Escribe aquí.." rows="1"></textarea>
-                                </div>
-                            </div>
-
-                            <div class=" row col-sm-12 col-mdx-12 col-lg-12"><br>
-                                <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                    <label class="control-label" for=" USO_PROTECTOR_SOLAR">
-                                        USO DE PROTECCIÓN SOLAR:
-                                    </label>
-                                </div>
-                                <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                    <input class="form-check-input" type="checkbox" name="USO_PROTECTOR_SOLAR_SI"
-                                        id="USO_PROTECTOR_SOLAR_SI">
-                                    <label class="form-check-label" for="USO_PROTECTOR_SOLAR_SI">
-                                        SI
-                                    </label>
-                                </div>
-                                <div class="col-sm-2 col-mdx-2 col-lg-2">
-                                    <input class="form-check-input" type="checkbox" name="USO_PROTECTOR_SOLAR_NO"
-                                        id="USO_PROTECTOR_SOLAR_NO">
-                                    <label class="form-check-label" for="USO_PROTECTOR_SOLAR_NO">
-                                        NO
-                                    </label>
-                                </div>
-                                <div class="col-sm-3 col-mdx-3 col-lg-3">
-                                    <label class="control-label text-left">MARCA PROTECTOR SOLAR:</label>
-                                    <textarea class="form-control" name="MARCA_PROTECTOR_SOLAR"
-                                        placeholder="Escribe aquí.." rows="1"></textarea>
-                                </div>
-                                <div class="col-sm-3 col-mdx-3 col-lg-3">
-                                    <label class="control-label text-left">FPS:</label>
-                                    <textarea class="form-control" name="FPS_PROTECTOR_SOLAR"
-                                        placeholder="Escribe aquí.." rows="1"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12 col-lg-12">
                                     <h4 class="h3Antecedentes">MOTIVO DE CONSULTA</h4>
                                 </div>
                             </div>
@@ -750,7 +685,7 @@ $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_u
                                 </div>
                             </div>
 
-                            <div class="row col-sm-12 col-mdx-12 col-lg-12">
+                            <!--<div class="row col-sm-12 col-mdx-12 col-lg-12">
                                 <br>
                                 <div class="col-sm-3 col-mdx-3 col-lg-3">
                                     <label class="control-label"> CONDICIÓN DEL PACIENTE:</label>
@@ -809,146 +744,145 @@ $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_u
                                     <label class="control-label">ESTADO DE CONSCIENCIA:</label>
                                     <textarea class="form-control" name="ESTADO_CONCIENCIA_HABITUS"
                                         id="ESTADO_CONCIENCIA_HABITUS" placeholder="Escribe aquí.." rows="1"></textarea>
-                                </div>
+                                </div>-->
 
-                                <div class="col-sm-4 col-mdx-4 col-lg-4">
-                                    <label class="control-label">OTROS:</label>
-                                    <textarea class="form-control" name="OTROS_HABITUS" id="OTROS_HABITUS"
-                                        placeholder="Escribe aquí.." rows="1"></textarea>
+                            <div class="col-sm-12 col-mdx-12 col-lg-12">
+                                <label class="control-label">DESCRIPCIÓN:</label>
+                                <textarea class="form-control" name="OTROS_HABITUS" id="OTROS_HABITUS"
+                                    placeholder="Escribe aquí.." rows="5"></textarea>
+                            </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <h4 class="h3Antecedentes"> SIGNOS VITALES:</h4>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-sm-12 col-mdx-12">
+                            <div class="col-lg-4 col-sm-3 col-mdx-3">
+                                <div class="form-group">
+                                    <label for="">FC</label>
+                                    <textarea class="form-control" name="RG_FC_CONSULTA" id="FC" rows="2"
+                                        placeholder="Escribe aquí.."></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-mdx-4">
+                                <div class="form-group">
+                                    <label for="">FR</label>
+                                    <textarea class="form-control" name="RG_FR_CONSULTA" id="FR" rows="2"
+                                        placeholder="Escribe aquí.."></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-3 col-mdx-3">
+                                <div class="form-group">
+                                    <label for="">TA</label>
+                                    <textarea class="form-control" name="RG_TA_CONSULTA" id="RG_TA_CONSULTA"
+                                        rows="2" placeholder="Escribe aquí.."></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-3 col-mdx-3">
+                                <div class="form-group">
+                                    <label for="">Temp.</label>
+                                    <textarea class="form-control" name="RG_TEMP_CONSULTA" id="TEMP" rows="2"
+                                        placeholder="Escribe aquí.."></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-3 col-mdx-3">
+                                <div class="form-group">
+                                    <label for="">PESO</label>
+                                    <textarea class="form-control" name="RG_PESO_CONSULTA" id="RC" rows="2"
+                                        placeholder="Escribe aquí.."></textarea>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12 col-lg-12">
-                                    <h4 class="h3Antecedentes"> SIGNOS VITALES:</h4>
+
+                            <div class="col-lg-4 col-sm-4 col-mdx-4">
+                                <div class="form-group">
+                                    <label for="">TALLA</label>
+                                    <textarea class="form-control" name="RG_TALLA_CONSULTA" id="TALLA" rows="2"
+                                        placeholder="Escribe aquí.."></textarea>
                                 </div>
                             </div>
-
-                            <div class="col-lg-12 col-sm-12 col-mdx-12">
-                                <div class="col-lg-4 col-sm-3 col-mdx-3">
-                                    <div class="form-group">
-                                        <label for="">FC</label>
-                                        <textarea class="form-control" name="RG_FC_CONSULTA" id="FC" rows="2"
-                                            placeholder="Escribe aquí.."></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-sm-4 col-mdx-4">
-                                    <div class="form-group">
-                                        <label for="">FR</label>
-                                        <textarea class="form-control" name="RG_FR_CONSULTA" id="FR" rows="2"
-                                            placeholder="Escribe aquí.."></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-sm-3 col-mdx-3">
-                                    <div class="form-group">
-                                        <label for="">TA</label>
-                                        <textarea class="form-control" name="RG_TA_CONSULTA" id="RG_TA_CONSULTA"
-                                            rows="2" placeholder="Escribe aquí.."></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-sm-3 col-mdx-3">
-                                    <div class="form-group">
-                                        <label for="">Temp.</label>
-                                        <textarea class="form-control" name="RG_TEMP_CONSULTA" id="TEMP" rows="2"
-                                            placeholder="Escribe aquí.."></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-sm-3 col-mdx-3">
-                                    <div class="form-group">
-                                        <label for="">PESO</label>
-                                        <textarea class="form-control" name="RG_PESO_CONSULTA" id="RC" rows="2"
-                                            placeholder="Escribe aquí.."></textarea>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-4 col-sm-4 col-mdx-4">
-                                    <div class="form-group">
-                                        <label for="">TALLA</label>
-                                        <textarea class="form-control" name="RG_TALLA_CONSULTA" id="TALLA" rows="2"
-                                            placeholder="Escribe aquí.."></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-sm-4 col-mdx-4">
-                                    <div class="form-group">
-                                        <label for="">IMC</label>
-                                        <textarea class="form-control" name="RG_IMC_CONSULTA" id="GC" rows="2"
-                                            placeholder="Escribe aquí.."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12 col-lg-12">
-                                    <h4 class="h3Antecedentes"> DIAGNÓSTICO PRICIPAL</h4>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-                                <div class="col-lg-12 col-sm-12 col-md-12">
-                                    <div class="form-group">
-                                        <label for="">PROCEDIMIENTOS PROPUESTOS</label>
-                                        <textarea class="form-control" name="DP_PROCP" id="LS" rows="PP"
-                                            placeholder="Escribe aquí.."></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-sm-12 col-md-12">
-                                    <div class="form-group">
-                                        <label for="">INDICACION TERAPÉUTICA</label>
-                                        <textarea class="form-control" name="DP_IND_TERP" id="IT"
-                                            rows="2" placeholder="Escribe aquí.."></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-sm-12 col-md-12">
-                                    <div class="form-group">
-                                        <label for="">PROCEDIMIENTO A REALIZAR</label>
-                                        <textarea class="form-control" name="DP_PROC_RELZ" id="PR"
-                                            rows="2" placeholder="Escribe aquí.."></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-sm-12 col-md-12">
-                                    <div class="form-group">
-                                        <label for="">NOTA PRE-PROCEDIMIENTO</label>
-                                        <textarea class="form-control" name="DP_PRE_PROC" id="PRE_PROC"
-                                            rows="2" placeholder="Escribe aquí.."></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-sm-12 col-md-12">
-                                    <div class="form-group">
-                                        <label for="">NOTA POST-PROCEDIMIENTO</label>
-                                        <textarea class="form-control" name="DP_POST_PROC" id="POST_PROC"
-                                            rows="2" placeholder="Escribe aquí.."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12 col-lg-12">
-                                    <h4 class="h3Antecedentes"> LABORATORIOS</h4>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-sm-12 col-mdx-12">
-                                <div class="col-12-4 col-sm-12 col-mdx-12">
-                                    <div class="form-group">
-                                        <label for="">LABORATORIOS A SOLICITAR</label>
-                                        <textarea class="form-control" name="RG_LABORATORIOS" id="LS" rows="2"
-                                            placeholder="Escribe aquí.."></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-sm-12 col-mdx-12">
-                                    <div class="form-group">
-                                        <label for="">IMPRESIÓN DIAGNÓSTICA</label>
-                                        <textarea class="form-control" name="RG_LABORATORIOS_I_DIAGNOSTICA" id="LID"
-                                            rows="2" placeholder="Escribe aquí.."></textarea>
-                                    </div>
+                            <div class="col-lg-4 col-sm-4 col-mdx-4">
+                                <div class="form-group">
+                                    <label for="">IMC</label>
+                                    <textarea class="form-control" name="RG_IMC_CONSULTA" id="GC" rows="2"
+                                        placeholder="Escribe aquí.."></textarea>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <h4 class="h3Antecedentes"> DIAGNÓSTICO PRICIPAL</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="">PROCEDIMIENTOS PROPUESTOS</label>
+                                    <textarea class="form-control" name="DP_PROCP" id="LS" rows="PP"
+                                        placeholder="Escribe aquí.."></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="">INDICACION TERAPÉUTICA</label>
+                                    <textarea class="form-control" name="DP_IND_TERP" id="IT"
+                                        rows="2" placeholder="Escribe aquí.."></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="">PROCEDIMIENTO A REALIZAR</label>
+                                    <textarea class="form-control" name="DP_PROC_RELZ" id="PR"
+                                        rows="2" placeholder="Escribe aquí.."></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="">NOTA PRE-PROCEDIMIENTO</label>
+                                    <textarea class="form-control" name="DP_PRE_PROC" id="PRE_PROC"
+                                        rows="2" placeholder="Escribe aquí.."></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="">NOTA POST-PROCEDIMIENTO</label>
+                                    <textarea class="form-control" name="DP_POST_PROC" id="POST_PROC"
+                                        rows="2" placeholder="Escribe aquí.."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <h4 class="h3Antecedentes"> LABORATORIOS</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-mdx-12">
+                            <div class="col-12-4 col-sm-12 col-mdx-12">
+                                <div class="form-group">
+                                    <label for="">LABORATORIOS A SOLICITAR</label>
+                                    <textarea class="form-control" name="RG_LABORATORIOS" id="LS" rows="2"
+                                        placeholder="Escribe aquí.."></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-mdx-12">
+                                <div class="form-group">
+                                    <label for="">IMPRESIÓN DIAGNÓSTICA</label>
+                                    <textarea class="form-control" name="RG_LABORATORIOS_I_DIAGNOSTICA" id="LID"
+                                        rows="2" placeholder="Escribe aquí.."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                </div>
 
 
 
 
-                        <!--  <div class="col-sm-12 col-mdx-12 col-lg-3">
+
+                <!--  <div class="col-sm-12 col-mdx-12 col-lg-3">
                                <div class="form-group">
                                   <label for="">Condición</label>
                                   <div class="input-group">
@@ -959,7 +893,7 @@ $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_u
                                </div>
                                <div class="help-block with-errors"></div>
                             </div> -->
-                        <!--<div class="col-sm-12 col-mdx-12 col-lg-6">
+                <!--<div class="col-sm-12 col-mdx-12 col-lg-6">
                         <div class="form-group">
                            <label for="">Origen</label>
                            <div class="input-group">
@@ -1123,9 +1057,9 @@ $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_u
                            </div>
                         </div>
                      </div>-->
-                        <!--consulta pediatrica-->
+                <!--consulta pediatrica-->
 
-                        <!--<div class="col-lg-12 col-sm-12 col-mdx-12">
+                <!--<div class="col-lg-12 col-sm-12 col-mdx-12">
                         <label for="">Somatometría</label><br>
                         <div class="col-lg-4 col-sm-3 col-mdx-3">
                            <div class="form-group">
@@ -1209,11 +1143,11 @@ $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_u
                         </div>
                      </div>
                   </div>-->
-                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-1"></div>
+</div>
+<div class="col-sm-1"></div>
 </div>
 </div>
 </div>

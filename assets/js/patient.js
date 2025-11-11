@@ -163,8 +163,7 @@ $(document).ready(function () {
             type: 'POST',
             data: $(this).serialize(),
             success: function (data) {
-               console.log(data);
-               if (data === "success") {
+               if (data.includes("success")) {
                   Swal.fire({
                      title: 'Cambios guardados!',
                      text: 'Se edito la información del paciente',
