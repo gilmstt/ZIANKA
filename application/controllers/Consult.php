@@ -1619,7 +1619,7 @@ class Consult extends CI_Controller
                     $this->pdf->Text(182, 92, $ROW_CONSULT[0]['CANCER_HERMANOS'] ? 'X' : '');
                     $this->pdf->Text(30, 99, $ROW_CONSULT[0]['OTROS_HEREDOFAMILIARES']);
                     if ($ROW_CONSULT[0]['DIABETES_MELLITUS'] == 1) {
-                        $this->pdf->Text(77, 127, 'X'); // Marca el "sí"
+                        $this->pdf->Text(77, 122, 'X'); // Marca el "sí"
                     } else {
                         $this->pdf->Text(89, 122, 'X'); // Marca el "no"
                     }
@@ -1985,14 +1985,14 @@ class Consult extends CI_Controller
                     }
 
 
-                    $this->pdf->Text(59, 12, $ROW_CONSULT[0]['CONDICION_PACIENTE']);
-                    $this->pdf->Text(38, 17, $ROW_CONSULT[0]['CONSTITUCION_HABITUS']);
-                    $this->pdf->Text(112, 17, $ROW_CONSULT[0]['CONFORMACION_HABITUS']);
-                    $this->pdf->Text(173, 17, $ROW_CONSULT[0]['ACTITUD_HABITUS']);
-                    $this->pdf->Text(27, 23, $ROW_CONSULT[0]['FACIES_HABITUS']);
-                    $this->pdf->Text(115, 23, $ROW_CONSULT[0]['MOVIMIENTOS_ANORMALES_HABITUS']);
-                    $this->pdf->Text(28, 29, $ROW_CONSULT[0]['MARCHA_HABITUS']);
-                    $this->pdf->Text(115, 29, $ROW_CONSULT[0]['ESTADO_CONCIENCIA_HABITUS']);
+                    //$this->pdf->Text(59, 12, $ROW_CONSULT[0]['CONDICION_PACIENTE']);
+                    //$this->pdf->Text(38, 17, $ROW_CONSULT[0]['CONSTITUCION_HABITUS']);
+                    //$this->pdf->Text(112, 17, $ROW_CONSULT[0]['CONFORMACION_HABITUS']);
+                    //$this->pdf->Text(173, 17, $ROW_CONSULT[0]['ACTITUD_HABITUS']);
+                    //$this->pdf->Text(27, 23, $ROW_CONSULT[0]['FACIES_HABITUS']);
+                    //$this->pdf->Text(115, 23, $ROW_CONSULT[0]['MOVIMIENTOS_ANORMALES_HABITUS']);
+                    //$this->pdf->Text(28, 29, $ROW_CONSULT[0]['MARCHA_HABITUS']);
+                    //$this->pdf->Text(115, 29, $ROW_CONSULT[0]['ESTADO_CONCIENCIA_HABITUS']);
                     $this->pdf->Text(28, 35, $ROW_CONSULT[0]['OTROS_HABITUS']);
                     $this->pdf->Text(46, 41, $ROW_CONSULT[0]['FC_CONSULTA']);
                     $this->pdf->Text(65, 41, $ROW_CONSULT[0]['FR_CONSULTA']);
