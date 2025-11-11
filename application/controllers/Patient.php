@@ -94,7 +94,7 @@ class Patient extends CI_Controller
             $ID_PATIENT = intval($PARAM);
             if ($ID_PATIENT > NULO) {
                 $ROW_PATIENT = $this->mpatient->get_patient_by_id($ID_PATIENT);
-                if (count($ROW_PATIENT) > NULO) {
+                if (!empty($ROW_PATIENT)) {
                     //CARGAR LA VISTA..
                     $data = getActive("classPat");
                     $this->load->view('esqueleton/header', $data);
