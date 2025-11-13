@@ -9,13 +9,16 @@ class Consult extends CI_Controller
      * @var Murgency
      * @var mpatient
      * @var mconfig
+     * @var Minventary
      * @var pdf
      */
     public $mconsult;
     public $Murgency;
     public $mpatient;
     public $mconfig;
+    public $Minventary;
     public $pdf;
+    private $ID_SESSION;
     // CONSTRUCT
 
     public function __construct()
@@ -175,14 +178,14 @@ class Consult extends CI_Controller
     }
 
     // FICHA CONSUMO
-    public function ajax_insert_ficha()
+    /*public function ajax_insert_ficha()
     {
         if ($this->input->is_ajax_request()) {
             $this->mconsult->insertFicha();
         } else {
             redirect('index');
         }
-    }
+    }*/
 
     // PROCEDIMIENTOS & PRODUCTOS
     public function ajax_obtener_procedimiento()
@@ -457,7 +460,7 @@ class Consult extends CI_Controller
 
                 $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                 $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
-                $this->pdf->image(base_url() . "assets/img/encabezado.png", 76, 8, 100);
+                $this->pdf->image(FCPATH . "assets/img/encabezado.png", 76, 8, 100);
                 $this->pdf->designUp();
 
                 //$this->pdf->image(base_url() . "assets/img/", 76, 8, 70);
@@ -733,10 +736,6 @@ class Consult extends CI_Controller
 
                 if (count($ROW_CONSULT) > NULO) {
                     $this->load->library('PDF');
-                    //Carpeta imágenes está un directorio arriba
-                    $directorioPadre = base_url() . "assets/img/";
-
-                    // $this->pdf->Image($directorioPadre."logo.jpg",10,10,10,28);
 
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
@@ -934,16 +933,12 @@ class Consult extends CI_Controller
                 $SUM_FICHA = $this->mconsult->get_sum_ficha($ROW_URGENCY[0]['ID_FICHA']);
                 if (count($ROW_URGENCY) > NULO) {
                     $this->load->library('PDF');
-                    //Carpeta imágenes está un directorio arriba
-                    $directorioPadre = base_url() . "assets/img/";
-
-                    // $this->pdf->Image($directorioPadre."logo.jpg",10,10,10,28);
 
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                     $this->pdf->designUp();
 
-                    $this->pdf->image(base_url() . "assets/img/encabezado.png", 76, 6, 100);
+                    $this->pdf->image(FCPATH . "assets/img/encabezado.png", 76, 6, 100);
 
                     $this->pdf->setXY(11, 29);
                     $this->pdf->Cell(66, 5, 'FECHA:', 1, 1, 'L');
@@ -1166,7 +1161,7 @@ class Consult extends CI_Controller
                     $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
                     $this->pdf->setXY(13, 255);
                     $this->pdf->Cell(0, 0, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 0, 'C');
-                    $this->pdf->line(12, $y + 257, 205, $y + 257);
+                    $this->pdf->line(12, $posicionY + 257, 205, $posicionY + 257);
 
                     //Nos ayuda a saber qué posición está haciendo
                     //Posición 0 || 1 || 2 || 3
@@ -1188,13 +1183,11 @@ class Consult extends CI_Controller
                 $ROW_URGENCY = $this->mconsult->get_urgency_by_id($ID_URGENCY);
                 if (count($ROW_URGENCY) > NULO) {
                     $this->load->library('PDF');
-                    //Carpeta imágenes está un directorio arriba
-                    $directorioPadre = base_url() . "assets/img/";
 
                     $this->pdf->AddPage('P', 'letter', 0); //Vertical, Carta
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                     $this->pdf->designUp();
-                    $this->pdf->image(base_url() . "assets/img/encabezado.png", 76, 8, 100);
+                    $this->pdf->image(FCPATH . "assets/img/encabezado.png", 76, 8, 100);
 
                     /*if ($ROW_URGENCY[0]['TARIFA2'] > NULO) {
                         $ROW_TARIFA = $this->mconfig->get_tarifa_by_id($ROW_URGENCY[0]['TARIFA2']);
@@ -1418,7 +1411,7 @@ class Consult extends CI_Controller
                     $this->pdf->Text(102, $y + 3, utf8_decode($ROW_URGENCY[0]['DESTINO']));
 
                     // Verificar si el contenido anterior alcanza el límite inferior
-                    if ($y + 10 > $this->pdf->GetPageHeight() - $footerHeight) {
+                    if ($y + 10 > $this->pdf->GetPageHeight() - $this->pdf->GetBottomMargin()) {
                         $this->pdf->AddPage();  // Añadir una nueva página si no hay espacio suficiente
                     }
 
@@ -1462,18 +1455,14 @@ class Consult extends CI_Controller
 
                 if (count($ROW_CONSULT) > NULO) {
                     $this->load->library('PDF');
-                    //Carpeta imágenes está un directorio arriba
-                    $directorioPadre = base_url() . "assets/img/";
                     $modo = $this->input->get('modo'); // o $this->input->post('modo')
-
-                    // $this->pdf->Image($directorioPadre."logo.jpg",10,10,10,28);
 
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                     $this->pdf->designUp();
 
                     if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/ZC_LABORATORIOS.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(FCPATH . "assets/img/ZC_LABORATORIOS.png", 0, 0, 215.9, 279.4);
                     }
 
                     $this->pdf->setXY(11, 29);
@@ -1518,20 +1507,16 @@ class Consult extends CI_Controller
 
                 if (count($ROW_CONSULT) > NULO) {
                     $this->load->library('PDF');
-                    //Carpeta imágenes está un directorio arriba
-                    $directorioPadre = base_url() . "assets/img/";
-
-                    // $this->pdf->Image($directorioPadre."logo.jpg",10,10,10,28);
 
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                     $this->pdf->designUp();
 
-                    $this->pdf->image(base_url() . "assets/img/ZC_LABORATORIOS.png", 0, 0, 215.9, 279.4);
+                    $this->pdf->image(FCPATH . "assets/img/ZC_LABORATORIOS.png", 0, 0, 215.9, 279.4);
 
                     $this->pdf->setXY(11, 29);
                     $this->pdf->SetFont('Arial', '', 9);
-                    $this->pdf->Text(27, 45, mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['NOMBRE_PACIENTE']), 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE']), 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'])), 'ISO-8859-1', 'UTF-8');
+                    $this->pdf->Text(27, 45, mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['NOMBRE_PACIENTE']), 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE']), 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding(mb_strtoupper($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE']), 'ISO-8859-1', 'UTF-8'));
                     $this->pdf->Text(11, 73, date('d', strtotime($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'])));
                     $this->pdf->Text(20, 73, date('m', strtotime($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'])));
                     $this->pdf->Text(30, 73, date('Y', strtotime($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'])));
@@ -1571,19 +1556,15 @@ class Consult extends CI_Controller
 
                 if (count($ROW_CONSULT) > NULO) {
                     $this->load->library('PDF');
-                    //Carpeta imágenes está un directorio arriba
-                    $directorioPadre = base_url() . "assets/img/";
 
                     $modo = $this->input->get('modo');
-
-                    // $this->pdf->Image($directorioPadre."logo.jpg",10,10,10,28);
 
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                     $this->pdf->designUp();
 
                     if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/historiaClinica/1.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(FCPATH . "assets/img/historiaClinica/1.png", 0, 0, 215.9, 279.4);
                     }
 
                     $this->pdf->setXY(11, 29);
@@ -1619,7 +1600,7 @@ class Consult extends CI_Controller
                     $this->pdf->Text(182, 92, $ROW_CONSULT[0]['CANCER_HERMANOS'] ? 'X' : '');
                     $this->pdf->Text(30, 99, $ROW_CONSULT[0]['OTROS_HEREDOFAMILIARES']);
                     if ($ROW_CONSULT[0]['DIABETES_MELLITUS'] == 1) {
-                        $this->pdf->Text(77, 122, 'X'); // Marca el "sí"
+                        $this->pdf->Text(77, 127, 'X'); // Marca el "sí"
                     } else {
                         $this->pdf->Text(89, 122, 'X'); // Marca el "no"
                     }
@@ -1793,7 +1774,7 @@ class Consult extends CI_Controller
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->designUp();
                     if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/historiaClinica/2.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(FCPATH . "assets/img/historiaClinica/2.png", 0, 0, 215.9, 279.4);
                     }
 
                     if ($ROW_CONSULT[0]['INMUNIZACION'] == 1) {
@@ -1981,18 +1962,18 @@ class Consult extends CI_Controller
                     $this->pdf->designUp();
 
                     if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/historiaClinica/3.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(FCPATH . "assets/img/historiaClinica/3.png", 0, 0, 215.9, 279.4);
                     }
 
 
-                    //$this->pdf->Text(59, 12, $ROW_CONSULT[0]['CONDICION_PACIENTE']);
-                    //$this->pdf->Text(38, 17, $ROW_CONSULT[0]['CONSTITUCION_HABITUS']);
-                    //$this->pdf->Text(112, 17, $ROW_CONSULT[0]['CONFORMACION_HABITUS']);
-                    //$this->pdf->Text(173, 17, $ROW_CONSULT[0]['ACTITUD_HABITUS']);
-                    //$this->pdf->Text(27, 23, $ROW_CONSULT[0]['FACIES_HABITUS']);
-                    //$this->pdf->Text(115, 23, $ROW_CONSULT[0]['MOVIMIENTOS_ANORMALES_HABITUS']);
-                    //$this->pdf->Text(28, 29, $ROW_CONSULT[0]['MARCHA_HABITUS']);
-                    //$this->pdf->Text(115, 29, $ROW_CONSULT[0]['ESTADO_CONCIENCIA_HABITUS']);
+                    $this->pdf->Text(59, 12, $ROW_CONSULT[0]['CONDICION_PACIENTE']);
+                    $this->pdf->Text(38, 17, $ROW_CONSULT[0]['CONSTITUCION_HABITUS']);
+                    $this->pdf->Text(112, 17, $ROW_CONSULT[0]['CONFORMACION_HABITUS']);
+                    $this->pdf->Text(173, 17, $ROW_CONSULT[0]['ACTITUD_HABITUS']);
+                    $this->pdf->Text(27, 23, $ROW_CONSULT[0]['FACIES_HABITUS']);
+                    $this->pdf->Text(115, 23, $ROW_CONSULT[0]['MOVIMIENTOS_ANORMALES_HABITUS']);
+                    $this->pdf->Text(28, 29, $ROW_CONSULT[0]['MARCHA_HABITUS']);
+                    $this->pdf->Text(115, 29, $ROW_CONSULT[0]['ESTADO_CONCIENCIA_HABITUS']);
                     $this->pdf->Text(28, 35, $ROW_CONSULT[0]['OTROS_HABITUS']);
                     $this->pdf->Text(46, 41, $ROW_CONSULT[0]['FC_CONSULTA']);
                     $this->pdf->Text(65, 41, $ROW_CONSULT[0]['FR_CONSULTA']);
@@ -2034,7 +2015,7 @@ class Consult extends CI_Controller
                     $this->pdf->designUp();
 
                     if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/historiaClinica/4.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(FCPATH . "assets/img/historiaClinica/4.png", 0, 0, 215.9, 279.4);
                     }
 
                     $this->pdf->Text(58, 3, mb_convert_encoding($ROW_CONSULT[0]['PRE_PROCEDIMIENTO'], 'ISO-8859-1', 'UTF-8'));
@@ -2054,7 +2035,7 @@ class Consult extends CI_Controller
                     $this->pdf->designUp();
 
                     if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/historiaClinica/5.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(FCPATH . "assets/img/historiaClinica/5.png", 0, 0, 215.9, 279.4);
                     }
 
                     $this->pdf->Text(165, 127, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
@@ -2066,7 +2047,7 @@ class Consult extends CI_Controller
                     $this->pdf->designUp();
 
                     if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/historiaClinica/6.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(FCPATH . "assets/img/historiaClinica/6.png", 0, 0, 215.9, 279.4);
                     }
 
                     $this->pdf->Text(52, 10, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2079,7 +2060,7 @@ class Consult extends CI_Controller
                     $this->pdf->designUp();
 
                     if ($modo != 'imprimir') {
-                        $this->pdf->image(base_url() . "assets/img/historiaClinica/7.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->image(FCPATH . "assets/img/historiaClinica/7.png", 0, 0, 215.9, 279.4);
                     }
 
                     $this->pdf->Text(52, 10, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2115,13 +2096,8 @@ class Consult extends CI_Controller
 
                 if (count($ROW_CONSULT) > NULO) {
                     $this->load->library('PDF');
-                    //Carpeta imágenes está un directorio arriba
-                    $directorioPadre = base_url() . "assets/img/";
 
-                    $modo = $this->input->get('modo'); // Obtener el modo desde la URL
-
-                    // $this->pdf->Image($directorioPadre."logo.jpg",10,10,10,28);
-
+                    $modo = $this->input->get('modo');
 
                     //----------------TIPO DE CONSULTA 1 ------------------
 
@@ -2131,7 +2107,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/acidoHialuronico/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/acidoHialuronico/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2147,7 +2123,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/acidoHialuronico/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/acidoHialuronico/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2207,7 +2183,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/acidoHialuronico/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/acidoHialuronico/3.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2227,7 +2203,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/bioestimulador/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/bioestimulador/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2242,7 +2218,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/bioestimulador/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/bioestimulador/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2305,7 +2281,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/bioestimulador/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/bioestimulador/3.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2324,7 +2300,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/co2/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/co2/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2339,7 +2315,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/co2/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/co2/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2361,7 +2337,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/laser/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/laser/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2375,7 +2351,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/laser/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/laser/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
@@ -2383,7 +2359,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/laser/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/laser/3.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2446,7 +2422,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/laser/4.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/laser/4.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2464,7 +2440,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/endolifting/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/endolifting/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2478,7 +2454,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/endolifting/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/endolifting/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
@@ -2486,7 +2462,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/endolifting/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/endolifting/3.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2496,7 +2472,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/endolifting/4.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/endolifting/4.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2514,7 +2490,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/enzimas/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/enzimas/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2528,7 +2504,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/enzimas/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/enzimas/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
@@ -2536,7 +2512,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/enzimas/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/enzimas/3.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2600,7 +2576,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/enzimas/4.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/enzimas/4.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2619,7 +2595,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/hialuronidasa/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/hialuronidasa/1.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(60, 32, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2632,7 +2608,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/hialuronidasa/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/hialuronidasa/2.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->Text(73, 208, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
                         $campos = [
@@ -2693,7 +2669,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/hialuronidasa/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/hialuronidasa/3.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(80, 124, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2711,7 +2687,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/peeling/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/peeling/1.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(60, 32, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2724,14 +2700,14 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/peeling/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/peeling/2.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/peeling/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/peeling/3.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(73, 33, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
@@ -2801,7 +2777,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/toxina/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/toxina/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2815,7 +2791,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/toxina/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/toxina/2.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->Text(73, 152, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
                         $campos = [
@@ -2876,7 +2852,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(base_url() . "assets/img/toxina/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->image(FCPATH . "assets/img/toxina/3.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(80, 72, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
