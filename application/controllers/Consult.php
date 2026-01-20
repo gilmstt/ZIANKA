@@ -460,32 +460,8 @@ class Consult extends CI_Controller
 
                 $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                 $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
-                $this->pdf->image(FCPATH . "assets/img/encabezado.png", 76, 8, 100);
+                $this->pdf->Image(FCPATH . "assets/img/encabezado.png", 76, 8, 100);
                 $this->pdf->designUp();
-
-                //$this->pdf->image(base_url() . "assets/img/", 76, 8, 70);
-
-                /* if ($ROW_CONSULT[0]['TARIFA2'] > NULO) {
-                    $ROW_TARIFA = $this->mconfig->get_tarifa_by_id(mb_strtoupper($ROW_CONSULT[0]['TARIFA2']));
-                    $this->pdf->SetFont('Arial', 'B', 11);
-                    $this->pdf->text(172, 32, 'Tarifa:', 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 11);
-                    $this->pdf->Text(186, 32, $ROW_TARIFA[0]['NOMBRE_TARIFA']);
-                    //$this->pdf->line(182, 32.5, 193, 32.5);
-                }
-                if ($ROW_CONSULT[0]['ID_MEMBRESIA'] > NULO) {
-                    $ROW_MEMBRESIA = $this->mconfig->get_membresia_by_id($ROW_CONSULT[0]['ID_MEMBRESIA']);
-                    $this->pdf->SetFont('Arial', 'B', 11);
-                    $this->pdf->text(127, 34, 'Membresia:', 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 11);
-                    $this->pdf->Text(149, 34, $ROW_MEMBRESIA[0]['NOMBRE_MEMBRESIA']);
-                    //$this->pdf->line(142, 32.5, 156, 32.5);
-                    $ROW_PERFIL = $this->mconfig->get_perfil_by_id($ROW_CONSULT[0]['ID_PERFIL_MEMBRESIA']);
-                    $this->pdf->SetFont('Arial', 'B', 11);
-                    $this->pdf->text(159, 34, 'Perfil:', 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 11);
-                    $this->pdf->Text(171, 34, $ROW_PERFIL[0]['NOMBRE_PERFIL']);
-                }*/
 
                 $this->pdf->SetFont('Arial', 'B', 10);
                 $this->pdf->text(26, 40, 'Nombre:', 0, 0, 'L');
@@ -495,22 +471,12 @@ class Consult extends CI_Controller
                 $this->pdf->SetFont('Arial', 'B', 10);
                 $this->pdf->text(150, 40, 'Edad:', 0, 0, 'L');
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Text(160, 40, utf8_decode(calcula_edad_2($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'], $ROW_CONSULT[0]['FECHA_CONSULTA'])));
+                $this->pdf->Text(160, 40, mb_convert_encoding(calcula_edad_2($ROW_CONSULT[0]['FECHA_NAC_PACIENTE'], $ROW_CONSULT[0]['FECHA_CONSULTA']), 'ISO-8859-1', 'UTF-8'));
 
                 $this->pdf->SetFont('Arial', 'B', 10);
                 $this->pdf->text(26, 47, 'Domicilio:', 0, 0, 'L');
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Text(46, 47, utf8_decode($ROW_CONSULT[0]['CALLE_PACIENTE']) . ' ' . utf8_decode($ROW_CONSULT[0]['NUMERO_PACIENTE']) . ' ' . utf8_decode($ROW_CONSULT[0]['COLONIA_PACIENTE']));
-
-                /* $this->pdf->SetFont('Arial', 'B', 11);
-                $this->pdf->text(26, 53, 'Lugar Nacimiento:', 0, 0, 'L');
-                $this->pdf->SetFont('Arial', '', 11);
-                $this->pdf->Text(62, 53, utf8_decode($ROW_CONSULT[0]['LUGAR_NACIMIENTO']));
-
-                $this->pdf->SetFont('Arial', 'B', 11);
-                $this->pdf->text(146, 47, 'Residencia:', 0, 0, 'L');
-                $this->pdf->SetFont('Arial', '', 11);
-                $this->pdf->Text(168, 47, utf8_decode($ROW_CONSULT[0]['RESIDENCIA']));*/
+                $this->pdf->Text(46, 47, mb_convert_encoding($ROW_CONSULT[0]['CALLE_PACIENTE'], 'ISO-8859-1', 'UTF-8')  . ' ' . mb_convert_encoding($ROW_CONSULT[0]['NUMERO_PACIENTE'], 'ISO-8859-1', 'UTF-8')  . ' ' . mb_convert_encoding($ROW_CONSULT[0]['COLONIA_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
 
                 $this->pdf->SetFont('Arial', 'B', 10);
                 $this->pdf->text(26, 58, 'Ingreso:', 0, 0, 'L');
@@ -525,153 +491,153 @@ class Consult extends CI_Controller
                 $this->pdf->Text(109, 58, $ROW_CONSULT[0]['HORA_CONSULTA']);
 
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(129, 58, utf8_decode('Condición:'), 0, 0, 'L');
+                $this->pdf->text(129, 58, mb_convert_encoding('Condición:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Text(139, 58, utf8_decode($ROW_CONSULT[0]['CONDICION_CONSULTA']));
+                $this->pdf->Text(139, 58, mb_convert_encoding($ROW_CONSULT[0]['CONDICION_CONSULTA'], 'ISO-8859-1', 'UTF-8'));
 
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(159, 58, utf8_decode('Origen:'), 0, 0, 'L');
+                $this->pdf->text(159, 58, mb_convert_encoding('Origen:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Text(174, 58, utf8_decode($ROW_CONSULT[0]['ORIGEN_CONSULTA']));
+                $this->pdf->Text(174, 58, mb_convert_encoding($ROW_CONSULT[0]['ORIGEN_CONSULTA'], 'ISO-8859-1', 'UTF-8'));
 
                 $this->pdf->SetFont('Arial', 'B', 10);
                 $this->pdf->text(26, 65, 'Motivo de Consulta:', 0, 0, 'L');
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Text(64, 65, utf8_decode($ROW_CONSULT[0]['MOTIVO_CONSULTA']));
+                $this->pdf->Text(64, 65, mb_convert_encoding($ROW_CONSULT[0]['MOTIVO_CONSULTA'], 'ISO-8859-1', 'UTF-8'));
 
                 $this->pdf->setXY(25, 65);
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(26, 70, utf8_decode('Inicio y Evolución:'), 0, 0, 'L');
+                $this->pdf->text(26, 70, mb_convert_encoding('Inicio y Evolución:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
 
 
                 $y = $this->pdf->GetY();
                 $this->pdf->setXY(25, $y + 5);
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Multicell(168, 5.5, utf8_decode($ROW_CONSULT[0]['INICIOEVOLUCION_CONSULTA']));
+                $this->pdf->Multicell(168, 5.5, mb_convert_encoding($ROW_CONSULT[0]['INICIOEVOLUCION_CONSULTA'], 'ISO-8859-1', 'UTF-8'));
                 $this->pdf->Ln(3);
 
                 $y = $this->pdf->GetY();
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(26, $y, utf8_decode('Signos Vitales:'));
+                $this->pdf->text(26, $y, mb_convert_encoding('Signos Vitales:', 'ISO-8859-1', 'UTF-8'));
                 $this->pdf->Ln(3);
 
                 $y = $this->pdf->GetY();
-                $this->pdf->text(26, $y + 2, utf8_decode('TA:'));
+                $this->pdf->text(26, $y + 2, mb_convert_encoding('TA:', 'ISO-8859-1', 'UTF-8'));
                 $this->pdf->SetFont('Arial', '', 10);
                 $this->pdf->Text(33, $y + 2, $ROW_CONSULT[0]['SIGNOS_VITALES']);
 
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(58, $y + 2, utf8_decode('FC:'));
+                $this->pdf->text(58, $y + 2, mb_convert_encoding('FC:', 'ISO-8859-1', 'UTF-8'));
                 $this->pdf->SetFont('Arial', '', 10);
                 $this->pdf->Text(65, $y + 2, $ROW_CONSULT[0]['FC_CONSULTA']);
 
 
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(86, $y + 2, utf8_decode('RITMO CARDIACO:'));
+                $this->pdf->text(86, $y + 2, mb_convert_encoding('RITMO CARDIACO:', 'ISO-8859-1', 'UTF-8'));
                 $this->pdf->SetFont('Arial', '', 10);
                 $this->pdf->Text(120, $y + 2, $ROW_CONSULT[0]['RITMO_CARDIACO_CONSULTA']);
 
 
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(140, $y + 2, utf8_decode('TEMP.:'));
+                $this->pdf->text(140, $y + 2, mb_convert_encoding('TEMP.:', 'ISO-8859-1', 'UTF-8'));
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Text(154, $y + 2, utf8_decode($ROW_CONSULT[0]['TEMP_CONSULTA']));
+                $this->pdf->Text(154, $y + 2, mb_convert_encoding($ROW_CONSULT[0]['TEMP_CONSULTA'], 'ISO-8859-1', 'UTF-8'));
 
 
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(169, $y + 2, utf8_decode('FR:'));
+                $this->pdf->text(169, $y + 2, mb_convert_encoding('FR:', 'ISO-8859-1', 'UTF-8'));
                 $this->pdf->SetFont('Arial', '', 10);
                 $this->pdf->Text(177, $y + 2, $ROW_CONSULT[0]['FR_CONSULTA']);
 
 
                 $y = $this->pdf->GetY();
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(26, $y + 6, utf8_decode('SAT:'));
+                $this->pdf->text(26, $y + 6, mb_convert_encoding('SAT:', 'ISO-8859-1', 'UTF-8'));
                 $this->pdf->SetFont('Arial', '', 10);
                 $this->pdf->Text(36, $y + 6, $ROW_CONSULT[0]['SAT_CONSULTA']);
 
 
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(50, $y + 6, utf8_decode('GLICEMA CAPILAR:'));
+                $this->pdf->text(50, $y + 6, mb_convert_encoding('GLICEMA CAPILAR:', 'ISO-8859-1', 'UTF-8'));
                 $this->pdf->SetFont('Arial', '', 10);
                 $this->pdf->Text(89, $y + 6, $ROW_CONSULT[0]['GLICEMIA_CAPILAR_CONSULTA']);
                 $this->pdf->Ln(6);
 
                 $y = $this->pdf->GetY();
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(26, $y + 4, utf8_decode('Diágnostico Presuntivo:'), 0, 0, 'L');
+                $this->pdf->text(26, $y + 4, mb_convert_encoding('Diágnostico Presuntivo:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Text(71, $y + 4, utf8_decode($ROW_CONSULT[0]['DIAGNOSTICO']));
+                $this->pdf->Text(71, $y + 4, mb_convert_encoding($ROW_CONSULT[0]['DIAGNOSTICO'], 'ISO-8859-1', 'UTF-8'));
                 $this->pdf->Ln(8);
 
                 $y = $this->pdf->GetY();
                 $this->pdf->setXY(25, $y);
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(26, $y, utf8_decode('Exploración Física:'), 0, 0, 'L');
+                $this->pdf->text(26, $y, mb_convert_encoding('Exploración Física:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
 
                 $y = $this->pdf->GetY();
                 $this->pdf->setXY(25, $y);
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Multicell(168, 5.5, utf8_decode($ROW_CONSULT[0]['EXPLORACION_FISICA']));
+                $this->pdf->Multicell(168, 5.5, mb_convert_encoding($ROW_CONSULT[0]['EXPLORACION_FISICA'], 'ISO-8859-1', 'UTF-8'));
                 $this->pdf->Ln(4);
 
                 $y = $this->pdf->GetY();
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(26, $y, utf8_decode('Manejo Intrahospitalario:'), 0, 0, 'L');
+                $this->pdf->text(26, $y, mb_convert_encoding('Manejo Intrahospitalario:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
 
                 $y = $this->pdf->GetY();
                 $this->pdf->setXY(25, $y);
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Multicell(168, 5.5, utf8_decode($ROW_CONSULT[0]['MANEJO_INTRAHOSPITALARIO_CONSULTA']));
+                $this->pdf->Multicell(168, 5.5, mb_convert_encoding($ROW_CONSULT[0]['MANEJO_INTRAHOSPITALARIO_CONSULTA'], 'ISO-8859-1', 'UTF-8'));
                 $this->pdf->Ln(4);
 
                 $y = $this->pdf->GetY();
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(26, $y, utf8_decode('Tratamiento:'), 0, 0, 'L');
+                $this->pdf->text(26, $y, mb_convert_encoding('Tratamiento:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
 
                 $y = $this->pdf->GetY();
                 $this->pdf->setXY(25, $y);
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Multicell(168, 5.5, utf8_decode($ROW_CONSULT[0]['TRATAMIENTO_CONSULTA']));
+                $this->pdf->Multicell(168, 5.5, mb_convert_encoding($ROW_CONSULT[0]['TRATAMIENTO_CONSULTA'], 'ISO-8859-1', 'UTF-8'));
                 $this->pdf->Ln(4);
 
                 $y = $this->pdf->GetY();
 
                 $this->pdf->setXY(25, $y);
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->Text(26, $y, utf8_decode('Evolución:'), 0, 0, 'L');
+                $this->pdf->Text(26, $y, mb_convert_encoding('Evolución:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
 
                 $y = $this->pdf->GetY();
 
                 $this->pdf->setXY(25, $y);
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Multicell(168, 6.5, utf8_decode($ROW_CONSULT[0]['EVOLUCION_CONSULTA']));
+                $this->pdf->Multicell(168, 6.5, mb_convert_encoding($ROW_CONSULT[0]['EVOLUCION_CONSULTA'], 'ISO-8859-1', 'UTF-8'));
                 $this->pdf->Ln(3);
 
                 $y = $this->pdf->GetY();
 
                 $this->pdf->setXY(25, $y);
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(26, $y, utf8_decode('Observaciones:'), 0, 0, 'L');
+                $this->pdf->text(26, $y, mb_convert_encoding('Observaciones:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
 
                 $y = $this->pdf->GetY();
                 $this->pdf->setXY(25, $y);
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Multicell(168, 6.5, utf8_decode($ROW_CONSULT[0]['OBSERVACIONES_CONSULTA']));
+                $this->pdf->Multicell(168, 6.5, mb_convert_encoding($ROW_CONSULT[0]['OBSERVACIONES_CONSULTA'], 'ISO-8859-1', 'UTF-8'));
 
 
                 $y = $this->pdf->GetY();
 
                 $this->pdf->setXY(25, $y);
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->Cell(26, 5, utf8_decode('Egreso:'), 0, 0, 'L');
+                $this->pdf->Cell(26, 5, mb_convert_encoding('Egreso:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
                 $this->pdf->Ln(2);
 
 
                 $y = $this->pdf->GetY();
 
                 $this->pdf->setXY(25, $y + 4);
-                $this->pdf->Cell(26, 5, utf8_decode('DX:'), 0, 0, 'L');
+                $this->pdf->Cell(26, 5, mb_convert_encoding('DX:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
 
                 $this->pdf->setXY(25, $y + 7);
                 $this->pdf->SetFont('Arial', '', 10);
@@ -679,7 +645,7 @@ class Consult extends CI_Controller
 
                 $y = $this->pdf->GetY();
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(26, $y + 3, utf8_decode('Fecha:'), 0, 0, 'L');
+                $this->pdf->text(26, $y + 3, mb_convert_encoding('Fecha:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
                 $this->pdf->SetFont('Arial', '', 10);
                 $this->pdf->Text(38, $y + 3, $ROW_CONSULT[0]['FECHAEGRESO_CONSULTA']);
                 //$this->pdf->line(80, 229.5, 110, 229.5);
@@ -687,7 +653,7 @@ class Consult extends CI_Controller
                 $y = $this->pdf->GetY();
 
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(65, $y + 3, utf8_decode('Hora:'), 0, 0, 'L');
+                $this->pdf->text(65, $y + 3, mb_convert_encoding('Hora:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
                 $this->pdf->SetFont('Arial', '', 10);
                 $this->pdf->Text(74, $y + 3, $ROW_CONSULT[0]['HREGRESO_CONSULTA']);
                 //$this->pdf->line(118, 229.5, 145, 229.5);
@@ -695,21 +661,21 @@ class Consult extends CI_Controller
                 $y = $this->pdf->GetY();
 
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(96, $y + 3, utf8_decode('Destino:'), 0, 0, 'L');
+                $this->pdf->text(96, $y + 3, mb_convert_encoding('Destino:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
 
                 $y = $this->pdf->GetY();
 
                 $this->pdf->SetFont('Arial', 'B', 10);
-                $this->pdf->text(26, $y + 9, utf8_decode('Médico:'), 0, 0, 'L');
+                $this->pdf->text(26, $y + 9, mb_convert_encoding('Médico:', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
 
                 $y = $this->pdf->GetY();
                 $this->pdf->SetFont('Arial', '', 10);
-                $this->pdf->Text(41, $y + 9, utf8_decode($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO']));
+                $this->pdf->Text(41, $y + 9, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'], 'ISO-8859-1', 'UTF-8' . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
                 //$this->pdf->line(36, 243.5, 193, 243.5);
 
                 $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
                 $this->pdf->setXY(13, 255);
-                $this->pdf->Cell(0, 0, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 0, 'C');
+                $this->pdf->Cell(0, 0, mb_convert_encoding('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890', 'ISO-8859-1', 'UTF-8'), 0, 0, 'C');
                 $y = $this->pdf->GetY();
                 $this->pdf->line(12, $y + 2, 205, $y + 2);
 
@@ -741,7 +707,7 @@ class Consult extends CI_Controller
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                     $this->pdf->designUp();
 
-                    $this->pdf->image(base_url() . "assets/img/FichaConsumo/1.png", 0, 0, 215.9, 279.4);
+                    $this->pdf->Image(FCPATH . "assets/img/FichaConsumo/1.png", 0, 0, 215.9, 279.4);
 
                     $this->pdf->setXY(11, 29);
                     $this->pdf->SetFont('Arial', '', 12);
@@ -907,7 +873,7 @@ class Consult extends CI_Controller
                         $this->pdf->setXY(66, 132);
                         $this->pdf->Cell(21, 5, 'DESC. TARIFA', 1, 1, 'C');
                         $this->pdf->SetFont('Arial', '', 10);
-                        $this->pdf->Text(72, 141, utf8_decode('%' . $porcentaje));
+                        $this->pdf->Text(72, 141, mb_convert_encoding('%' . $porcentaje, 'ISO-8859-1', 'UTF-8'));
                     }
 
                     $this->pdf->Output(); //Salida al navegador del pdf
@@ -920,530 +886,6 @@ class Consult extends CI_Controller
         }
     }
 
-    //FICHA DE URGENCIA
-    public function creaPdfUrgency($ID_URGENCY)
-    {
-        if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
-
-            if ($ID_URGENCY > NULO) {
-                $ROW_URGENCY = $this->mconsult->get_urgency_by_id($ID_URGENCY);
-                $ROW_PROC = $this->mconsult->get_procedimiento_by_urgency_id($ID_URGENCY);
-                $ROW_MAT = $this->mconsult->get_producto_by_urgency_id($ID_URGENCY);
-                $SUM_PROC = $this->mconsult->get_sum($ROW_URGENCY[0]['ID_FICHA']);
-                $SUM_FICHA = $this->mconsult->get_sum_ficha($ROW_URGENCY[0]['ID_FICHA']);
-                if (count($ROW_URGENCY) > NULO) {
-                    $this->load->library('PDF');
-
-                    $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
-                    $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
-                    $this->pdf->designUp();
-
-                    $this->pdf->image(FCPATH . "assets/img/encabezado.png", 76, 6, 100);
-
-                    $this->pdf->setXY(11, 29);
-                    $this->pdf->Cell(66, 5, 'FECHA:', 1, 1, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(37, 32.5, $ROW_URGENCY[0]['FECHA_URGENCIA']);
-
-                    $this->pdf->setXY(77, 29);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(66, 5, 'HORA DE INGRESO:', 1, 1, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(118, 32.5, $ROW_URGENCY[0]['HORA_URGENCIA']);
-
-                    $this->pdf->setXY(143, 29);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(62, 5, 'HORA DE EGRESO:', 1, 1, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(183, 32.5, $ROW_URGENCY[0]['HREGRESO_URGENCIA']);
-
-                    $this->pdf->setXY(11, 34);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(138, 5, 'NOMBRE DEL PACIENTE:', 1, 1, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(60, 37, utf8_decode(mb_strtoupper($ROW_URGENCY[0]['NOMBRE_PACIENTE'])) . ' ' . utf8_decode(mb_strtoupper($ROW_URGENCY[0]['APELLIDO_PATERNO_PACIENTE'])) . ' ' . utf8_decode(mb_strtoupper($ROW_URGENCY[0]['APELLIDO_MATERNO_PACIENTE'])));
-
-                    $this->pdf->setXY(149, 34);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(30, 5, 'EDAD:', 1, 1, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(166, 37, calcula_edad_2($ROW_URGENCY[0]['FECHA_NAC_PACIENTE'], $ROW_URGENCY[0]['FECHA_URGENCIA']));
-
-                    $this->pdf->setXY(179, 34);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(26, 5, 'SEXO:', 1, 1, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(196, 37, $ROW_URGENCY[0]['ABREV_SEXO']);
-
-                    $this->pdf->setXY(164, 132);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(41, 5, 'TOTAL PAGADO', 1, 1, 'C');
-                    $this->pdf->setXY(164, 137);
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Cell(41, 5, ' ', 1, 1, 'C');
-                    $this->pdf->Text(179, 141, to_currency($ROW_URGENCY[0]['TOTAL_PAGADO_URGENCIA']));
-
-
-                    if ($ROW_URGENCY[0]['TARIFA2'] > NULO) {
-                        $ROW_TARIFA = $this->mconfig->get_tarifa_by_id($ROW_URGENCY[0]['TARIFA2']);
-                        $suma = $SUM_PROC[0]['suma'] + $SUM_FICHA[0]['sumaficha'] + $ROW_TARIFA[0]['URGENCIA_TARIFA'];
-                        $NOMBRE_TARIFA = $ROW_TARIFA[0]['NOMBRE_TARIFA'];
-                        $porcentaje = $ROW_URGENCY[0]['DESC_TARIFA'];
-                        $descuento = $suma * ($porcentaje / 100);
-                        $total = $suma - $descuento;
-                        $this->pdf->setXY(11, 39);
-                        $this->pdf->SetFont('Arial', 'B', 10);
-                        $this->pdf->Cell(194, 5, 'TIPO DE TARIFA:', 1, 1, 'L');
-                        $this->pdf->SetFont('Arial', '', 10);
-                        $this->pdf->Text(60, 43, $ROW_TARIFA[0]['NOMBRE_TARIFA']);
-                    }
-                    if ($ROW_URGENCY[0]['MEMBRESIA2'] > NULO) {
-                        $ROW_MEMBRESIA = $this->mconfig->get_membresia_by_id($ROW_URGENCY[0]['MEMBRESIA2']);
-                        $this->pdf->setXY(11, 39);
-                        $this->pdf->SetFont('Arial', 'B', 10);
-                        $this->pdf->Cell(194, 5, 'MEMBRESIA:', 1, 1, 'L');
-                        $this->pdf->SetFont('Arial', '', 10);
-                        $this->pdf->Text(55, 43, $ROW_MEMBRESIA[0]['NOMBRE_MEMBRESIA']);
-                        $ROW_PERFIL = $this->mconfig->get_perfil_by_id($ROW_URGENCY[0]['ID_PERFIL_MEMBRESIA']);
-                        $this->pdf->setXY(77, 39);
-                        $this->pdf->SetFont('Arial', 'B', 10);
-                        $this->pdf->Cell(128, 5, 'PERFIL:', 1, 1, 'L');
-                        $this->pdf->SetFont('Arial', '', 10);
-                        if (count($ROW_PERFIL) <= 0) {
-                            $this->pdf->Text(100, 43, 'Sin asignar', 1, 1, 'L');
-                        } else {
-                            $this->pdf->Text(100, 43, $ROW_PERFIL[0]['NOMBRE_PERFIL']);
-                        }
-                    }
-
-                    $this->pdf->setXY(11, 44);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(194, 5, utf8_decode('DIAGNÓSTICO:'), 1, 1, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(60, 48, utf8_decode(mb_strtoupper($ROW_URGENCY[0]['DIAGNOSTICO'])));
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Text(26, 56, 'PROCEDIMIENTOS');
-                    $this->pdf->Text(113, 56, 'MATERIAL Y MEDICAMENTOS UTILIZADOS');
-
-                    $this->pdf->setXY(11, 57);
-                    $this->pdf->Cell(55, 5, 'NOMBRE', 1, 1, 'C');
-
-                    $this->pdf->setXY(66, 57);
-                    $this->pdf->Cell(20, 5, 'CANT.', 1, 1, 'C');
-
-                    $this->pdf->setXY(86, 57);
-                    $this->pdf->Cell(23, 5, 'COSTO', 1, 1, 'C');
-
-                    $this->pdf->setXY(109, 57);
-                    $this->pdf->Cell(55, 5, 'NOMBRE', 1, 1, 'C');
-
-                    $this->pdf->setXY(164, 57);
-                    $this->pdf->Cell(20, 5, 'CANT.', 1, 1, 'C');
-
-                    $this->pdf->setXY(184, 57);
-                    $this->pdf->Cell(21, 5, 'COSTO', 1, 1, 'C');
-
-                    $posicionY = 62;
-                    $this->pdf->SetFont('Arial', 'B', 8);
-
-                    for ($x = 0; $x < 14; $x++) {
-                        $NOMBRE_PROCEDIMIENTO = isset($ROW_PROC[$x]['NOMBRE_PROCEDIMIENTO']) ? $ROW_PROC[$x]['NOMBRE_PROCEDIMIENTO'] : '';
-                        $CANT_PROCEDIMIENTO = isset($ROW_PROC[$x]['CANT_PROCEDIMIENTO']) ? $ROW_PROC[$x]['CANT_PROCEDIMIENTO'] : '';
-                        $PRECIO_PROCEDIMIENTO = isset($ROW_PROC[$x]['PRECIO_PROCEDIMIENTO']) ? $ROW_PROC[$x]['PRECIO_PROCEDIMIENTO'] : '';
-
-                        $NOMBRE_PRODUCTO = isset($ROW_MAT[$x]['NOMBRE_PRODUCTO']) ? $ROW_MAT[$x]['NOMBRE_PRODUCTO'] : '';
-                        $CANT_PRODUCTO = isset($ROW_MAT[$x]['CANT_PRODUCTO']) ? $ROW_MAT[$x]['CANT_PRODUCTO'] : '';
-                        $PRECIO_PRODUCTO = isset($ROW_MAT[$x]['PRECIO_PRODUCTO']) ? $ROW_MAT[$x]['PRECIO_PRODUCTO'] : '';
-
-                        $this->pdf->setXY(11, $posicionY);
-                        $limit = strlen($NOMBRE_PROCEDIMIENTO);
-                        $nom_Procedim = '';
-
-                        if ($limit > 29) {
-                            $nom_Procedim = substr(utf8_decode($NOMBRE_PROCEDIMIENTO), 0, 28) . '...';
-                        } else {
-                            $nom_Procedim = $NOMBRE_PROCEDIMIENTO;
-                        }
-                        $this->pdf->SetFont('Arial', '', 10);
-                        $this->pdf->Cell(55, 5, utf8_decode($nom_Procedim), 1, 1, 'L');
-
-                        $this->pdf->setXY(66, $posicionY);
-                        $this->pdf->Cell(20, 5, $CANT_PROCEDIMIENTO, 1, 1, 'C');
-
-                        $this->pdf->setXY(86, $posicionY);
-                        $this->pdf->Cell(23, 5, floatval($PRECIO_PROCEDIMIENTO) > 0 ? to_currency(floatval($PRECIO_PROCEDIMIENTO)) : "", 1, 1, 'R');
-
-                        $this->pdf->setXY(109, $posicionY);
-                        $limit = strlen($NOMBRE_PRODUCTO);
-                        $nom_Producto = '';
-
-                        if ($limit > 30) {
-                            $nom_Producto = substr(utf8_decode($NOMBRE_PRODUCTO), 0, 29) . '...';
-                        } else {
-                            $nom_Producto = $NOMBRE_PRODUCTO;
-                        }
-
-                        $this->pdf->Cell(55, 5, utf8_decode($nom_Producto), 1, 1, 'L');
-                        //$this->pdf->Cell(55, 5, $NOMBRE_PRODUCTO, 1, 1, 'L');
-
-                        $this->pdf->setXY(164, $posicionY);
-                        $this->pdf->Cell(20, 5, $CANT_PRODUCTO, 1, 1, 'C');
-
-                        $this->pdf->setXY(184, $posicionY);
-                        $this->pdf->Cell(21, 5, floatval($PRECIO_PRODUCTO) > 0 ? to_currency(floatval($PRECIO_PRODUCTO)) : "", 1, 1, 'R');
-
-                        $posicionY += 5;
-                    }
-                    $this->pdf->setXY(11, 120);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(55, 20, 'TOTAL', 0, 0, 'C');
-
-                    $this->pdf->setXY(88, 127);
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Cell(21, 5, to_currency($SUM_PROC[0]['suma']), 0, 0, 'R');
-
-                    $this->pdf->setXY(110, 120);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->Cell(55, 20, 'TOTAL', 0, 0, 'C');
-
-                    $this->pdf->setXY(186, 127);
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Cell(19, 5, to_currency($SUM_FICHA[0]['sumaficha']), 0, 0, 'R');
-
-                    if ($ROW_URGENCY[0]['TARIFA2'] > NULO) {
-
-                        $this->pdf->setXY(11, 132);
-                        $this->pdf->SetFont('Arial', 'B', 10);
-                        $this->pdf->Cell(55, 5, 'PRECIO CONSULTA', 1, 1, 'C');
-
-                        $this->pdf->setXY(11, 137);
-                        $this->pdf->SetFont('Arial', '', 10);
-                        $this->pdf->Cell(55, 5, ' ', 1, 1, 'C');
-                        $this->pdf->Text(35, 141, to_currency($ROW_TARIFA[0]['URGENCIA_TARIFA']));
-
-                        $this->pdf->setXY(66, 132);
-                        $this->pdf->SetFont('Arial', 'B', 8);
-                        $this->pdf->Cell(21, 5, 'DESC. TARIFA', 1, 1, 'C');
-                        $this->pdf->Text(72, 141, utf8_decode('%' . $porcentaje));
-
-                        $this->pdf->setXY(66, 137);
-                        $this->pdf->Cell(21, 5, ' ', 1, 1, 'C');
-
-                        $this->pdf->setXY(87, 132);
-                        $this->pdf->SetFont('Arial', 'B', 10);
-                        $this->pdf->Cell(22, 5, 'SUBTOTAL', 1, 1, 'C');
-                        $this->pdf->SetFont('Arial', '', 10);
-                        $this->pdf->Text(94, 141, to_currency($suma));
-
-                        $this->pdf->setXY(87, 137);
-                        $this->pdf->Cell(22, 5, ' ', 1, 1, 'C');
-
-                        $this->pdf->setXY(109, 132);
-                        $this->pdf->SetFont('Arial', 'B', 10);
-                        $this->pdf->Cell(22, 5, 'DESCUENTO', 1, 1, 'C');
-                        $this->pdf->SetFont('Arial', '', 10);
-                        $this->pdf->Text(115, 141, to_currency($descuento));
-
-                        $this->pdf->setXY(109, 137);
-                        $this->pdf->Cell(22, 5, ' ', 1, 1, 'C');
-
-                        $this->pdf->setXY(131, 132);
-                        $this->pdf->SetFont('Arial', 'B', 10);
-                        $this->pdf->Cell(33, 5, 'TOTAL A PAGAR', 1, 1, 'C');
-                        $this->pdf->SetFont('Arial', '', 10);
-                        $this->pdf->Text(142, 141, to_currency($total));
-
-                        $this->pdf->setXY(131, 137);
-                        $this->pdf->Cell(33, 5, '  ', 1, 1, 'C');
-                    }
-
-                    $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
-                    $this->pdf->setXY(13, 255);
-                    $this->pdf->Cell(0, 0, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 0, 'C');
-                    $this->pdf->line(12, $posicionY + 257, 205, $posicionY + 257);
-
-                    //Nos ayuda a saber qué posición está haciendo
-                    //Posición 0 || 1 || 2 || 3
-
-                    $this->pdf->Output(); //Salida al navegador del pdf
-                } else {
-                    redirect('Urgency/index');
-                }
-            }
-        }
-    }
-
-    //FORMATO DE URGENCIA
-    public function creaPdfFichaUrgency($ID_URGENCY)
-    {
-        if (!empty($this->session->userdata('CAREYES_ID_USUARIO'))) {
-
-            if ($ID_URGENCY > NULO) {
-                $ROW_URGENCY = $this->mconsult->get_urgency_by_id($ID_URGENCY);
-                if (count($ROW_URGENCY) > NULO) {
-                    $this->load->library('PDF');
-
-                    $this->pdf->AddPage('P', 'letter', 0); //Vertical, Carta
-                    $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
-                    $this->pdf->designUp();
-                    $this->pdf->image(FCPATH . "assets/img/encabezado.png", 76, 8, 100);
-
-                    /*if ($ROW_URGENCY[0]['TARIFA2'] > NULO) {
-                        $ROW_TARIFA = $this->mconfig->get_tarifa_by_id($ROW_URGENCY[0]['TARIFA2']);
-                        $this->pdf->text(163, 32, 'Tarifa:', 0, 0, 'L');
-                        $this->pdf->SetFont('Arial', '', 10);
-                        $this->pdf->Text(180, 32, $ROW_TARIFA[0]['NOMBRE_TARIFA']);
-                    }
-                    if ($ROW_URGENCY[0]['MEMBRESIA2'] > NULO) {
-                        $ROW_MEMBRESIA = $this->mconfig->get_membresia_by_id($ROW_URGENCY[0]['MEMBRESIA2']);
-                        $this->pdf->setXY(125, 31);
-                        $this->pdf->text(163, 32, 'Membresia:', 0, 0, 'L');
-                        $this->pdf->SetFont('Arial', '', 10);
-                        $this->pdf->Text(143, 34, $ROW_MEMBRESIA[0]['NOMBRE_MEMBRESIA']);
-
-                        $ROW_PERFIL = $this->mconfig->get_perfil_by_id($ROW_URGENCY[0]['ID_PERFIL_MEMBRESIA']);
-                        $this->pdf->setXY(160, 31);
-                        $this->pdf->SetFont('Arial', 'B', 10);
-                        $this->pdf->Cell(26, 5, 'Perfil', 0, 0, 'L');
-                        $this->pdf->SetFont('Arial', '', 10);
-                        $this->pdf->Text(171, 34, $ROW_PERFIL[0]['NOMBRE_PERFIL']);
-                    }*/
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, 40, 'Nombre:', 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->SetXY(40, 36);
-                    $this->pdf->Multicell(50, 4.5, utf8_decode($ROW_URGENCY[0]['NOMBRE_PACIENTE']) . ' ' . utf8_decode($ROW_URGENCY[0]['APELLIDO_PATERNO_PACIENTE']) . ' ' . utf8_decode($ROW_URGENCY[0]['APELLIDO_MATERNO_PACIENTE']), 0, 1);
-
-                    $this->pdf->SetXY(90, 36);
-
-                    /*$this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->multicell(40, 5.5, 'Lugar Nacimiento:',0,1);
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(115, 40, strtoupper(utf8_decode($ROW_URGENCY[0]['LUGAR_NACIMIENTO'])));*/
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(163, 40, 'Edad:', 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(173, 40, calcula_edad_2($ROW_URGENCY[0]['FECHA_NAC_PACIENTE'], $ROW_URGENCY[0]['FECHA_URGENCIA']));
-
-                    /*$this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(152, 47, 'Residencia:', 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(172, 47, utf8_decode($ROW_URGENCY[0]['RESIDENCIA']));*/
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, 47, 'Domicilio:', 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(43, 47, utf8_decode($ROW_URGENCY[0]['CALLE_PACIENTE']) . ' ' . utf8_decode($ROW_URGENCY[0]['NUMERO_PACIENTE']) . ' ' . utf8_decode($ROW_URGENCY[0]['COLONIA_PACIENTE']));
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, 54, 'Ingreso:', 0, 0, 'L');
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(50, 54, 'Fecha:', 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(62, 54, $ROW_URGENCY[0]['FECHA_URGENCIA']);
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(90, 54, 'Hora:', 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(99, 54, $ROW_URGENCY[0]['HORA_URGENCIA']);
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(120, 54, utf8_decode('Condición:'), 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(139, 54, $ROW_URGENCY[0]['CONDICION_URGENCIA']);
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(155, 54, utf8_decode('Origen:'), 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(176, 54, $ROW_URGENCY[0]['ORIGEN_URGENCIA']);
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, 61, 'Motivo de urgencia:', 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(61, 61, utf8_decode($ROW_URGENCY[0]['MOTIVO_URGENCIA']));
-
-                    $this->pdf->SetXY(26, 68);
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, 68, utf8_decode('Inicio y Evolución:'), 0, 0, 'L');
-
-
-                    $y = $this->pdf->GetY();
-
-                    $this->pdf->SetXY(26, $y);
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Multicell(168, 5.5, utf8_decode($ROW_URGENCY[0]['INICIOEVOLUCION_URGENCIA']));
-                    $this->pdf->Ln(2);
-                    $y = $this->pdf->GetY();
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, $y + 2, utf8_decode('Signos Vitales:'), 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Ln(5);
-
-                    $y = $this->pdf->GetY();
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, $y + 2, utf8_decode('TA:'));
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(33, $y + 2, $ROW_URGENCY[0]['SIGNOS_VITALES']);
-
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(57, $y + 2, utf8_decode('FC:'));
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(64, $y + 2, $ROW_URGENCY[0]['FC_URGENCIA']);
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(79, $y + 2, utf8_decode('RITMO CARDIACO:'));
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(115, $y + 2, $ROW_URGENCY[0]['RITMO_CARDIACO_URGENCIA']);
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(140, $y + 2, utf8_decode('TEMP.:'));
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(154, $y + 2, utf8_decode($ROW_URGENCY[0]['TEMP_URGENCIA']));
-
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(169, $y + 2, utf8_decode('FR:'));
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(177, $y + 2, $ROW_URGENCY[0]['FR_URGENCIA']);
-
-                    $y = $this->pdf->GetY();
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, $y + 6, utf8_decode('SAT:'));
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(36, $y + 6, $ROW_URGENCY[0]['SAT_URGENCIA']);
-
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(50, $y + 6, utf8_decode('GLICEMA CAPILAR:'));
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(89, $y + 6, $ROW_URGENCY[0]['GLICEMIA_CAPILAR_URGENCIA']);
-                    $this->pdf->Ln(6);
-
-                    $y = $this->pdf->GetY();
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, $y + 4, utf8_decode('Diágnostico Ingreso:'), 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-
-                    $y = $this->pdf->GetY();
-                    $this->pdf->SetXY(26, $y + 4);
-                    $this->pdf->Multicell(170, 4.4, utf8_decode($ROW_URGENCY[0]['DIAGNOSTICO']));
-                    $this->pdf->Ln(6);
-
-                    $y = $this->pdf->GetY();
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, $y, utf8_decode('Exploración Física:'), 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->setXY(25, $y);
-                    $this->pdf->Multicell(160, 5.5, utf8_decode($ROW_URGENCY[0]['EXPLORACION_FISICA']));
-                    $this->pdf->Ln(2);
-
-                    $y = $this->pdf->GetY();
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, $y, utf8_decode('Manejo intrahospitalario:'), 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->setXY(25, $y);
-                    $this->pdf->Multicell(168, 5.5, utf8_decode($ROW_URGENCY[0]['MANEJO_INTRAHOSPITALARIO_URGENCIA']));
-                    $this->pdf->Ln(2);
-
-                    $y = $this->pdf->GetY();
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, $y, utf8_decode('Tratamiento:'), 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->setXY(25, $y);
-                    $this->pdf->Multicell(168, 5.5, utf8_decode($ROW_URGENCY[0]['TRATAMIENTO_URGENCIA']));
-                    $this->pdf->Ln(2);
-
-                    $y = $this->pdf->GetY();
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, $y, utf8_decode('Evolución:'), 0, 0, 'L');
-
-                    $this->pdf->setXY(25, $y);
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Multicell(168, 6.5, utf8_decode($ROW_URGENCY[0]['EVOLUCION_URGENCIA']));
-                    $this->pdf->Ln(2);
-
-                    $y = $this->pdf->GetY();
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, $y, utf8_decode('Observaciones:'), 0, 0, 'L');
-
-                    $y = $this->pdf->GetY();
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->setXY(26, $y);
-                    $this->pdf->Multicell(168, 5.5, utf8_decode($ROW_URGENCY[0]['OBSERVACION_URGENCIA']));
-                    $this->pdf->Ln(5);
-
-                    $y = $this->pdf->GetY();
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, $y, utf8_decode('Egreso:'), 0, 0, 'L');
-                    $this->pdf->Ln(5);
-                    $y = $this->pdf->GetY();
-
-                    $this->pdf->text(26, $y, utf8_decode('DX egreso:'), 0, 0, 'L');
-
-                    $this->pdf->setXY(25, $y + 3);
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Multicell(163, 4.5, utf8_decode($ROW_URGENCY[0]['DIAGNOSTICO_EGRESO']));
-
-                    $y = $this->pdf->GetY();
-
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, $y + 3, utf8_decode('Fecha:'), 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(38, $y + 3, $ROW_URGENCY[0]['FECHAEGRESO_URGENCIA']);
-
-                    $y = $this->pdf->GetY();
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(61, $y + 3, utf8_decode('Hora:'), 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(72, $y + 3, $ROW_URGENCY[0]['HREGRESO_URGENCIA']);
-
-                    $y = $this->pdf->GetY();
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(87, $y + 3, utf8_decode('Destino:'), 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(102, $y + 3, utf8_decode($ROW_URGENCY[0]['DESTINO']));
-
-                    // Verificar si el contenido anterior alcanza el límite inferior
-                    if ($y + 10 > $this->pdf->GetPageHeight() - $this->pdf->GetBottomMargin()) {
-                        $this->pdf->AddPage();  // Añadir una nueva página si no hay espacio suficiente
-                    }
-
-                    $y = $this->pdf->GetY();
-                    $this->pdf->SetFont('Arial', 'B', 10);
-                    $this->pdf->text(26, $y + 10, utf8_decode('Médico:'), 0, 0, 'L');
-                    $this->pdf->SetFont('Arial', '', 10);
-                    $this->pdf->Text(40, $y + 10, utf8_decode($ROW_URGENCY[0]['NOMBRE_USUARIO'] . ' ' . $ROW_URGENCY[0]['APELLIDO_USUARIO']));
-
-                    $this->pdf->SetFont('Arial', 'B', 8); //Arial, negrita, 12 puntos
-                    //$this->pdf->setXY(13, 258);
-
-                    $footerHeight = 10; // Altura del pie de página
-                    $this->pdf->SetAutoPageBreak(true, $footerHeight);
-                    $this->pdf->SetY(-$footerHeight);
-
-                    $this->pdf->Cell(0, 0, utf8_decode('Km. 53.5 CARRETERA MELAQUE-PUERTO VALLARTA TELS:(315) 351 0170 Y 351 0169 FAX:(315) 351 0043 CAREYITOS,JALISCO. C.P.48890'), 0, 1, 'C');
-                    $y = $this->pdf->GetY();
-                    $this->pdf->line(12, $y + 2, 205, $y + 2);
-
-                    $this->pdf->Output(); //Salida al navegador del pdf
-                    $this->pdf->close();
-                } else {
-                    redirect('Urgency/index');
-                }
-            } else {
-                redirect('Urgency/index');
-            }
-        } else {
-            redirect('Login/salir');
-        }
-    }
 
     //RECETA
     public function creaPdfReceta($ID_CONSULT)
@@ -1462,7 +904,7 @@ class Consult extends CI_Controller
                     $this->pdf->designUp();
 
                     if ($modo != 'imprimir') {
-                        $this->pdf->image(FCPATH . "assets/img/ZC_LABORATORIOS.png", 0, 0, 215.9, 279.4);
+                        $this->pdf->Image(FCPATH . "assets/img/ZC_LABORATORIOS.png", 0, 0, 215.9, 279.4);
                     }
 
                     $this->pdf->setXY(11, 29);
@@ -1512,7 +954,7 @@ class Consult extends CI_Controller
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                     $this->pdf->designUp();
 
-                    $this->pdf->image(FCPATH . "assets/img/ZC_LABORATORIOS.png", 0, 0, 215.9, 279.4);
+                    $this->pdf->Image(FCPATH . "assets/img/ZC_LABORATORIOS.png", 0, 0, 215.9, 279.4);
 
                     $this->pdf->setXY(11, 29);
                     $this->pdf->SetFont('Arial', '', 9);
@@ -1556,6 +998,7 @@ class Consult extends CI_Controller
 
                 if (count($ROW_CONSULT) > NULO) {
                     $this->load->library('PDF');
+                    $base = FCPATH . 'assets/img/historiaClinica/';
 
                     $modo = $this->input->get('modo');
 
@@ -1563,8 +1006,8 @@ class Consult extends CI_Controller
                     $this->pdf->SetFont('Arial', 'B', 10); //Arial, negrita, 12 puntos
                     $this->pdf->designUp();
 
-                    if ($modo != 'imprimir') {
-                        $this->pdf->image(FCPATH . "assets/img/historiaClinica/1.png", 0, 0, 215.9, 279.4);
+                    if ($modo != 'imprimir' && file_exists($base . '1.png')) {
+                        $this->pdf->Image($base . '1.png', 0, 0, 215.9, 279.4, '', '', '', false, 300, '', false, false, 0);
                     }
 
                     $this->pdf->setXY(11, 29);
@@ -1600,7 +1043,7 @@ class Consult extends CI_Controller
                     $this->pdf->Text(182, 92, $ROW_CONSULT[0]['CANCER_HERMANOS'] ? 'X' : '');
                     $this->pdf->Text(30, 99, $ROW_CONSULT[0]['OTROS_HEREDOFAMILIARES']);
                     if ($ROW_CONSULT[0]['DIABETES_MELLITUS'] == 1) {
-                        $this->pdf->Text(77, 127, 'X'); // Marca el "sí"
+                        $this->pdf->Text(77, 122, 'X'); // Marca el "sí"
                     } else {
                         $this->pdf->Text(89, 122, 'X'); // Marca el "no"
                     }
@@ -1773,8 +1216,8 @@ class Consult extends CI_Controller
 
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->designUp();
-                    if ($modo != 'imprimir') {
-                        $this->pdf->image(FCPATH . "assets/img/historiaClinica/2.png", 0, 0, 215.9, 279.4);
+                    if ($modo != 'imprimir' && file_exists($base . '2.png')) {
+                        $this->pdf->Image($base . '2.png', 0, 0, 215.9, 279.4, '', '', '', false, 300, '', false, false, 0);
                     }
 
                     if ($ROW_CONSULT[0]['INMUNIZACION'] == 1) {
@@ -1961,8 +1404,8 @@ class Consult extends CI_Controller
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->designUp();
 
-                    if ($modo != 'imprimir') {
-                        $this->pdf->image(FCPATH . "assets/img/historiaClinica/3.png", 0, 0, 215.9, 279.4);
+                    if ($modo != 'imprimir' && file_exists($base . '3.png')) {
+                        $this->pdf->Image($base . '3.png', 0, 0, 215.9, 279.4, '', '', '', false, 300, '', false, false, 0);
                     }
 
 
@@ -2014,8 +1457,8 @@ class Consult extends CI_Controller
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->designUp();
 
-                    if ($modo != 'imprimir') {
-                        $this->pdf->image(FCPATH . "assets/img/historiaClinica/4.png", 0, 0, 215.9, 279.4);
+                    if ($modo != 'imprimir' && file_exists($base . '4.png')) {
+                        $this->pdf->Image($base . '4.png', 0, 0, 215.9, 279.4, '', '', '', false, 300, '', false, false, 0);
                     }
 
                     $this->pdf->Text(58, 3, mb_convert_encoding($ROW_CONSULT[0]['PRE_PROCEDIMIENTO'], 'ISO-8859-1', 'UTF-8'));
@@ -2034,8 +1477,8 @@ class Consult extends CI_Controller
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->designUp();
 
-                    if ($modo != 'imprimir') {
-                        $this->pdf->image(FCPATH . "assets/img/historiaClinica/5.png", 0, 0, 215.9, 279.4);
+                    if ($modo != 'imprimir' && file_exists($base . '5.png')) {
+                        $this->pdf->Image($base . '5.png', 0, 0, 215.9, 279.4, '', '', '', false, 300, '', false, false, 0);
                     }
 
                     $this->pdf->Text(165, 127, date('d/m/Y', strtotime($ROW_CONSULT[0]['FECHA_CONSULTA'])));
@@ -2046,8 +1489,8 @@ class Consult extends CI_Controller
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->designUp();
 
-                    if ($modo != 'imprimir') {
-                        $this->pdf->image(FCPATH . "assets/img/historiaClinica/6.png", 0, 0, 215.9, 279.4);
+                    if ($modo != 'imprimir' && file_exists($base . '6.png')) {
+                        $this->pdf->Image($base . '6.png', 0, 0, 215.9, 279.4, '', '', '', false, 300, '', false, false, 0);
                     }
 
                     $this->pdf->Text(52, 10, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2059,8 +1502,8 @@ class Consult extends CI_Controller
                     $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                     $this->pdf->designUp();
 
-                    if ($modo != 'imprimir') {
-                        $this->pdf->image(FCPATH . "assets/img/historiaClinica/7.png", 0, 0, 215.9, 279.4);
+                    if ($modo != 'imprimir' && file_exists($base . '7.png')) {
+                        $this->pdf->Image($base . '7.png', 0, 0, 215.9, 279.4, '', '', '', false, 300, '', false, false, 0);
                     }
 
                     $this->pdf->Text(52, 10, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2107,7 +1550,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/acidoHialuronico/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/acidoHialuronico/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2123,7 +1566,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/acidoHialuronico/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/acidoHialuronico/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2183,7 +1626,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/acidoHialuronico/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/acidoHialuronico/3.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2203,7 +1646,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/bioestimulador/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/bioestimulador/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2218,7 +1661,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/bioestimulador/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/bioestimulador/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2281,7 +1724,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/bioestimulador/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/bioestimulador/3.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2300,7 +1743,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/co2/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/co2/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2315,7 +1758,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/co2/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/co2/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2337,7 +1780,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/laser/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/laser/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2351,7 +1794,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/laser/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/laser/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
@@ -2359,7 +1802,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/laser/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/laser/3.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2422,7 +1865,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/laser/4.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/laser/4.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2440,7 +1883,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/endolifting/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/endolifting/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2454,7 +1897,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/endolifting/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/endolifting/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
@@ -2462,7 +1905,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/endolifting/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/endolifting/3.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2472,7 +1915,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/endolifting/4.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/endolifting/4.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2490,7 +1933,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/enzimas/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/enzimas/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2504,7 +1947,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/enzimas/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/enzimas/2.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
@@ -2512,7 +1955,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/enzimas/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/enzimas/3.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2576,7 +2019,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/enzimas/4.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/enzimas/4.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2595,7 +2038,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/hialuronidasa/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/hialuronidasa/1.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(60, 32, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2608,7 +2051,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/hialuronidasa/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/hialuronidasa/2.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->Text(73, 208, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
                         $campos = [
@@ -2669,7 +2112,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/hialuronidasa/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/hialuronidasa/3.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(80, 124, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2687,7 +2130,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/peeling/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/peeling/1.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(60, 32, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2700,14 +2143,14 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/peeling/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/peeling/2.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->AddPage('P', 'Letter'); //Vertical, Carta
                         $this->pdf->SetFont('Arial', '', 9); //Arial, negrita, 12 puntos
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/peeling/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/peeling/3.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(73, 33, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
@@ -2777,7 +2220,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/toxina/1.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/toxina/1.png", 0, 0, 215.9, 279.4);
                         }
 
                         $this->pdf->setXY(11, 29);
@@ -2791,7 +2234,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/toxina/2.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/toxina/2.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->Text(73, 152, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_USUARIO'] . ' ' . $ROW_CONSULT[0]['APELLIDO_USUARIO'], 'ISO-8859-1', 'UTF-8'));
                         $campos = [
@@ -2852,7 +2295,7 @@ class Consult extends CI_Controller
                         $this->pdf->designUp();
 
                         if ($modo != 'imprimir') {
-                            $this->pdf->image(FCPATH . "assets/img/toxina/3.png", 0, 0, 215.9, 279.4);
+                            $this->pdf->Image(FCPATH . "assets/img/toxina/3.png", 0, 0, 215.9, 279.4);
                         }
                         $this->pdf->setXY(11, 29);
                         $this->pdf->Text(80, 72, mb_convert_encoding($ROW_CONSULT[0]['NOMBRE_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_PATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8') . ' ' . mb_convert_encoding($ROW_CONSULT[0]['APELLIDO_MATERNO_PACIENTE'], 'ISO-8859-1', 'UTF-8'));
@@ -2866,6 +2309,506 @@ class Consult extends CI_Controller
             } else {
                 redirect('Consult/index');
             }
+        }
+    }
+    public function previewConsentimiento($idPacienteActual = null, $idTipoConsentimiento = null, $idMedico = null, $indicacionesIds = null)
+    {
+        // ... validaciones previas ...
+
+        if (!$idPacienteActual || !$idTipoConsentimiento || !$idMedico) {
+            show_error('Faltan parámetros requeridos (paciente, tipo o médico)');
+        }
+
+        // Obtener datos del paciente
+        $paciente = $this->mpatient->get_patient_by_id($idPacienteActual);
+
+        if (empty($paciente)) {
+            show_error('Paciente no encontrado');
+        }
+
+        $p = $paciente; // o row_array() según tu modelo
+
+        // Obtener nombre completo del médico seleccionado (¡aquí usamos $idMedico!)
+        $medicoData = $this->mpatient->get_medico_by_id($idMedico);
+
+        $nombreMedico = mb_convert_encoding(
+            trim(
+                (isset($medicoData['NOMBRE_USUARIO']) ? $medicoData['NOMBRE_USUARIO'] : '') . ' ' .
+                    (isset($medicoData['APELLIDO_USUARIO']) ? $medicoData['APELLIDO_USUARIO'] : '')
+            ),
+            'ISO-8859-1',
+            'UTF-8'
+        );
+
+        if (empty($nombreMedico)) {
+            $nombreMedico = 'Médico no identificado'; // fallback
+        }
+
+        // Nombre del paciente
+        $nombrePaciente = mb_convert_encoding(
+            trim($p->NOMBRE_PACIENTE . ' ' . $p->APELLIDO_PATERNO_PACIENTE . ' ' . $p->APELLIDO_MATERNO_PACIENTE),
+            'ISO-8859-1',
+            'UTF-8'
+        );
+
+        // Fecha actual (hoy)
+        $fechaHoy = date('d/m/Y');
+
+        $this->db->select("AUTO_INCREMENT");
+        $this->db->from("information_schema.tables");
+        $this->db->where("table_schema", $this->db->database);
+        $this->db->where("table_name", "consulta");
+
+        $query = $this->db->get();
+        $siguiente = ($query->num_rows() > 0) ? $query->row()->AUTO_INCREMENT : 1;
+
+        $historiaClinica =  str_pad($siguiente, 6);
+
+        // Cargar librería PDF
+        $this->load->library('PDF');
+
+        $indicaciones = [];
+        if ($indicacionesIds && $indicacionesIds !== '0') {
+            $codigos = explode('-', $indicacionesIds);
+            $opcionesFijas = [
+                'ENVEJECIMIENTO_CUTANEO' => 'Envejecimiento cutáneo',
+                'RITIDES' => 'Rítides',
+                'BRUXISMO' => 'Bruxismo',
+                'ADIPOSIDAD_LOCALIZADA' => 'Adiposidad Localizada',
+                'ESTRIAS' => 'Estrías',
+                'VARICES' => 'Várices',
+                'HIPERPIGMENTACION' => 'Hiperpigmentación',
+                'ALOPECIA' => 'Alopecia',
+                'VERRUGAS' => 'Verrugas',
+                'FLACIDEZ_CUTANEA' => 'Flacidez cutánea',
+                'ACNE' => 'Acné',
+                'CELULITIS' => 'Celulitis',
+                'CICATRICES' => 'Cicatrices',
+                'ROSACEA' => 'Rosácea',
+                'HIPERHIDROSIS' => 'Hiperhidrósis',
+            ];
+
+            foreach ($codigos as $codigo) {
+                if (isset($opcionesFijas[$codigo])) {
+                    $indicaciones[] = $opcionesFijas[$codigo];
+                }
+            }
+        }
+
+        // Agregar texto de "Otros" si existe
+        $otros = $this->input->get('otros');
+        if ($otros) {
+            $indicaciones[] = urldecode($otros);
+        }
+
+        $textoIndicaciones = empty($indicaciones)
+            ? 'No se especificaron indicaciones'
+            : implode(', ', $indicaciones);
+
+        // ---------------- TIPO DE CONSENTIMIENTO 1 ------------------
+        if ($idTipoConsentimiento == 1) {
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/acidoHialuronico/1.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 10);
+
+
+            $this->pdf->Text(60, 32, $nombrePaciente);
+            $this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 47, $nombreMedico);
+            $this->pdf->Text(60, 56, $fechaHoy);
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/acidoHialuronico/2.png", 0, 0, 215.9, 279.4);
+            $this->pdf->Text(73, 222, $nombreMedico);
+            $this->pdf->SetFont('Arial', '', 9);
+
+            $x = 161;          // Coordenada X inicial
+            $y = 227;
+            $maxX = 205;
+            $espaciado = 3;
+
+            if (empty($textoIndicaciones)) {
+                $this->pdf->Text($x, $y, mb_convert_encoding('No se especificaron indicaciones', 'ISO-8859-1', 'UTF-8'));
+            } else {
+                $items = explode(', ', $textoIndicaciones);
+                foreach ($items as $texto) {
+                    $textoPDF = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
+                    $anchoTexto = $this->pdf->GetStringWidth($textoPDF);
+
+                    if ($x + $anchoTexto > $maxX) {
+                        $x = 20;
+                        $y += 5;
+                    }
+
+                    $this->pdf->Text($x, $y, $textoPDF);
+                    $x += $anchoTexto + $espaciado;
+                }
+            }
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+           // $this->pdf->Image(FCPATH . "assets/img/acidoHialuronico/3.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 9);
+            $this->pdf->Text(80, 137, $nombrePaciente);
+
+            $this->pdf->Output('I');
+        }
+        // ---------------- TIPO DE CONSENTIMIENTO 2 ------------------
+        elseif ($idTipoConsentimiento == 2) {
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+           // $this->pdf->Image(FCPATH . "assets/img/bioestimulador/1.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 10);
+
+            $this->pdf->Text(60, 32, $nombrePaciente);
+            $this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 47, $nombreMedico);
+            $this->pdf->Text(60, 56, $fechaHoy);
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/bioestimulador/2.png", 0, 0, 215.9, 279.4);
+            $this->pdf->Text(73, 187, $nombreMedico);
+            $this->pdf->SetFont('Arial', '', 9);
+
+            $x = 161;          // Coordenada X inicial
+            $y = 192;
+            $maxX = 205;
+            $espaciado = 3;
+
+            if (empty($indicaciones)) {
+                $this->pdf->Text($x, $y, mb_convert_encoding('No se especificaron indicaciones', 'ISO-8859-1', 'UTF-8'));
+            } else {
+                foreach ($indicaciones as $texto) {
+                    $textoPDF = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
+                    $anchoTexto = $this->pdf->GetStringWidth($textoPDF);
+
+                    if ($x + $anchoTexto > $maxX) {
+                        $x = 20;
+                        $y += 5;
+                    }
+
+                    $this->pdf->Text($x, $y, $textoPDF);
+                    $x += $anchoTexto + $espaciado;
+                }
+            }
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/bioestimulador/3.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 9);
+            $this->pdf->Text(80, 101, $nombrePaciente);
+
+            $this->pdf->Output('I');
+        }
+
+        // ---------------- TIPO DE CONSENTIMIENTO 3 ------------------
+        elseif ($idTipoConsentimiento == 3) {
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/co2/1.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 10);
+
+            $this->pdf->Text(60, 32, $nombrePaciente);
+            $this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 47, $nombreMedico);
+            $this->pdf->Text(60, 56, $fechaHoy);
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+           // $this->pdf->Image(FCPATH . "assets/img/co2/2.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 9);
+            $this->pdf->Text(80, 129, $nombrePaciente);
+            $this->pdf->Text(80, 200, $nombrePaciente);
+
+
+            $this->pdf->Output('I');
+        }
+        // ==================== TIPO 4 - Laser ====================
+        elseif ($idTipoConsentimiento == 4) {
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/laser/1.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 10);
+            $this->pdf->Text(60, 32, $nombrePaciente);
+            $this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 47, $nombreMedico);
+            $this->pdf->Text(60, 56, $fechaHoy);
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/laser/2.png", 0, 0, 215.9, 279.4);
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/laser/3.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 8);
+            $this->pdf->Text(73, 170, $nombreMedico);
+
+            $x = 161;          // Coordenada X inicial
+            $y = 175;
+            $maxX = 205;
+            $espaciado = 3;
+
+            if (empty($indicaciones)) {
+                $this->pdf->Text($x, $y, mb_convert_encoding('No se especificaron indicaciones', 'ISO-8859-1', 'UTF-8'));
+            } else {
+                foreach ($indicaciones as $texto) {
+                    $textoPDF = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
+                    $anchoTexto = $this->pdf->GetStringWidth($textoPDF);
+
+                    if ($x + $anchoTexto > $maxX) {
+                        $x = 20;
+                        $y += 5;
+                    }
+
+                    $this->pdf->Text($x, $y, $textoPDF);
+                    $x += $anchoTexto + $espaciado;
+                }
+            }
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/laser/4.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 8);
+            $this->pdf->Text(80, 88, $nombrePaciente);
+
+            $this->pdf->Output('I');
+        }
+
+        // ==================== TIPO 5 - Endolifting ====================
+        elseif ($idTipoConsentimiento == 5) {
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/endolifting/1.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 10);
+            $this->pdf->Text(60, 30, $nombrePaciente);
+            $this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 47, $nombreMedico);
+            $this->pdf->Text(60, 55, $fechaHoy);
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/endolifting/2.png", 0, 0, 215.9, 279.4);
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/endolifting/3.png", 0, 0, 215.9, 279.4);
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/endolifting/4.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 9);
+            $this->pdf->Text(80, 170, $nombrePaciente);
+            //$this->pdf->Text(80, 188, $nombreMedico);
+
+            $this->pdf->Output('I');
+        }
+
+        // ==================== TIPO 6 - Enzimas ====================
+        elseif ($idTipoConsentimiento == 6) {
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/enzimas/1.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 10);
+            $this->pdf->Text(60, 30, $nombrePaciente);
+            $this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 46, $nombreMedico);
+            $this->pdf->Text(60, 54, $fechaHoy);
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/enzimas/2.png", 0, 0, 215.9, 279.4);
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/enzimas/3.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 8);
+            $this->pdf->Text(73, 141, $nombreMedico);
+
+            $x = 162;          // Coordenada X inicial
+            $y = 146;
+            $maxX = 205;
+            $espaciado = 3;
+
+            if (empty($indicaciones)) {
+                $this->pdf->Text($x, $y, mb_convert_encoding('No se especificaron indicaciones', 'ISO-8859-1', 'UTF-8'));
+            } else {
+                foreach ($indicaciones as $texto) {
+                    $textoPDF = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
+                    $anchoTexto = $this->pdf->GetStringWidth($textoPDF);
+
+                    if ($x + $anchoTexto > $maxX) {
+                        $x = 20;
+                        $y += 5;
+                    }
+
+                    $this->pdf->Text($x, $y, $textoPDF);
+                    $x += $anchoTexto + $espaciado;
+                }
+            }
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/enzimas/4.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 9);
+            $this->pdf->Text(80, 58, $nombrePaciente);
+            //$this->pdf->Text(80, 76.5, $nombreMedico);
+
+            $this->pdf->Output('I');
+        }
+
+        // ==================== TIPO 7 - Hialuronidasa ====================
+        elseif ($idTipoConsentimiento == 7) {
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/hialuronidasa/1.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 10);
+            $this->pdf->Text(60, 32, $nombrePaciente);
+            $this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 46, $nombreMedico);
+            $this->pdf->Text(60, 56, $fechaHoy);
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+           // $this->pdf->Image(FCPATH . "assets/img/hialuronidasa/2.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 8);
+            $this->pdf->Text(73, 208, $nombreMedico);
+
+            $x = 154;          // Coordenada X inicial
+            $y = 213;
+            $maxX = 205;
+            $espaciado = 3;
+
+            if (empty($indicaciones)) {
+                $this->pdf->Text($x, $y, mb_convert_encoding('No se especificaron indicaciones', 'ISO-8859-1', 'UTF-8'));
+            } else {
+                foreach ($indicaciones as $texto) {
+                    $textoPDF = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
+                    $anchoTexto = $this->pdf->GetStringWidth($textoPDF);
+
+                    if ($x + $anchoTexto > $maxX) {
+                        $x = 20;
+                        $y += 5;
+                    }
+
+                    $this->pdf->Text($x, $y, $textoPDF);
+                    $x += $anchoTexto + $espaciado;
+                }
+            }
+
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/hialuronidasa/3.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 9);
+            $this->pdf->Text(80, 124, $nombrePaciente);
+            //$this->pdf->Text(80, 143, $nombreMedico);
+
+            $this->pdf->Output('I');
+        }
+
+        // ==================== TIPO 8 - Peeling ====================
+        elseif ($idTipoConsentimiento == 8) {
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/peeling/1.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 10);
+            $this->pdf->Text(60, 32, $nombrePaciente);
+            $this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 46, $nombreMedico);
+            $this->pdf->Text(60, 56, $fechaHoy);
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/peeling/2.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 8);
+            //$this->pdf->Text(73, 208, $nombreMedico);
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/peeling/3.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 9);
+            $this->pdf->Text(73, 33, $nombreMedico);
+            $this->pdf->Text(80, 200, $nombrePaciente);
+            //$this->pdf->Text(80, 219, $nombreMedico);
+
+            $x = 185;          // Coordenada X inicial
+            $y = 39;
+            $maxX = 205;
+            $espaciado = 3;
+
+            if (empty($indicaciones)) {
+                $this->pdf->Text($x, $y, mb_convert_encoding('No se especificaron indicaciones', 'ISO-8859-1', 'UTF-8'));
+            } else {
+                foreach ($indicaciones as $texto) {
+                    $textoPDF = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
+                    $anchoTexto = $this->pdf->GetStringWidth($textoPDF);
+
+                    if ($x + $anchoTexto > $maxX) {
+                        $x = 20;
+                        $y += 5;
+                    }
+
+                    $this->pdf->Text($x, $y, $textoPDF);
+                    $x += $anchoTexto + $espaciado;
+                }
+            }
+
+            $this->pdf->Output('I');
+        }
+
+        // ==================== TIPO 9 - Toxina ====================
+        elseif ($idTipoConsentimiento == 9) {
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/toxina/1.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 10);
+            $this->pdf->Text(60, 32, $nombrePaciente);
+            $this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 46, $nombreMedico);
+            $this->pdf->Text(60, 56, $fechaHoy);
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+            //$this->pdf->Image(FCPATH . "assets/img/toxina/2.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 8);
+            $this->pdf->Text(73, 152, $nombreMedico);
+
+            $x = 161;          // Coordenada X inicial
+            $y = 157;
+            $maxX = 205;
+            $espaciado = 3;
+
+            if (empty($indicaciones)) {
+                $this->pdf->Text($x, $y, mb_convert_encoding('No se especificaron indicaciones', 'ISO-8859-1', 'UTF-8'));
+            } else {
+                foreach ($indicaciones as $texto) {
+                    $textoPDF = mb_convert_encoding($texto, 'ISO-8859-1', 'UTF-8');
+                    $anchoTexto = $this->pdf->GetStringWidth($textoPDF);
+
+                    if ($x + $anchoTexto > $maxX) {
+                        $x = 20;
+                        $y += 5;
+                    }
+
+                    $this->pdf->Text($x, $y, $textoPDF);
+                    $x += $anchoTexto + $espaciado;
+                }
+            }
+
+            $this->pdf->AddPage('P', 'Letter');
+            $this->pdf->designUp();
+           // $this->pdf->Image(FCPATH . "assets/img/toxina/3.png", 0, 0, 215.9, 279.4);
+            $this->pdf->SetFont('Arial', '', 9);
+            $this->pdf->Text(80, 72, $nombrePaciente);
+            //$this->pdf->Text(80, 90, $nombreMedico);
+
+            $this->pdf->Output('I');
+        } else {
+            show_error('Tipo de consentimiento no válido');
         }
     }
 }

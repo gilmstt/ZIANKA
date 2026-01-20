@@ -85,7 +85,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>IRIDECENCE</title>
+	<title>IRIDEZCENCE</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -122,7 +122,7 @@
 
 				<form class="login100-form validate-form" id="LOGIN_FORM">
 					<span class="login100-form-title">
-						IRIDECENCE
+						IRIDEZCENCE
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "El usuario es requerido">

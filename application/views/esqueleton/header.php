@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>IRIDECENCE</title>
+    <title>IRIDEZCENCE</title>
     <link rel="shortcut icon" href="<?= base_url(); ?>/assets/img/favicon.png" type="image/x-icon" />
     <script type="text/javascript">
         var raiz_url = '<?php echo base_url() ?>';

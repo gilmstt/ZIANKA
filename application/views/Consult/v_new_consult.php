@@ -56,7 +56,6 @@ $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_u
                     <form id="NEW_CONSULT" data-toggle="validator" method="post">
                         <div class="row">
                             <input type="hidden" name="ID_PACIENTE" value="<?= $row_user->ID_PACIENTE ?>">
-
                             <div data-type="readonly" class="col-sm-12 col-mdx-12 col-lg-12">
                                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                     <div class="panel panel-default">

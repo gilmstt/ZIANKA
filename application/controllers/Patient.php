@@ -34,6 +34,39 @@ class Patient extends CI_Controller
             redirect('login/salir');
         }
     }
+    public function cargar_tipos_consentimiento()
+    {
+        $this->db->select('id_tipo_consulta AS id, nombre_tipo_consulta');
+        $this->db->from('tipo_consulta');
+        $this->db->where('vigencia_tipo_consulta', 1);
+
+        $query = $this->db->get();
+
+        echo json_encode($query->result_array());
+    }
+
+    // En application/controllers/Patient.php (o donde tengas cargar_tipos_consentimiento)
+    public function cargar_medicos()
+    {
+        $this->db->select('ID_USUARIO, NOMBRE_USUARIO, APELLIDO_USUARIO');
+        $this->db->where('ID_ROL', 4); // ajusta según tu campo de rol
+        $this->db->where('VIGENCIA_USUARIO', 1);     // solo activos
+        $this->db->order_by('NOMBRE_USUARIO', 'ASC');
+
+        $medicos = $this->db->get('usuario')->result_array();
+
+        // Formato simple para JS
+        $response = [];
+        foreach ($medicos as $m) {
+            $response[] = [
+                'id'     => $m['ID_USUARIO'],
+                'nombre' => trim($m['NOMBRE_USUARIO'] . ' ' . $m['APELLIDO_USUARIO'])
+            ];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
 
     public function ajax_get_patients()
     {
