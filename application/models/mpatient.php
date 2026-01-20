@@ -195,7 +195,7 @@ class Mpatient extends CI_Model
                     'DESMAYOS' => $this->input->post('DESMAYOS') !== false ? (int)$this->input->post('DESMAYOS') : null,
                     'ASPIRINA' => $this->input->post('ASPIRINA') !== false ?  (int)$this->input->post('ASPIRINA') : null,
                     'MORETES' => $this->input->post('MORETES') !== false ? (int)$this->input->post('MORETES') : null,
-                    'BRONCEADO' => $this->input->post('BRONCEADO') !== false ? (int)$this->input->post('BRONCEADO') : null, 
+                    'BRONCEADO' => $this->input->post('BRONCEADO') !== false ? (int)$this->input->post('BRONCEADO') : null,
                     'ANESTESIA' => $this->input->post('ANESTESIA') !== false ? (int)$this->input->post('ANESTESIA') : null,
                     'PROBLEMA_ANESTESIA' => $this->input->post('PROBLEMA_ANESTESIA') !== false ? (int)$this->input->post('PROBLEMA_ANESTESIA') : null,
                     'ESPECIFIQUE_PROBLEMA_ANESTESIA' => trim($this->input->post('ESPECIFIQUE_PROBLEMA_ANESTESIA')),
@@ -240,6 +240,18 @@ class Mpatient extends CI_Model
             $this->db->where('paciente.ID_PACIENTE', $ID_PATIENT);
             $query = $this->db->get();
             return $query->row();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+    function get_medico_by_id($idMedico)
+    {
+        try {
+            $this->db->select("*");
+            $this->db->from('usuario');
+            $this->db->where('ID_USUARIO', $idMedico);
+            $query = $this->db->get();
+            return $query->row_array();
         } catch (Exception $ex) {
             return $ex->getMessage();
         }
@@ -289,7 +301,7 @@ class Mpatient extends CI_Model
                 'ID_SANGRE' => intval($row['ID_SANGRE']),
                 "EXPOSICION_SOLAR" => $this->input->post('EXPOSICION_SOLAR') !== false ? (int)$this->input->post('EXPOSICION_SOLAR') : null,
                 "TIEMPO_EXPOSICION_SOLAR" => trim($row['TIEMPO_EXPOSICION_SOLAR']),
-                "USO_PROTECCION_SOLAR" =>$this->input->post('USO_PROTECCION_SOLAR') !== false ? (int)$this->input->post('USO_PROTECCION_SOLAR') : null,
+                "USO_PROTECCION_SOLAR" => $this->input->post('USO_PROTECCION_SOLAR') !== false ? (int)$this->input->post('USO_PROTECCION_SOLAR') : null,
                 "MARCA_PROTECTOR_SOLAR" => trim($row['MARCA_PROTECTOR_SOLAR']),
                 "FPS_PROTECTOR_SOLAR" => trim($row['FPS_PROTECTOR_SOLAR']),
                 'MUNICIPIO_PACIENTE' => trim($row['MUNICIPIO_PACIENTE']),
@@ -306,13 +318,14 @@ class Mpatient extends CI_Model
                 'ID_TARIFA' => $id_tarifa,
                 'ID_PERFIL_MEMBRESIA' => $perfil,
                 'ID_CASA' =>  intval($row["ID_CASA"]),
-            );var_dump($data);
+            );
+            var_dump($data);
 
 
             // Actualizar tabla paciente
             $this->db->where('ID_PACIENTE', $row['ID_PACIENTE']);
             $this->db->update('paciente', $data);
-           
+
             if ($this->db->affected_rows() > 0) {
                 return true;
             } else {
@@ -463,12 +476,20 @@ class Mpatient extends CI_Model
           </button>
         </span> 
 
-         <button id='btnDeletePatient' class='btn btn-defaultz btn-delete-patient'           
+         <button id='btnDeletePatient' class='btn btn-defaultz btn-delete-patient'
             data-id-patient='" . $row['ID_PACIENTE'] . "'
             data-original-title='Eliminar paciente'
             data-toggle='tooltip'>
             <i class='fa fa-trash fa-x'></i>
-         </button>";
+         </button>
+
+         <button class='btn btn-defaultz btn_impr_consentimiento_index' 
+            data-id-paciente='" . $row['ID_PACIENTE'] . "' 
+            data-toggle='modal'
+            data-target='#modalSeleccionTipoConsentimiento'
+            title='Imprimir consentimiento'>
+            <i class='fa fa-print fa-x'></i>
+        </button>";
 
             $sub_array = array();
 
