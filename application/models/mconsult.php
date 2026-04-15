@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mconsult extends CI_Model
 {
 
-    
+
 
     function agregarReceta($idConsulta, $idReceta)
     {
@@ -112,6 +112,17 @@ class Mconsult extends CI_Model
             $descTarifa = ($this->input->post('DESC_TARIFA')) ? $this->input->post('DESC_TARIFA') : intval("0");
             /* $descMembresia = ($this->input->post('RG_DESCUENTO')) ? $this->input->post('RG_DESCUENTO') : intval("0"); */
 
+            // Obtener los tipos de consulta seleccionados (ahora es un array)
+            $tipos_seleccionados = $this->input->post('RG_TIPO_CONSULTA');
+
+            // Convertir a array si solo viene un valor
+            if (!is_array($tipos_seleccionados)) {
+                $tipos_seleccionados = !empty($tipos_seleccionados) ? [$tipos_seleccionados] : [];
+            }
+
+            // Tomamos el primer tipo como principal (para mantener compatibilidad con ID_TIPO_CONSULTA)
+            $id_tipo_principal = !empty($tipos_seleccionados) ? (int) reset($tipos_seleccionados) : 0;
+
             $data = array(
                 "ID_PACIENTE" => $this->input->post('ID_PACIENTE'),
                 "ID_TARIFA" => $idTarifa,
@@ -122,7 +133,7 @@ class Mconsult extends CI_Model
                 "DESC_TARIFA" => $descTarifa,
                 "FECHA_CONSULTA" => convierte_fecha($this->input->post('RG_FECHA_FICHA')),
                 "HORA_CONSULTA" => $this->input->post('RG_HR_FICHA'),
-                "ID_TIPO_CONSULTA" => $this->input->post('RG_TIPO_CONSULTA'),
+                "ID_TIPO_CONSULTA" => $id_tipo_principal,
                 "ENVEJECIMIENTO_CUTANEO" => $this->input->post('ENVEJECIMIENTO_CUTANEO') ? 1 : 0,
                 "RITIDES" => $this->input->post('RITIDES') ? 1 : 0,
                 "BRUXISMO" => $this->input->post('BRUXISMO') ? 1 : 0,
@@ -164,9 +175,9 @@ class Mconsult extends CI_Model
                 "IMC_CONSULTA" => $this->input->post('RG_IMC_CONSULTA'),
                 "PROC_PROPUESTO" => $this->input->post('DP_PROCP'),
                 "IND_TERAPEUTICA" => $this->input->post('DP_IND_TERP'),
-                "PROC_REALIZAR"=> $this->input->post('DP_PROC_RELZ'),
-                "PRE_PROCEDIMIENTO"=> $this->input->post('DP_PRE_PROC'),
-                "POST_PROCEDIMIENTO"=> $this->input->post('DP_POST_PROC'),
+                "PROC_REALIZAR" => $this->input->post('DP_PROC_RELZ'),
+                "PRE_PROCEDIMIENTO" => $this->input->post('DP_PRE_PROC'),
+                "POST_PROCEDIMIENTO" => $this->input->post('DP_POST_PROC'),
                 "LABORATORIOS_SOLICITADOS" => $this->input->post('RG_LABORATORIOS'),
                 "IMPRESION_DIAGNOSTICA"   => $this->input->post('RG_LABORATORIOS_I_DIAGNOSTICA'),
                 "TOTAL_PAGADO_CONSULTA" =>  floatval($this->input->post('RG_TOTAL_PAGADO_CONSULTA')),
@@ -193,6 +204,18 @@ class Mconsult extends CI_Model
             $this->db->insert('consulta', $data);
             $id_consulta = $this->db->insert_id();
 
+            // ====================== TABLA INTERMEDIA ======================
+            if (!empty($tipos_seleccionados) && is_array($tipos_seleccionados)) {
+                foreach ($tipos_seleccionados as $id_tipo) {
+                    if (!empty($id_tipo) && is_numeric($id_tipo)) {
+                        $this->db->insert('consulta_tipo_consulta', [
+                            'id_consulta'      => $id_consulta,
+                            'id_tipo_consulta' => (int)$id_tipo
+                        ]);
+                    }
+                }
+            }
+            // ==============================================================
             // Insertar tratamientos si existen
             $tratamientos = $this->input->post('TRATAMIENTOS'); // Suponiendo que los tratamientos vienen en un array
 
@@ -201,7 +224,7 @@ class Mconsult extends CI_Model
                     $procedimiento = $tratamiento['PROCEDIMIENTO'];
                     $producto = $tratamiento['PRODUCTO'];
                     $fecha = convierte_fecha($tratamiento['FECHA']); // Formato a Y-m-d
-    
+
                     // Insertar cada tratamiento
                     $this->db->insert('tratamientos_aplicados_consulta', [
                         'id_consulta' => $id_consulta,  // Asociamos el tratamiento con la consulta recién insertada
@@ -457,12 +480,17 @@ class Mconsult extends CI_Model
         }
     }
 
-    public function getProcedimientosPorTipo($id_tipo_consulta)
+    public function getProcedimientosPorTipo($id_tipos)
     {
+        if (!is_array($id_tipos)) {
+            $id_tipos = [$id_tipos];
+        }
         $this->db->select('p.id_procedimiento, p.descripcion_procedimiento');
         $this->db->from('tipo_consulta_procedimientos tcp');
         $this->db->join('procedimiento p', 'p.id_procedimiento = tcp.id_procedimiento');
-        $this->db->where('tcp.id_tipo_consulta', $id_tipo_consulta);
+        $this->db->where_in('tcp.id_tipo_consulta', $id_tipos);
+        $this->db->group_by('p.id_procedimiento'); // evita duplicados
+        $this->db->order_by('p.descripcion_procedimiento', 'ASC');
         $query = $this->db->get();
 
         return $query->result_array();
@@ -927,17 +955,23 @@ class Mconsult extends CI_Model
         try {
             $this->db->select("*, c.ID_TARIFA as TARIFA2, c.ID_MEMBRESIA as MEMBRECIA2");
             $this->db->from('consulta as c');
-            $this->db->join('usuario as u', 'c.ID_MEDICO=u.ID_USUARIO');
-            $this->db->join('paciente as p', 'c.ID_PACIENTE=p.ID_PACIENTE');
-            $this->db->join('antecedentes as an', 'p.ID_PACIENTE=an.ID_PACIENTE' );
-            $this->db->join('sexo as s', 'p.ID_SEXO=s.ID_SEXO');
-            $this->db->join('sangre as sa', 'p.ID_SANGRE=sa.id_sangre');
+            $this->db->join('usuario as u', 'c.ID_MEDICO = u.ID_USUARIO', 'left');
+            $this->db->join('paciente as p', 'c.ID_PACIENTE = p.ID_PACIENTE', 'left');
+            $this->db->join('antecedentes as an', 'p.ID_PACIENTE = an.ID_PACIENTE', 'left');
+            $this->db->join('sexo as s', 'p.ID_SEXO = s.ID_SEXO', 'left');
+            $this->db->join('sangre as sa', 'p.ID_SANGRE = sa.id_sangre', 'left');
             $this->db->where('c.ID_CONSULTA', $ID_CONSULT);
 
             $query = $this->db->get();
-            return $query->result_array();
+
+            if ($query->num_rows() > 0) {
+                return $query->result_array();   // mantenemos result_array() como querías
+            } else {
+                return [];   // devolvemos array vacío en lugar de false o mensaje
+            }
         } catch (Exception $ex) {
-            return $ex->getMessage();
+            log_message('error', 'Error en get_consult_by_id_consult: ' . $ex->getMessage());
+            return [];
         }
     }
 
@@ -1067,16 +1101,33 @@ class Mconsult extends CI_Model
     {
         //$pacientes = $this->db->get_where('paciente', array('ACTIVO_PACIENTE' => 1))->result_array();
 
-        $order_column = array(NULL, NULL,NULL, NULL, NULL, NULL, NULL, NULL);
-        $this->db->select('consulta.*, paciente.NOMBRE_PACIENTE, paciente.APELLIDO_PATERNO_PACIENTE, paciente.APELLIDO_MATERNO_PACIENTE, usuario.NOMBRE_USUARIO, tarifa.NOMBRE_TARIFA, membresia.NOMBRE_MEMBRESIA, tipo_consulta.nombre_tipo_consulta');
+        $order_column = array(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        $this->db->select("
+            consulta.*,
+            paciente.NOMBRE_PACIENTE,
+            paciente.APELLIDO_PATERNO_PACIENTE,
+            paciente.APELLIDO_MATERNO_PACIENTE,
+            usuario.NOMBRE_USUARIO,
+            usuario.APELLIDO_USUARIO,
+            tarifa.NOMBRE_TARIFA,
+            membresia.NOMBRE_MEMBRESIA,
+            GROUP_CONCAT(DISTINCT tipo_consulta.nombre_tipo_consulta) AS tipos_consulta
+        ");
         $this->db->from('consulta');
         $this->db->join('paciente', 'paciente.ID_PACIENTE = consulta.ID_PACIENTE');
-        $this->db->join('tipo_consulta', 'consulta.ID_TIPO_CONSULTA = tipo_consulta.id_tipo_consulta', 'left');
         $this->db->join('usuario', 'usuario.ID_USUARIO = consulta.ID_MEDICO');
         $this->db->join('tarifa', 'tarifa.ID_TARIFA = consulta.ID_TARIFA', 'left');
         $this->db->join('membresia', 'membresia.ID_MEMBRESIA = consulta.ID_MEMBRESIA', 'left');
         $this->db->join('vigencia as v', 'consulta.VIGENCIA_CONSULTA = v.VIGENCIA');
+
+        // JOIN con la tabla intermedia (esto es lo más importante)
+        $this->db->join('consulta_tipo_consulta as ctc', 'ctc.id_consulta = consulta.ID_CONSULTA', 'left');
+        $this->db->join('tipo_consulta', 'tipo_consulta.id_tipo_consulta = ctc.id_tipo_consulta', 'left');
+
         $this->db->where('VIGENCIA_CONSULTA', 1);
+
+        // Agrupar por consulta para que no se dupliquen las filas
+        $this->db->group_by('consulta.ID_CONSULTA');
 
 
         if (!empty($_POST["search"]["value"] != "")) {
@@ -1089,6 +1140,7 @@ class Mconsult extends CI_Model
 
             $this->db->or_like("FECHA_CONSULTA", $search_value);
             $this->db->or_like("MOTIVO_CONSULTA", $search_value);
+            $this->db->or_like("tipo_consulta.nombre_tipo_consulta", $search_value);
         }
 
         if (isset($_POST["order"])) {
@@ -1148,69 +1200,69 @@ class Mconsult extends CI_Model
 
             $actions = '
 <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton_'.$row['ID_CONSULTA'].'" 
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton_' . $row['ID_CONSULTA'] . '" 
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Acciones">
         <i class="fas fa-ellipsis-v"></i>
     </button>
-    <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton_'.$row['ID_CONSULTA'].'" style="right: auto; left: 40px; transform: translateX(-25%);"  >
+    <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton_' . $row['ID_CONSULTA'] . '" style="right: auto; left: 40px; transform: translateX(-25%);"  >
         <li>
-            <a id="BTN_RECETA_'.$row['ID_CONSULTA'].'" class="btn-receta-show" 
+            <a id="BTN_RECETA_' . $row['ID_CONSULTA'] . '" class="btn-receta-show" 
                 title="Imprimir Receta" data-toggle="tooltip"
-                data-id_consulta="'.$row['ID_CONSULTA'].'"
-                data-id_paciente="'.$row['ID_PACIENTE'].'">
+                data-id_consulta="' . $row['ID_CONSULTA'] . '"
+                data-id_paciente="' . $row['ID_PACIENTE'] . '">
                 <i class="fas fa-print fa-fw" style="margin-right: 8px;"></i>
                 Imprimir Receta
             </a>
         </li>
         <li>
-            <a id="BTN_RECETA_VER_'.$row['ID_CONSULTA'].'" class="btn-receta-ver" 
+            <a id="BTN_RECETA_VER_' . $row['ID_CONSULTA'] . '" class="btn-receta-ver" 
                 title="Ver Receta" data-toggle="tooltip"
-                data-id_consulta="'.$row['ID_CONSULTA'].'"
-                data-id_paciente="'.$row['ID_PACIENTE'].'">
+                data-id_consulta="' . $row['ID_CONSULTA'] . '"
+                data-id_paciente="' . $row['ID_PACIENTE'] . '">
                 <i class="fas fa-eye fa-fw" style="margin-right: 8px;"></i>
                 Ver Receta
             </a>
         </li>
         <li>
-            <a id="BTN_HISTORIA_CLINICA_'.$row['ID_CONSULTA'].'" class="btn_hist_clinica" 
+            <a id="BTN_HISTORIA_CLINICA_' . $row['ID_CONSULTA'] . '" class="btn_hist_clinica" 
                 title="Historia clínica" data-toggle="tooltip"
-                data-id_consulta="'.$row['ID_CONSULTA'].'"
-                data-id_paciente="'.$row['ID_PACIENTE'].'">
+                data-id_consulta="' . $row['ID_CONSULTA'] . '"
+                data-id_paciente="' . $row['ID_PACIENTE'] . '">
                 <i class="fas fa-history fa-fw" style="margin-right: 8px;"></i>
                 Historia Clínica
             </a>
         </li>
         <li>
-            <a id="BTN_IMPRIMIR_HISTORIAL_'.$row['ID_CONSULTA'].'" class="btn_impr_clinica" 
+            <a id="BTN_IMPRIMIR_HISTORIAL_' . $row['ID_CONSULTA'] . '" class="btn_impr_clinica" 
                 title="Imprimir historia clínica" data-toggle="tooltip"
-                data-id_consulta="'.$row['ID_CONSULTA'].'"
-                data-id_paciente="'.$row['ID_PACIENTE'].'">
+                data-id_consulta="' . $row['ID_CONSULTA'] . '"
+                data-id_paciente="' . $row['ID_PACIENTE'] . '">
                 <i class="fas fa-print fa-fw" style="margin-right: 8px;"></i>
                 Imprimir Historial
             </a>
         </li>
         <li>
-            <a id="BTN_CONSENTIMIENTO_'.$row['ID_CONSULTA'].'" class="btn_consentimiento" 
+            <a id="BTN_CONSENTIMIENTO_' . $row['ID_CONSULTA'] . '" class="btn_consentimiento" 
                 title="Consentimiento" data-toggle="tooltip"
-                data-id_consulta="'.$row['ID_CONSULTA'].'"
-                data-id_paciente="'.$row['ID_PACIENTE'].'">
+                data-id_consulta="' . $row['ID_CONSULTA'] . '"
+                data-id_paciente="' . $row['ID_PACIENTE'] . '">
                 <i class="fas fa-info fa-fw" style="margin-right: 8px;"></i>
                 Consentimiento
             </a>
         </li>
         <li>
-            <a id="BTN_IMPRIMIR_CONSENTIMIENTO_'.$row['ID_CONSULTA'].'" class="btn_impr_consentimiento" 
+            <a id="BTN_IMPRIMIR_CONSENTIMIENTO_' . $row['ID_CONSULTA'] . '" class="btn_impr_consentimiento" 
                 title="Imprimir consentimiento" data-toggle="tooltip"
-                data-id_consulta="'.$row['ID_CONSULTA'].'"
-                data-id_paciente="'.$row['ID_PACIENTE'].'">
+                data-id_consulta="' . $row['ID_CONSULTA'] . '"
+                data-id_paciente="' . $row['ID_PACIENTE'] . '">
                 <i class="fas fa-print fa-fw" style="margin-right: 8px;"></i>
                 Imprimir Consentimiento
             </a>
         </li>
         <li>
-            <a id="BTN_ADJUNTAR_ARCHIVO_'.$row['ID_CONSULTA'].'" class="" href="#modAddFiles"
+            <a id="BTN_ADJUNTAR_ARCHIVO_' . $row['ID_CONSULTA'] . '" class="" href="#modAddFiles"
                 data-toggle="modal" title="Adjuntar archivo"
-                data-id_consult="'.$row['ID_CONSULTA'].'">
+                data-id_consult="' . $row['ID_CONSULTA'] . '">
                 <i class="fas fa-file-medical fa-fw" style="margin-right: 8px;"></i>
                 Adjuntar Archivo
             </a>
@@ -1218,53 +1270,27 @@ class Mconsult extends CI_Model
         <li>
             <a id="BTN_FICHA_CONSUMO" class="btn_defaultz" 
                 title="Ficha consumo" data-toggle="tooltip"
-                data-nombre_paciente="' . $row['NOMBRE_PACIENTE'] .'"
-                data-id_paciente="' . $row['ID_PACIENTE'] .'"
-                data-id_consulta="' . $row['ID_CONSULTA'] .'"
-                data-id_ficha="' . $row['ID_FICHA'] .'"
-                data-precio_consult="' . $PrecioC .'"
-                data-close="' . $row['CLOSE_CONSULTA'] .'"
-                data-desc_tarifa="' . $row['DESC_TARIFA'] .'"
-                data-membresia="' . $row['NOMBRE_MEMBRESIA'] .'"
-                data-tarifa="' . $NameTarifa .'"
-                data-folio="' . $row['FOLIO_CONSULTA'] .'"
-                data-folio_m="' . $row['FOLIO_CONSULTA'] .'"
-                data-id_tarifa="' . $row['ID_TARIFA'] .'">
+                data-nombre_paciente="' . $row['NOMBRE_PACIENTE'] . '"
+                data-id_paciente="' . $row['ID_PACIENTE'] . '"
+                data-id_consulta="' . $row['ID_CONSULTA'] . '"
+                data-id_ficha="' . $row['ID_FICHA'] . '"
+                data-precio_consult="' . $PrecioC . '"
+                data-close="' . $row['CLOSE_CONSULTA'] . '"
+                data-desc_tarifa="' . $row['DESC_TARIFA'] . '"
+                data-membresia="' . $row['NOMBRE_MEMBRESIA'] . '"
+                data-tarifa="' . $NameTarifa . '"
+                data-folio="' . $row['FOLIO_CONSULTA'] . '"
+                data-folio_m="' . $row['FOLIO_CONSULTA'] . '"
+                data-id_tarifa="' . $row['ID_TARIFA'] . '">
                 <i class="fas fa-file-invoice fa-fw" style="margin-right: 8px; aria-hidden="true"></i>
                 Ficha consumo
             </a>
-        </li>'.
-    
-        /*<button id='BTN_FICHA_CLINICA'  class='btn btn-defaultx' type='button'
-               title='Ficha Diagnóstico' data-toggle='tooltip'
-               data-id_tarifa='" . $row['ID_TARIFA'] . "'
-               data-id_consulta='" . $row['ID_CONSULTA'] . "'
-               data-id_paciente='" . $row['ID_PACIENTE'] . "'>
-               <i class='fas fa-file-contract fa-x'></i>
-            </button>
-           
-
-            <button id='BTN_FICHA_CONSUMO' class='btn btn-defaultz' title='Ficha consumo' data-toggle='tooltip'
-               data-nombre_paciente='" . $row['NOMBRE_PACIENTE'] . "'
-               data-id_paciente='" . $row['ID_PACIENTE'] . "'
-               data-id_consulta='" . $row['ID_CONSULTA'] . "'
-               data-id_ficha='" . $row['ID_FICHA'] . "'
-               data-precio_consult='" . $PrecioC . "'
-               data-close='" . $row['CLOSE_CONSULTA'] . "'
-               data-desc_tarifa='" . $row['DESC_TARIFA'] . "'
-               data-membresia='" . $row['NOMBRE_MEMBRESIA'] . "'
-               data-tarifa='" . $NameTarifa . "'
-               data-folio='" . $row['FOLIO_CONSULTA'] . "'
-               data-folio_m='" . $row['FOLIO_CONSULTA'] . "'
-               data-id_tarifa='" . $row['ID_TARIFA'] . "'>
-               <i class='fas fa-file-invoice fa-x' aria-hidden='true'></i>
-            </button>*/
-
-        '<li class="divider"></li>
+        </li>' .
+                '<li class="divider"></li>
         <li>
-            <a id="BTN_ELIMINAR_CONSULTA_'.$row['ID_CONSULTA'].'" class="text-danger"
+            <a id="BTN_ELIMINAR_CONSULTA_' . $row['ID_CONSULTA'] . '" class="text-danger"
                 title="Eliminar consulta" data-toggle="tooltip"
-                data-id-consult="'.$row['ID_CONSULTA'].'">
+                data-id-consult="' . $row['ID_CONSULTA'] . '">
                 <i class="fas fa-trash fa-fw" style="margin-right: 8px;"></i>
                 Eliminar Consulta
             </a>
@@ -1278,7 +1304,19 @@ class Mconsult extends CI_Model
             $sub_array[] = "<span class='" . $badge . "'>" . $status . "</span>";
             $sub_array[] = $row['NOMBRE_PACIENTE'] . " " . $row['APELLIDO_PATERNO_PACIENTE'] . " " . $row['APELLIDO_MATERNO_PACIENTE'];
             $sub_array[] = $row['NOMBRE_USUARIO'];
-            $sub_array[] = $row['nombre_tipo_consulta'];
+
+            // Mostrar los tipos como texto normal, pero convertidos en un link clickeable
+            $tipos_texto = $row['tipos_consulta'] ? $row['tipos_consulta'] : 'Sin tipo asignado';
+
+            $html_tipos = '<a href="#" class="link-tipos-consulta" 
+                  data-id-consulta="' . $row['ID_CONSULTA'] . '" 
+                  data-id-paciente="' . $row['ID_PACIENTE'] . '"
+                  title="Click para ver/imprimir consentimientos">
+                  ' . htmlspecialchars($tipos_texto) . '
+               </a>';
+
+            $sub_array[] = $html_tipos;
+
             $sub_array[] = $row['FECHA_CONSULTA'];
             $sub_array[] = $row['HORA_CONSULTA'];
             $sub_array[] = $type;
