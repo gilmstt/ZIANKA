@@ -1377,21 +1377,22 @@
                         </div>
                     <?php endif; ?>
                     </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="<?= base_url() ?>patient/index" class="btn btn-cancel pull-left"
+                                    id="btnCloseAddPatient">
+                                    <i class="fas fa-chevron-double-left"></i> Regresar
+                                </a>
+                                <button type="submit" class="btn btn-info pull-right">
+                                    <i class="fas fa-user-check"></i> Guardar paciente
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
             </form>
         </div>
-        <div class="panel-footer">
-            <div class="row">
-                <div class="col-lg-12">
-                    <a href="<?= base_url() ?>patient/index" class="btn btn-cancel pull-left"
-                        id="btnCloseAddPatient">
-                        <i class="fas fa-chevron-double-left"></i> Regresar
-                    </a>
-                    <button type="submit" class="btn btn-info pull-right">
-                        <i class="fas fa-user-check"></i> Guardar paciente
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-2"></div>
     </div>
 </div>

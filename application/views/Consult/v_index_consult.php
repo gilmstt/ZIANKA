@@ -681,10 +681,10 @@ $disabled = ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) ? 'dis
 
 <!-- Modal Lista de Consentimientos -->
 <div class="modal fade" id="modalListaConsentimientos" tabindex="-1" role="dialog" aria-labelledby="modalListaLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalListaLabel">Consentimientos de esta consulta</h5>
+            <div class="modal-header header-primary">
+                <span class="modal-title" id="modalListaLabel">Consentimientos de esta consulta</span>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">

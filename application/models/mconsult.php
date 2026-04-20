@@ -107,6 +107,27 @@ class Mconsult extends CI_Model
             $temps_proce = $this->db->get_where('temp_procedimiento', array('ID_SESSION' => $id_user))->num_rows();
             $temps_product = $this->db->get_where('temp_producto', array('ID_SESSION' => $id_user))->num_rows();
 
+            $id_paciente = $this->input->post('ID_PACIENTE');
+
+            // ====================== DATOS ÚNICOS DEL PACIENTE ======================
+            // Verificar si es la PRIMERA consulta de este paciente
+            $es_primera_consulta = $this->db->where('ID_PACIENTE', $id_paciente)
+                ->get('consulta')
+                ->num_rows() == 0;
+
+            if ($es_primera_consulta) {
+                // Solo actualizar estos campos la primera vez
+                $datos_paciente = array(
+                    'FITZPATRICK' => $this->input->post('FITZPATRICK'),
+                    'GLOGAU'      => $this->input->post('GLOGAU'),
+                    'TIPO_PIEL'   => $this->input->post('TIPO_PIEL'),
+                    'TIPO_ROSTRO' => $this->input->post('TIPO_ROSTRO')
+                );
+
+                $this->db->where('ID_PACIENTE', $id_paciente);
+                $this->db->update('paciente', $datos_paciente);
+            }
+
             $idTarifa = ($this->input->post('ID_TARIFA')) ? $this->input->post('ID_TARIFA') : NULL;
             $idMembresia = ($this->input->post('ID_MEMBRESIA')) ? $this->input->post('ID_MEMBRESIA') : NULL;
             $descTarifa = ($this->input->post('DESC_TARIFA')) ? $this->input->post('DESC_TARIFA') : intval("0");
@@ -150,10 +171,10 @@ class Mconsult extends CI_Model
                 "ROSACEA" => $this->input->post('ROSACEA') ? 1 : 0,
                 "HIPERHIDROSIS" => $this->input->post('HIPERHIDROSIS') ? 1 : 0,
                 "OTROS_MOTIVO_CONSULTA" => $this->input->post('OTROS_MOTIVO_CONSULTA'),
-                'FITZPATRICK' => $this->input->post('FITZPATRICK'),
+                /*'FITZPATRICK' => $this->input->post('FITZPATRICK'),
                 'GLOGAU' => $this->input->post('GLOGAU'),
                 'TIPO_PIEL' => $this->input->post('TIPO_PIEL'),
-                'TIPO_ROSTRO' => $this->input->post('TIPO_ROSTRO'),
+                'TIPO_ROSTRO' => $this->input->post('TIPO_ROSTRO'),*/
                 'LESIONES_DERMATOLOGICAS' => $this->input->post('LESIONES_DERMATOLOGICAS'),
                 'TIPO_DERMATOLOGICAS' => $this->input->post('TIPO_DERMATOLOGICAS'),
                 'LOCALIZACION_DERMATOLOGICAS' => $this->input->post('LOCALIZACION_DERMATOLOGICAS'),
