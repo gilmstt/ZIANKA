@@ -113,7 +113,7 @@ $(document).ready(function () {
    })
    // INIT SELECT 2 ==================================================================//
    $('#SEARCH_PROCEDIMIENTO').select2({
-      placeholder: "Elige un procedimiento",
+      placeholder: "Eligir zona",
       dropdownParent: $("#modal"),
    });
    $('#SEARCH_PRODUCTO').select2({
@@ -122,24 +122,30 @@ $(document).ready(function () {
    });
 
    $("#SELECT_TIPO_CONSULTA").change(function () {
-      var id_tipo_consulta = $(this).val();
+      var id_tipos = $(this).val();   // ahora es un array o null
 
-      if (id_tipo_consulta) {
+      var selectProced = $("#SEARCH_PROCEDIMIENTO");
+      selectProced.empty();
+      selectProced.append('<option value="" disabled selected>Elige uno o varios procedimientos...</option>');
+
+      if (id_tipos && id_tipos.length > 0) {
          $.ajax({
             type: "POST",
             url: raiz_url + "Consult/ajax_get_procedimientos_por_tipo",
-            data: { id_tipo_consulta: id_tipo_consulta },
+            data: { id_tipo_consulta: id_tipos },   // enviamos array
             dataType: "json",
             success: function (response) {
-               var select = $("#SEARCH_PROCEDIMIENTO");
-               select.empty(); // limpia anteriores
-               select.append('<option value="" disabled selected>Elige</option>');
-
                if (response.length > 0) {
                   $.each(response, function (index, item) {
-                     select.append('<option value="' + item.descripcion_procedimiento + '">' + item.descripcion_procedimiento + '</option>');
+                     selectProced.append('<option value="' + item.id_procedimiento + '">' +
+                        item.descripcion_procedimiento + '</option>');
                   });
+               } else {
+                  selectProced.append('<option value="">No hay procedimientos para los tipos seleccionados</option>');
                }
+            },
+            error: function () {
+               selectProced.html('<option value="">Error al cargar procedimientos</option>');
             }
          });
       }
@@ -1480,6 +1486,74 @@ $(document).ready(function () {
    $("body").on('click', '.btn_impr_consentimiento', function () {
       var ID_CONSULT = $(this).attr('data-id_consulta');
       window.open(raiz_url + "consult/creaConsentimiento/" + ID_CONSULT + "?modo=imprimir");
+   });
+
+   // Click en el link de tipos
+   $("body").on("click", ".link-tipos-consulta", function (e) {
+      e.preventDefault();
+      var id_consulta = $(this).data("id-consulta");
+      var id_paciente = $(this).data("id-paciente");
+
+      cargarListaConsentimientos(id_consulta, id_paciente);
+      $('#modalListaConsentimientos').modal('show');
+   });
+
+   // Función principal
+   function cargarListaConsentimientos(id_consulta, id_paciente) {
+      $.ajax({
+         url: raiz_url + "Consult/ajax_get_tipos_por_consulta",
+         type: "POST",
+         data: { id_consulta: id_consulta },
+         dataType: "json",
+         success: function (response) {
+            var html = '';
+
+            if (response.length > 0) {
+               html += '<div class="list-group">';
+               $.each(response, function (i, tipo) {
+                  html += `
+                  <div class="list-group-item d-flex justify-content-between align-items-center">
+                     <div class="font-weight-bold">${tipo.nombre_tipo_consulta}</div>
+                     <div>
+                           <button class="btn btn-sm btn-info mr-2 btn-ver-cons" 
+                              data-id-consulta="${id_consulta}"
+                              data-id-tipo="${tipo.id_tipo_consulta}">
+                              Ver
+                           </button>
+                           <button class="btn btn-sm btn-success btn-impr-cons" 
+                              data-id-consulta="${id_consulta}"
+                              data-id-tipo="${tipo.id_tipo_consulta}">
+                              Imprimir
+                           </button>
+                     </div>
+                  </div>`;
+               });
+               html += '</div>';
+            } else {
+               html = '<div class="alert alert-warning">No se encontraron tipos de consentimiento para esta consulta.</div>';
+            }
+
+            $('#lista_consentimientos_body').html(html);
+         },
+         error: function () {
+            $('#lista_consentimientos_body').html('<div class="alert alert-danger">Error al cargar los consentimientos.</div>');
+         }
+      });
+   }
+
+   // Botones del modal
+   $("body").on("click", ".btn-ver-cons", function () {
+      var id_consulta = $(this).data("id-consulta");
+      var id_tipo = $(this).data("id-tipo");
+
+      window.open(raiz_url + "consult/creaConsentimiento/" + id_consulta + "/" + id_tipo, "_blank");
+   });
+
+   $("body").on("click", ".btn-impr-cons", function () {
+      var id_consulta = $(this).data("id-consulta");
+      var id_tipo = $(this).data("id-tipo");     // ← Este es el dato clave
+
+      window.open(raiz_url + "consult/creaConsentimiento/" + id_consulta + "/" + id_tipo + "?modo=imprimir", "_blank");
    });
 
 

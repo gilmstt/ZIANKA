@@ -315,13 +315,12 @@ $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_u
                                 </div>
                                 <div class="col-sm-12 col-mdx-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="">Selecciona procedimiento</label>
+                                        <label for="SELECT_TIPO_CONSULTA">Tipo(s) de consulta (puede seleccionar varios):</label>
                                         <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1"><i
-                                                    class="fas fa-procedures"></i></span>
-                                            <select class="form-control" name="RG_TIPO_CONSULTA"
-                                                id="SELECT_TIPO_CONSULTA" required>
-                                                <option value="" disabled selected>Seleccionar...</option>
+                                            <span class="input-group-addon" id="basic-addon1"><i class="fas fa-procedures"></i></span>
+                                            <select class="form-control" name="RG_TIPO_CONSULTA[]"
+                                                id="SELECT_TIPO_CONSULTA" multiple required>
+                                                <option value="" disabled selected>Selecciona uno o varios tipos...</option>
                                                 <?php
                                                 foreach ($TipoConsu as $row) {
                                                     $id = $row['id_tipo_consulta'];
@@ -334,6 +333,9 @@ $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_u
                                                 ?>
                                             </select>
                                         </div>
+                                        <small class="form-text text-muted">
+                                            Mantén presionada la tecla <strong>Ctrl</strong> (o Cmd en Mac) para seleccionar varios tipos de consulta.
+                                        </small>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-mdx-6 col-lg-4">
@@ -582,66 +584,110 @@ $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_u
                             </div>
 
                             <!-- FITZPATRICK -->
+                            <?php
+                            // Datos del paciente (viene del modelo)
+                            $p = $row_user ?? (object)[];
+
+                            // Determinar si es la primera consulta
+                            $es_primera_consulta = ($this->db->where('ID_PACIENTE', $p->ID_PACIENTE ?? 0)
+                                ->get('consulta')->num_rows() == 0);
+                            ?>
+
                             <div class="form-group">
                                 <div class="row col-sm-12 col-mdx-12 col-lg-12">
+
+                                    <!-- FITZPATRICK -->
                                     <div class="col-sm-4 col-mdx-4 col-lg-4">
                                         <label class="control-label">FITZPATRICK:</label><br>
-                                        <?php for ($i = 1; $i <= 6; $i++): ?>
-                                            <input class="form-check-input" type="radio" name="FITZPATRICK"
-                                                id="FITZPATRICK_<?php echo $i; ?>" value="<?php echo $i; ?>">
-                                            <label class="form-check-label" for="FITZPATRICK_<?php echo $i; ?>">
-                                                <?php echo $i; ?>
-                                            </label>
-                                        <?php endfor; ?>
+                                        <?php if ($es_primera_consulta): ?>
+                                            <?php for ($i = 1; $i <= 6; $i++): ?>
+                                                <input class="form-check-input" type="radio" name="FITZPATRICK"
+                                                    id="FITZPATRICK_<?php echo $i; ?>"
+                                                    value="<?php echo $i; ?>"
+                                                    <?php echo (isset($p->FITZPATRICK) && $p->FITZPATRICK == $i) ? 'checked' : ''; ?>>
+                                                <label class="form-check-label" for="FITZPATRICK_<?php echo $i; ?>">
+                                                    <?php echo $i; ?>
+                                                </label>
+                                            <?php endfor; ?>
+                                        <?php else: ?>
+                                            <strong class="text-primary"><?php echo $p->FITZPATRICK ?? 'No registrado'; ?></strong>
+                                        <?php endif; ?>
                                     </div>
 
+                                    <!-- GLOGAU -->
                                     <div class="col-sm-4 col-mdx-4 col-lg-4">
                                         <label class="control-label">GLOGAU:</label><br>
-                                        <?php for ($i = 1; $i <= 4; $i++): ?>
-                                            <input class="form-check-input" type="radio" name="GLOGAU"
-                                                id="GLOGAU_<?php echo $i; ?>" value="<?php echo $i; ?>">
-                                            <label class="form-check-label" for="GLOGAU_<?php echo $i; ?>">
-                                                <?php echo $i; ?>
-                                            </label>
-                                        <?php endfor; ?>
+                                        <?php if ($es_primera_consulta): ?>
+                                            <?php for ($i = 1; $i <= 4; $i++): ?>
+                                                <input class="form-check-input" type="radio" name="GLOGAU"
+                                                    id="GLOGAU_<?php echo $i; ?>"
+                                                    value="<?php echo $i; ?>"
+                                                    <?php echo (isset($p->GLOGAU) && $p->GLOGAU == $i) ? 'checked' : ''; ?>>
+                                                <label class="form-check-label" for="GLOGAU_<?php echo $i; ?>">
+                                                    <?php echo $i; ?>
+                                                </label>
+                                            <?php endfor; ?>
+                                        <?php else: ?>
+                                            <strong class="text-primary"><?php echo $p->GLOGAU ?? 'No registrado'; ?></strong>
+                                        <?php endif; ?>
                                     </div>
 
+                                    <!-- TIPO DE PIEL -->
                                     <div class="col-sm-4 col-mdx-4 col-lg-4">
                                         <label class="control-label">TIPO DE PIEL:</label><br>
-                                        <input class="form-check-input" type="radio" name="TIPO_PIEL"
-                                            id="TIPO_PIEL_MIXTA" value="MIXTA">
-                                        <label class="form-check-label" for="TIPO_PIEL_MIXTA">MIXTA</label>
-                                        <input class="form-check-input" type="radio" name="TIPO_PIEL"
-                                            id="TIPO_PIEL_SECA" value="SECA">
-                                        <label class="form-check-label" for="TIPO_PIEL_SECA">SECA</label>
-                                        <input class="form-check-input" type="radio" name="TIPO_PIEL"
-                                            id="TIPO_PIEL_GRASA" value="GRASA">
-                                        <label class="form-check-label" for="TIPO_PIEL_GRASA">GRASA</label>
+                                        <?php if ($es_primera_consulta): ?>
+                                            <input class="form-check-input" type="radio" name="TIPO_PIEL"
+                                                id="TIPO_PIEL_MIXTA" value="MIXTA"
+                                                <?php echo (isset($p->TIPO_PIEL) && $p->TIPO_PIEL == 'MIXTA') ? 'checked' : ''; ?>>
+                                            <label class="form-check-label" for="TIPO_PIEL_MIXTA">MIXTA</label>
+
+                                            <input class="form-check-input" type="radio" name="TIPO_PIEL"
+                                                id="TIPO_PIEL_SECA" value="SECA"
+                                                <?php echo (isset($p->TIPO_PIEL) && $p->TIPO_PIEL == 'SECA') ? 'checked' : ''; ?>>
+                                            <label class="form-check-label" for="TIPO_PIEL_SECA">SECA</label>
+
+                                            <input class="form-check-input" type="radio" name="TIPO_PIEL"
+                                                id="TIPO_PIEL_GRASA" value="GRASA"
+                                                <?php echo (isset($p->TIPO_PIEL) && $p->TIPO_PIEL == 'GRASA') ? 'checked' : ''; ?>>
+                                            <label class="form-check-label" for="TIPO_PIEL_GRASA">GRASA</label>
+                                        <?php else: ?>
+                                            <strong class="text-primary"><?php echo $p->TIPO_PIEL ?? 'No registrado'; ?></strong>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- TIPO DE ROSTRO -->
                             <div class="col-sm-12">
                                 <label class="control-label">TIPO DE ROSTRO:</label><br>
+                                <?php if ($es_primera_consulta): ?>
 
-                                <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
-                                    id="TIPO_ROSTRO_OVALADO" value="OVALADO">
-                                <label class="form-check-label" for="TIPO_ROSTRO_OVALADO">OVALADO</label>
-                                <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
-                                    id="TIPO_ROSTRO_RECTANGULAR" value="RECTANGULAR">
-                                <label class="form-check-label" for="TIPO_ROSTRO_RECTANGULAR">RECTANGULAR</label>
-                                <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
-                                    id="TIPO_ROSTRO_REDONDO" value="REDONDO">
-                                <label class="form-check-label" for="TIPO_ROSTRO_REDONDO">REDONDO</label>
-                                <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
-                                    id="TIPO_ROSTRO_CUADRADO" value="CUADRADO">
-                                <label class="form-check-label" for="TIPO_ROSTRO_CUADRADO">CUADRADO</label>
-                                <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
-                                    id="TIPO_ROSTRO_TRIANGULAR" value="TRIANGULAR">
-                                <label class="form-check-label" for="TIPO_ROSTRO_TRIANGULAR">TRIANGULAR</label>
-                                <input class="form-check-input" type="radio" name="TIPO_ROSTRO"
-                                    id="TIPO_ROSTRO_DIAMANTE" value="DIAMANTE">
-                                <label class="form-check-label" for="TIPO_ROSTRO_DIAMANTE">DIAMANTE</label>
+                                    <input class="form-check-input" type="radio" name="TIPO_ROSTRO" id="TIPO_ROSTRO_OVALADO" value="OVALADO"
+                                        <?php echo (isset($p->TIPO_ROSTRO) && $p->TIPO_ROSTRO == 'OVALADO') ? 'checked' : ''; ?>>
+                                    <label class="form-check-label" for="TIPO_ROSTRO_OVALADO">OVALADO</label>
+
+                                    <input class="form-check-input" type="radio" name="TIPO_ROSTRO" id="TIPO_ROSTRO_RECTANGULAR" value="RECTANGULAR"
+                                        <?php echo (isset($p->TIPO_ROSTRO) && $p->TIPO_ROSTRO == 'RECTANGULAR') ? 'checked' : ''; ?>>
+                                    <label class="form-check-label" for="TIPO_ROSTRO_RECTANGULAR">RECTANGULAR</label>
+
+                                    <input class="form-check-input" type="radio" name="TIPO_ROSTRO" id="TIPO_ROSTRO_REDONDO" value="REDONDO"
+                                        <?php echo (isset($p->TIPO_ROSTRO) && $p->TIPO_ROSTRO == 'REDONDO') ? 'checked' : ''; ?>>
+                                    <label class="form-check-label" for="TIPO_ROSTRO_REDONDO">REDONDO</label>
+
+                                    <input class="form-check-input" type="radio" name="TIPO_ROSTRO" id="TIPO_ROSTRO_CUADRADO" value="CUADRADO"
+                                        <?php echo (isset($p->TIPO_ROSTRO) && $p->TIPO_ROSTRO == 'CUADRADO') ? 'checked' : ''; ?>>
+                                    <label class="form-check-label" for="TIPO_ROSTRO_CUADRADO">CUADRADO</label>
+
+                                    <input class="form-check-input" type="radio" name="TIPO_ROSTRO" id="TIPO_ROSTRO_TRIANGULAR" value="TRIANGULAR"
+                                        <?php echo (isset($p->TIPO_ROSTRO) && $p->TIPO_ROSTRO == 'TRIANGULAR') ? 'checked' : ''; ?>>
+                                    <label class="form-check-label" for="TIPO_ROSTRO_TRIANGULAR">TRIANGULAR</label>
+
+                                    <input class="form-check-input" type="radio" name="TIPO_ROSTRO" id="TIPO_ROSTRO_DIAMANTE" value="DIAMANTE"
+                                        <?php echo (isset($p->TIPO_ROSTRO) && $p->TIPO_ROSTRO == 'DIAMANTE') ? 'checked' : ''; ?>>
+                                    <label class="form-check-label" for="TIPO_ROSTRO_DIAMANTE">DIAMANTE</label>
+                                <?php else: ?>
+                                    <strong class="text-primary"><?php echo $p->TIPO_ROSTRO ?? 'No registrado'; ?></strong>
+                                <?php endif; ?>
                             </div>
 
 
@@ -684,471 +730,143 @@ $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_u
                                 </div>
                             </div>
 
-                            <!--<div class="row col-sm-12 col-mdx-12 col-lg-12">
-                                <br>
-                                <div class="col-sm-3 col-mdx-3 col-lg-3">
-                                    <label class="control-label"> CONDICIÓN DEL PACIENTE:</label>
-                                </div>
-                                <div class="col-sm-9 col-mdx-9 col-lg-9">
-                                    <textarea class="form-control" name="CONDICION_PACIENTE" id="CONDICION_PACIENTE"
-                                        placeholder="Escribe aquí.." rows="1"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="row col-sm-12 col-mdx-12 col-lg-12 "> <br>
-                                <div class="col-sm-4 col-mdx-4 col-lg-4 d-flex">
-
-                                    <label class="control-label">CONSTITUCIÓN:</label>
-
-                                    <textarea class="form-control" name="CONSTITUCION_HABITUS" id="CONSTITUCION_HABITUS"
-                                        placeholder="Escribe aquí.." rows="1"></textarea>
-                                </div>
-
-                                <div class="col-sm-4 col-mdx-4 col-lg-4">
-                                    <label class="control-label">CONFORMACIÓN:</label>
-                                    <textarea class="form-control" name="CONFORMACION_HABITUS" id="CONFORMACION_HABITUS"
-                                        placeholder="Escribe aquí.." rows="1"></textarea>
-                                </div>
-
-                                <div class="col-sm-4 col-mdx-4 col-lg-4">
-                                    <label class="control-label">ACTITUD:</label>
-                                    <textarea class="form-control" name="ACTITUD_HABITUS" id="ACTITUD_HABITUS"
-                                        placeholder="Escribe aquí.." rows="1"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="row col-sm-12 col-mdx-12 col-lg-12"> <br>
-                                <div class="col-sm-4 col-mdx-4 col-lg-4">
-                                    <label class="control-label">FACIES:</label>
-                                    <textarea class="form-control" name="FACIES_HABITUS" id="FACIES_HABITUS"
-                                        placeholder="Escribe aquí.." rows="1"></textarea>
-                                </div>
-
-                                <div class="col-sm-4 col-mdx-4 col-lg-4">
-                                    <label class="control-label">MOVIMIENTOS ANORMALES:</label>
-                                    <textarea class="form-control" name="MOVIMIENTOS_ANORMALES_HABITUS"
-                                        id="MOVIMIENTOS_ANORMALES_HABITUS" placeholder="Escribe aquí.."
-                                        rows="1"></textarea>
-                                </div>
-
-                                <div class="col-sm-4 col-mdx-4 col-lg-4">
-                                    <label class="control-label">MARCHA:</label>
-                                    <textarea class="form-control" name="MARCHA_HABITUS" id="MARCHA_HABITUS"
-                                        placeholder="Escribe aquí.." rows="1"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="row col-sm-12 col-mdx-12 col-lg-12"> <br>
-                                <div class="col-sm-4 col-mdx-4 col-lg-4">
-                                    <label class="control-label">ESTADO DE CONSCIENCIA:</label>
-                                    <textarea class="form-control" name="ESTADO_CONCIENCIA_HABITUS"
-                                        id="ESTADO_CONCIENCIA_HABITUS" placeholder="Escribe aquí.." rows="1"></textarea>
-                                </div>-->
-
                             <div class="col-sm-12 col-mdx-12 col-lg-12">
                                 <label class="control-label">DESCRIPCIÓN:</label>
                                 <textarea class="form-control" name="OTROS_HABITUS" id="OTROS_HABITUS"
                                     placeholder="Escribe aquí.." rows="5"></textarea>
                             </div>
 
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 col-lg-12">
-                                <h4 class="h3Antecedentes"> SIGNOS VITALES:</h4>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 col-sm-12 col-mdx-12">
-                            <div class="col-lg-4 col-sm-3 col-mdx-3">
-                                <div class="form-group">
-                                    <label for="">FC</label>
-                                    <textarea class="form-control" name="RG_FC_CONSULTA" id="FC" rows="2"
-                                        placeholder="Escribe aquí.."></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-4 col-mdx-4">
-                                <div class="form-group">
-                                    <label for="">FR</label>
-                                    <textarea class="form-control" name="RG_FR_CONSULTA" id="FR" rows="2"
-                                        placeholder="Escribe aquí.."></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-3 col-mdx-3">
-                                <div class="form-group">
-                                    <label for="">TA</label>
-                                    <textarea class="form-control" name="RG_TA_CONSULTA" id="RG_TA_CONSULTA"
-                                        rows="2" placeholder="Escribe aquí.."></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-3 col-mdx-3">
-                                <div class="form-group">
-                                    <label for="">Temp.</label>
-                                    <textarea class="form-control" name="RG_TEMP_CONSULTA" id="TEMP" rows="2"
-                                        placeholder="Escribe aquí.."></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-3 col-mdx-3">
-                                <div class="form-group">
-                                    <label for="">PESO</label>
-                                    <textarea class="form-control" name="RG_PESO_CONSULTA" id="RC" rows="2"
-                                        placeholder="Escribe aquí.."></textarea>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="h3Antecedentes"> SIGNOS VITALES:</h4>
                                 </div>
                             </div>
 
+                            <div class="col-lg-12 col-sm-12 col-mdx-12">
+                                <div class="col-lg-4 col-sm-3 col-mdx-3">
+                                    <div class="form-group">
+                                        <label for="">FC</label>
+                                        <textarea class="form-control" name="RG_FC_CONSULTA" id="FC" rows="2"
+                                            placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-mdx-4">
+                                    <div class="form-group">
+                                        <label for="">FR</label>
+                                        <textarea class="form-control" name="RG_FR_CONSULTA" id="FR" rows="2"
+                                            placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-3 col-mdx-3">
+                                    <div class="form-group">
+                                        <label for="">TA</label>
+                                        <textarea class="form-control" name="RG_TA_CONSULTA" id="RG_TA_CONSULTA"
+                                            rows="2" placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-3 col-mdx-3">
+                                    <div class="form-group">
+                                        <label for="">Temp.</label>
+                                        <textarea class="form-control" name="RG_TEMP_CONSULTA" id="TEMP" rows="2"
+                                            placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-3 col-mdx-3">
+                                    <div class="form-group">
+                                        <label for="">PESO</label>
+                                        <textarea class="form-control" name="RG_PESO_CONSULTA" id="RC" rows="2"
+                                            placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
 
-                            <div class="col-lg-4 col-sm-4 col-mdx-4">
-                                <div class="form-group">
-                                    <label for="">TALLA</label>
-                                    <textarea class="form-control" name="RG_TALLA_CONSULTA" id="TALLA" rows="2"
-                                        placeholder="Escribe aquí.."></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-4 col-mdx-4">
-                                <div class="form-group">
-                                    <label for="">IMC</label>
-                                    <textarea class="form-control" name="RG_IMC_CONSULTA" id="GC" rows="2"
-                                        placeholder="Escribe aquí.."></textarea>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 col-lg-12">
-                                <h4 class="h3Antecedentes"> DIAGNÓSTICO PRICIPAL</h4>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-sm-12 col-md-12">
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="">PROCEDIMIENTOS PROPUESTOS</label>
-                                    <textarea class="form-control" name="DP_PROCP" id="LS" rows="PP"
-                                        placeholder="Escribe aquí.."></textarea>
+                                <div class="col-lg-4 col-sm-4 col-mdx-4">
+                                    <div class="form-group">
+                                        <label for="">TALLA</label>
+                                        <textarea class="form-control" name="RG_TALLA_CONSULTA" id="TALLA" rows="2"
+                                            placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-mdx-4">
+                                    <div class="form-group">
+                                        <label for="">IMC</label>
+                                        <textarea class="form-control" name="RG_IMC_CONSULTA" id="GC" rows="2"
+                                            placeholder="Escribe aquí.."></textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="">INDICACION TERAPÉUTICA</label>
-                                    <textarea class="form-control" name="DP_IND_TERP" id="IT"
-                                        rows="2" placeholder="Escribe aquí.."></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="">PROCEDIMIENTO A REALIZAR</label>
-                                    <textarea class="form-control" name="DP_PROC_RELZ" id="PR"
-                                        rows="2" placeholder="Escribe aquí.."></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="">NOTA PRE-PROCEDIMIENTO</label>
-                                    <textarea class="form-control" name="DP_PRE_PROC" id="PRE_PROC"
-                                        rows="2" placeholder="Escribe aquí.."></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="">NOTA POST-PROCEDIMIENTO</label>
-                                    <textarea class="form-control" name="DP_POST_PROC" id="POST_PROC"
-                                        rows="2" placeholder="Escribe aquí.."></textarea>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 col-lg-12">
-                                <h4 class="h3Antecedentes"> LABORATORIOS</h4>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="h3Antecedentes"> DIAGNÓSTICO PRICIPAL</h4>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12 col-sm-12 col-mdx-12">
-                            <div class="col-12-4 col-sm-12 col-mdx-12">
-                                <div class="form-group">
-                                    <label for="">LABORATORIOS A SOLICITAR</label>
-                                    <textarea class="form-control" name="RG_LABORATORIOS" id="LS" rows="2"
-                                        placeholder="Escribe aquí.."></textarea>
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="">PROCEDIMIENTOS PROPUESTOS</label>
+                                        <textarea class="form-control" name="DP_PROCP" id="LS" rows="PP"
+                                            placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="">INDICACION TERAPÉUTICA</label>
+                                        <textarea class="form-control" name="DP_IND_TERP" id="IT"
+                                            rows="2" placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="">PROCEDIMIENTO A REALIZAR</label>
+                                        <textarea class="form-control" name="DP_PROC_RELZ" id="PR"
+                                            rows="2" placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="">NOTA PRE-PROCEDIMIENTO</label>
+                                        <textarea class="form-control" name="DP_PRE_PROC" id="PRE_PROC"
+                                            rows="2" placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="">NOTA POST-PROCEDIMIENTO</label>
+                                        <textarea class="form-control" name="DP_POST_PROC" id="POST_PROC"
+                                            rows="2" placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="h3Antecedentes"> LABORATORIOS</h4>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-sm-12 col-mdx-12">
-                                <div class="form-group">
-                                    <label for="">IMPRESIÓN DIAGNÓSTICA</label>
-                                    <textarea class="form-control" name="RG_LABORATORIOS_I_DIAGNOSTICA" id="LID"
-                                        rows="2" placeholder="Escribe aquí.."></textarea>
+                                <div class="col-12-4 col-sm-12 col-mdx-12">
+                                    <div class="form-group">
+                                        <label for="">LABORATORIOS A SOLICITAR</label>
+                                        <textarea class="form-control" name="RG_LABORATORIOS" id="LS" rows="2"
+                                            placeholder="Escribe aquí.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-mdx-12">
+                                    <div class="form-group">
+                                        <label for="">IMPRESIÓN DIAGNÓSTICA</label>
+                                        <textarea class="form-control" name="RG_LABORATORIOS_I_DIAGNOSTICA" id="LID"
+                                            rows="2" placeholder="Escribe aquí.."></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                 </div>
-
-
-
-
-
-                <!--  <div class="col-sm-12 col-mdx-12 col-lg-3">
-                               <div class="form-group">
-                                  <label for="">Condición</label>
-                                  <div class="input-group">
-                                     <span class="input-group-addon"><i class="fas fa-user-injured"></i></span>
-                                     <input type="text" class="form-control" placeholder="Escribe aquí.."
-                                        name="RG_CONDICION_CONSULTA"  >
-                                  </div>
-                               </div>
-                               <div class="help-block with-errors"></div>
-                            </div> -->
-                <!--<div class="col-sm-12 col-mdx-12 col-lg-6">
-                        <div class="form-group">
-                           <label for="">Origen</label>
-                           <div class="input-group">
-                              <span class="input-group-addon"><i class="fas fa-file-signature"></i></span>
-                              <input type="text" class="form-control" placeholder="Escribe aquí.."
-                                 name="RG_ORIGEN_CONSULTA">
-                           </div>
-                        </div>
-                        <div class="help-block with-errors"></div>
-                     </div>
-
-                     
-                     </div>
-                     <?php
-                        $valida = 0;
-                        if ($ID_TARIFA) {
-                            $valida = 1;
-                            $readonlyx = "";
-                        ?>
-                     <div class="col-sm-12 col-mdx-6 col-lg-3">
-                        <div class="form-group">
-                           <label for="">Tarifa</label>
-                           <div class="input-group">
-                              <span class="input-group-addon" id="basic-addon1">
-                                 <i class="fas fa-dollar-sign"></i>
-                              </span>
-                              <input type="hidden" id="PORCENTAJE_TARIFA" value="<?= $Tarifas->PORCENTAJE_TARIFA; ?>">
-                              <select class="form-control" id="SELECT_TARIFA" name="ID_TARIFA" required>
-                                 <option value="" disabled selected>Elige una Tarifa</option>
-                                 <?php
-                                    foreach ($AllTarifas as $row) {
-                                        $id = $row['ID_TARIFA'];
-                                        $percent = $row['PORCENTAJE_TARIFA'];
-                                        $nombre = $row['NOMBRE_TARIFA'];
-                                        $PrecioConsulta = $row['CONSULTA_TARIFA'];
-                                        $selected = "";
-                                        if ($ID_TARIFA == $id)
-                                            $selected = "selected";
-                                        echo "<option data-percent='$percent' data-precioconsulta='$PrecioConsulta' data-nombre='$nombre' value='$id' $selected>$nombre</option>";
-                                    }
-                                    ?>
-                              </select>
-                           </div>
-                        </div>
-                     </div>
-                     <?php
-                        }
-                        if ($ID_MEMBRESIA) {
-                            $valida = 1;
-                            $readonlyx = "readonly";
-                        ?>
-                     <div class="col-sm-12 col-mdx-6 col-lg-3">
-                        <div class="form-group">
-                           <label for="">Membresia</label>
-                           <div class="input-group">
-                              <span class="input-group-addon" id="basic-addon1">
-                                 <i class="fas fa-credit-card"></i>
-                              </span>
-                              <?php
-                                $nombre_membresia = $Membresia->NOMBRE_MEMBRESIA;
-                                $ide_membresia = $Membresia->ID_MEMBRESIA;
-                                ?>
-                              <input type="hidden" id="ID_MEMBRESIA" name="ID_MEMBRESIA" value="<?= $ide_membresia ?>">
-                              <input type="text" class="form-control" readonly value="<?= $nombre_membresia ?>"
-                                 placeholder="Escribe aquí..">
-                           </div>
-                        </div>
-                     </div>
-                     <?php
-                        }
-                        if ($valida == 0) {
-                        ?>
-                     <div class="col-sm-12 col-mdx-6 col-lg-3">
-                        <label style="color:red;">Para asignar una tarifa o membresía "favor de editar el
-                           paciente"</label>
-                     </div>
-                     <?php }
-                        ?>
-                     <?php if ($ID_CASA > 0): ?>
-                     <div class="col-sm-12 col-mdx-6 col-lg-4">
-                        <div class="form-group">
-                           <label for="RG_ID_CASA" class="control-label text-left">Casa</label>
-                           <div class="input-group">
-                              <span class="input-group-addon"><i class="fas fa-home"></i></span>
-                              <?php
-                                $nombre_casa = $Casa->NOMBRE_CASA;
-                                $id_casa = $Casa->ID_CASA;
-                                ?>
-                              <input type="hidden" id="ID_CASA" name="ID_CASA" value="<?= $id_casa ?>">
-                              <input type="text" class="form-control" readonly value="<?= $nombre_casa ?>"
-                                 placeholder="Escribe aquí..">
-                           </div>
-                        </div>
-                     </div>
-                     <?php endif; ?>
-                     <div class="col-sm-12 col-mdx-12 col-lg-12">
-                        <div class="form-group">
-                           <label for="">Motivo consulta :</label>
-                           <textarea class="form-control" name="RG_MOTIVO_CONSULTA" id="MOTIVO" cols="10" rows=5
-                              placeholder="Escribe aquí.."></textarea>
-                        </div>
-                     </div>
-                     <div class="col-sm-12 col-mdx-12 col-lg-12">
-                        <div class="form-group">
-                           <label for="">Inicio & Evolución</label>
-                           <textarea class="form-control" name="RG_INICIOEVOLUCION_CONSULTA" id="INICIOEVOLUCION"
-                              cols="10" rows="5" placeholder="Escribe aquí.."></textarea>
-                        </div>
-                     </div>
-
-                     <div class="col-lg-12 col-sm-12 col-mdx-12">
-                        <label for="">Signos vitales</label><br>
-                        <div class="col-lg-4 col-sm-3 col-mdx-3">
-                           <div class="form-group">
-                              <label for="">TA</label>
-                              <textarea class="form-control" name="RG_SIGNOS_VITALES_CONSULTA" id="SIGNOS_VITALES"
-                                 rows="2" placeholder="Escribe aquí.."></textarea>
-                           </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-3 col-mdx-3">
-                           <div class="form-group">
-                              <label for="">FC</label>
-                              <textarea class="form-control" name="RG_FC_CONSULTA" id="FC" rows="2"
-                                 placeholder="Escribe aquí.."></textarea>
-                           </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-3 col-mdx-3">
-                           <div class="form-group">
-                              <label for="">Ritmo Cardiaco</label>
-                              <textarea class="form-control" name="RG_RITMO_CARDIACO_CONSULTA" id="RC" rows="2"
-                                 placeholder="Escribe aquí.."></textarea>
-                           </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-3 col-mdx-3">
-                           <div class="form-group">
-                              <label for="">Temp.</label>
-                              <textarea class="form-control" name="RG_TEMP_CONSULTA" id="TEMP" rows="2"
-                                 placeholder="Escribe aquí.."></textarea>
-                           </div>
-                        </div>
-
-                        <div class="col-lg-4 col-sm-4 col-mdx-4">
-                           <div class="form-group">
-                              <label for="">FR</label>
-                              <textarea class="form-control" name="RG_FR_CONSULTA" id="FR" rows="2"
-                                 placeholder="Escribe aquí.."></textarea>
-                           </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-4 col-mdx-4">
-                           <div class="form-group">
-                              <label for="">Sat. O2</label>
-                              <textarea class="form-control" name="RG_SAT_CONSULTA" id="SAT" rows="2"
-                                 placeholder="Escribe aquí.."></textarea>
-                           </div>
-                        </div>
-                        <div class="col-lg-12 col-sm-4 col-mdx-4">
-                           <div class="form-group">
-                              <label for="">Glicemia Capilar</label>
-                              <textarea class="form-control" name="RG_GLICEMIA_CAPILAR_CONSULTA" id="GC" rows="2"
-                                 placeholder="Escribe aquí.."></textarea>
-                           </div>
-                        </div>
-                     </div>-->
-                <!--consulta pediatrica-->
-
-                <!--<div class="col-lg-12 col-sm-12 col-mdx-12">
-                        <label for="">Somatometría</label><br>
-                        <div class="col-lg-4 col-sm-3 col-mdx-3">
-                           <div class="form-group">
-                              <label for="">PESO</label>
-                              <textarea class="form-control" name="RG_PESO_CONSULTA" id="PESO" rows="2"
-                                 placeholder="Escribe aquí.."></textarea>
-                           </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-3 col-mdx-3">
-                           <div class="form-group">
-                              <label for="">TALLA</label>
-                              <textarea class="form-control" name="RG_TALLA_CONSULTA" id="TALLA" rows="2"
-                                 placeholder="Escribe aquí.."></textarea>
-                           </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-3 col-mdx-3">
-                           <div class="form-group">
-                              <label for="">PC</label>
-                              <textarea class="form-control" name="RG_PC_CONSULTA" id="PC" rows="2"
-                                 placeholder="Escribe aquí.."></textarea>
-                           </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-3 col-mdx-3">
-                           <div class="form-group">
-                              <label for="">PA</label>
-                              <textarea class="form-control" name="RG_PA_CONSULTA" id="PA" rows="2"
-                                 placeholder="Escribe aquí.."></textarea>
-                           </div>
-                        </div>
-                     </div>
-
-                     <div class="col-sm-12 col-mdx-12 col-lg-12">
-                        <div class="form-group">
-                           <label for="">Diagnóstico Presuntivo</label>
-                           <textarea placeholder="Escribe aquí.." class="form-control" name="RG_DIAGNOSTICO_CONSULTA"
-                              id="DIAGNOSTICO" cols="10" rows="5"></textarea>
-                        </div>
-                     </div>
-                     <div class="col-sm-12 col-mdx-12 col-lg-12">
-                        <div class="form-group">
-                           <label for="">Exploración Física</label>
-                           <textarea placeholder="Escribe aquí.." class="form-control" name="RG_EXPLORACION_FISICA"
-                              id="EXPLORACION" cols="10" rows="5"></textarea>
-                        </div>
-                     </div>
-                     <div class="col-sm-12 col-mdx-12 col-lg-12">
-                        <div class="form-group">
-                           <label for="">DESARROLLO PSICOMOTOR</label>
-                           <textarea placeholder="Escribe aquí.." class="form-control" name="RG_DESARROLLO_PSICOMOTOR"
-                              id="DESARROLLO_PSICOMOTOR" cols="10" rows="5"></textarea>
-                        </div>
-                     </div>
-                     <div class="col-sm-12 col-mdx-12 col-lg-12">
-                        <div class=" form-group">
-                           <label for="">Manejo intrahospitalario:</label>
-                           <textarea placeholder="Escribe aquí.." class="form-control"
-                              name="RG_MANEJO_INTRAHOSPITALARIO_CONSULTA" id="MANEJO_INTRAHOSPITALARIO_CONSULTA"
-                              cols="10" rows="5"></textarea>
-                        </div>
-                     </div>
-
-                     <div class="col-sm-12 col-mdx-12 col-lg-12">
-                        <div class="form-group">
-                           <label for="">Tratamiento</label>
-                           <textarea placeholder="Escribe aquí.." class="form-control" name="RG_TRATAMIENTO_CONSULTA"
-                              id="TRATAMIENTO" cols="10" rows="5"></textarea>
-                        </div>
-                     </div>
-                     <div class="col-sm-12 col-mdx-12 col-lg-12">
-                        <div class="form-group">
-                           <label for="">Evolución</label>
-                           <textarea placeholder="Escribe aquí.." class="form-control" name="RG_EVOLUCION_CONSULTA"
-                              id="EVOLUCION" cols="10" rows="5"></textarea>
-                        </div>
-                     </div>
-                     <div class="col-sm-12 col-mdx-12 col-lg-12">
-                        <div class="form-group">
-                           <label for="">Observaciones</label>
-                           <textarea placeholder="Escribe aquí.." class="form-control" name="RG_OBSERVACION_CONSULTA"
-                              id="EVOLUCION" cols="10" rows="5"></textarea>
-                        </div>
-                     </div>
-                  </div>-->
             </div>
         </div>
     </div>
-</div>
-<div class="col-sm-1"></div>
-</div>
-</div>
+    <div class="col-sm-1"></div>
 </div>
 
 <div class="container">
@@ -1157,7 +875,7 @@ $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_u
             <div class="row">
                 <div class="col-lg-12 row-proce">
                     <div class="head modal-headx">
-                        <span class="text-center">PROCEDIMIENTOS</span>
+                        <span class="text-center">ZONAS</span>
                         <button type="button" class="btn btn-info button-head modal-proced"><i
                                 class="fas fa-plus-circle"></i></button>
                     </div>
@@ -1563,7 +1281,7 @@ $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_u
     <div class="modal-dialog modal-centered" role="document">
         <div class="modal-content">
             <div class="modal-header modal-headx">
-                <span class="modal-title">Agregar Procedimientos</span>
+                <span class="modal-title">Agregar zonas</span>
                 <button type="button" class="close" data-custom-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
