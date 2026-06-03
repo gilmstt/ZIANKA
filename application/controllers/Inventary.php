@@ -369,6 +369,16 @@ class Inventary extends CI_Controller
          show_404();
       }
    }
+   public function ajax_disable_treatment()
+   {
+      if ($this->input->is_ajax_request()) {
+         $ID_TREATMENT = $this->input->post('id_tipo_consulta');
+         $AFFECTED_ROWS = $this->minventary->disable_treatment_on_db($ID_TREATMENT);
+         echo $AFFECTED_ROWS;
+      } else {
+         redirect('proyectos');
+      }
+   }
 
 
    /* INICIO COMPRAS */
@@ -787,10 +797,10 @@ class Inventary extends CI_Controller
 
                $this->pdf->Output(); //Salida al navegador del pdf
             } else {
-               redirect('Consult/index');
+               redirect('consult/index');
             }
          } else {
-            redirect('Consult/index');
+            redirect('consult/index');
          }
       }
    }
@@ -845,7 +855,7 @@ class Inventary extends CI_Controller
          echo "sucess";
       } else {
          //operacion no permitida..
-         redirect('Inventary/index');
+         redirect('inventary/index');
       }
    }
    /* FIN COMPRAS */

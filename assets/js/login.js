@@ -24,7 +24,7 @@ $(document).ready(function () {
         $('#btnEntrar').html('<img src="' + raiz_url + 'assets/img/loader.gif" width="20px">  ...Cargando');
         
         $.ajax({
-            url: raiz_url + "Login/ajax_validate_user",
+            url: raiz_url + "login/ajax_validate_user",
             type: 'POST',
             data: 'USR_USUARIO=' + $('#RG_USERNAME_USUARIO').val()+
                   '&PSWD_USUARIO=' + $('#RG_PASSWD_USUARIO').val(),  

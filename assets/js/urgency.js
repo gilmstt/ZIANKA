@@ -45,7 +45,7 @@ $(document).ready(function (e) {
       "serverSide" : true,
       "order":[],
       "ajax" :{
-         url: raiz_url+"Urgency/ajax_get_all_patients",
+         url: raiz_url+"urgency/ajax_get_all_patients",
          type: "POST",
       },
       "buttons": ['excel'],          
@@ -66,7 +66,7 @@ $(document).ready(function (e) {
       "serverSide" : true,
       "order":[],
       "ajax" :{
-         url: raiz_url+"Urgency/ajax_get_all_urgencys",
+         url: raiz_url+"urgency/ajax_get_all_urgencys",
          type: "POST",
       },
       "buttons": ['excel'],          
@@ -89,7 +89,7 @@ $(document).ready(function (e) {
 
          $.ajax({
             type: "POST",
-            url: raiz_url + "Urgency/ajax_add_urgency_by_patient",
+            url: raiz_url + "urgency/ajax_add_urgency_by_patient",
             data: formData,
             cache: false,
             contentType: false,
@@ -107,7 +107,7 @@ $(document).ready(function (e) {
                   showConfirmButton: false,
                   timer:2500,
                   onClose: function(){
-                     window.location.href = raiz_url + "Urgency/index";
+                     window.location.href = raiz_url + "urgency/index";
                   },
                 })
 
@@ -131,7 +131,7 @@ $(document).ready(function (e) {
 
       $.ajax({
          type: "POST",
-         url: raiz_url + "Urgency/ajax_get_urgency_by_id",
+         url: raiz_url + "urgency/ajax_get_urgency_by_id",
          data: { urgencia: id_urgencia, paciente: id_patient, tarifa: id_tarifa }
       })
       .done(function (respuesta) {
@@ -228,7 +228,7 @@ $(document).ready(function (e) {
 
       $.ajax({
          type: "POST",
-         url: raiz_url + "Urgency/ajax_update_urgency",
+         url: raiz_url + "urgency/ajax_update_urgency",
          data: formData,
          cache: false,
          contentType: false,
@@ -286,7 +286,7 @@ $("#tarifa_select_urgency").change(function(){
          
    $.ajax({
       type: "POST",
-      url: raiz_url+"Urgency/change_tarifa_urgency",
+      url: raiz_url+"urgency/change_tarifa_urgency",
       data: {ficha:ficha , id_tarifa:selectVal},
       dataType: "POST",
       success: function (response) {
@@ -317,7 +317,7 @@ $("#tarifa_select_urgency").change(function(){
         
             $.ajax({
                type: "post",
-               url: raiz_url+"Urgency/ajax_edit_total_pagado",
+               url: raiz_url+"urgency/ajax_edit_total_pagado",
                data: {
                      TotPag:$("#TOTAL_PAGADO_URGENCIA").val(),
                      ficha:$("#id_ficha").val()
@@ -332,7 +332,7 @@ $("#tarifa_select_urgency").change(function(){
             $("#DESC_TARIFA_U").attr('readonly',true);
             $.ajax({
                type: "post",
-               url: raiz_url+"Urgency/ajax_edit_desc_tarifa",
+               url: raiz_url+"urgency/ajax_edit_desc_tarifa",
                data: {desc:$("#DESC_TARIFA_U").val(),
                      TotPag:$("#TOTAL_PAGADO_URGENCIA").val(),
                      FolUrg:$("#FOLIO_URGENCIA").val(),
@@ -366,7 +366,7 @@ $("#tarifa_select_urgency").change(function(){
          }else{
             $.ajax({
                type: "post",
-               url: raiz_url+"Urgency/ajax_edit_desc_tarifa",
+               url: raiz_url+"urgency/ajax_edit_desc_tarifa",
                data: {FolUrgM:$("#FOLIO_URGENCIA_M").val(),
                ficha:$("#id_ficha").val(),
                urgencia:$("#id_urgencia").val()},
@@ -521,7 +521,7 @@ $("#tarifa_select_urgency").change(function(){
       else {
          $.ajax({
             type: "POST",
-            url: raiz_url + "Urgency/ajax_insert_relProcedimiento",
+            url: raiz_url + "urgency/ajax_insert_relProcedimiento",
             data: formData,
             cache: false,
             contentType: false,
@@ -557,7 +557,7 @@ $("#tarifa_select_urgency").change(function(){
       var ficha = $(this).data('id_ficha');
       $(this).html('<img src="' + raiz_url + 'assets/img/loader.gif">');
       $.ajax({
-         url: raiz_url + "Urgency/ajax_delete_relProcedimiento",
+         url: raiz_url + "urgency/ajax_delete_relProcedimiento",
          type: "POST",
          data: {
             id_rel: id,
@@ -576,7 +576,7 @@ $("#tarifa_select_urgency").change(function(){
       let id_ficha = ficha;
       $.ajax({
          type: "POST",
-         url: raiz_url + "Urgency/ajax_get_procedimientos",
+         url: raiz_url + "urgency/ajax_get_procedimientos",
          data: { id_ficha: ficha },
          dataType: 'json',
       })
@@ -642,7 +642,7 @@ $("#tarifa_select_urgency").change(function(){
       else {
          $.ajax({
             type: "POST",
-            url: raiz_url + "Urgency/ajax_insert_relProducto",
+            url: raiz_url + "urgency/ajax_insert_relProducto",
             data: formData,
             cache: false,
             contentType: false,
@@ -677,7 +677,7 @@ $("#tarifa_select_urgency").change(function(){
 
       $(this).html('<img src="' + raiz_url + 'assets/img/loader.gif">');
       $.ajax({
-         url: raiz_url + "Urgency/ajax_delete_relProducto",
+         url: raiz_url + "urgency/ajax_delete_relProducto",
          type: "POST",
          data: {
             id_relP: id,
@@ -696,7 +696,7 @@ $("#tarifa_select_urgency").change(function(){
       let id_ficha = ficha;
       $.ajax({
          type: "POST",
-         url: raiz_url + "Urgency/ajax_get_productos",
+         url: raiz_url + "urgency/ajax_get_productos",
          data: { id_ficha: ficha },
          dataType: 'json',
       })
@@ -756,7 +756,7 @@ $("#tarifa_select_urgency").change(function(){
    $('body').on("change", ".product-quantity", function (e) {
       var idrel = $(this).data('idrelp');
       $.ajax({
-         url: raiz_url + "Urgency/ajax_update_cantidad_producto",
+         url: raiz_url + "urgency/ajax_update_cantidad_producto",
          type: 'POST',
          data: {id:idrel, cantidad: $(this).val()},
          success: function (id_ficha) {
@@ -774,7 +774,7 @@ $("#tarifa_select_urgency").change(function(){
       var ID_DOCUMENTO = $(this).attr('data-id-document');
       var NOMBRE_DOCUMENTO = $(this).attr('data-document-name');
       $.ajax({
-         url: raiz_url + "Urgency/ajax_delete_file_by_id",
+         url: raiz_url + "urgency/ajax_delete_file_by_id",
          type: 'POST',
          data: {ID_URGENCIA:ID_URGENCIA,ID_DOCUMENTO:ID_DOCUMENTO,NOMBRE_DOCUMENTO:NOMBRE_DOCUMENTO},
          success: function (data) {
@@ -798,7 +798,7 @@ $("#tarifa_select_urgency").change(function(){
    $("#formFilesClient_U").on('submit', (function (e) {
       e.preventDefault();
       $.ajax({
-         url: raiz_url + "Urgency/ajax_subir_archivo",
+         url: raiz_url + "urgency/ajax_subir_archivo",
          type: "POST",
          data: new FormData(this),
          mimeType: "multipart/form-data",
@@ -835,7 +835,7 @@ $("#tarifa_select_urgency").change(function(){
       //  $('#modAddFiles').modal('toggle');
 
       $.ajax({
-         url: raiz_url + "Urgency/ajax_get_files_urgency",
+         url: raiz_url + "urgency/ajax_get_files_urgency",
          type: 'POST',
          data: 'ID_URGENCIA=' + ID_URGENCIA,
          success: function (data2) {
@@ -894,7 +894,7 @@ $("#tarifa_select_urgency").change(function(){
          if (result.value) {
             $.ajax({
                type: "POST",
-               url: raiz_url+"Urgency/ajax_delete_urgency",
+               url: raiz_url+"urgency/ajax_delete_urgency",
                data: {id_urgencia:id},
             })
             .done( function(){
@@ -924,7 +924,7 @@ $("#tarifa_select_urgency").change(function(){
       let PrecioUrgencia="";
       $.ajax({
          type: "POST",
-         url: raiz_url+"Urgency/ajax_get_tarifa_by_id",
+         url: raiz_url+"urgency/ajax_get_tarifa_by_id",
          data:{tarifa:$(this).val()},
          success: function (data) {
             let json = JSON.parse(data);
@@ -958,7 +958,7 @@ $("#tarifa_select_urgency").change(function(){
 
          $.ajax({
             type: "POST",
-            url: raiz_url+"Urgency/ajax_get_tarifa_by_id",
+            url: raiz_url+"urgency/ajax_get_tarifa_by_id",
             data:{tarifa:$("#ID_TARIFA").val()},
             success: function (data) {
                let json = JSON.parse(data);
@@ -983,7 +983,7 @@ $("#tarifa_select_urgency").change(function(){
 
          $.ajax({
             type: "POST",
-            url: raiz_url + "Consult/ajax_total_final",
+            url: raiz_url + "consult/ajax_total_final",
             data: {descuento:'0.00'},        
             success: function (response) {
                var json = JSON.parse(response);   
@@ -1019,7 +1019,7 @@ $("#tarifa_select_urgency").change(function(){
 
       $.ajax({
          type: "POST",
-         url: raiz_url + "Consult/ajax_costo_total",
+         url: raiz_url + "consult/ajax_costo_total",
          data: {descuento:desc, ficha:ficha, precio:precio_urgency, tarifa:IsTarifa},
          
          success: function (response) {
@@ -1061,7 +1061,7 @@ $("#tarifa_select_urgency").change(function(){
      
       $.ajax({
          type: "POST",
-         url: raiz_url + "Consult/ajax_total_final",
+         url: raiz_url + "consult/ajax_total_final",
          data: {descuento:desc,
                precio:PrecioUrgency,
                membresia:isMembresia},        
@@ -1126,14 +1126,14 @@ $("#tarifa_select_urgency").change(function(){
             if (result.value) {
                $.ajax({
                   type: "POST",
-                  url: raiz_url + "Urgency/ajax_close_urgency",
+                  url: raiz_url + "urgency/ajax_close_urgency",
                   data: { id_urgencia: URGENCY_ID },
                })
                   .done(function (response) {
                      if (response === "success") {
                         $('#dataUrgency').DataTable().ajax.reload();
                         $("#BTN_EDIT_FICHA_U").hide();
-                        window.open(raiz_url + "Consult/creaPdfUrgency/" + URGENCY_ID);
+                        window.open(raiz_url + "consult/creaPdfUrgency/" + URGENCY_ID);
                      } else {
                         alert('Hubo un error, intente de nuevo');
                      }
@@ -1142,7 +1142,7 @@ $("#tarifa_select_urgency").change(function(){
             }
          })
       }else{
-         window.open(raiz_url + "Consult/creaPdfUrgency/" + URGENCY_ID);
+         window.open(raiz_url + "consult/creaPdfUrgency/" + URGENCY_ID);
       }
       
    });
@@ -1158,7 +1158,7 @@ $("#tarifa_select_urgency").change(function(){
             html: '<div class="class_invalid">¡ESTABLECE FECHA Y HORA EGRESO!</div>'
          });
       }else{
-         window.open(raiz_url + "Consult/creaPdfFichaUrgency/" + URGENCY_ID);
+         window.open(raiz_url + "consult/creaPdfFichaUrgency/" + URGENCY_ID);
       }
    });
    $("body").on('click', '.btn-receta-urgency-show', function () {

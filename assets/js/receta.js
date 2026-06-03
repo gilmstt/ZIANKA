@@ -5,7 +5,7 @@ $(document).ready(function () {
     $("#addReceta").click(function () {
 
         $.ajax({
-            url: raiz_url + "Receta/ajax_guardar_receta",
+            url: raiz_url + "receta/ajax_guardar_receta",
             type: 'POST',
             dataType: 'json',
 
@@ -41,7 +41,7 @@ $(document).ready(function () {
             e.preventDefault();
 
         $.ajax({
-            url: raiz_url + "Receta/ajax_guardar_indicacion",
+            url: raiz_url + "receta/ajax_guardar_indicacion",
             type: 'POST',
             data: $(this).serialize(),
             success: function (data) {
@@ -62,7 +62,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: raiz_url + 'Receta/ajax_borrar_indicacion',
+            url: raiz_url + 'receta/ajax_borrar_indicacion',
             dataType: 'json',
             data: 'id=' + id,
 
@@ -78,7 +78,7 @@ $(document).ready(function () {
         */
     $.ajax({
         type: "POST",
-        url: raiz_url + 'Receta/ajax_obtener_nombres',
+        url: raiz_url + 'receta/ajax_obtener_nombres',
         dataType: 'json',
 
         success: function (respuesta) {
@@ -97,7 +97,7 @@ $(document).ready(function () {
                         */
                     $.ajax({
                         type: "POST",
-                        url: raiz_url + 'Receta/ajax_obtener_nombres_comerciales',
+                        url: raiz_url + 'receta/ajax_obtener_nombres_comerciales',
                         dataType: 'json',
                         data: 'nombre=' + nombre,
 
@@ -116,7 +116,7 @@ $(document).ready(function () {
                                      */
                                     $.ajax({
                                         type: "POST",
-                                        url: raiz_url + 'Receta/ajax_obtener_formulas',
+                                        url: raiz_url + 'receta/ajax_obtener_formulas',
                                         dataType: 'json',
                                         data: 'nombre=' + nombre + '&nombreComercial=' + nombreComercial,
 
@@ -170,12 +170,12 @@ $(document).ready(function () {
         var id_urgencia = $(this).data('id_urgencia');
 
         $.ajax({
-            url: raiz_url + "Receta/ajax_guardar_ids_sesion",
+            url: raiz_url + "receta/ajax_guardar_ids_sesion",
             type: 'POST',
             data: 'LAST_URL=' + lastURL + '&ID_PACIENTE=' + id_patient + '&ID_URGENCIA=' + id_urgencia,
 
             success: function (data) {
-                window.location.href = raiz_url + "Receta"
+                window.location.href = raiz_url + "receta"
             }
         });
     });
@@ -189,12 +189,12 @@ $(document).ready(function () {
         var id_consult = $(this).data('id_consulta');
 
         $.ajax({
-            url: raiz_url + "Receta/ajax_guardar_ids_sesion",
+            url: raiz_url + "receta/ajax_guardar_ids_sesion",
             type: 'POST',
             data: 'LAST_URL=' + lastURL + '&ID_PACIENTE=' + id_patient + '&ID_RECETA=' + id_receta +'&ID_CONSULTA=' + id_consult,
 
             success: function (data) {
-                window.location.href = raiz_url + "Receta/editar"
+                window.location.href = raiz_url + "receta/editar"
             }
         });
     });
@@ -208,12 +208,12 @@ $(document).ready(function () {
         var id_urgencia = $(this).data('id_urgencia');
 
         $.ajax({
-            url: raiz_url + "Receta/ajax_guardar_ids_sesion",
+            url: raiz_url + "receta/ajax_guardar_ids_sesion",
             type: 'POST',
             data: 'LAST_URL=' + lastURL + '&ID_PACIENTE=' + id_patient + '&ID_RECETA=' + id_receta + '&ID_URGENCIA=' + id_urgencia,
 
             success: function (data) {
-                window.location.href = raiz_url + "Receta/editar"
+                window.location.href = raiz_url + "receta/editar"
             }
         });
     });

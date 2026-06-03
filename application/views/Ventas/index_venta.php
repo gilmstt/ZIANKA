@@ -130,7 +130,7 @@
                   <button type="button" class="btn btn-secondary w100 mt-20">Cancelar ventar</button>
                </div>
                <div class="col-lg-12">
-                  <a href="<?= base_url('Ventas/history') ?>" class="btn btn-secondary w100 mt-20">Ver ventas</a>
+                  <a href="<?= base_url('ventas/history') ?>" class="btn btn-secondary w100 mt-20">Ver ventas</a>
                </div>
             </div>
          </div>

@@ -85,7 +85,7 @@ $(document).ready(function () {
       $.ajax({
 
          type: "POST",
-         url: raiz_url + "Ventas/PaymentCart",
+         url: raiz_url + "ventas/PaymentCart",
          data: { id: id, action: 'add' },
          success: function (response) {
             PaymentsCart()
@@ -100,7 +100,7 @@ $(document).ready(function () {
 
       $.ajax({
          type: "POST",
-         url: raiz_url + "Ventas/ProductCart",
+         url: raiz_url + "ventas/ProductCart",
          data: { id: id, action: 'add' },
          success: function (response) {
             GetCart()
@@ -115,7 +115,7 @@ $(document).ready(function () {
 
       $.ajax({
          type: "POST",
-         url: raiz_url + "Ventas/removePayment",
+         url: raiz_url + "ventas/removePayment",
          data: { id: id },
          success: function (response) {
             if (response == true) {
@@ -130,7 +130,7 @@ $(document).ready(function () {
 
       $.ajax({
          type: "POST",
-         url: raiz_url + "Ventas/ProductCart",
+         url: raiz_url + "ventas/ProductCart",
          data: { id: id, action: 'remove' },
          success: function (response) {
             if (response == true) {
@@ -147,7 +147,7 @@ $(document).ready(function () {
 
       $.ajax({
          type: "post",
-         url: raiz_url + "Ventas/VentaLibre",
+         url: raiz_url + "ventas/VentaLibre",
          data: data,
          processData: false,
          contentType: false,
@@ -205,7 +205,7 @@ $(document).ready(function () {
          console.log("topay:" + $(".MontoPagar").html());
          $.ajax({
             type: "post",
-            url: raiz_url + "Ventas/insertPayment",
+            url: raiz_url + "ventas/insertPayment",
             data: {
                amount: amount,
                method: method,
@@ -241,7 +241,7 @@ $(document).ready(function () {
       if (amount <= 0) {
          $.ajax({
             type: "post",
-            url: raiz_url + "Ventas/insertSale",
+            url: raiz_url + "ventas/insertSale",
             dataType: "json",
             success: function (response) {
                if (response.data.status == true) { console.log(data);
@@ -275,7 +275,7 @@ $(document).ready(function () {
 
       $.ajax({
          type: "post",
-         url: raiz_url + "Ventas/getSales",
+         url: raiz_url + "ventas/getSales",
          data: {
             start_date: start_date,
             end_date: end_date,
@@ -307,7 +307,7 @@ $(document).ready(function () {
    $("body").on('click', '.btn-view-sale', function () {
       $.ajax({
          type: "post",
-         url: raiz_url + "Ventas/searchSale",
+         url: raiz_url + "ventas/searchSale",
          data: {
             sale_id: $(this).data('id-venta')
          },
@@ -419,7 +419,7 @@ $(document).ready(function () {
          if (result.value == true) {
             $.ajax({
                type: "post",
-               url: raiz_url + "Ventas/cancelSale",
+               url: raiz_url + "ventas/cancelSale",
                dataType: "json",
                data: {
                   sale_id: $(this).data('id-venta')
@@ -447,7 +447,7 @@ $(document).ready(function () {
 
       $.ajax({
          type: "post",
-         url: raiz_url + "Ventas/searchCode",
+         url: raiz_url + "ventas/searchCode",
          data: {
             code: code
          },
@@ -467,7 +467,7 @@ $(document).ready(function () {
 
       $.ajax({
          type: "post",
-         url: raiz_url + "Ventas/getPayments",
+         url: raiz_url + "ventas/getPayments",
          dataType: 'json',
          success: function (response) {
             if (response.data.length > 0) {
@@ -516,7 +516,7 @@ $(document).ready(function () {
 
       $.ajax({
          type: "post",
-         url: raiz_url + "Ventas/getCart",
+         url: raiz_url + "ventas/getCart",
          dataType: 'json',
          success: function (response) {
             //console.log(response);
@@ -597,7 +597,7 @@ $(document).ready(function () {
       else {
          $.ajax({
             type: "POST",
-            url: raiz_url + "Ventas/ProductCart",
+            url: raiz_url + "ventas/ProductCart",
             data: { id: id, qty: qty, desc: desc, action: 'update' },
             success: function (response) {
                GetCart()

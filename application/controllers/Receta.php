@@ -226,10 +226,10 @@ class Receta extends CI_Controller {
                 
                 $this->pdf->Output(); //Salida al navegador del pdf
             } else {
-                redirect('Consult/index');
+                redirect('consult/index');
             }
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 

@@ -197,7 +197,7 @@ class Schedule extends CI_Controller
          $AFFECTED_ROWS = $this->mschedule->disable_schedule_on_db($ID_CITA);
          echo $AFFECTED_ROWS;
       } else {
-         redirect('Schedule');
+         redirect('schedule');
       }
    }
 

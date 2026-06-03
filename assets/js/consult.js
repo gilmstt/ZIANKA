@@ -2,7 +2,7 @@ $(document).ready(function () {
    let isEdit = false;
    $.ajax({
       type: "method",
-      url: raiz_url + "Consult/ajax_get_all_consults",
+      url: raiz_url + "consult/ajax_get_all_consults",
       data: "data",
       dataType: "json",
       success: function (response) {
@@ -20,7 +20,7 @@ $(document).ready(function () {
       "pageLength": 25, // 👈 Establece 25 como valor por defecto
       "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]], // 👈 Agrega opción "Todos"
       "ajax": {
-         url: raiz_url + "Consult/ajax_get_all_consults",
+         url: raiz_url + "consult/ajax_get_all_consults",
          type: "POST"
       },
       drawCallback: function () {
@@ -42,7 +42,7 @@ $(document).ready(function () {
          var formData = new FormData($(this)[0]);
          $.ajax({
             type: "POST",
-            url: raiz_url + "Consult/ajax_nueva_consulta",
+            url: raiz_url + "consult/ajax_nueva_consulta",
             data: formData,
             cache: false,
             contentType: false,
@@ -61,7 +61,7 @@ $(document).ready(function () {
                      showConfirmButton: false,
                      timer: 2500,
                      onClose: function () {
-                        window.location.href = raiz_url + "Consult/index";
+                        window.location.href = raiz_url + "consult/index";
                      },
                   });
 
@@ -131,7 +131,7 @@ $(document).ready(function () {
       if (id_tipos && id_tipos.length > 0) {
          $.ajax({
             type: "POST",
-            url: raiz_url + "Consult/ajax_get_procedimientos_por_tipo",
+            url: raiz_url + "consult/ajax_get_procedimientos_por_tipo",
             data: { id_tipo_consulta: id_tipos },   // enviamos array
             dataType: "json",
             success: function (response) {
@@ -158,7 +158,7 @@ $(document).ready(function () {
       if (txt) {
          $.ajax({
             type: "POST",
-            url: raiz_url + "Consult/ajax_obtener_procedimiento",
+            url: raiz_url + "consult/ajax_obtener_procedimiento",
             data: { var: txt },
             dataType: 'json',
             success: function (respuesta) {
@@ -203,7 +203,7 @@ $(document).ready(function () {
       } else {
          $.ajax({
             type: "POST",
-            url: raiz_url + "Consult/ajax_temp_procedimiento",
+            url: raiz_url + "consult/ajax_temp_procedimiento",
             data: formData,
             cache: false,
             contentType: false,
@@ -229,7 +229,7 @@ $(document).ready(function () {
       var id = $(this).data('idtemp');
       $(this).html('<img src="' + raiz_url + 'assets/img/loader.gif">');
       $.ajax({
-         url: raiz_url + "Consult/ajax_delete_temProcedimiento",
+         url: raiz_url + "consult/ajax_delete_temProcedimiento",
          type: "POST",
          data: { id_temp: id }
       })
@@ -247,7 +247,7 @@ $(document).ready(function () {
    function load_temProcedimientos() {
       $.ajax({
          type: "POST",
-         url: raiz_url + "Consult/ajax_show_tempProcedimientos",
+         url: raiz_url + "consult/ajax_show_tempProcedimientos",
          dataType: 'json',
          success: function (respuesta) {
 
@@ -292,7 +292,7 @@ $(document).ready(function () {
       if (txt) {
          $.ajax({
             type: "POST",
-            url: raiz_url + "Consult/ajax_obtener_producto",
+            url: raiz_url + "consult/ajax_obtener_producto",
             data: { var: txt },
             dataType: 'json',
             success: function (respuesta) {
@@ -346,7 +346,7 @@ $(document).ready(function () {
       } else {
          $.ajax({
             type: "POST",
-            url: raiz_url + "Consult/ajax_temp_producto",
+            url: raiz_url + "consult/ajax_temp_producto",
             data: formData,
             cache: false,
             contentType: false,
@@ -373,7 +373,7 @@ $(document).ready(function () {
       $(this).html('<img src="' + raiz_url + 'assets/img/loader.gif">');
 
       $.ajax({
-         url: raiz_url + "Consult/ajax_delete_temProducto",
+         url: raiz_url + "consult/ajax_delete_temProducto",
          type: "POST",
          data: { id_temp: id }
       })
@@ -388,7 +388,7 @@ $(document).ready(function () {
    function load_tempProductos() {
       $.ajax({
          type: "POST",
-         url: raiz_url + "Consult/ajax_show_tempProductos",
+         url: raiz_url + "consult/ajax_show_tempProductos",
          dataType: 'json',
          success: function (respuesta) {
             var data = respuesta.data;
@@ -534,7 +534,7 @@ $(document).ready(function () {
 
       $.ajax({
          type: "POST",
-         url: raiz_url + "Consult/change_tarifa",
+         url: raiz_url + "consult/change_tarifa",
          data: { ficha: ficha, id_tarifa: selectVal },
          dataType: "POST",
          success: function (response) {
@@ -566,7 +566,7 @@ $(document).ready(function () {
             $("#DESC_TARIFA_INDEX").attr('readonly', true);
             $.ajax({
                type: "post",
-               url: raiz_url + "Consult/ajax_edit_desc_tarifa",
+               url: raiz_url + "consult/ajax_edit_desc_tarifa",
                data: {
                   desc: $("#DESC_TARIFA_INDEX").val(),
                   TotPag: $("#TOTAL_PAGADO_CONSULTA").val(),
@@ -602,7 +602,7 @@ $(document).ready(function () {
          } else {
             $.ajax({
                type: "post",
-               url: raiz_url + "Consult/ajax_edit_desc_tarifa",
+               url: raiz_url + "consult/ajax_edit_desc_tarifa",
                data: {
                   FolConM: $("#FOLIO_CONSULTA_M").val(),
                   ficha: $("#id_ficha_consumo").val(),
@@ -664,7 +664,7 @@ $(document).ready(function () {
       var ficha = $(this).data('id_ficha');
       $(this).html('<img src="' + raiz_url + 'assets/img/loader.gif">');
       $.ajax({
-         url: raiz_url + "Consult/ajax_delete_relProcedimiento",
+         url: raiz_url + "consult/ajax_delete_relProcedimiento",
          type: "POST",
          data: {
             id_rel: id,
@@ -714,7 +714,7 @@ $(document).ready(function () {
       } else {
          $.ajax({
             type: "POST",
-            url: raiz_url + "Consult/ajax_insert_relProcedimiento",
+            url: raiz_url + "consult/ajax_insert_relProcedimiento",
             data: formData,
             cache: false,
             contentType: false,
@@ -749,7 +749,7 @@ $(document).ready(function () {
       let id_ficha = ficha;
       $.ajax({
          type: "POST",
-         url: raiz_url + "Consult/ajax_get_procedimientos",
+         url: raiz_url + "consult/ajax_get_procedimientos",
          data: { id_ficha: ficha },
          dataType: 'json'
       })
@@ -815,7 +815,7 @@ $(document).ready(function () {
       } else {
          $.ajax({
             type: "POST",
-            url: raiz_url + "Consult/ajax_insert_relProducto",
+            url: raiz_url + "consult/ajax_insert_relProducto",
             data: formData,
             cache: false,
             contentType: false,
@@ -849,7 +849,7 @@ $(document).ready(function () {
       var ficha = $(this).data('id_ficha');
       $(this).html('<img src="' + raiz_url + 'assets/img/loader.gif">');
       $.ajax({
-         url: raiz_url + "Consult/ajax_delete_relProducto",
+         url: raiz_url + "consult/ajax_delete_relProducto",
          type: "POST",
          data: {
             id_relP: id,
@@ -868,7 +868,7 @@ $(document).ready(function () {
       let id_ficha = ficha;
       $.ajax({
          type: "POST",
-         url: raiz_url + "Consult/ajax_get_productos",
+         url: raiz_url + "consult/ajax_get_productos",
          data: { id_ficha: ficha },
          dataType: 'json'
       })
@@ -930,7 +930,7 @@ $(document).ready(function () {
    $('body').on("change", ".product-quantityC", function (e) {
       var idrel = $(this).data('idrelp');
       $.ajax({
-         url: raiz_url + "Urgency/ajax_update_cantidad_producto",
+         url: raiz_url + "urgency/ajax_update_cantidad_producto",
          type: 'POST',
          data: { id: idrel, cantidad: $(this).val() },
          success: function (id_ficha) {
@@ -952,7 +952,7 @@ $(document).ready(function () {
 
       $.ajax({
          type: "POST",
-         url: raiz_url + "Consult/ajax_get_consulta_by_id",
+         url: raiz_url + "consult/ajax_get_consulta_by_id",
          data: { consulta: id_consult, paciente: id_patient, tarifa: id_tarifa }
       })
          .done(function (respuesta) {
@@ -1054,7 +1054,7 @@ $(document).ready(function () {
 
       $.ajax({
          type: "POST",
-         url: raiz_url + "Consult/ajax_update_consulta",
+         url: raiz_url + "consult/ajax_update_consulta",
          data: formData,
          cache: false,
          contentType: false,
@@ -1107,7 +1107,7 @@ $(document).ready(function () {
       var ID_DOCUMENTO = $(this).attr('data-id-document');
       var NOMBRE_DOCUMENTO = $(this).attr('data-document-name');
       $.ajax({
-         url: raiz_url + "Consult/ajax_delete_file_by_id",
+         url: raiz_url + "consult/ajax_delete_file_by_id",
          type: 'POST',
          data: 'ID_CONSULTA=' + ID_CONSULTA + "&ID_DOCUMENTO=" + ID_DOCUMENTO + "&NOMBRE_DOCUMENTO=" + NOMBRE_DOCUMENTO,
          success: function (data) {
@@ -1128,7 +1128,7 @@ $(document).ready(function () {
    $("#formFilesClient").on('submit', (function (e) {
       e.preventDefault();
       $.ajax({
-         url: raiz_url + "Consult/ajax_subir_archivo",
+         url: raiz_url + "consult/ajax_subir_archivo",
          type: "POST",
          data: new FormData(this),
          mimeType: "multipart/form-data",
@@ -1169,7 +1169,7 @@ $(document).ready(function () {
       //  $('#modAddFiles').modal('toggle');
 
       $.ajax({
-         url: raiz_url + "Consult/ajax_get_files_consult",
+         url: raiz_url + "consult/ajax_get_files_consult",
          type: 'POST',
          data: 'ID_CONSULTA=' + ID_CLIENTE,
          success: function (data2) {
@@ -1225,7 +1225,7 @@ $(document).ready(function () {
          if (result.value) {
             $.ajax({
                type: "POST",
-               url: raiz_url + "Consult/ajax_delete_consult",
+               url: raiz_url + "consult/ajax_delete_consult",
                data: { id_consulta: id }
             })
                .done(function () {
@@ -1292,7 +1292,7 @@ $(document).ready(function () {
             if (result.value) {
                $.ajax({
                   type: "POST",
-                  url: raiz_url + "Consult/ajax_close_consult",
+                  url: raiz_url + "consult/ajax_close_consult",
                   data: { id_consulta: CONSULT_ID },
                })
                   .done(function (response) {
@@ -1300,7 +1300,7 @@ $(document).ready(function () {
                         $('#close_consulta').val('1');
                         $('#dataConsult').DataTable().ajax.reload();
                         $("#BTN_EDIT_FICHA").hide();
-                        window.open(raiz_url + "Consult/creaPdf/" + CONSULT_ID);
+                        window.open(raiz_url + "consult/creaPdf/" + CONSULT_ID);
 
                      } else {
                         alert('Hubo un error, intente de nuevo');
@@ -1310,7 +1310,7 @@ $(document).ready(function () {
             }
          })
       } else {
-         window.open(raiz_url + "Consult/creaPdf/" + CONSULT_ID);
+         window.open(raiz_url + "consult/creaPdf/" + CONSULT_ID);
       }
    });
    $('#BTN_PRINT_DIAG_CONSULT').on('click', function () {
@@ -1326,7 +1326,7 @@ $(document).ready(function () {
 
          });
       } else {
-         window.open(raiz_url + "Consult/creaPdfFichaDiagnostic/" + CONSULT_ID);
+         window.open(raiz_url + "consult/creaPdfFichaDiagnostic/" + CONSULT_ID);
 
       }
    });
@@ -1405,7 +1405,7 @@ $(document).ready(function () {
       let IsTarifa = $("#id_tarifa").val();
       $.ajax({
          type: "POST",
-         url: raiz_url + "Consult/ajax_costo_total",
+         url: raiz_url + "consult/ajax_costo_total",
          data: {
             descuento: desc,
             ficha: ficha,
@@ -1438,7 +1438,7 @@ $(document).ready(function () {
 
       $.ajax({
          type: "POST",
-         url: raiz_url + "Consult/ajax_total_final",
+         url: raiz_url + "consult/ajax_total_final",
          data: {
             descuento: desc,
             precio: PrecioConsult,
@@ -1501,7 +1501,7 @@ $(document).ready(function () {
    // Función principal
    function cargarListaConsentimientos(id_consulta, id_paciente) {
       $.ajax({
-         url: raiz_url + "Consult/ajax_get_tipos_por_consulta",
+         url: raiz_url + "consult/ajax_get_tipos_por_consulta",
          type: "POST",
          data: { id_consulta: id_consulta },
          dataType: "json",

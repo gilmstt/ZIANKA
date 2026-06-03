@@ -106,23 +106,23 @@
                             </div>
                             <div id="nav_ma_toggle" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav navbar-right header-ul">
-                                    <li <?= $classIni ?>> <a href="<?= base_url(); ?>Inicio/index"><i class="fa fa-hospital"></i> Inicio</a></li>
+                                    <li <?= $classIni ?>> <a href="<?= base_url(); ?>inicio/index"><i class="fa fa-hospital"></i> Inicio</a></li>
                                     <?php if ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR || $this->session->userdata('CAREYES_ID_ROL') == MEDICO || $this->session->userdata('CAREYES_ID_ROL') == RECEPCION) { ?>
-                                        <li <?= $classSch ?>> <a href="<?= base_url(); ?>Schedule/index"><i class="fa fa-calendar"></i> Citas</a></li>
-                                        <li <?= $classPat ?>> <a href="<?= base_url(); ?>Patient/index"><i class="fa fa-users"></i> Pacientes</a></li>
+                                        <li <?= $classSch ?>> <a href="<?= base_url(); ?>schedule/index"><i class="fa fa-calendar"></i> Citas</a></li>
+                                        <li <?= $classPat ?>> <a href="<?= base_url(); ?>patient/index"><i class="fa fa-users"></i> Pacientes</a></li>
                                     <?php } ?>
                                     <?php if ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR || $this->session->userdata('CAREYES_ID_ROL') == ALMACEN) { ?>
-                                        <li <?= $classInv ?>> <a href="<?= base_url(); ?>Inventary/index"><i class="fa fa-pills"></i> Inventario</a></li>
+                                        <li <?= $classInv ?>> <a href="<?= base_url(); ?>inventary/index"><i class="fa fa-pills"></i> Inventario</a></li>
                                     <?php } ?>
                                     <?php if ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR) { ?>
-                                        <li <?= $classRep ?>> <a href="<?= base_url(); ?>Report/consultas"><i class="fas fa-file-invoice"></i> Reportes</a></li>
+                                        <li <?= $classRep ?>> <a href="<?= base_url(); ?>report/consultas"><i class="fas fa-file-invoice"></i> Reportes</a></li>
                                     <?php } ?>
                                     <?php if ($this->session->userdata('VET_ROL_ID') == ADMINISTRADOR || $this->session->userdata('CAREYES_ID_ROL') == MEDICO) { ?>
-                                        <li <?= $classVent ?>> <a href="<?= base_url(); ?>Ventas/index"><i class="fa fa-dollar-sign"></i> Venta</a></li>
+                                        <li <?= $classVent ?>> <a href="<?= base_url(); ?>ventas/index"><i class="fa fa-dollar-sign"></i> Venta</a></li>
                                     <?php } ?>
                                     <?php if ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR || $this->session->userdata('CAREYES_ID_ROL') == MEDICO || $this->session->userdata('CAREYES_ID_ROL') == RECEPCION) { ?>
-                                        <li <?= $classCon ?>> <a href="<?= base_url(); ?>Consult/index"><i class="fa fa-stethoscope"></i> Consultas</a></li>
-                                        <!--<li <?= $classUrg ?>> <a href="<?= base_url(); ?>Urgency/index"><i class="fa fa-hospital-symbol"></i> Urgencias</a></li>-->
+                                        <li <?= $classCon ?>> <a href="<?= base_url(); ?>consult/index"><i class="fa fa-stethoscope"></i> Consultas</a></li>
+                                        <!--<li <?= $classUrg ?>> <a href="<?= base_url(); ?>urgency/index"><i class="fa fa-hospital-symbol"></i> Urgencias</a></li>-->
                                     <?php } ?>
                                     <li class="dropdown <?= $classCfg ?>">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

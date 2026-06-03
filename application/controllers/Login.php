@@ -16,7 +16,7 @@ class Login extends CI_Controller {
             // echo "alo";
             $this->load->view('Login/v_register');
         } else {
-            redirect('Inicio/index');
+            redirect('inicio/index');
         }
     }
 
@@ -47,7 +47,7 @@ class Login extends CI_Controller {
             //redirect('login/salir');
             endif;
         else:
-            redirect('Login/salir');
+            redirect('login/salir');
         endif;
     }
 

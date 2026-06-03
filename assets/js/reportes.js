@@ -373,7 +373,7 @@ $(document).ready(function () {
       $("#Historia").removeClass('hidden')
    });
    $("#Historial").on("click", function () {
-      window.open(raiz_url + "Report/pdfPaciente/");
+      window.open(raiz_url + "report/pdfPaciente/");
    });
    $('#formSearchPaciente').submit(function (e) {
       e.preventDefault();
@@ -384,7 +384,7 @@ $(document).ready(function () {
    $('#btn_ver_historial').on('click', function () {
       var PACIENT_ID = $('#id_paciente').val();
       {
-         window.open(raiz_url + "Report/pdfPaciente/" + PACIENT_ID);
+         window.open(raiz_url + "report/pdfPaciente/" + PACIENT_ID);
       }
 
    });
@@ -403,7 +403,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: raiz_url + "Report/ajax_search_houses",
+            url: raiz_url + "report/ajax_search_houses",
             data: {fecha_ini: FECHAINI, fecha_fin: FECHAFIN},
             dataType: 'json',
             success: function (respuesta) {

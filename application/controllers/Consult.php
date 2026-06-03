@@ -700,10 +700,10 @@ class Consult extends CI_Controller
 
                 $this->pdf->Output(); //Salida al navegador del pdf
             } else {
-                redirect('Consult/index');
+                redirect('consult/index');
             }
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -897,10 +897,10 @@ class Consult extends CI_Controller
 
                     $this->pdf->Output(); //Salida al navegador del pdf
                 } else {
-                    echo "redirect('Consult/index')";
+                    echo "redirect('consult/index')";
                 }
             } else {
-                redirect('Consult/index');
+                redirect('consult/index');
             }
         }
     }
@@ -951,10 +951,10 @@ class Consult extends CI_Controller
 
                     $this->pdf->Output(); //Salida al navegador del pdf
                 } else {
-                    echo "redirect('Consult/index')";
+                    echo "redirect('consult/index')";
                 }
             } else {
-                redirect('Consult/index');
+                redirect('consult/index');
             }
         }
     }
@@ -1000,10 +1000,10 @@ class Consult extends CI_Controller
 
                     $this->pdf->Output(); //Salida al navegador del pdf
                 } else {
-                    echo "redirect('Consult/index')";
+                    echo "redirect('consult/index')";
                 }
             } else {
-                redirect('Consult/index');
+                redirect('consult/index');
             }
         }
     }
@@ -1541,10 +1541,10 @@ class Consult extends CI_Controller
 
                     $this->pdf->Output(); //Salida al navegador del pdf
                 } else {
-                    echo "redirect('Consult/index')";
+                    echo "redirect('consult/index')";
                 }
             } else {
-                redirect('Consult/index');
+                redirect('consult/index');
             }
         }
     }
@@ -2346,10 +2346,10 @@ class Consult extends CI_Controller
                         $this->pdf->Output(); //Salida al navegador del pdf
                     }
                 } else {
-                    echo "redirect('Consult/index')";
+                    echo "redirect('consult/index')";
                 }
             } else {
-                redirect('Consult/index');
+                redirect('consult/index');
             }
         }
     }
@@ -2455,10 +2455,10 @@ class Consult extends CI_Controller
             $this->pdf->SetFont('Arial', '', 10);
 
 
-            $this->pdf->Text(60, 32, $nombrePaciente);
-            $this->pdf->Text(60, 39, $historiaClinica);
-            $this->pdf->Text(60, 47, $nombreMedico);
-            $this->pdf->Text(60, 56, $fechaHoy);
+            $this->pdf->Text(60, 47, $nombrePaciente);
+            //$this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 54, $nombreMedico);
+            $this->pdf->Text(60, 62, $fechaHoy);
 
             $this->pdf->AddPage('P', 'Letter');
             $this->pdf->designUp();
@@ -2467,7 +2467,7 @@ class Consult extends CI_Controller
             $this->pdf->SetFont('Arial', '', 9);
 
             $x = 161;          // Coordenada X inicial
-            $y = 227;
+            $y = 228 ;
             $maxX = 205;
             $espaciado = 3;
 
@@ -2493,7 +2493,7 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             // $this->pdf->Image(FCPATH . "assets/img/acidoHialuronico/3.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 9);
-            $this->pdf->Text(80, 137, $nombrePaciente);
+            $this->pdf->Text(80, 145, $nombrePaciente);
 
             $this->pdf->Output('I');
         }
@@ -2504,19 +2504,19 @@ class Consult extends CI_Controller
             // $this->pdf->Image(FCPATH . "assets/img/bioestimulador/1.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 10);
 
-            $this->pdf->Text(60, 32, $nombrePaciente);
-            $this->pdf->Text(60, 39, $historiaClinica);
-            $this->pdf->Text(60, 47, $nombreMedico);
-            $this->pdf->Text(60, 56, $fechaHoy);
+            $this->pdf->Text(60, 47, $nombrePaciente);
+            //$this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 54, $nombreMedico);
+            $this->pdf->Text(60, 62, $fechaHoy);
 
             $this->pdf->AddPage('P', 'Letter');
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/bioestimulador/2.png", 0, 0, 215.9, 279.4);
-            $this->pdf->Text(73, 187, $nombreMedico);
+            $this->pdf->Text(73, 188, $nombreMedico);
             $this->pdf->SetFont('Arial', '', 9);
 
             $x = 161;          // Coordenada X inicial
-            $y = 192;
+            $y = 193;
             $maxX = 205;
             $espaciado = 3;
 
@@ -2541,7 +2541,7 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/bioestimulador/3.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 9);
-            $this->pdf->Text(80, 101, $nombrePaciente);
+            $this->pdf->Text(80, 108, $nombrePaciente);
 
             $this->pdf->Output('I');
         }
@@ -2553,17 +2553,17 @@ class Consult extends CI_Controller
             //$this->pdf->Image(FCPATH . "assets/img/co2/1.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 10);
 
-            $this->pdf->Text(60, 32, $nombrePaciente);
-            $this->pdf->Text(60, 39, $historiaClinica);
-            $this->pdf->Text(60, 47, $nombreMedico);
-            $this->pdf->Text(60, 56, $fechaHoy);
+            $this->pdf->Text(60, 47, $nombrePaciente);
+            //$this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 54, $nombreMedico);
+            $this->pdf->Text(60, 62, $fechaHoy);
 
             $this->pdf->AddPage('P', 'Letter');
             $this->pdf->designUp();
             // $this->pdf->Image(FCPATH . "assets/img/co2/2.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 9);
-            $this->pdf->Text(80, 129, $nombrePaciente);
-            $this->pdf->Text(80, 200, $nombrePaciente);
+            $this->pdf->Text(80, 134, $nombrePaciente);
+            $this->pdf->Text(80, 201, $nombrePaciente);
 
 
             $this->pdf->Output('I');
@@ -2574,10 +2574,10 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/laser/1.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 10);
-            $this->pdf->Text(60, 32, $nombrePaciente);
-            $this->pdf->Text(60, 39, $historiaClinica);
-            $this->pdf->Text(60, 47, $nombreMedico);
-            $this->pdf->Text(60, 56, $fechaHoy);
+            $this->pdf->Text(60, 47, $nombrePaciente);
+            //$this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 54, $nombreMedico);
+            $this->pdf->Text(60, 62, $fechaHoy);
 
             $this->pdf->AddPage('P', 'Letter');
             $this->pdf->designUp();
@@ -2587,11 +2587,11 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/laser/3.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 8);
-            $this->pdf->Text(73, 170, $nombreMedico);
+            $this->pdf->Text(73, 176, $nombreMedico);
 
             $x = 161;          // Coordenada X inicial
-            $y = 175;
-            $maxX = 205;
+            $y = 178;
+            $maxX = 208;
             $espaciado = 3;
 
             if (empty($indicaciones)) {
@@ -2614,8 +2614,8 @@ class Consult extends CI_Controller
             $this->pdf->AddPage('P', 'Letter');
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/laser/4.png", 0, 0, 215.9, 279.4);
-            $this->pdf->SetFont('Arial', '', 8);
-            $this->pdf->Text(80, 88, $nombrePaciente);
+            $this->pdf->SetFont('Arial', '', 9);
+            $this->pdf->Text(80, 99, $nombrePaciente);
 
             $this->pdf->Output('I');
         }
@@ -2626,10 +2626,10 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/endolifting/1.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 10);
-            $this->pdf->Text(60, 30, $nombrePaciente);
-            $this->pdf->Text(60, 39, $historiaClinica);
-            $this->pdf->Text(60, 47, $nombreMedico);
-            $this->pdf->Text(60, 55, $fechaHoy);
+            $this->pdf->Text(60, 47, $nombrePaciente);
+            //$this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 54, $nombreMedico);
+            $this->pdf->Text(60, 62, $fechaHoy);
 
             $this->pdf->AddPage('P', 'Letter');
             $this->pdf->designUp();
@@ -2643,7 +2643,7 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/endolifting/4.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 9);
-            $this->pdf->Text(80, 170, $nombrePaciente);
+            $this->pdf->Text(80, 174, $nombrePaciente);
             //$this->pdf->Text(80, 188, $nombreMedico);
 
             $this->pdf->Output('I');
@@ -2655,10 +2655,10 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/enzimas/1.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 10);
-            $this->pdf->Text(60, 30, $nombrePaciente);
-            $this->pdf->Text(60, 39, $historiaClinica);
-            $this->pdf->Text(60, 46, $nombreMedico);
-            $this->pdf->Text(60, 54, $fechaHoy);
+            $this->pdf->Text(60, 47, $nombrePaciente);
+            //$this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 54, $nombreMedico);
+            $this->pdf->Text(60, 62, $fechaHoy);
 
             $this->pdf->AddPage('P', 'Letter');
             $this->pdf->designUp();
@@ -2668,10 +2668,10 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/enzimas/3.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 8);
-            $this->pdf->Text(73, 141, $nombreMedico);
+            $this->pdf->Text(73, 147, $nombreMedico);
 
             $x = 162;          // Coordenada X inicial
-            $y = 146;
+            $y = 150;
             $maxX = 205;
             $espaciado = 3;
 
@@ -2696,7 +2696,7 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/enzimas/4.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 9);
-            $this->pdf->Text(80, 58, $nombrePaciente);
+            $this->pdf->Text(80, 70, $nombrePaciente);
             //$this->pdf->Text(80, 76.5, $nombreMedico);
 
             $this->pdf->Output('I');
@@ -2708,19 +2708,19 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/hialuronidasa/1.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 10);
-            $this->pdf->Text(60, 32, $nombrePaciente);
-            $this->pdf->Text(60, 39, $historiaClinica);
-            $this->pdf->Text(60, 46, $nombreMedico);
-            $this->pdf->Text(60, 56, $fechaHoy);
+            $this->pdf->Text(60, 47, $nombrePaciente);
+            //$this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 54, $nombreMedico);
+            $this->pdf->Text(60, 62, $fechaHoy);
 
             $this->pdf->AddPage('P', 'Letter');
             $this->pdf->designUp();
             // $this->pdf->Image(FCPATH . "assets/img/hialuronidasa/2.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 8);
-            $this->pdf->Text(73, 208, $nombreMedico);
+            $this->pdf->Text(73, 211, $nombreMedico);
 
             $x = 154;          // Coordenada X inicial
-            $y = 213;
+            $y = 215;
             $maxX = 205;
             $espaciado = 3;
 
@@ -2746,7 +2746,7 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/hialuronidasa/3.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 9);
-            $this->pdf->Text(80, 124, $nombrePaciente);
+            $this->pdf->Text(80, 133, $nombrePaciente);
             //$this->pdf->Text(80, 143, $nombreMedico);
 
             $this->pdf->Output('I');
@@ -2758,10 +2758,10 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/peeling/1.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 10);
-            $this->pdf->Text(60, 32, $nombrePaciente);
-            $this->pdf->Text(60, 39, $historiaClinica);
-            $this->pdf->Text(60, 46, $nombreMedico);
-            $this->pdf->Text(60, 56, $fechaHoy);
+            $this->pdf->Text(60, 47, $nombrePaciente);
+            //$this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 54, $nombreMedico);
+            $this->pdf->Text(60, 62, $fechaHoy);
 
             $this->pdf->AddPage('P', 'Letter');
             $this->pdf->designUp();
@@ -2773,12 +2773,12 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/peeling/3.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 9);
-            $this->pdf->Text(73, 33, $nombreMedico);
-            $this->pdf->Text(80, 200, $nombrePaciente);
+            $this->pdf->Text(73, 48, $nombreMedico);
+            $this->pdf->Text(80, 204, $nombrePaciente);
             //$this->pdf->Text(80, 219, $nombreMedico);
 
             $x = 185;          // Coordenada X inicial
-            $y = 39;
+            $y = 53;
             $maxX = 205;
             $espaciado = 3;
 
@@ -2808,19 +2808,19 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/toxina/1.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 10);
-            $this->pdf->Text(60, 32, $nombrePaciente);
-            $this->pdf->Text(60, 39, $historiaClinica);
-            $this->pdf->Text(60, 46, $nombreMedico);
-            $this->pdf->Text(60, 56, $fechaHoy);
+            $this->pdf->Text(60, 47, $nombrePaciente);
+            //$this->pdf->Text(60, 39, $historiaClinica);
+            $this->pdf->Text(60, 54, $nombreMedico);
+            $this->pdf->Text(60, 62, $fechaHoy);
 
             $this->pdf->AddPage('P', 'Letter');
             $this->pdf->designUp();
             //$this->pdf->Image(FCPATH . "assets/img/toxina/2.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 8);
-            $this->pdf->Text(73, 152, $nombreMedico);
+            $this->pdf->Text(73, 159, $nombreMedico);
 
             $x = 161;          // Coordenada X inicial
-            $y = 157;
+            $y = 164;
             $maxX = 205;
             $espaciado = 3;
 
@@ -2845,7 +2845,7 @@ class Consult extends CI_Controller
             $this->pdf->designUp();
             // $this->pdf->Image(FCPATH . "assets/img/toxina/3.png", 0, 0, 215.9, 279.4);
             $this->pdf->SetFont('Arial', '', 9);
-            $this->pdf->Text(80, 72, $nombrePaciente);
+            $this->pdf->Text(80, 85, $nombrePaciente);
             //$this->pdf->Text(80, 90, $nombreMedico);
 
             $this->pdf->Output('I');

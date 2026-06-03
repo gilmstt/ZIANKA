@@ -239,7 +239,7 @@ $(document).ready(function () {
                             showConfirmButton: false,
                             timer: 1500,
                             onClose: function () {
-                                window.location.href = raiz_url + "Config/index/tarifas";
+                                window.location.href = raiz_url + "config/index/tarifas";
                             }
                         });
                     } else {
@@ -269,7 +269,7 @@ $(document).ready(function () {
                             showConfirmButton: false,
                             timer: 1500,
                             onClose: function () {
-                                window.location.href = raiz_url + "Config/index/tarifas";
+                                window.location.href = raiz_url + "config/index/tarifas";
                             }
                         });
                     } else {
@@ -316,7 +316,7 @@ $(document).ready(function () {
                             showConfirmButton: false,
                             timer: 1500,
                             onClose: function () {
-                                window.location.href = raiz_url + "Config/index/tarifas";
+                                window.location.href = raiz_url + "config/index/tarifas";
                             }
                             });
                         }else{
@@ -351,7 +351,7 @@ $(document).ready(function () {
                             showConfirmButton: false,
                             timer: 1500,
                             onClose: function () {
-                                window.location.href = raiz_url + "Config/index/membresias";
+                                window.location.href = raiz_url + "config/index/membresias";
                             }
                         });
                     } else {
@@ -381,7 +381,7 @@ $(document).ready(function () {
                             showConfirmButton: false,
                             timer: 1500,
                             onClose: function () {
-                                window.location.href = raiz_url + "Config/index/membresias";
+                                window.location.href = raiz_url + "config/index/membresias";
                             }
                         });
                     } else {
@@ -424,7 +424,7 @@ $(document).ready(function () {
                             showConfirmButton: false,
                             timer: 1500,
                             onClose: function () {
-                                window.location.href = raiz_url + "Config/index/membresias";
+                                window.location.href = raiz_url + "config/index/membresias";
                             }
                             });
                         }else{
@@ -459,7 +459,7 @@ $(document).ready(function () {
                             showConfirmButton: false,
                             timer: 1500,
                             onClose: function () {
-                                window.location.href = raiz_url + "Config/index/perfiles";
+                                window.location.href = raiz_url + "config/index/perfiles";
                             }
                         });
                     } else {
@@ -489,7 +489,7 @@ $(document).ready(function () {
                             showConfirmButton: false,
                             timer: 1500,
                             onClose: function () {
-                                window.location.href = raiz_url + "Config/index/perfiles";
+                                window.location.href = raiz_url + "config/index/perfiles";
                             }
                         });
                     } else {
@@ -532,7 +532,7 @@ $(document).ready(function () {
                             showConfirmButton: false,
                             timer: 1500,
                             onClose: function () {
-                                window.location.href = raiz_url + "Config/index/perfiles";
+                                window.location.href = raiz_url + "config/index/perfiles";
                             }
                             });
                         }else{
@@ -571,7 +571,7 @@ $(document).ready(function () {
                             showConfirmButton: false,
                             timer: 1500,
                             onClose: function () {
-                                window.location.href = raiz_url + "Config/index";
+                                window.location.href = raiz_url + "config/index";
                             }
                         });
                     } else {

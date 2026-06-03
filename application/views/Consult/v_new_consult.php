@@ -1099,7 +1099,7 @@ $Antecedentes = $CI->db->get_where('antecedentes', array('ID_PACIENTE' => $row_u
 
     <div class="text-center">
         <hr>
-            <a href="<?= base_url('Patient/index'); ?>" class="btn btnx btn-cancel">
+            <a href="<?= base_url('patient/index'); ?>" class="btn btnx btn-cancel">
             <i class="fas fa-chevron-double-left"></i> Volver a pacientes
         </a>      
           <button type="submit" class="btn btn-info btnx">

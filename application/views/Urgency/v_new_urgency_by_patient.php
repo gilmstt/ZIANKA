@@ -570,7 +570,7 @@ fieldset[disabled] .form-control {
 </div>
 <div class="text-center">
    <hr>
-       <a href="<?= base_url('Urgency/index'); ?>" class="btn btnx btn-cancel">
+       <a href="<?= base_url('urgency/index'); ?>" class="btn btnx btn-cancel">
       <i class="fas fa-chevron-double-left"></i> Volver a urgencias
    </a>      
    <button type="submit" id="submit-urgency" class="btn btn-info btnx">

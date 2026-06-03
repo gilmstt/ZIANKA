@@ -93,7 +93,7 @@
                         
                         <div class="row">
                             <div class="col-lg-12">
-                                <a href="<?= base_url() ?>Config/index" class="btn btn-cancel pull-left" >
+                                <a href="<?= base_url() ?>config/index" class="btn btn-cancel pull-left" >
                                     <i class="fas fa-chevron-double-left"></i> Regresar
                                 </a>
                                 <button type="submit" class="btn btn-info pull-right" id="okAddUser">

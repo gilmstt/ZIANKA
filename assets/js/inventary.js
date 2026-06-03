@@ -57,7 +57,7 @@ $(document).ready(function () {
       "serverSide": true,
       "order": [],
       "ajax": {
-         url: raiz_url + "Inventary/ajax_dt_product",
+         url: raiz_url + "inventary/ajax_dt_product",
          type: "POST",
       },
       "columnDefs": [
@@ -78,7 +78,7 @@ $(document).ready(function () {
       "serverSide": true,
       "order": [],
       "ajax": {
-         url: raiz_url + "Inventary/ajax_dt_med",
+         url: raiz_url + "inventary/ajax_dt_med",
          type: "POST",
       },
       "columnDefs": [
@@ -99,7 +99,7 @@ $(document).ready(function () {
       "serverSide": true,
       "order": [],
       "ajax": {
-         url: raiz_url + "Inventary/search_compras",
+         url: raiz_url + "inventary/search_compras",
          type: "POST",
          data: function (d) {
             d.RG_FECHA_INICIAL = $("#RG_FECHA_INICIAL").val();
@@ -126,7 +126,7 @@ $(document).ready(function () {
       "serverSide": true,
       "order": [],
       "ajax": {
-         url: raiz_url + "Inventary/ajax_dt_supliers",
+         url: raiz_url + "inventary/ajax_dt_supliers",
          type: "POST",
       },
       "columnDefs": [
@@ -148,7 +148,7 @@ $(document).ready(function () {
       "serverSide": true,
       "order": [],
       "ajax": {
-         url: raiz_url + "Inventary/ajax_dt_procedures",
+         url: raiz_url + "inventary/ajax_dt_procedures",
          type: "POST",
       },
       "columnDefs": [
@@ -170,7 +170,7 @@ $(document).ready(function () {
       "serverSide": true,
       "order": [],
       "ajax": {
-         url: raiz_url + "Inventary/ajax_dt_treatments",
+         url: raiz_url + "inventary/ajax_dt_treatments",
          type: "POST",
       },
       "columnDefs": [
@@ -238,7 +238,7 @@ $(document).ready(function () {
                      showConfirmButton: false,
                      timer: 1500,
                      onClose: function () {
-                        window.location.href = raiz_url + "Inventary/index/";
+                        window.location.href = raiz_url + "inventary/index/";
                      },
                   })
                } else {
@@ -291,7 +291,7 @@ $(document).ready(function () {
                      showConfirmButton: false,
                      timer: 1500,
                      onClose: function () {
-                        window.location.href = raiz_url + "Inventary/index/";
+                        window.location.href = raiz_url + "inventary/index/";
                      },
                   })
                } else {
@@ -517,7 +517,7 @@ $(document).ready(function () {
    $('body').on("click", ".btn-edit-treatment", function (e) {
       var ID_TREATMENT = $(this).attr('data-id-treatment');
       console.log(ID_TREATMENT);
-      window.location.href = raiz_url + "Inventary/form_edit_treatment/" + ID_TREATMENT;
+      window.location.href = raiz_url + "inventary/form_edit_treatment/" + ID_TREATMENT;
    });
 
    $('#formEditTreatment').validator().on('submit', function (e) {
@@ -528,7 +528,7 @@ $(document).ready(function () {
          e.preventDefault();
 
          $.ajax({
-            url: raiz_url + "Inventary/ajax_edit_treatment",
+            url: raiz_url + "inventary/ajax_edit_treatment",
             type: 'POST',
             data: $(this).serialize(),
             success: function (data) {
@@ -541,7 +541,7 @@ $(document).ready(function () {
                      showConfirmButton: false,
                      timer: 2500,
                      onClose: function () {
-                        window.location.href = raiz_url + "Inventary/index_tipos_consultas";
+                        window.location.href = raiz_url + "inventary/index_tipos_consultas";
                      },
                   })
                } else {
@@ -555,6 +555,52 @@ $(document).ready(function () {
                }
             }
          });
+      }
+   });
+   /*DELETE TREATMENT*/
+   $('body').on("click", ".btn-delete-treatment", function (e) {
+      var ID_TREATMENT = $(this).attr('data-id-treatment');
+      if (ID_TREATMENT > 0) {
+
+         Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Se eliminará este tratamiento!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar!'
+         }).then((result) => {
+            if (result.value) {
+               $.ajax({
+                  url: raiz_url + "inventary/ajax_disable_treatment",
+                  type: 'POST',
+                  data: 'id_tipo_consulta=' + ID_TREATMENT,
+                  success: function (data) {
+                     console.log(data);
+                     if (data > 0) {
+                        Swal.fire({
+                           title: 'tratamiento Eliminado!',
+                           icon: 'success',
+                           showConfirmButton: false,
+                           timer: 1500,
+                           onClose: function () {
+                              $('#dataTreatment').DataTable().ajax.reload();
+                           },
+                        })
+                     } else {
+                        Swal.fire({
+                           title: 'Error al eliminar!',
+                           icon: 'error',
+                           showConfirmButton: false,
+                           timer: 1500,
+                        })
+                     }
+                  }
+               });
+            }
+         })
+
       }
    });
    /*********************PROCEDIMIENTOS*****************************/
@@ -713,7 +759,7 @@ $(document).ready(function () {
          }).then((result) => {
             if (result.value) {
                $.ajax({
-                  url: raiz_url + "Inventary/ajax_cancel_buy",
+                  url: raiz_url + "inventary/ajax_cancel_buy",
                   type: 'POST',
                   data: { ID_BUY: ID_BUY },
                   success: function (data) {
@@ -765,7 +811,7 @@ $(document).ready(function () {
                      showConfirmButton: false,
                      timer: 1500,
                      onClose: function () {
-                        window.location.href = raiz_url + "Inventary/index_supplier";
+                        window.location.href = raiz_url + "inventary/index_supplier";
                      },
                   })
                } else {
@@ -877,7 +923,7 @@ $(document).ready(function () {
 
 
    $('#cancelAddItemCompra').on('click', function () {
-      window.location.href = raiz_url + "Inventary/index_buy";
+      window.location.href = raiz_url + "inventary/index_buy";
    });
 
 
