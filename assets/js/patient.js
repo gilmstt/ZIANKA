@@ -22,7 +22,7 @@ $(document).ready(function () {
       "serverSide": true,
       "order": [],
       "ajax": {
-         url: raiz_url + "Patient/ajax_get_patients",
+         url: raiz_url + "patient/ajax_get_patients",
          type: "POST",
       },
       "columnDefs": [
@@ -107,7 +107,7 @@ $(document).ready(function () {
       } else {
          e.preventDefault();
          $.ajax({
-            url: raiz_url + "Patient/ajax_add_patient",
+            url: raiz_url + "patient/ajax_add_patient",
             type: 'POST',
             data: $(this).serialize(),
             success: function (data) {
@@ -241,7 +241,7 @@ $(document).ready(function () {
       var ID_DOCUMENTO = $(this).attr('data-id-document');
       var NOMBRE_DOCUMENTO = $(this).attr('data-document-name');
       $.ajax({
-         url: raiz_url + "Patient/ajax_delete_file_by_id",
+         url: raiz_url + "patient/ajax_delete_file_by_id",
          type: 'POST',
          data: 'ID_PACIENTE=' + ID_PACIENTE + "&ID_DOCUMENTO=" + ID_DOCUMENTO + "&NOMBRE_DOCUMENTO=" + NOMBRE_DOCUMENTO,
          success: function (data) {
@@ -262,7 +262,7 @@ $(document).ready(function () {
    $("#formFilesPatient").on('submit', (function (e) {
       e.preventDefault();
       $.ajax({
-         url: raiz_url + "Patient/ajax_subir_archivo",
+         url: raiz_url + "patient/ajax_subir_archivo",
          type: "POST",
          data: new FormData(this),
          mimeType: "multipart/form-data",
@@ -303,7 +303,7 @@ $(document).ready(function () {
       //  $('#modAddFiles').modal('toggle');
 
       $.ajax({
-         url: raiz_url + "Patient/ajax_get_files_patient",
+         url: raiz_url + "patient/ajax_get_files_patient",
          type: 'POST',
          data: 'ID_PACIENTE=' + ID_CLIENTE,
          success: function (data2) {

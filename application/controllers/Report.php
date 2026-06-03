@@ -1117,10 +1117,10 @@ class Report extends CI_Controller {
 
                 $this->pdf->Output(); //Salida al navegador del pdf
             } else {
-                redirect('Report/paciente');
+                redirect('report/paciente');
             }
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 

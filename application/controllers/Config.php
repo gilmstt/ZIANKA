@@ -68,7 +68,7 @@ class Config extends CI_Controller {
             $this->load->view('Config/v_principal_config', $data);
             $this->load->view('esqueleton/footer');
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -81,7 +81,7 @@ class Config extends CI_Controller {
             $this->load->view('Config/v_config_user', $data);
             $this->load->view('esqueleton/footer');
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -94,7 +94,7 @@ class Config extends CI_Controller {
             $this->load->view('Config/v_config_add_user');
             $this->load->view('esqueleton/footer');
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -116,10 +116,10 @@ class Config extends CI_Controller {
                 }
             } else {
                 //operacion no permitida..
-                redirect('Login/salir');
+                redirect('login/salir');
             }
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -129,7 +129,7 @@ class Config extends CI_Controller {
             $AFFECTED_ROWS = $this->mconfig->disable_user_on_db($ID_USUARIO);
             echo $AFFECTED_ROWS;
         } else {
-            redirect('Config');
+            redirect('config');
         }
     }
 
@@ -155,7 +155,7 @@ class Config extends CI_Controller {
                 redirect('Config/v_config_user');
             }
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -180,10 +180,10 @@ class Config extends CI_Controller {
                 }
             } else {
                 //operacion no permitida..
-                redirect('Login/salir');
+                redirect('login/salir');
             }
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -196,7 +196,7 @@ class Config extends CI_Controller {
             $this->load->view('Config/v_index_tarifa', $data);
             $this->load->view('esqueleton/footer');
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -221,10 +221,10 @@ class Config extends CI_Controller {
                 }
             } else {
                 //operacion no permitida..
-                redirect('Login/salir');
+                redirect('login/salir');
             }
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -244,10 +244,10 @@ class Config extends CI_Controller {
                 }
             } else {
                 //operacion no permitida..
-                redirect('Login/salir');
+                redirect('login/salir');
             }
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -257,7 +257,7 @@ class Config extends CI_Controller {
             $AFFECTED_ROWS = $this->mconfig->delete_tarifa_on_db($ID_TARIFA);
             echo $AFFECTED_ROWS;
         } else {
-            redirect('Config');
+            redirect('config');
         }
     }
 
@@ -280,10 +280,10 @@ class Config extends CI_Controller {
                 }
             } else {
                 //operacion no permitida..
-                redirect('Login/salir');
+                redirect('login/salir');
             }
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -308,10 +308,10 @@ class Config extends CI_Controller {
                 }
             } else {
                 //operacion no permitida..
-                redirect('Login/salir');
+                redirect('login/salir');
             }
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -321,7 +321,7 @@ class Config extends CI_Controller {
             $AFFECTED_ROWS = $this->mconfig->delete_membresia_on_db($ID_MEMBRESIA);
             echo $AFFECTED_ROWS;
         } else {
-            redirect('Config');
+            redirect('config');
         }
     }
 
@@ -344,10 +344,10 @@ class Config extends CI_Controller {
                 }
             } else {
                 //operacion no permitida..
-                redirect('Login/salir');
+                redirect('login/salir');
             }
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -372,10 +372,10 @@ class Config extends CI_Controller {
                 }
             } else {
                 //operacion no permitida..
-                redirect('Login/salir');
+                redirect('login/salir');
             }
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -385,7 +385,7 @@ class Config extends CI_Controller {
             $AFFECTED_ROWS = $this->mconfig->delete_perfil_on_db($ID_PERFIL);
             echo $AFFECTED_ROWS;
         } else {
-            redirect('Config');
+            redirect('config');
         }
     }
 
@@ -408,10 +408,10 @@ class Config extends CI_Controller {
                 }
             } else {
                 //operacion no permitida..
-                redirect('Login/salir');
+                redirect('login/salir');
             }
         } else {
-            redirect('Login/salir');
+            redirect('login/salir');
         }
     }
 
@@ -430,7 +430,7 @@ class Config extends CI_Controller {
                     echo -1;
                 }
             } else {
-                redirect('Login/salir');
+                redirect('login/salir');
             }
         }
     }

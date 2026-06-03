@@ -34,7 +34,7 @@ class Ventas extends CI_Controller
       $this->PAYMENTS_CART =  $this->session->userdata('PAYMENTS_CART');
 
       if (!$this->session->userdata('VET_USER_ID'))
-         redirect('Inicio/index');
+         redirect('inicio/index');
    }
 
    public function index()

@@ -20,7 +20,7 @@
 				<div class=icon>
 					<i class="fa fa-user fa-x"></i>
 				</div>
-				<a class="link-title-a" href="<?= base_url() ?>Report/paciente">
+				<a class="link-title-a" href="<?= base_url() ?>report/paciente">
 					<span class="link-title-span">Paciente</span>
 				</a>
 			</div>
@@ -31,7 +31,7 @@
 				<div class=icon>
 					<i class="fa fa-user fa-x"></i>
 				</div>
-				<a class="link-title-a" href="<?= base_url() ?>Report/consultas">
+				<a class="link-title-a" href="<?= base_url() ?>report/consultas">
 					<span class="link-title-span">Registro</span>
 				</a>
 			</div>

@@ -18,7 +18,7 @@
                     if ($this->session->userdata('CAREYES_ID_ROL') == ADMINISTRADOR):
                         ?>
 
-                        <a href="<?= base_url() ?>Urgency/form_add_urgency" class="btn pull-right btn-header" id="">
+                        <a href="<?= base_url() ?>urgency/form_add_urgency" class="btn pull-right btn-header" id="">
                             <i class="fas fa-plus" prescription-bottle aria-hidden="true"></i> Nueva urgencia
                         </a>
                     <?php endif; ?>

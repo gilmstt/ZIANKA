@@ -21,7 +21,7 @@
                </div>
             </div>
                <div class="form-group text-left">
-                  <a class="link-title-a" href="<?= base_url() ?>Report/index">
+                  <a class="link-title-a" href="<?= base_url() ?>report/index">
                      <span class="link-title-span">Regresar</span>
                   </a>
                </div>

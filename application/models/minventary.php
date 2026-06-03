@@ -150,6 +150,21 @@ class Minventary extends CI_Model
         return $this->db->trans_status(); // true si todo fue bien
     }
 
+    function disable_treatment_on_db($ID_TREATMENT)
+    {
+        try {
+            $data = array(
+                'vigencia_tipo_consulta' => 0
+            );
+
+            $this->db->where('id_tipo_consulta', $ID_TREATMENT);
+            $this->db->update('tipo_consulta', $data);
+            return $this->db->affected_rows();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+
 
     /* PROCEDIMIENTOS CRUD */
 

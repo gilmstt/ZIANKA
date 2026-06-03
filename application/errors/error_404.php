@@ -7,10 +7,10 @@
     <meta content="utf-8" http-equiv="encoding">
     <meta http-equiv="conten-type" content="text/html; charset=UTF-8" />
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-    <link href="/KAIZER/assets/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-    <link href="/KAIZER/assets/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
-    <script src="/KAIZER/assets/js/jquery.js" type="text/javascript"></script>
-    <script src="/KAIZER/assets/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+    <link href="https://iridezcence.geemsolutions.com/assets/plugins/bootstrap/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="https://iridezcence.geemsolutions.com/assets/plugins/jquery/jquery-ui-theme.css" rel="stylesheet" type="text/css"/>
+    <script src="https://iridezcence.geemsolutions.com/assets/plugins/jquery/jquery1.9.js" type="text/javascript"></script>
+    <script src="https://iridezcence.geemsolutions.com/assets/plugins/bootstrap/bootstrap.js" type="text/javascript"></script>
 
 </head>
 
@@ -18,7 +18,7 @@
 	<div class="row text-center">
 		<h1>¡ Ruta no encontrada !</h1>
                 <h4>La ruta a la que intentas acceder no existe o no tienes permisos de acceso</h4><br>
-                <a href="/ALMACEN/inicio/index" class="btn btn-primary btn-lg">Ir al inicio</a>
+                <a href="https://iridezcence.geemsolutions.com/inicio/index" class="btn btn-primary btn-lg">Ir al inicio</a>
 	</div>
 </body>
 </html>

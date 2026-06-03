@@ -12,7 +12,7 @@
 				<div class=icon>
 					<i class="fa fa-th fa-x"></i>
 				</div>
-				<a class="link-title-a" href="<?= base_url() ?>Inventary/index">
+				<a class="link-title-a" href="<?= base_url() ?>inventary/index">
 					<span class="link-title-span">Productos</span>
 				</a>
 			</div>
@@ -23,7 +23,7 @@
 				<div class=icon>
 					<i class="fa fa-list fa-x"></i>
 				</div>
-				<a class="link-title-a" href="<?= base_url() ?>Inventary/index_tipos_consultas">
+				<a class="link-title-a" href="<?= base_url() ?>inventary/index_tipos_consultas">
 					<span class="link-title-span">Tratamientos</span>
 				</a>
 			</div>
@@ -34,7 +34,7 @@
 				<div class=icon>
 					<i class="fa fa-tasks fa-x"></i>
 				</div>
-				<a class="link-title-a" href="<?= base_url() ?>Inventary/index_procedure">
+				<a class="link-title-a" href="<?= base_url() ?>inventary/index_procedure">
 					<span class="link-title-span">Procedimientos</span>
 				</a>
 			</div>
@@ -45,7 +45,7 @@
 				<div class=icon>
 					<i class="fas fa-hand-holding-usd fa-x"></i>
 				</div>
-				<a class="link-title-a" href="<?= base_url() ?>Inventary/index_buy"><span
+				<a class="link-title-a" href="<?= base_url() ?>inventary/index_buy"><span
 						class="link-title-span">Compras</span></a>
 			</div>
 		</li>
@@ -55,7 +55,7 @@
 				<div class=icon>
 					<i class="fa fa-users fa-x"></i>
 				</div>
-				<a class="link-title-a" href="<?= base_url() ?>Inventary/index_supplier">
+				<a class="link-title-a" href="<?= base_url() ?>inventary/index_supplier">
 					<span	class="link-title-span">Proveedores</span>
 				</a>
 			</div>
@@ -66,7 +66,7 @@
 				<div class=icon>
 					<i class="fas fa-briefcase-medical fa-x"></i>
 				</div>
-				<a class="link-title-a" href="<?= base_url() ?>Inventary/index_usage">
+				<a class="link-title-a" href="<?= base_url() ?>inventary/index_usage">
 					<span	class="link-title-span">Uso interno</span>
 				</a>
 			</div>

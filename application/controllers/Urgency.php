@@ -114,7 +114,7 @@ class Urgency extends CI_Controller
       if ($this->input->is_ajax_request()) {
          $this->Murgency->edit_tot_pag();
       }else{
-         redirect('Urgency/index');
+         redirect('urgency/index');
       }
    }
    public function ajax_close_urgency()
@@ -124,7 +124,7 @@ class Urgency extends CI_Controller
             echo "success";
          }
       }else{
-         redirect('Urgency/index');
+         redirect('urgency/index');
       }
    }
 // MODAL FICHA CONSUMO PRODUCTOS & PROCEDIMIENTOS
@@ -360,10 +360,10 @@ class Urgency extends CI_Controller
                   $this->pdf->line(12, $y+17, 205, $y+17);
                   $this->pdf->Output(); //Salida al navegador del pdf
               } else {
-                  echo "redirect('urgencia/index')";
+                  echo "redirect('urgency/index')";
               }
           } else {
-              redirect('Urgency/index');
+              redirect('urgency/index');
           }
       }
   }

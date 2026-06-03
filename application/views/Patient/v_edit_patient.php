@@ -1322,7 +1322,7 @@
         <div class="panel-footer">
             <div class="row">
                 <div class="col-lg-12">
-                    <a href="<?= base_url() ?>Patient/index" class="btn btn-cancel pull-left"
+                    <a href="<?= base_url() ?>patient/index" class="btn btn-cancel pull-left"
                         id="btnCloseAddAgent">
                         <i class="fas fa-chevron-double-left"></i> Regresar
                     </a>
